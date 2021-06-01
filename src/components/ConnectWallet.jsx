@@ -20,6 +20,7 @@ const Dialog = {
     display: "flex",
     justifyContent: "center",
     flexDirection:"column",
+
 }
 const DialogButton = {
     margin: "10px 20px 10px 20px"
