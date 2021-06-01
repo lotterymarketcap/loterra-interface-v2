@@ -1,6 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+  --color: #243746;
+  --color-primary: #158876;
+  --color-secondary: #0e2233;
+  --bg: #e0e0e0;
+  --bg-secondary: #bebebe;
+  --bg-third: #ffffff;
+  --border-color: #ffffff;
+}
+
+.dark-mode {
+  --color: #ebf4f1;
+  --color-primary: #41b38a;
+  --color-secondary: #fdf9f3;
+  --bg: #1d1f29;
+  --bg-secondary: #0c0c10;
+  --bg-third: #2e3242;
+  --border-color: #0d2538;
+}
+
 
 body {
   margin: 0;
@@ -10,6 +30,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--color);
+  transition: background-color 0.3s;
 }
 
 code {
@@ -31,4 +54,15 @@ code {
 }
 .navbar nav a {
   margin-right:50px;
+}
+
+.card {
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow:  5px 5px 10px var(--bg-secondary),
+  -5px -5px 10px var(--bg-third);
+}
+.container {
+  margin-left: 100px;
+  margin-right: 100px;
 }
