@@ -21,7 +21,7 @@ class App extends Component {
   render() {
     return (
         <Suspense fallback={<div>Loading... </div>}>
-          <WalletProvider defaultNetwork={mainnet} walletConnectChainIds={{
+          <WalletProvider defaultNetwork={testnet} walletConnectChainIds={{
             0: testnet,
             1: mainnet,
           }}>

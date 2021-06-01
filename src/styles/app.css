@@ -55,6 +55,21 @@ code {
 .navbar nav a {
   margin-right:50px;
 }
+.button {
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow:  5px 5px 10px var(--bg-secondary),
+  -5px -5px 10px var(--bg-third);
+}
+
+.button-active {
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: inset 5px 5px 10px var(--bg-secondary),
+  inset -5px -5px 10px var(--bg-third);
+}
 
 .card {
   border-radius: 10px;
