@@ -21,3 +21,14 @@ code {
   text-align: center;
 }
 
+.navbar{
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+.navbar nav a {
+  margin-right:50px;
+}

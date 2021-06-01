@@ -1,9 +1,9 @@
 import React, { Component, Suspense } from 'react'
 import  {WalletProvider} from "@terra-money/wallet-provider";
-import './styles/app.css'
-
 import { Root, Routes } from 'react-static'
 import { Router, Link } from '@reach/router'
+import Navbar from "./components/Navbar";
+import './styles/app.css'
 
 const mainnet = {
   name: 'mainnet',
@@ -26,9 +26,7 @@ class App extends Component {
             1: mainnet,
           }}>
             <Root>
-              <nav>
-                <Link to="/">Home</Link>
-              </nav>
+              <Navbar/>
               <div className="content">
                 <Router>
                   <Routes default />
