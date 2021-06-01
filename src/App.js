@@ -3,6 +3,8 @@ import  {WalletProvider} from "@terra-money/wallet-provider";
 import { Root, Routes } from 'react-static'
 import { Router, Link } from '@reach/router'
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 import './styles/app.css'
 
 const mainnet = {
@@ -32,6 +34,7 @@ class App extends Component {
                   <Routes default />
                 </Router>
               </div>
+              <Footer/>
             </Root>
           </WalletProvider>
         </Suspense>

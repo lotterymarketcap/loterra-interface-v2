@@ -5,7 +5,13 @@ import {
     useInstallChromeExtension,
     useWallet
 } from '@terra-money/wallet-provider';
-
+const Modal = {
+    position: "absolute",
+    width: "100%",
+    height:"100%",
+    left: "0",
+    top: "0",
+}
 const Dialog = {
     position: "absolute",
     right: "100px",
@@ -38,24 +44,28 @@ export default function ConnectWallet(){
     function display(){
         // active or disable dialog
         setIsDisplayDialog(!isDisplayDialog)
-        console.log(availableConnectTypes)
-        if (isDisplayDialog){
+    }
+    function closeModal() {
+        setIsDisplayDialog(false)
+    }
+    function connectTo(to) {
+        if (to == "extension") {
             connect(availableConnectTypes[1])
-        }else{
-            disconnect()
         }
-
-        console.log(status)
+        else if (to == "mobile") {
+            connect(availableConnectTypes[2])
+        }
+        setIsDisplayDialog(false)
     }
-    function connectTo(to){
 
-    }
     function renderDialog(){
         if (isDisplayDialog){
             return(
-                <div style={Dialog} className="card">
-                    <button onClick={connectTo("extension")} className="button" style={DialogButton}>Terra Station (extension)</button>
-                    <button onClick={connectTo("mobile")} className="button" style={DialogButton}>Terra Station (mobile)</button>
+                <div style={Modal} onClick={() => closeModal()}>
+                    <div style={Dialog} className="drop-down">
+                        <button onClick={() => connectTo("extension")} className="button-two" style={DialogButton}>Terra Station (extension)</button>
+                        <button onClick={() => connectTo("mobile")} className="button-two" style={DialogButton}>Terra Station (mobile)</button>
+                    </div>
                 </div>
             )
         }
@@ -63,7 +73,7 @@ export default function ConnectWallet(){
 
     return(
         <div>
-            <button onClick={display}>Connect Wallet</button>
+            <button onClick={() => display()}>Connect Wallet</button>
             {renderDialog()}
         </div>
 
