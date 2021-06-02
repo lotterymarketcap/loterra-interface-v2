@@ -16,7 +16,7 @@ export default function Index () {
         const obj = new StdFee(10_000_000, { uusd: 2000000 })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            "terra1e7hzp3tnsswpfcu6gt4wlgfm20lcsqqywhaagu",
+            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
             {
                 register: {
                     combination: cart,
