@@ -107,3 +107,6 @@ footer{
   width: 100%;
   padding-bottom: 50px;
 }
+textarea::placeholder {
+  color: dimgrey;
+}
