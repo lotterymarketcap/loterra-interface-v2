@@ -42,8 +42,10 @@ export default function ConnectWallet(){
         recheckStatus,
         post,
     } = useWallet();
+
     function display(){
         // active or disable dialog
+        console.log(network)
         setIsDisplayDialog(!isDisplayDialog)
     }
     function closeModal() {
@@ -63,9 +65,9 @@ export default function ConnectWallet(){
         if (isDisplayDialog){
             return(
                 <div style={Modal} onClick={() => closeModal()}>
-                    <div style={Dialog} className="drop-down">
-                        <button onClick={() => connectTo("extension")} className="button-two" style={DialogButton}>Terra Station (extension)</button>
-                        <button onClick={() => connectTo("mobile")} className="button-two" style={DialogButton}>Terra Station (mobile)</button>
+                    <div style={Dialog} className="card-glass">
+                        <button onClick={() => connectTo("extension")} className="button-glass" style={DialogButton}>Terra Station (extension)</button>
+                        <button onClick={() => connectTo("mobile")} className="button-glass" style={DialogButton}>Terra Station (mobile)</button>
                     </div>
                 </div>
             )

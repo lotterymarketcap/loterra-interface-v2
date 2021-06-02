@@ -5,10 +5,14 @@
   --color: #243746;
   --color-primary: #158876;
   --color-secondary: #0e2233;
-  --bg: #e0e0e0;
+  --bg: #ff99f5;
   --bg-secondary: #bebebe;
   --bg-third: #ffffff;
   --border-color: #ffffff;
+  --background-image: radial-gradient(at 50% 8%, hsla(320,100%,91%,1) 0, transparent 42%),
+  radial-gradient(at 50% 35%, hsla(320,100%,88%,1) 0, transparent 100%),
+  radial-gradient(at 10% 85%, hsla(58,100%,78%,1) 0, transparent 54%),
+  radial-gradient(at 84% 81%, hsla(183,66%,64%,1) 0, transparent 49%);
 }
 
 .dark-mode {
@@ -19,8 +23,17 @@
   --bg-secondary: #0c0c10;
   --bg-third: #2e3242;
   --border-color: #0d2538;
+  --background-image: radial-gradient(at 50% 8%, hsla(320,100%,91%,1) 0, transparent 42%),
+  radial-gradient(at 50% 35%, hsla(320,100%,88%,1) 0, transparent 100%),
+  radial-gradient(at 10% 85%, hsla(58,100%,78%,1) 0, transparent 54%),
+  radial-gradient(at 84% 81%, hsla(183,66%,64%,1) 0, transparent 49%);
 }
 
+html {
+  height: 100%;
+  background-color: var(--bg);
+  background-image: var(--background-image)
+}
 
 body {
   margin: 0;
@@ -30,7 +43,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg);
+  /*background-color: var(--bg);*/
   color: var(--color);
   transition: background-color 0.3s;
 }
@@ -55,33 +68,26 @@ code {
 .navbar nav a {
   margin-right:50px;
 }
-.button {
-  padding: 10px;
-  border-radius: 10px;
-  background: var(--bg);
-  box-shadow:  5px 5px 10px var(--bg-secondary),
-  -5px -5px 10px var(--bg-third);
-}
 
-.button-active {
-  padding: 10px;
-  border-radius: 10px;
-  background: var(--bg);
-  box-shadow: inset 5px 5px 10px var(--bg-secondary),
-  inset -5px -5px 10px var(--bg-third);
-}
-.button-two {
+.button-glass{
   padding: 5px;
+  background: rgba( 255, 255, 255, 0.10 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4.0px );
+  -webkit-backdrop-filter: blur( 4.0px );
   border-radius: 10px;
-  background-color: white;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
-.card {
+.card-glass {
+  background: rgba( 255, 255, 255, 0.10 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4.0px );
+  -webkit-backdrop-filter: blur( 4.0px );
   border-radius: 10px;
-  background: var(--bg);
-  box-shadow:  5px 5px 10px var(--bg-secondary),
-  -5px -5px 10px var(--bg-third);
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
+
 .drop-down {
   padding: 10px;
   border-radius: 10px;
