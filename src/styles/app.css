@@ -5,14 +5,15 @@
   --color: #243746;
   --color-primary: #158876;
   --color-secondary: #0e2233;
-  --bg: #ff99f5;
+  --bg: #ff99c5;
   --bg-secondary: #bebebe;
   --bg-third: #ffffff;
   --border-color: #ffffff;
-  --background-image: radial-gradient(at 50% 8%, hsla(320,100%,91%,1) 0, transparent 42%),
-  radial-gradient(at 50% 35%, hsla(320,100%,88%,1) 0, transparent 100%),
-  radial-gradient(at 10% 85%, hsla(58,100%,78%,1) 0, transparent 54%),
-  radial-gradient(at 84% 81%, hsla(183,66%,64%,1) 0, transparent 49%);
+  --background-image:
+        radial-gradient(at 96% 55%, hsla(151,78%,77%,1) 0, transparent 43%),
+        radial-gradient(at 90% 44%, hsla(297,89%,74%,1) 0, transparent 51%),
+        radial-gradient(at 8% 40%, hsla(307,90%,77%,1) 0, transparent 49%),
+        radial-gradient(at 90% 91%, hsla(209,89%,73%,1) 0, transparent 59%);
 }
 
 .dark-mode {

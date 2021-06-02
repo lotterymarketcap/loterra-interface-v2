@@ -5,7 +5,7 @@ import {
     useInstallChromeExtension,
     useWallet
 } from '@terra-money/wallet-provider';
-const Modal = {
+/*const Modal = {
     position: "absolute",
     width: "100%",
     height:"100%",
@@ -21,7 +21,7 @@ const Dialog = {
     justifyContent: "center",
     flexDirection:"column",
 
-}
+} */
 const DialogButton = {
     margin: "10px 20px 10px 20px"
 }
@@ -64,8 +64,8 @@ export default function ConnectWallet(){
     function renderDialog(){
         if (isDisplayDialog){
             return(
-                <div style={Modal} onClick={() => closeModal()}>
-                    <div style={Dialog} className="card-glass">
+                <div /*style={Modal}*/ onClick={() => closeModal()}>
+                    <div /*style={Dialog}*/ className="card-glass">
                         <button onClick={() => connectTo("extension")} className="button-glass" style={DialogButton}>Terra Station (extension)</button>
                         <button onClick={() => connectTo("mobile")} className="button-glass" style={DialogButton}>Terra Station (mobile)</button>
                     </div>
@@ -76,8 +76,13 @@ export default function ConnectWallet(){
 
     return(
         <div>
-            <button onClick={() => display()}>Connect Wallet</button>
-            {renderDialog()}
+            <div style={{display:"flex"}}>
+                <button onClick={() => connectTo("extension")} className="button-glass" style={DialogButton}>Terra Station (extension)</button>
+                <button onClick={() => connectTo("mobile")} className="button-glass" style={DialogButton}>Terra Station (mobile)</button>
+            </div>
+
+            {/*<button onClick={() => display()}>Connect Wallet</button>
+            {renderDialog()}*/}
         </div>
 
     )

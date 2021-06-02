@@ -23,7 +23,7 @@ class App extends Component {
   render() {
     return (
         <Suspense fallback={<div>Loading... </div>}>
-          <WalletProvider defaultNetwork={testnet} walletConnectChainIds={{
+          <WalletProvider defaultNetwork={mainnet} walletConnectChainIds={{
             0: testnet,
             1: mainnet,
           }}>
@@ -34,7 +34,7 @@ class App extends Component {
                   <Routes default />
                 </Router>
               </div>
-              <Footer/>
+              {/*<Footer/>*/}
             </Root>
           </WalletProvider>
         </Suspense>

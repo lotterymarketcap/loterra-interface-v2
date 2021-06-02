@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-
+import { Provider } from 'react-redux'
+import store from './store'
 // Your top level component
 import App from './App'
 
@@ -18,9 +19,11 @@ if (typeof document !== 'undefined') {
 
   const render = Comp => {
     renderMethod(
-      <AppContainer>
-        <Comp />
-      </AppContainer>,
+      <Provider store={store}>
+        <AppContainer>
+            <Comp />
+        </AppContainer>
+      </Provider>,
       target
     )
   }

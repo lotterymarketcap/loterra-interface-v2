@@ -12,6 +12,7 @@ const FootContent = {
 }
 export default function Footer(){
     const [isDarkMode, setDarkMode] = useState(false)
+
     function darkMode (){
         setDarkMode(!isDarkMode)
         isDarkMode ? localStorage.theme = 'dark' : localStorage.theme = 'light'
