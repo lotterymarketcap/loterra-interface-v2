@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
     useConnectedWallet,
     ConnectedWallet,
@@ -27,25 +27,18 @@ const DialogButton = {
 }
 export default function ConnectWallet(){
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
+    let wallet = ""
+    if (window.localStorage) {
+        wallet = useWallet();
+        // do stuff with localStorage
+        // no need to use window anymore
+    }
+    //const installChrome = useInstallChromeExtension();
+    //const connectedWallet = ConnectedWallet ? useConnectedWallet() : undefined;
 
-    const installChrome = useInstallChromeExtension();
-    const connectedWallet = ConnectedWallet ? useConnectedWallet() : undefined;
-    const {
-        status,
-        network,
-        availableConnectTypes,
-        connect,
-        availableInstallTypes,
-        install,
-        wallets,
-        disconnect,
-        recheckStatus,
-        post,
-    } = useWallet();
 
     function display(){
         // active or disable dialog
-        console.log(network)
         setIsDisplayDialog(!isDisplayDialog)
     }
     function closeModal() {
@@ -53,10 +46,10 @@ export default function ConnectWallet(){
     }
     function connectTo(to) {
         if (to == "extension") {
-            connect(availableConnectTypes[1])
+            wallet.connect(wallet.availableConnectTypes[1])
         }
         else if (to == "mobile") {
-            connect(availableConnectTypes[2])
+            wallet.connect(wallet.availableConnectTypes[2])
         }
         setIsDisplayDialog(false)
     }

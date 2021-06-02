@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { useConnectedWallet } from '@terra-money/wallet-provider'
+import React, {useEffect, useState} from "react";
+import {useConnectedWallet} from '@terra-money/wallet-provider'
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract, } from "@terra-money/terra.js"
 const HomeCard={
@@ -7,9 +7,16 @@ const HomeCard={
     width: '100px',
     padding: '30px',
 }
+
 export default function Index () {
     const [combo, setCombo] = useState("")
-    const connectedWallet = useConnectedWallet()
+    let connectedWallet = ""
+    if (window.localStorage) {
+        connectedWallet = useConnectedWallet()
+        // do stuff with localStorage
+        // no need to use window anymore
+    }
+
 
     function execute(){
         const cart = combo.split(" ")
@@ -22,7 +29,7 @@ export default function Index () {
                     combination: cart,
                 },
             },
-            { uusd: 1_000_000 }
+            { uusd: 1000000 * cart.length }
         )
 
         connectedWallet.post({

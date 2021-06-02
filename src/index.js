@@ -10,7 +10,7 @@ import App from './App'
 export default App
 
 // Render your app
-if (typeof document !== 'undefined') {
+if (typeof document !== 'undefined'  && typeof localStorage !== "undefined"  ) {
   const target = document.getElementById('root')
 
   const renderMethod = target.hasChildNodes()
@@ -36,11 +36,5 @@ if (typeof document !== 'undefined') {
     module.hot.accept('./App', () => {
       render(App)
     })
-  }
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
   }
 }

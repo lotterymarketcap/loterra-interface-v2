@@ -33,13 +33,7 @@ const { _ticketPrice, _balanceOf, _bonded, _rewards, _unBounded } = slice.action
 
 export const ticketPrice = ({price}) => async dispatch => {
     try {
-        dispatch(_ticketPrice({price}));
-        const contractInfo = await api.contractQuery(
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
-                config: {},
-            }
-        )
+        // dispatch(_ticketPrice({price}));
         console.log(contractInfo)
     } catch (e) {
         return console.error(e.message);
