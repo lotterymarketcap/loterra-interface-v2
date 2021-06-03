@@ -19,19 +19,19 @@ export default {
       template: 'src/pages/Index',
     },
     {
-      path: '/public-sale',
+      path: 'public-sale',
       template: 'src/pages/PublicSale',
     },
     {
-      path: '/staking',
+      path: 'staking',
       template: 'src/pages/Staking',
     },
     {
-      path: '/terrand-oracle',
+      path: 'terrand-oracle',
       template: 'src/pages/Terrand',
     },
     {
-      path: '/dao',
+      path: 'dao',
       template: 'src/pages/DAO',
     },
     // A 404 component

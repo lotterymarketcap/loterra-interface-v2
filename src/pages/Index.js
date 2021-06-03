@@ -13,7 +13,7 @@ const HomeCard={
     padding: '30px',
 }
 
-export default function Index () {
+export default () => {
     const [combo, setCombo] = useState("")
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
@@ -41,6 +41,41 @@ export default function Index () {
         })
 
     }
+    function claim(){
+        const obj = new StdFee(10_000_000, { uusd: 2000000 })
+        const msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
+            {
+                claim: {},
+            }
+        )
+
+        connectedWallet.post({
+            msgs: [msg],
+            gasPrices: obj.gasPrices(),
+            gasAdjustment: 1.1,
+        })
+
+    }
+    function collect(){
+        const obj = new StdFee(10_000_000, { uusd: 2000000 })
+        const msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
+            {
+                collect: {},
+            }
+        )
+
+        connectedWallet.post({
+            msgs: [msg],
+            gasPrices: obj.gasPrices(),
+            gasAdjustment: 1.1,
+        })
+
+    }
+
     function change(e) {
         e.preventDefault();
         setCombo(e.target.value)
@@ -56,8 +91,11 @@ export default function Index () {
                  <textarea placeholder="123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
                  <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                  <button onClick={()=> execute()} className="button-glass" style={{color:"deeppink"}}>Buy ticket</button>
+                 <div style={{display:"flex", marginTop: "10px"}}>
+                     <button onClick={()=> claim()} className="button-glass" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
+                     <button onClick={()=> collect()} className="button-glass" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
+                 </div>
              </div>
          </div>
-
      );
 }
