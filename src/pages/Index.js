@@ -104,7 +104,7 @@ export default () => {
                  <textarea placeholder="123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
                  <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                  <div className="text-sm">{result}</div>
-                 <button onClick={()=> execute()} className="button-glass" style={{color:"deeppink"}}>Buy ticket</button>
+                 <button onClick={()=> execute()} className="button-glass" style={{color:"deeppink"}}>Buy tickets</button>
                  <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
                      <button onClick={()=> claim()} className="button-glass" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
                      <button onClick={()=> collect()} className="button-glass" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
