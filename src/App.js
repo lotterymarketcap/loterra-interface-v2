@@ -1,40 +1,35 @@
 import React, { Component, Suspense } from 'react'
-import  {WalletProvider} from "@terra-money/wallet-provider";
 import { Root, Routes } from 'react-static'
 import { Router, Link } from '@reach/router'
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 import './styles/app.css'
-
-const mainnet = {
-  name: 'mainnet',
-  chainID: 'columbus-4',
-  lcd: 'https://lcd.terra.dev',
-};
-
-const testnet = {
-  name: 'testnet',
-  chainID: 'tequila-0004',
-  lcd: 'https://tequila-lcd.terra.dev',
-};
+import {Head} from "react-static";
 
 class App extends Component {
   render() {
     return (
         <Suspense fallback={<div>Loading... </div>}>
-          <WalletProvider defaultNetwork={mainnet} walletConnectChainIds={{
-            0: testnet,
-            1: mainnet,
-          }}>
             <Root>
+                <Head>
+                    <meta charSet="UTF-8" />
+                    <title>LoTerra interface</title>
+                    <meta property="og:title" content="LoTerra" />
+                    <meta property="og:image" content="https://loterra.io/loterra.png" />
+                    <meta property="og:image:alt" content="LoTerra icon" />
+                    <meta property="og:type" content="website" />
+                    <meta property="og:site_name" content="LoTerra interface" />
+                    <meta property="og:description" content="LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain."/>
+                </Head>
               <Navbar/>
               <div className="content">
-                <Router>
                   <Routes default />
-                </Router>
               </div>
+              {/*<Footer/>*/}
             </Root>
-          </WalletProvider>
         </Suspense>
+
     )
   }
 }

@@ -11,7 +11,7 @@ export default {
     title: 'LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain.',
     lastBuilt: Date.now(),
   }),
-  maxThreads: 1, // Remove this when you start doing any static generation
+  //maxThreads: 1, // Remove this when you start doing any static generation
   getRoutes: async ({ dev }) => [
     // A simple route
     {
@@ -19,19 +19,19 @@ export default {
       template: 'src/pages/Index',
     },
     {
-      path: '/public-sale',
+      path: 'public-sale',
       template: 'src/pages/PublicSale',
     },
     {
-      path: '/staking',
+      path: 'staking',
       template: 'src/pages/Staking',
     },
     {
-      path: '/terrand-oracle',
+      path: 'terrand-oracle',
       template: 'src/pages/Terrand',
     },
     {
-      path: '/dao',
+      path: 'dao',
       template: 'src/pages/DAO',
     },
     // A 404 component

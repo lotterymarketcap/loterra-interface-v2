@@ -5,10 +5,15 @@
   --color: #243746;
   --color-primary: #158876;
   --color-secondary: #0e2233;
-  --bg: #e0e0e0;
+  --bg: #ff99c5;
   --bg-secondary: #bebebe;
   --bg-third: #ffffff;
   --border-color: #ffffff;
+  --background-image:
+        radial-gradient(at 96% 55%, hsla(151,78%,77%,1) 0, transparent 43%),
+        radial-gradient(at 90% 44%, hsla(297,89%,74%,1) 0, transparent 51%),
+        radial-gradient(at 8% 40%, hsla(307,90%,77%,1) 0, transparent 49%),
+        radial-gradient(at 90% 91%, hsla(209,89%,73%,1) 0, transparent 59%);
 }
 
 .dark-mode {
@@ -19,8 +24,17 @@
   --bg-secondary: #0c0c10;
   --bg-third: #2e3242;
   --border-color: #0d2538;
+  --background-image: radial-gradient(at 50% 8%, hsla(320,100%,91%,1) 0, transparent 42%),
+  radial-gradient(at 50% 35%, hsla(320,100%,88%,1) 0, transparent 100%),
+  radial-gradient(at 10% 85%, hsla(58,100%,78%,1) 0, transparent 54%),
+  radial-gradient(at 84% 81%, hsla(183,66%,64%,1) 0, transparent 49%);
 }
 
+html {
+  height: 100%;
+  /*background-color: var(--bg);*/
+  /*background-image: var(--background-image)*/
+}
 
 body {
   margin: 0;
@@ -30,7 +44,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg);
+  /*background-color: var(--bg);*/
   color: var(--color);
   transition: background-color 0.3s;
 }
@@ -56,13 +70,43 @@ code {
   margin-right:50px;
 }
 
-.card {
+.button-glass{
+  padding: 5px;
+  background: rgba( 255, 255, 255, 0.10 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4.0px );
+  -webkit-backdrop-filter: blur( 4.0px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.card-glass {
+  background: rgba( 255, 255, 255, 0.10 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4.0px );
+  -webkit-backdrop-filter: blur( 4.0px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.drop-down {
+  padding: 10px;
   border-radius: 10px;
   background: var(--bg);
-  box-shadow:  5px 5px 10px var(--bg-secondary),
-  -5px -5px 10px var(--bg-third);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 .container {
   margin-left: 100px;
   margin-right: 100px;
+}
+
+footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 50px;
+}
+textarea::placeholder {
+  color: dimgrey;
 }
