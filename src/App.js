@@ -26,7 +26,7 @@ class App extends Component {
               <div className="content">
                   <Routes default />
               </div>
-              {/*<Footer/>*/}
+              <Footer/>
             </Root>
         </Suspense>
 
