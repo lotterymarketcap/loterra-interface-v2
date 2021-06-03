@@ -15,6 +15,7 @@ const HomeCard={
 
 export default () => {
     const [combo, setCombo] = useState("")
+    const [result, setResult] = useState("")
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
@@ -38,6 +39,10 @@ export default () => {
             msgs: [msg],
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.1,
+        }).then(e => {
+            setResult(e.message)
+        }).catch(e =>{
+            setResult(e.message)
         })
 
     }
@@ -55,6 +60,10 @@ export default () => {
             msgs: [msg],
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.1,
+        }).then(e => {
+            setResult(e.message)
+        }).catch(e =>{
+            setResult(e.message)
         })
 
     }
@@ -72,6 +81,10 @@ export default () => {
             msgs: [msg],
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.1,
+        }).then(e => {
+            setResult(e.message)
+        }).catch(e =>{
+            setResult(e.message)
         })
 
     }
@@ -90,8 +103,9 @@ export default () => {
                  <div>address: terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5</div>
                  <textarea placeholder="123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
                  <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
+                 <div className="text-sm">{result}</div>
                  <button onClick={()=> execute()} className="button-glass" style={{color:"deeppink"}}>Buy ticket</button>
-                 <div style={{display:"flex", marginTop: "10px"}}>
+                 <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
                      <button onClick={()=> claim()} className="button-glass" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
                      <button onClick={()=> collect()} className="button-glass" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
                  </div>
