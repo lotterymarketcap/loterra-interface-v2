@@ -32,8 +32,8 @@
 
 html {
   height: 100%;
-  background-color: var(--bg);
-  background-image: var(--background-image)
+  /*background-color: var(--bg);*/
+  /*background-image: var(--background-image)*/
 }
 
 body {

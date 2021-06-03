@@ -86,7 +86,7 @@ export default () => {
          <div>
              <div style={{display: "flex", flexDirection:"column", alignItems:"center"}}>
                  <div className="text-3xl">LoTerra</div>
-                 <div> contract-v2</div>
+                 <div>contract-v2</div>
                  <div>address: terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5</div>
                  <textarea placeholder="123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
                  <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
