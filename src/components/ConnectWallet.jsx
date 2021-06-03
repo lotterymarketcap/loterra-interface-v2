@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from "react";
-import {
-    useConnectedWallet,
-    ConnectedWallet,
-    useInstallChromeExtension,
-    useWallet
-} from '@terra-money/wallet-provider';
+
+let useWallet = {}
+if (typeof document !== 'undefined') {
+    useWallet = require('@terra-money/wallet-provider').useWallet
+}
 /*const Modal = {
     position: "absolute",
     width: "100%",
@@ -28,11 +27,10 @@ const DialogButton = {
 export default function ConnectWallet(){
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     let wallet = ""
-    if (window.localStorage) {
+    if (typeof document !== 'undefined') {
         wallet = useWallet();
-        // do stuff with localStorage
-        // no need to use window anymore
     }
+
     //const installChrome = useInstallChromeExtension();
     //const connectedWallet = ConnectedWallet ? useConnectedWallet() : undefined;
 

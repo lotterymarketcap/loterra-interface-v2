@@ -11,7 +11,7 @@ export default {
     title: 'LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain.',
     lastBuilt: Date.now(),
   }),
-  maxThreads: 1, // Remove this when you start doing any static generation
+  //maxThreads: 1, // Remove this when you start doing any static generation
   getRoutes: async ({ dev }) => [
     // A simple route
     {
