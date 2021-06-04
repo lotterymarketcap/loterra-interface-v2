@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from "react";
-
 // import Jackpot from "../components/Jackpot";
-import {StdFee, MsgExecuteContract} from "@terra-money/terra.js"
-let useConnectedWallet = {}
+let {execute, post_gas_auto } = {}
 if (typeof document !== 'undefined') {
-    useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
+    require("../helpers/tx")
 }
-
 const HomeCard={
     marginTop: '50px',
     width: '100px',
@@ -16,79 +13,34 @@ const HomeCard={
 export default () => {
     const [combo, setCombo] = useState("")
     const [result, setResult] = useState("")
-    let connectedWallet = ""
     if (typeof document !== 'undefined') {
-        connectedWallet = useConnectedWallet()
-    }
-
-    function execute(){
-        const cart = combo.split(" ")
-        const obj = new StdFee(10_000_000, { uusd: 2000000 })
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
+        function buy(){
+            const cart = combo.split(" ")
+            const msg = {
                 register: {
                     combination: cart,
-                },
-            },
-            { uusd: 1000000 * cart.length }
-        )
-
-        connectedWallet.post({
-            msgs: [msg],
-            gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.1,
-        }).then(e => {
-            setResult(e.message)
-        }).catch(e =>{
-            setResult(e.message)
-        })
-
-    }
-    function claim(){
-        const obj = new StdFee(10_000_000, { uusd: 2000000 })
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
-                claim: {},
+                }
             }
-        )
+            let txMsg = execute("terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5", msg, { uusd: 1000000 * cart.length })
+            post_gas_auto(txMsg)
+        }
 
-        connectedWallet.post({
-            msgs: [msg],
-            gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.1,
-        }).then(e => {
-            setResult(e.message)
-        }).catch(e =>{
-            setResult(e.message)
-        })
-
-    }
-    function collect(){
-        const obj = new StdFee(10_000_000, { uusd: 2000000 })
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
-                collect: {},
+        function claim(){
+            const msg = {
+                claim:{}
             }
-        )
-
-        connectedWallet.post({
-            msgs: [msg],
-            gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.1,
-        }).then(e => {
-            setResult(e.message)
-        }).catch(e =>{
-            setResult(e.message)
-        })
+            let txMsg = execute("terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5", msg)
+            post_gas_auto(txMsg)
+        }
+        function collect(){
+            const msg = {
+                collect:{}
+            }
+            let txMsg = execute("terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5", msg)
+            post_gas_auto(txMsg)
+        }
 
     }
-
     function change(e) {
         e.preventDefault();
         setCombo(e.target.value)
@@ -104,7 +56,7 @@ export default () => {
                  <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
                  <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                  <div className="text-sm">{result}</div>
-                 <button onClick={()=> execute()} className="button-glass" style={{color:"deeppink"}}>Buy tickets</button>
+                 <button onClick={()=> buy()} className="button-glass" style={{color:"deeppink"}}>Buy tickets</button>
                  <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
                      <button onClick={()=> claim()} className="button-glass" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
                      <button onClick={()=> collect()} className="button-glass" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
