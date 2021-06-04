@@ -116,7 +116,7 @@ export default () => {
             const random = Math.floor(Math.random() * combination.length)
             randomCombination += combination[random]
         }
-        let newCombo = combo + " " + randomCombination
+        let newCombo = combo == "" ? randomCombination : combo + " " + randomCombination
         setCombo(newCombo)
     }
      return (
