@@ -38,7 +38,7 @@ export default () => {
         connectedWallet.post({
             msgs: [msg],
             gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.1,
+            gasAdjustment: 1.2,
         }).then(e => {
             setResult("register combination success")
         }).catch(e =>{
@@ -59,7 +59,7 @@ export default () => {
         connectedWallet.post({
             msgs: [msg],
             gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.1,
+            gasAdjustment: 1.2,
         }).then(e => {
             setResult("claim success")
         }).catch(e =>{
@@ -80,7 +80,7 @@ export default () => {
         connectedWallet.post({
             msgs: [msg],
             gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.1,
+            gasAdjustment: 1.2,
         }).then(e => {
             setResult("collect success")
         }).catch(e =>{
