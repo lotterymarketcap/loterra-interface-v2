@@ -20,10 +20,9 @@ export default () => {
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
     }
-
+    const obj = new StdFee(1_000_000, { uusd: 200000 })
     function execute(){
         const cart = combo.split(" ")
-        const obj = new StdFee(10_000_000, { uusd: 2000000 })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
@@ -47,7 +46,7 @@ export default () => {
 
     }
     function claim(){
-        const obj = new StdFee(10_000_000, { uusd: 2000000 })
+
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
@@ -68,7 +67,6 @@ export default () => {
 
     }
     function collect(){
-        const obj = new StdFee(10_000_000, { uusd: 2000000 })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
