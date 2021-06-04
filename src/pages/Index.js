@@ -89,7 +89,7 @@ export default () => {
 
     function change(e) {
         e.preventDefault();
-        setCombo(e.target.value)
+        setCombo(e.target.value.toLowerCase())
         console.log(combo.split(" "))
     }
 
