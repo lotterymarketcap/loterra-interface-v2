@@ -13,19 +13,15 @@ const testnet = {
 };
 
 export default function AppProviders({ children }) {
-  if (process.browser) {
-    return (
-      <WalletProvider
-        defaultNetwork={mainnet}
-        walletConnectChainIds={{
-          0: testnet,
-          1: mainnet,
-        }}
-      >
-        {children}
-      </WalletProvider>
-    );
-  }
-
-  return children;
+  return (
+    <WalletProvider
+      defaultNetwork={mainnet}
+      walletConnectChainIds={{
+        0: testnet,
+        1: mainnet,
+      }}
+    >
+      {children}
+    </WalletProvider>
+  );
 }
