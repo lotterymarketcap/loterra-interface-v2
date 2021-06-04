@@ -39,7 +39,12 @@ export default () => {
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.5,
         }).then(e => {
-            setResult("register combination success")
+            if (e.success) {
+                setResult("register combination success")
+            }
+            else{
+                setResult("register combination error")
+            }
         }).catch(e =>{
             setResult(e.message)
         })
@@ -60,7 +65,12 @@ export default () => {
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.5,
         }).then(e => {
-            setResult("claim success")
+            if (e.success) {
+                setResult("claim success")
+            }
+            else{
+                setResult("claim error")
+            }
         }).catch(e =>{
             setResult(e.message)
         })
@@ -80,7 +90,12 @@ export default () => {
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.5,
         }).then(e => {
-            setResult("collect success")
+            if (e.success) {
+                setResult("collect success")
+            }
+            else{
+                setResult("collect error")
+            }
         }).catch(e =>{
             setResult(e.message)
         })
