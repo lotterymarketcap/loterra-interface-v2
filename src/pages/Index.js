@@ -40,7 +40,7 @@ export default () => {
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.1,
         }).then(e => {
-            setResult(e.message)
+            setResult("register combination success")
         }).catch(e =>{
             setResult(e.message)
         })
@@ -61,7 +61,7 @@ export default () => {
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.1,
         }).then(e => {
-            setResult(e.message)
+            setResult("claim success")
         }).catch(e =>{
             setResult(e.message)
         })
@@ -82,7 +82,7 @@ export default () => {
             gasPrices: obj.gasPrices(),
             gasAdjustment: 1.1,
         }).then(e => {
-            setResult(e.message)
+            setResult("collect success")
         }).catch(e =>{
             setResult(e.message)
         })
