@@ -2,6 +2,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Add .env file with
+LOTTERY_ADDRESS_V2 
+LOTTERY_ADDRESS 
+CW20_ADDRESS
+TERRAND_ADDRESS
+STAKING_ADDRESS
+
 First, run the development server:
 
 ```bash
