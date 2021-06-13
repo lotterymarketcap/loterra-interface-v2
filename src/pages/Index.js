@@ -131,8 +131,16 @@ export default () => {
             const random = Math.floor(Math.random() * combination.length)
             randomCombination += combination[random]
         }
-        let newCombo = combo == "" ? randomCombination : combo + " " + randomCombination
-        setCombo(newCombo)
+        return randomCombination
+    }
+
+    function multiplier(mul){
+        let allCombo = combo;
+        for (let x=0; x < mul; x++ ){
+            let newCombo = generate()
+            allCombo = allCombo == "" ? newCombo : allCombo + " " + newCombo
+        }
+        setCombo(allCombo)
     }
      return (
          <div>
@@ -140,7 +148,9 @@ export default () => {
                  <div className="text-3xl">LoTerra</div>
                  <div>contract-v2</div>
                  <div className="text-sm">terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5</div>
-                 <button onClick={() => generate()} className="button-glass" style={{color:"deeppink", margin: "10px"}}>Generate combination</button>
+                 <button onClick={() => multiplier(1)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>Generate combination</button>
+                 <button onClick={() => multiplier(10)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X10</button>
+                 <button onClick={() => multiplier(100)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X100</button>
                  <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
                  <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                  <div className="text-sm">{result}</div>
