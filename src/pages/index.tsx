@@ -1,4 +1,5 @@
 import Head from "next/head";
+import tw from "twin.macro";
 import Layout from "../components/Layout";
 
 export default function Home() {
@@ -11,7 +12,7 @@ export default function Home() {
       </Head>
 
       <Layout>
-        <main className="relative px-4 sm:px-6 lg:px-8 pb-4">Loterra</main>
+        <main tw="relative px-4 sm:px-6 lg:px-8 pb-4"></main>
       </Layout>
     </>
   );
