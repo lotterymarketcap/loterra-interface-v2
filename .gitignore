@@ -14,6 +14,8 @@
 
 # production
 /build
+artifacts/
+dist/
 
 # misc
 .DS_Store
@@ -32,3 +34,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Intellij IDEA
+.idea/
