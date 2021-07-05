@@ -7,7 +7,7 @@ export default function LoterraStats(){
         <div className="lota-card mt-4">
             <div className={styles.stats}>
                 <div className={styles.icon}><Trophy color="#20FF93" weight="regular" size={88} /></div>
-                    <h2 className="center">Some title <span>Current Lottery</span></h2>
+                    <h2 className="center">Lottery stats <span>Current Lottery</span></h2>
                         <div className="w4 center">
                             Test
                         </div>

@@ -7,11 +7,21 @@ import JackpotCounter from '../components/JackpotCounter';
 import { Ticket, Users } from "phosphor-react";
 import { renderToStaticMarkup } from 'react-dom/server';
 
+import React from 'react';
+
+
 
 export default function Hero(){
 
+    let modal = false;
+
+    const [modalIsOpen,setIsOpen] = React.useState(false);
+
+
     const svgString = encodeURIComponent(renderToStaticMarkup(<HeroBg />));
     const dataUri = `url("data:image/svg+xml,${svgString}")`;
+
+    const toggleModal = () => setIsOpen(!modalIsOpen)
 
     return(
         <div className={hero.main} style={{backgroundImage: dataUri, backgroundSize:'cover', backgroundPosition:'bottom'}}>
@@ -48,8 +58,13 @@ export default function Hero(){
             </div>
 
            
-                <button className="pink">Buy tickets</button>
-       
+                <button className="pink" onClick={() => toggleModal()}>Buy tickets</button>
+
+                <div className={modalIsOpen ? hero.modal_show : hero.modal}>
+                    <h2>Hello</h2>
+                    <button className="pink" >Buy tickets</button>
+                </div>
+                <div className={modalIsOpen ? hero.backdrop_show : hero.backdrop} onClick={() => toggleModal()}></div>
         </div>
     )
 }
