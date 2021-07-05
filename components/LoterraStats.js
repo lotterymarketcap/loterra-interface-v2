@@ -1,12 +1,13 @@
 
 import styles from '../styles/components/LoterraStats.module.scss'
-import { Ticket, Users } from "phosphor-react";
+import { Trophy } from "phosphor-react";
 
 export default function LoterraStats(){
     return(
-        <div className="lota-card">
+        <div className="lota-card mt-4">
             <div className={styles.stats}>
-                <h2 className="center">Some title</h2>
+                <div className={styles.icon}><Trophy color="#20FF93" weight="regular" size={88} /></div>
+                <h2 className="center">Some title <span>Current Lottery</span></h2>
             </div>
         </div>
     )
