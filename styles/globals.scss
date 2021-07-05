@@ -94,6 +94,16 @@ button {
   border:0;
   padding:1rem 2rem;
   transition:all 150ms ease-in;
+    &.plain {
+      color: #FFFFFF;
+      background: #10003B;
+      border: 1px solid #40337A;
+      box-sizing: border-box;
+      border-radius: 7px;
+    }
+    &.default {
+      
+    }
     &.pink {
       color:#fff;
       background: linear-gradient(92.8deg, rgba(255, 255, 255, 0.6) -1.42%, rgba(205, 21, 205, 0.318) 102.82%), #FF36FF;

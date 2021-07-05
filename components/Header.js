@@ -1,6 +1,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ShoppingCartSimple } from "phosphor-react";
 
 import styles from '../styles/components/Header.module.scss'
 
@@ -33,6 +34,7 @@ export default function Header(){
                 </ul>
 
                 <ul className={styles.second_nav}>
+                    <li><button className="plain"> <ShoppingCartSimple color="#FFFFFF" weight="regular" size={26} /></button></li>
                     <li><button className="green">Connect wallet</button></li>
                 </ul>
             </nav>
