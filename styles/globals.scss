@@ -93,10 +93,25 @@ a {
 button {
   border:0;
   padding:1rem 2rem;
+  transition:all 150ms ease-in;
     &.pink {
       color:#fff;
       background: linear-gradient(92.8deg, rgba(255, 255, 255, 0.6) -1.42%, rgba(205, 21, 205, 0.318) 102.82%), #FF36FF;
       box-shadow: 0px 0px 74px #FF36FF, inset 0px -2px 0px #FF36FF;
       border-radius: 21px;
+      &:hover {        
+        box-shadow: 0px 0px 0px #FF36FF, inset 0px -2px 0px #FF36FF;
+        transform:translateY(-30px) scale(1.1);
+      }
+    }
+
+    &.green {
+      background: linear-gradient(92.8deg, rgba(255, 255, 255, 0.6) -1.42%, rgba(10, 176, 96, 0.6) 102.82%), #20FF93;
+      box-shadow: 0px 0px 33px #20FF93;
+      border-radius: 7px;
+    }
+
+    &:hover {
+      cursor:pointer;
     }
 }

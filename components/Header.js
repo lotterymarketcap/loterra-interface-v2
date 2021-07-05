@@ -13,7 +13,8 @@ export default function Header(){
     return(
         <header className={styles.header}>
             <nav>
-                <ul>
+                <img src="logo.png"/>
+                <ul className={styles.header.firstNavigation}> 
                     <li>
                         <Link href="/">
                             <a className={router.asPath == "/" ? styles.active : ""} href="/">Lottery</a>
@@ -29,6 +30,10 @@ export default function Header(){
                             <a className={router.asPath == "/dao" ? styles.active : ""} href="/dao">DAO</a>
                         </Link>
                     </li>
+                </ul>
+
+                <ul className={styles.second_nav}>
+                    <li><button className="green">Connect wallet</button></li>
                 </ul>
             </nav>
         </header>
