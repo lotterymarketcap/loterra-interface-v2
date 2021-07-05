@@ -1,0 +1,120 @@
+.main {    
+    width:100%;
+    float:left;
+    padding:75px 0;
+    height:765px;
+    background: linear-gradient(102.05deg, #0E0033 -0.19%, rgba(14, 0, 51, 0) 106.07%), #1B025F;      
+    position:relative;
+    margin-bottom:150px;
+        button {
+            left:calc(50% - 140px);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            position:absolute;
+            bottom:-55px;   
+            text-align:center;
+            width:280px;
+            font-weight: bold;
+            font-size: 24px;
+            color: #FFFFFF;
+        }
+}
+
+.container {
+    width:700px;    
+    top: 50%;
+    left:50%;
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    overflow:hidden;
+    position:relative;
+    padding-top: 20px;
+    @media(max-width:768px){
+        width:100%;
+    }
+}
+
+.title {
+    font-size: 36px;
+    line-height: 42px;
+    text-align: center; 
+    color: #F038F0;
+    text-shadow: 0px 0px 26px #FF36FF;
+    text-transform:uppercase;
+    margin:0 0 -15px 0;
+}  
+
+.jackpot_price {
+    background: #0E0034;
+    border: 1px solid #25135F;
+    box-sizing: border-box;
+    box-shadow: inset 0px 4px 23px 9px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    width: 100%;
+    margin: 2rem auto;
+    overflow:hidden;
+    position:relative;
+        @media(max-width:768px){
+            width:90%;
+        }
+  p {
+    font-weight: 900;
+    font-size: 66px;
+    line-height: 77px;
+    text-align: center;
+    letter-spacing: 0.05em;    
+    color: #FFFFFF;
+    margin: 0;
+    padding: 20px 0px;
+        span {
+            font-weight: normal;
+            font-size: 28px;
+            line-height: 33px;
+            text-align: center;
+            color: #3EFFA4;
+        }
+        @media(max-width:768px){
+            font-size:38px;
+            line-height: 36px;
+        }
+  }
+  &:after {
+      content:'';
+      background: linear-gradient(0deg, rgba(14, 0, 52, 0) 0%, rgba(14, 0, 52, 0.3) 53.08%, rgba(14, 0, 52, 0) 53.09%, rgba(14, 0, 52, 0) 106.17%);
+      position:absolute;
+      left:0;
+      top:0;
+      height:100%;
+      width:100%;
+  }
+  
+
+}
+
+.stats {
+    float:left;
+    width:100%;
+    @media(max-width:768px){
+       text-align:center;
+    }
+    span {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 19px;
+        text-transform:uppercase;
+        color: #FF36FF;
+        @media(max-width:768px){
+            text-align:center;
+         }
+    }
+    p {
+        margin:0;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 28px;
+        color: #FFFFFF;
+        @media(max-width:768px){
+            font-size:18px;
+         }
+    }
+}
