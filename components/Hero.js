@@ -38,8 +38,8 @@ export default function Hero(){
                                 <Users color="#20FF93" weight="regular" size={50} />
                             </div>
                             <div className="w8">
-                                <span>Tickets sold</span>
-                                <p>3 444 555</p>
+                                <span>Players</span>
+                                <p>122 444</p>
                             </div>
                         </div>
                     </div>
