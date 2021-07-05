@@ -1,6 +1,9 @@
 
 import hero from '../styles/components/Hero.module.scss';
 import HeroBg from '../images/herobg.js';
+
+import JackpotCounter from '../components/JackpotCounter';
+
 import { Ticket, Users } from "phosphor-react";
 import { renderToStaticMarkup } from 'react-dom/server';
 
@@ -41,7 +44,9 @@ export default function Hero(){
                         </div>
                     </div>
                 </div>
+            <JackpotCounter/>
             </div>
+
            
                 <button className="pink">Buy tickets</button>
        
