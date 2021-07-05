@@ -1,11 +1,99 @@
 import Head from 'next/head'
 import styles from '../../styles/pages/Dao.module.scss'
+import {  Line } from 'react-chartjs-2';
 
 import SmallBackground from '../../components/SmallBackground'
 
 export default function Dao() {
 
     
+  const lineOptions = {
+    
+    scales:{
+      xAxis:{
+        beginAtZero:true,
+        display:false
+      },
+      yAxis:{
+        beginAtZero:true,
+        display:false 
+      },
+      },
+    plugins : {
+  
+      legend: {
+        display: false
+    },
+    title: {
+        display: false
+    }
+    },
+    
+}
+
+
+const lineData_green = canvas => {
+
+  const ctx = canvas.getContext('2d');  
+  let gradientGreen = ctx.createLinearGradient(0, 0, 0, 170);
+  gradientGreen.addColorStop(0, '#193250');
+  gradientGreen.addColorStop(1, '#181446'); 
+
+
+
+  return {
+    labels: [75,25,10,21,35,40,77],
+ 
+  datasets: [
+    {      
+      data: [75,25,10,21,35,40,77],
+      fill:true,
+      backgroundColor:gradientGreen,
+      borderColor: [
+        '#20FF93',   
+      ],
+      pointBackgroundColor: '#20FF93',
+      pointBorderColor: '#FFFFFF',
+      pointBorderWidth: 2,
+      lineTension: .4,
+      borderWidth: 4,
+    },
+  ],
+
+}
+};
+  
+
+  const lineData = canvas => {
+
+    const ctx = canvas.getContext('2d');  
+    let gradientPink = ctx.createLinearGradient(0, 0, 0, 170);
+    gradientPink.addColorStop(0, '#431166');
+    gradientPink.addColorStop(1, '#1F0A49'); 
+
+
+
+    return {
+      labels: [75,25,10,21,35,40,77],
+   
+    datasets: [
+      {      
+        data: [75,25,10,21,35,40,77],
+        fill:true,
+        backgroundColor:gradientPink,
+        borderColor: [
+          '#FF36FF',   
+        ],
+        pointBackgroundColor: '#FF36FF',
+        pointBorderColor: '#FFFFFF',
+        pointBorderWidth: 2,
+        lineTension: .4,
+        borderWidth: 4,
+      },
+    ],
+  
+  }
+  };
 
   return (
     <>
@@ -17,9 +105,58 @@ export default function Dao() {
   </Head>
   <SmallBackground/>
      <div className={styles.container}>
-    
-
-    </div>
+        <div className="w12">
+          <div className="lota-card">
+            <div className="w12">
+              <h1>Staking</h1>
+            </div>
+              <div className="w4">
+                <h4>Tickets gold average</h4>
+                <div className={styles.chart}>               
+                    <Line data={lineData} options={lineOptions}/>
+                </div>
+              </div>
+              <div className="w4">
+                <h4>Tickets gold average</h4>
+                <div className={styles.chart}>               
+                    <Line data={lineData} options={lineOptions}/>
+                </div>
+              </div>
+              <div className="w4">
+                <h4>Tickets gold average</h4>
+                <div className={styles.chart}>               
+                    <Line data={lineData} options={lineOptions}/>
+                </div>
+              </div>
+              <div className="w4">
+                <h4>Tickets gold average</h4>
+                <div className={styles.chart}>               
+                    <Line data={lineData} options={lineOptions}/>
+                </div>
+              </div>        
+          </div>
+        </div>
+        <div className="w12 mt-3">
+          <div className="lota-card">
+            <div className="w12">
+              <h1>Staking</h1>
+            </div>
+              <div className="w6">
+                <h4>Tickets gold average</h4>
+                <div className={styles.chart}>               
+                    <Line data={lineData_green} options={lineOptions}/>
+                </div>
+              </div>
+              <div className="w6">
+                <h4>Tickets gold average</h4>
+                <div className={styles.chart}>               
+                    <Line data={lineData_green} options={lineOptions}/>
+                </div>
+              </div>                  
+          </div>
+        </div>
+      </div>
+      
     </>
   )
 }

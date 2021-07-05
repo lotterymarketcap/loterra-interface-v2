@@ -8,6 +8,57 @@ import { Pie, Line } from 'react-chartjs-2';
 
 export default function Staking() {
 
+  const lineOptions = {
+    
+    scales:{
+      xAxis:{
+        beginAtZero:true,
+        display:false
+      },
+      yAxis:{
+        beginAtZero:true,
+        display:false 
+      },
+      },
+    plugins : {
+  
+      legend: {
+        display: false
+    },
+    title: {
+        display: false
+    }
+    },
+    
+}
+  
+
+  const lineData = canvas => {
+    const ctx = canvas.getContext('2d');  
+    let gradientGreen = ctx.createLinearGradient(500, 0, 100, 0);
+    gradientGreen.addColorStop(0, '#4DF6A4');
+    gradientGreen.addColorStop(1, '#1BC472'); 
+
+    return {
+      labels: [75,25,10,21,35,40,77],
+   
+    datasets: [
+      {      
+        data: [75,25,10,21,35,40,77],
+        fill:true,
+        backgroundColor:'rgba(32, 255, 147, 0.2)',
+        borderColor: [
+          gradientGreen,   
+        ],
+        pointBackgroundColor: '#FFFFFF',
+        lineTension: .4,
+        borderWidth: 5,
+      },
+    ],
+  
+  }
+  };
+
   const data = canvas => {
     const ctx = canvas.getContext('2d');
  
@@ -83,7 +134,9 @@ export default function Staking() {
           <div className="w12">
             <div className="lota-card mt-3">
               <div className="w6">
-              <Line data={data} />
+                <div className={styles.chart}>
+                  <Line data={lineData} options={lineOptions}/>
+                </div>
               </div>
               <div className="w6 center">
                   <div className={styles.card_header}>
