@@ -3,8 +3,41 @@ import styles from '../../styles/pages/Staking.module.scss'
 
 import SmallBackground from '../../components/SmallBackground'
 
+import { Pie, Line } from 'react-chartjs-2';
+
+
 export default function Staking() {
 
+  const data = canvas => {
+    const ctx = canvas.getContext('2d');
+ 
+    let gradientBlack = ctx.createLinearGradient(500, 0, 100, 0);
+    gradientBlack.addColorStop(0, '#3B2E5D');
+    gradientBlack.addColorStop(1, '#271A49');
+
+    let gradientGreen = ctx.createLinearGradient(500, 0, 100, 0);
+    gradientGreen.addColorStop(0, '#4DF6A4');
+    gradientGreen.addColorStop(1, '#1BC472'); 
+
+    return {
+      labels: ['Red', 'Blue'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [75,25],
+        backgroundColor: [
+          gradientGreen,
+          gradientBlack,          
+        ],
+        borderColor: [
+          gradientGreen,
+          gradientBlack,       
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+  };
     
 
   return (
@@ -18,6 +51,7 @@ export default function Staking() {
       <SmallBackground/>
          <div className={styles.container}>
           <div className="w4">
+          <Pie data={data} />
 
           </div>
           <div className="w8">
@@ -49,7 +83,7 @@ export default function Staking() {
           <div className="w12">
             <div className="lota-card mt-3">
               <div className="w6">
-
+              <Line data={data} />
               </div>
               <div className="w6 center">
                   <div className={styles.card_header}>

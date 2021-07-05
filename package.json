@@ -17,6 +17,7 @@
   "devDependencies": {
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1",
+    "react-chartjs-2": "^3.0.3",
     "sass": "^1.35.1"
   }
 }
