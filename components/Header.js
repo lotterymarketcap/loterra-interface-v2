@@ -1,6 +1,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect,useState,useCallback } from "react";
 import { ShoppingCartSimple } from "phosphor-react";
 
 import styles from '../styles/components/Header.module.scss'
@@ -10,9 +11,25 @@ import styles from '../styles/components/Header.module.scss'
 export default function Header(){
 
     const router = useRouter();
+    const [y, setY] = useState('scroll');
 
+    const handleNavigation = useCallback(
+      e => {
+        const window = e.currentTarget;       
+        setY(window.scrollY);
+      }, [y]
+    );
+    
+    useEffect(() => {
+      setY(window.scrollY);
+      window.addEventListener("scroll", handleNavigation);
+    
+      return () => {
+        window.removeEventListener("scroll", handleNavigation);
+      };
+    }, [handleNavigation]);    
     return(
-        <header className={styles.header}>
+        <header className={`${styles.header}` + (y > 0 ? ' '+styles.sticky : '')}>
             <nav>
                 <img src="logo.png"/>
                 <ul className={styles.header.firstNavigation}> 

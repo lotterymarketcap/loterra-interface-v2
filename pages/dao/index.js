@@ -119,19 +119,19 @@ const lineData_green = canvas => {
                 </div>
               </div>
               <div className="w4">
-                <h4>Tickets gold average</h4>
+                <h4>Players average</h4>
                 <div className={styles.chart}>               
                     <Line data={lineData} options={lineOptions}/>
                 </div>
               </div>
               <div className="w4">
-                <h4>Tickets gold average</h4>
+                <h4>Number of winners</h4>
                 <div className={styles.chart}>               
                     <Line data={lineData} options={lineOptions}/>
                 </div>
               </div>
               <div className="w4">
-                <h4>Tickets gold average</h4>
+                <h4>Jackpot</h4>
                 <div className={styles.chart}>               
                     <Line data={lineData} options={lineOptions}/>
                 </div>
@@ -141,16 +141,16 @@ const lineData_green = canvas => {
         <div className="w12 mt-3">
           <div className="lota-card">
             <div className="w12">
-              <h1>Staking</h1>
+              <h1>Total stats</h1>
             </div>
               <div className="w6">
-                <h4>Tickets gold average</h4>
+                <h4>Tickets sold</h4>
                 <div className={styles.chart}>               
                     <Line data={lineData_green} options={lineOptions}/>
                 </div>
               </div>
               <div className="w6">
-                <h4>Tickets gold average</h4>
+                <h4>Players</h4>
                 <div className={styles.chart}>               
                     <Line data={lineData_green} options={lineOptions}/>
                 </div>
@@ -179,7 +179,7 @@ const lineData_green = canvas => {
                       <div className="w6"><p><strong>Status</strong></p></div>
                       <div className="w6"><p>Passed</p></div>
                       <div className="w6"><p><strong>Price per rank</strong></p></div>
-                      <div className="w6"><p>[]]</p></div>
+                      <div className="w6"><p>[]</p></div>
                       <div className="w6"><p><strong>Proposal</strong></p></div>
                       <div className="w6"><p>DaoFunding</p></div>
                       <div className="w6"><p><strong>Yes votes</strong></p></div>
