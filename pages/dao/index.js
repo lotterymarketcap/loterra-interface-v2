@@ -6,6 +6,8 @@ import SmallBackground from '../../components/SmallBackground'
 
 export default function Dao() {
 
+  const proposals = [1,2,3,4,5,6]
+
     
   const lineOptions = {
     
@@ -153,6 +155,48 @@ const lineData_green = canvas => {
                     <Line data={lineData_green} options={lineOptions}/>
                 </div>
               </div>                  
+          </div>
+        </div>
+        <div className="w12 mt-3">
+          <div className="lota-card">
+            <div className="w12">
+              <h1>Proposals</h1>
+            </div>
+                { proposals.map( (obj) => {
+                    return (
+                      <div className="base-card mt-2">
+                  <div className="w12">
+                      <h3 className="fb">Proposal 15</h3>
+                      <p className="desc">New upcoming design for LoTerra frontend interface preview here https://drive.google.com/file/d/1JDVwEVQLjQSASunLgb6rXu2QPvvEm2k3/view?usp=drivesdk</p>
+                  </div>
+                  <div className="w8">
+                      <div className="w6"><p><strong>Creator</strong></p></div>
+                      <div className="w6"><p>terra1ar45r5e8y55ku847xvet6ny2psv6fkflhchzxk</p></div>
+                      <div className="w6"><p><strong>End block height</strong></p></div>
+                      <div className="w6"><p>3371352</p></div>
+                      <div className="w6"><p><strong>Amount</strong></p></div>
+                      <div className="w6"><p>50</p></div>
+                      <div className="w6"><p><strong>Status</strong></p></div>
+                      <div className="w6"><p>Passed</p></div>
+                      <div className="w6"><p><strong>Price per rank</strong></p></div>
+                      <div className="w6"><p>[]]</p></div>
+                      <div className="w6"><p><strong>Proposal</strong></p></div>
+                      <div className="w6"><p>DaoFunding</p></div>
+                      <div className="w6"><p><strong>Yes votes</strong></p></div>
+                      <div className="w6"><p>2</p></div>
+                      <div className="w6"><p><strong>No votes</strong></p></div>
+                      <div className="w6"><p>0</p></div>
+                  </div>
+                  <div className="w4">
+                    <div className="plain-card center">                      
+                            <h4 className="fb mt-1 mb-1">Vote</h4>                       
+                            <div className="w6"><button className="plain fm mb-2">Yes</button></div>
+                            <div className="w6"><button className="plain fm mb-2">No</button></div>
+                    </div>
+                  </div>
+                </div>
+                    )
+                })}
           </div>
         </div>
       </div>
