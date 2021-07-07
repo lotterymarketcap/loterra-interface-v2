@@ -61,7 +61,8 @@ export default function Hero(){
                 <button className="pink" onClick={() => toggleModal()}>Buy tickets</button>
 
                 <div className={modalIsOpen ? hero.modal_show : hero.modal}>
-                    <h2>Hello</h2>
+                    <h2>Buy tickets</h2>
+                    <h3>Create your own combinations</h3>
                     <button className="pink" >Buy tickets</button>
                 </div>
                 <div className={modalIsOpen ? hero.backdrop_show : hero.backdrop} onClick={() => toggleModal()}></div>
