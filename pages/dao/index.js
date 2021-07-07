@@ -1,12 +1,18 @@
 import Head from 'next/head'
 import styles from '../../styles/pages/Dao.module.scss'
 import {  Line } from 'react-chartjs-2';
+import { Plus } from "phosphor-react";
+
+import React from 'react';
 
 import SmallBackground from '../../components/SmallBackground'
+import ProposalModal from '../../components/ProposalModal'
 
 export default function Dao() {
 
   const proposals = [1,2,3,4,5,6]
+
+  const [modalIsOpen,setIsOpen] = React.useState(false);
 
     
   const lineOptions = {
@@ -161,6 +167,7 @@ const lineData_green = canvas => {
           <div className="lota-card">
             <div className="w12">
               <h1>Proposals</h1>
+              <button className={'plain ' + styles.add_proposals} onClick={() => setIsOpen(!modalIsOpen)}>Create proposal <Plus size={18}/></button>
             </div>
                 { proposals.map( (obj) => {
                     return (
@@ -199,6 +206,7 @@ const lineData_green = canvas => {
                 })}
           </div>
         </div>
+        <ProposalModal data={modalIsOpen} click={()=>setIsOpen(!modalIsOpen)}/>
       </div>
       
     </>
