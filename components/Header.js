@@ -4,6 +4,10 @@ import { useRouter } from "next/router";
 import { useEffect,useState,useCallback } from "react";
 import { ShoppingCartSimple, X, List } from "phosphor-react";
 
+import Bag from './Bag'
+import bagstyles from '../styles/components/Bag.module.scss'
+
+
 import styles from '../styles/components/Header.module.scss'
 
 
@@ -14,9 +18,7 @@ export default function Header(){
     const [y, setY] = useState('scroll');
 
     const [isNav, setIsNav] = useState(false);
-    const contentClassname = isNav
-        ? `${styles["nav-open"]} ${styles.ModalContainer}`
-        : styles.ModalContainer;
+    const [isBag, setIsBag] = useState(false);
 
     const handleNavigation = useCallback(
       e => {
@@ -57,13 +59,14 @@ export default function Header(){
                 </ul>
 
                 <ul className={styles.second_nav}>
-                    <li><button className="plain"> <ShoppingCartSimple color="#FFFFFF" weight="regular" size={26} /></button></li>
+                    <li><button className="plain" onClick={() => setIsBag(!isBag)}> <ShoppingCartSimple color="#FFFFFF" weight="regular" size={26} /></button></li>
                     <li><button className="green">Connect wallet</button></li>
                 </ul>
                
             </nav>
             <button className={styles.mobile_toggle_nav} onClick={() => setIsNav(!isNav)}><X color="#FFFFFF" weight="regular" size={36} /></button>
         </header>
+            <Bag data={isBag} click={()=>setIsBag(!isBag)}/>
          <button className={styles.mobile_toggle} onClick={() => setIsNav(!isNav)}><List color="#FFFFFF" weight="regular" size={36} /></button>
          <img className={styles.mobile_logo} src="logo.png"/>
          <div className={styles.backdrop + (isNav ? ' '+styles.backdrop_show : '')} onClick={() => setIsNav(!isNav)}></div>
