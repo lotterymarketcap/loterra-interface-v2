@@ -143,7 +143,7 @@ export default function Staking() {
                   <h1>Staking rewards</h1>
                   <h2>Claim what is yours, or perhaps another nice sentence</h2>
                   </div>
-                  <button className="pink">Claim rewards</button>
+                  <button className={"pink "+styles.claim_btn}>Claim rewards</button>
               </div>
             </div>
           </div>
