@@ -41,17 +41,17 @@ export default function Header(){
                 <ul className={styles.header.firstNavigation}> 
                     <li>
                         <Link href="/">
-                            <a className={router.asPath == "/" ? styles.active : ""} onClick={() => setIsNav(!isNav)} href="/">Lottery</a>
+                            <a className={router.asPath == "/" ? styles.active : ""} href="/">Lottery</a>
                         </Link>
                     </li>
                     <li>
                         <Link href="/staking">
-                            <a className={router.asPath == "/staking" ? styles.active : ""} onClick={() => setIsNav(!isNav)} href="/staking">Staking</a>
+                            <a className={router.asPath == "/staking" ? styles.active : ""} href="/staking">Staking</a>
                         </Link>
                     </li>
                     <li>
                         <Link href="/dao">
-                            <a className={router.asPath == "/dao" ? styles.active : ""} onClick={() => setIsNav(!isNav)} href="/dao">DAO</a>
+                            <a className={router.asPath == "/dao" ? styles.active : ""} href="/dao">DAO</a>
                         </Link>
                     </li>
                 </ul>

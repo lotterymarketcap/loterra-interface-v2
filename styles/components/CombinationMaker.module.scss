@@ -1,0 +1,101 @@
+.container {
+    width:60%;
+    padding:25px 0 85px 0;
+    margin:0 auto;
+    display:inline-block;
+    h2 {
+        font-weight: bold;
+        font-size: 42px;
+        text-align: center;        
+        color: #FFFFFF;
+        margin:25px 0 0 0;
+    }
+    h3 {
+        margin:0 0 50px 0;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 28px;
+        text-align: center;        
+        color: rgba(255, 255, 255, 0.44); 
+    }
+}
+
+.toggle_modal {
+    background:transparent;
+    color:#fff;
+    position:absolute;
+    right:0;
+    top:10px;
+    opacity:0.5;
+    &:hover {
+        opacity:1;
+    }
+}
+
+.display {
+    background: #0E0034;
+    border: 1px solid #25135F;
+    box-sizing: border-box;
+    box-shadow: inset 0px 4px 23px 9px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    width:100%;
+    height:95px;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:15px;
+    span {
+        font-weight: bold;
+        font-size: 74px;
+        line-height: 87px;      
+        letter-spacing: 0.15em;        
+        color: #FFFFFF;
+    }
+    &:after {
+        content: "";
+        background: -webkit-gradient(linear, left bottom, left top, from(rgba(14, 0, 52, 0)), color-stop(53.08%, rgba(14, 0, 52, 0.3)), color-stop(53.09%, rgba(14, 0, 52, 0)), color-stop(106.17%, rgba(14, 0, 52, 0)));
+        background: -webkit-linear-gradient(bottom, rgba(14, 0, 52, 0) 0%, rgba(14, 0, 52, 0.3) 53.08%, rgba(14, 0, 52, 0) 53.09%, rgba(14, 0, 52, 0) 106.17%);
+        background: linear-gradient(
+    0deg
+    , rgba(14, 0, 52, 0) 0%, rgba(14, 0, 52, 0.3) 53.08%, rgba(14, 0, 52, 0) 53.09%, rgba(14, 0, 52, 0) 106.17%);
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.buttons {
+    button {
+        position:relative;
+        float:left;
+        width:calc(16.66% - 10px);
+        height:55px;
+        background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
+        border-radius: 11px;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 48px;
+        text-align: center;
+        padding:0;
+        color: #FFFFFF;
+        margin:5px;
+        
+    }
+}
+
+.buttons_large {
+    width:calc(33.32% - 10px) !important;
+    font-weight: bold !important;
+    font-size: 23px !important;
+    line-height: 27px !important; 
+}
+
+.buttons_large_special {
+    width:calc(33.32% - 10px) !important;
+    font-weight: bold !important;
+    font-size: 23px !important;
+    line-height: 27px !important;
+    background: linear-gradient(328.75deg, #F042F0 -5.49%, #8A249D 19.13%, #0F0038 104.44%) !important;
+    border-radius: 11px;
+}

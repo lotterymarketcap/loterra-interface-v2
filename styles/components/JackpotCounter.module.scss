@@ -16,8 +16,12 @@
 .container {
     width:500px;
     margin:0 auto 0 auto;
+    padding:0 15px;
     display:block;
     text-align:center;
+    @media(max-width:768px){
+        width:100%;
+    }
 }
 
 .time_block {
@@ -30,6 +34,10 @@
         text-align: center;
         color: #FFFFFF;
         display:block;
+        @media(max-width:768px){
+            font-size: 40px;
+       
+        }
     }
     small {
         display:block;
