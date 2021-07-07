@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect,useState,useCallback } from "react";
-import { ShoppingCartSimple } from "phosphor-react";
+import { ShoppingCartSimple, X, List } from "phosphor-react";
 
 import styles from '../styles/components/Header.module.scss'
 
@@ -13,6 +13,11 @@ export default function Header(){
     const router = useRouter();
     const [y, setY] = useState('scroll');
 
+    const [isNav, setIsNav] = useState(false);
+    const contentClassname = isNav
+        ? `${styles["nav-open"]} ${styles.ModalContainer}`
+        : styles.ModalContainer;
+
     const handleNavigation = useCallback(
       e => {
         const window = e.currentTarget;       
@@ -20,7 +25,7 @@ export default function Header(){
       }, [y]
     );
     
-    useEffect(() => {
+    useEffect(() => {     
       setY(window.scrollY);
       window.addEventListener("scroll", handleNavigation);
     
@@ -29,23 +34,24 @@ export default function Header(){
       };
     }, [handleNavigation]);    
     return(
-        <header className={`${styles.header}` + (y > 0 ? ' '+styles.sticky : '')}>
+        <>
+        <header className={`${styles.header}` + (y > 0 ? ' '+styles.sticky : '') + (isNav ? ' '+styles.show : '')}>
             <nav>
                 <img src="logo.png"/>
                 <ul className={styles.header.firstNavigation}> 
                     <li>
                         <Link href="/">
-                            <a className={router.asPath == "/" ? styles.active : ""} href="/">Lottery</a>
+                            <a className={router.asPath == "/" ? styles.active : ""} onClick={() => setIsNav(!isNav)} href="/">Lottery</a>
                         </Link>
                     </li>
                     <li>
                         <Link href="/staking">
-                            <a className={router.asPath == "/staking" ? styles.active : ""} href="/staking">Staking</a>
+                            <a className={router.asPath == "/staking" ? styles.active : ""} onClick={() => setIsNav(!isNav)} href="/staking">Staking</a>
                         </Link>
                     </li>
                     <li>
                         <Link href="/dao">
-                            <a className={router.asPath == "/dao" ? styles.active : ""} href="/dao">DAO</a>
+                            <a className={router.asPath == "/dao" ? styles.active : ""} onClick={() => setIsNav(!isNav)} href="/dao">DAO</a>
                         </Link>
                     </li>
                 </ul>
@@ -54,7 +60,13 @@ export default function Header(){
                     <li><button className="plain"> <ShoppingCartSimple color="#FFFFFF" weight="regular" size={26} /></button></li>
                     <li><button className="green">Connect wallet</button></li>
                 </ul>
+               
             </nav>
+            <button className={styles.mobile_toggle_nav} onClick={() => setIsNav(!isNav)}><X color="#FFFFFF" weight="regular" size={36} /></button>
         </header>
+         <button className={styles.mobile_toggle} onClick={() => setIsNav(!isNav)}><List color="#FFFFFF" weight="regular" size={36} /></button>
+         <img className={styles.mobile_logo} src="logo.png"/>
+         <div className={styles.backdrop + (isNav ? ' '+styles.backdrop_show : '')} onClick={() => setIsNav(!isNav)}></div>
+        </>
     )
 }
