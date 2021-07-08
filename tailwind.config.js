@@ -13,6 +13,8 @@ module.exports = {
       colors: {
         "blue-dark": "#1B025F",
         "pink-light": "#F257F2",
+        "pink-dark": "#F038F0",
+        "green-light": "#20FF93",
       },
       fontFamily: {
         body: ["Roboto"],

@@ -12,7 +12,7 @@ const connectButtonStyles = css`
     ),
     #20ff93;
   box-shadow: 0px 0px 33px #20ff93;
-  ${tw`inline-flex m-4 items-center py-1.5 border border-transparent font-medium rounded shadow-sm text-black bg-green-200 hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+  ${tw`inline-flex m-4 items-center bg-green-light py-1.5 border border-transparent font-medium rounded shadow-sm text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-light`}
 `;
 
 const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
@@ -30,9 +30,8 @@ const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
       {status === WalletStatus.WALLET_NOT_CONNECTED ? (
         <>
           <button type="button" css={connectButtonStyles} onClick={() => {}}>
-            <CreditCardIcon tw="h-5 w-8 lg:hidden ml-2" aria-hidden="true" />
-            <span tw="text-xs lg:hidden mr-4">Connect</span>
-            <span tw="hidden lg:block px-8 ">Wallet Connect</span>
+            <CreditCardIcon tw="h-5 w-8 ml-2" aria-hidden="true" />
+            <span tw="text-xs md:text-base mr-4">Connect</span>
           </button>
         </>
       ) : status === WalletStatus.WALLET_CONNECTED ? (

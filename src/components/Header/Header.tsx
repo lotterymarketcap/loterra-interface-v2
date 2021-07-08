@@ -65,7 +65,7 @@ export default function Header({}) {
                   <ConnectedButton />
                 </div>
                 <div tw="-mr-2 flex items-center lg:hidden">
-                  <Popover.Button tw="rounded-md p-2 inline-flex items-center justify-center text-gray-400 focus:outline-none">
+                  <Popover.Button tw="rounded-md p-2 inline-flex items-center mr-4 justify-center text-gray-400 focus:outline-none">
                     <span tw="sr-only">Open main menu</span>
                     <MenuIcon tw="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
