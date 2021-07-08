@@ -1,4 +1,7 @@
 
+
+import React from 'react';
+
 import hero from '../styles/components/Hero.module.scss';
 import combinations from '../styles/components/CombinationMaker.module.scss'
 import HeroBg from '../images/herobg.js';
@@ -9,20 +12,20 @@ import JackpotCounter from '../components/JackpotCounter';
 import { Ticket, Users, Backspace, X } from "phosphor-react";
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import React from 'react';
 
 
 
 export default function Hero(){
 
     let modal = false;
-
+    const bearName = useStore(state => state.bearName)
+    
     const [modalIsOpen,setIsOpen] = React.useState(false);
 
 
     const svgString = encodeURIComponent(renderToStaticMarkup(<HeroBg />));
     const dataUri = `url("data:image/svg+xml,${svgString}")`;
-    const bearName = useStore(state => state.bearName)
+
     const toggleModal = () => setIsOpen(!modalIsOpen)
 
     return(
