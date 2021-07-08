@@ -2,6 +2,8 @@ import Head from 'next/head'
 import styles from '../../styles/pages/Staking.module.scss'
 
 import SmallBackground from '../../components/SmallBackground'
+import useStore from '../../store/store'
+
 
 import { Pie, Line } from 'react-chartjs-2';
 
@@ -89,7 +91,13 @@ export default function Staking() {
     ],
   }
   };
-    
+
+
+  const bears = useStore(state => state.bears)
+  const bearName = useStore(state => state.bearName)
+
+  const increasePopulation = useStore(state => state.increasePopulation)
+  const changeName = useStore(state => state.changeName)
 
   return (
  <>
@@ -100,10 +108,12 @@ export default function Staking() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SmallBackground/>
+
          <div className={styles.container}>
           <div className="w4">
           <Pie data={data} />
-
+          <button onClick={increasePopulation}>{bears}</button>
+          <input onChange={(e) => changeName(e)} value={bearName}/>
           </div>
           <div className="w8">
             <div className="lota-card">

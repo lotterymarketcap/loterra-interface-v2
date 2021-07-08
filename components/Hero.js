@@ -2,6 +2,7 @@
 import hero from '../styles/components/Hero.module.scss';
 import combinations from '../styles/components/CombinationMaker.module.scss'
 import HeroBg from '../images/herobg.js';
+import useStore from '../store/store'
 
 import JackpotCounter from '../components/JackpotCounter';
 
@@ -21,13 +22,14 @@ export default function Hero(){
 
     const svgString = encodeURIComponent(renderToStaticMarkup(<HeroBg />));
     const dataUri = `url("data:image/svg+xml,${svgString}")`;
-
+    const bearName = useStore(state => state.bearName)
     const toggleModal = () => setIsOpen(!modalIsOpen)
 
     return(
         <div className={hero.main} style={{backgroundImage: dataUri, backgroundSize:'cover', backgroundPosition:'bottom'}}>
+            
             <div className={hero.container}>
-                <p className={hero.title}>Jackpot</p>
+                <p className={hero.title}>Jackpot {bearName}</p>
                 <div className={hero.jackpot_price}>
                     <p>126,257.94 <span>UST</span></p>
                 </div>

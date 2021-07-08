@@ -5,7 +5,15 @@ import LoterraStats from '../components/LoterraStats'
 
 import styles from '../styles/pages/Home.module.scss'
 
+import useStore from '../store/store'
+
 export default function Home() {
+
+  const bears = useStore(state => state.bears)
+  const bearName = useStore(state => state.bearName)
+
+  const increasePopulation = useStore(state => state.increasePopulation)
+  const changeName = useStore(state => state.changeName)
 
   return (
     <>
@@ -16,6 +24,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero/>
+      <button onClick={increasePopulation}>{bears}</button>
+      <input onChange={(e) => changeName(e)} value={bearName}/>
       <div className={styles.container}>
         <LoterraStats/>     
       </div>      
