@@ -1,4 +1,7 @@
-import { WalletProvider } from "@terra-money/wallet-provider";
+import {
+  StaticWalletProvider,
+  WalletProvider,
+} from "@terra-money/wallet-provider";
 
 const mainnet = {
   name: "mainnet",
@@ -13,7 +16,7 @@ const testnet = {
 };
 
 export default function AppProviders({ children }) {
-  return (
+  return process.browser ? (
     <WalletProvider
       defaultNetwork={mainnet}
       walletConnectChainIds={{
@@ -23,5 +26,9 @@ export default function AppProviders({ children }) {
     >
       {children}
     </WalletProvider>
+  ) : (
+    <StaticWalletProvider defaultNetwork={mainnet}>
+      {children}
+    </StaticWalletProvider>
   );
 }

@@ -1,11 +1,7 @@
-import dynamic from "next/dynamic";
 import tw from "twin.macro";
 
-import Header from "./Header";
-
-const AppProviders = dynamic(() => import("./AppProviders"), {
-  ssr: false,
-});
+import Header from "./Header/Header";
+import AppProviders from "./AppProviders";
 
 export default function Layout({ children }) {
   return (
