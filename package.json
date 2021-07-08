@@ -14,7 +14,8 @@
     "phosphor-react": "^1.2.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "zustand": "^3.5.5"
+    "zustand": "^3.5.5",
+    "@terra-money/wallet-provider": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "7.30.0",

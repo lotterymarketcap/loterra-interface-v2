@@ -1,5 +1,4 @@
 import Head from 'next/head'
-
 import Hero from '../components/Hero'
 import LoterraStats from '../components/LoterraStats'
 
@@ -7,7 +6,22 @@ import styles from '../styles/pages/Home.module.scss'
 
 import useStore from '../store/store'
 
+import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
+
+
 export default function Home() {
+
+  const {
+    status,
+    network,
+    wallets,
+    availableConnectTypes,
+    availableInstallTypes,
+    connect,
+    install,
+    disconnect,
+  } = useWallet();
+ 
 
   const bears = useStore(state => state.bears)
   const bearName = useStore(state => state.bearName)
@@ -28,7 +42,45 @@ export default function Home() {
       <input onChange={(e) => changeName(e)} value={bearName}/>
       <div className={styles.container}>
         <LoterraStats/>     
-      </div>      
+      </div>     
+      <pre style={{color:'#fff'}}>
+          {JSON.stringify(
+            {
+              status,
+              network,
+              wallets,
+              availableConnectTypes,
+              availableInstallTypes,
+            },
+            null,
+            2,
+          )}
+        </pre> 
+      <footer>
+        {status === WalletStatus.WALLET_NOT_CONNECTED && (
+          <>
+            {availableInstallTypes.map((connectType) => (
+              <button
+                key={'install-' + connectType}
+                onClick={() => install(connectType)}
+              >
+                Install {connectType}
+              </button>
+            ))}
+            {availableConnectTypes.map((connectType) => (
+              <button
+                key={'connect-' + connectType}
+                onClick={() => connect(connectType)}
+              >
+                Connect {connectType}
+              </button>
+            ))}
+          </>
+        )}
+        {status === WalletStatus.WALLET_CONNECTED && (
+          <button onClick={() => disconnect()}>Disconnect</button>
+        )}
+      </footer>
     </>
   )
 }

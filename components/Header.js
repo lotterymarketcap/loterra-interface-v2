@@ -1,7 +1,9 @@
+import { LCDClient } from '@terra-money/terra.js';
+import { useConnectedWallet } from '@terra-money/wallet-provider';
+import React, { useEffect, useMemo, useState,useCallback } from 'react';
 
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect,useState,useCallback } from "react";
 import { ShoppingCartSimple, X, List } from "phosphor-react";
 
 import Bag from './Bag'
@@ -34,7 +36,38 @@ export default function Header(){
       return () => {
         window.removeEventListener("scroll", handleNavigation);
       };
-    }, [handleNavigation]);    
+    }, [handleNavigation]);  
+    
+
+    //Wallet code
+    const connectedWallet = useConnectedWallet();
+
+  const [bank, setBank] = useState();
+
+  const lcd = useMemo(() => {
+    if (!connectedWallet) {
+      return null;
+    }
+
+    return new LCDClient({
+      URL: connectedWallet.network.lcd,
+      chainID: connectedWallet.network.chainID,
+    });
+  }, [connectedWallet]);
+
+  useEffect(() => {
+    if (connectedWallet && lcd) {
+      lcd.bank.balance(connectedWallet.walletAddress).then((coins) => {
+          let uusd = coins.filter(c => { return c.denom === 'uusd'});
+          let ust = parseInt(uusd) / 1000000
+        setBank(ust.toString());
+      });
+    } else {
+      setBank(null);
+    }
+  }, [connectedWallet, lcd]);
+    
+
     return(
         <>
         <header className={`${styles.header}` + (y > 0 ? ' '+styles.sticky : '') + (isNav ? ' '+styles.show : '')}>
@@ -60,7 +93,10 @@ export default function Header(){
 
                 <ul className={styles.second_nav}>
                     <li><button className="plain" onClick={() => setIsBag(!isBag)}> <ShoppingCartSimple color="#FFFFFF" weight="regular" size={26} /></button></li>
-                    <li><button className="green">Connect wallet</button></li>
+                    <li><button className="green">{bank && <>
+                    {bank} <small>UST</small>
+                    </>}
+      {!connectedWallet && <p>Wallet not connected!</p>}</button></li>
                 </ul>
                
             </nav>
