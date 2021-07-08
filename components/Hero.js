@@ -19,7 +19,6 @@ export default function Hero(){
 
     let modal = false;
     const bearName = useStore(state => state.bearName)
-    
     const [modalIsOpen,setIsOpen] = React.useState(false);
 
 
