@@ -11,7 +11,7 @@ const buttonStyles = css`
       rgba(205, 21, 205, 0.318) 102.82%
     ),
     #ff36ff;
-  box-shadow: 0px 0px 74px #ff36ff, inset 0px -2px 0px #ff36ff;
+  box-shadow: 0px 0px 12px #ff36ff, inset 0px -2px 0px #ff36ff;
   ${tw`w-60 h-12 md:w-80 md:h-16 text-white font-bold text-center text-xl md:text-2xl rounded-3xl`}
 `;
 

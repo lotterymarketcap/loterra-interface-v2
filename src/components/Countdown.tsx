@@ -4,7 +4,7 @@ export interface CountdownProps {}
 
 const Countdown: React.FC<CountdownProps> = (props) => {
   return (
-    <>
+    <div tw="w-96">
       <div tw="text-center text-white opacity-50 text-lg md:text-xl">
         Next draw in
       </div>
@@ -43,7 +43,7 @@ const Countdown: React.FC<CountdownProps> = (props) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

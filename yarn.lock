@@ -3572,7 +3572,7 @@
   resolved "https://registry.yarnpkg.com/@terra-money/key-utils/-/key-utils-1.0.2.tgz#156df042a38c1028dce038d04375b8cf092ca392"
   integrity sha512-M3F+yIwiRgQie93nm/0PZSoeYKgjfHmcoJKuew9tc1xiGuLEKA0BXYzAy6AGJbs2DMHwQKBHKyznQjwayPTItw==
 
-"@terra-money/terra.js@^1.7.0", "@terra-money/terra.js@^1.8.0":
+"@terra-money/terra.js@^1.7.0", "@terra-money/terra.js@^1.8.0", "@terra-money/terra.js@^1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@terra-money/terra.js/-/terra.js-1.8.5.tgz#9ae56611f6ffb4293ecabcad4657f85fc20ac93e"
   integrity sha512-snyBHgADCZ5Jqn22i/H9uOWSrfmgnh6nC/+7L837/E12MLLM/McRZYmF5mRDOWY/6ITFX5g8Yw8Xw3WVCzm5hg==

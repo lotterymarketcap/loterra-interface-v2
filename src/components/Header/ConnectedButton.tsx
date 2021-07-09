@@ -1,13 +1,27 @@
 import { DialogContent, DialogOverlay } from "@reach/dialog";
-import { Fragment, useState, useRef, ReactNode } from "react";
+import { Popover } from "@headlessui/react";
+
+import {
+  Fragment,
+  useState,
+  useRef,
+  useEffect,
+  ReactNode,
+  useMemo,
+} from "react";
+import { LCDClient } from "@terra-money/terra.js";
 import {
   useWallet,
   WalletStatus,
+  useConnectedWallet,
   ConnectType,
 } from "@terra-money/wallet-provider";
-import { CheckIcon } from "@heroicons/react/outline";
 import tw, { css } from "twin.macro";
-import { CreditCardIcon } from "@heroicons/react/outline";
+import {
+  CheckIcon,
+  CreditCardIcon,
+  DotsCircleHorizontalIcon,
+} from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
 
 import Terra from "../../assets/terra.svg";
@@ -22,7 +36,13 @@ const connectOptionStyles = css`
     #8a249d 19.13%,
     #0f0038 104.44%
   );
-  ${tw`inline-flex m-4 px-8 py-4 rounded border-pink-light hover:border-pink-light`}
+  ${tw`inline-flex ml-2 my-4 px-4 py-4 rounded-lg border-pink-light hover:border-pink-light`}
+`;
+
+const bgConnectOptionStyles = css`
+  background: linear-gradient(328.75deg, #493c85 -5.49%, #0f0038 104.44%);
+  box-shadow: 0px 28px 48px #0f0038;
+  ${tw`inline-block align-bottom bg-blue-dark rounded-lg px-2  pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6`}
 `;
 
 const size = { width: 24, height: 24 };
@@ -50,12 +70,41 @@ const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
     disconnect,
   } = useWallet();
 
-  const [showConnectOptions, setShowConnectOptions] = useState(false);
-
   const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   };
+
+  const connectedWallet = useConnectedWallet();
+
+  const [showConnectOptions, setShowConnectOptions] = useState(false);
+  const [bank, setBank] = useState();
+
+  const lcd = useMemo(() => {
+    if (!connectedWallet) {
+      return null;
+    }
+
+    return new LCDClient({
+      URL: connectedWallet.network.lcd,
+      chainID: connectedWallet.network.chainID,
+    });
+  }, [connectedWallet]);
+
+  useEffect(() => {
+    if (connectedWallet && lcd) {
+      setShowConnectOptions(false);
+      lcd.bank.balance(connectedWallet.walletAddress).then((coins) => {
+        let uusd = coins.filter((c) => {
+          return c.denom === "uusd";
+        });
+        let ust = parseInt(uusd) / 1000000;
+        setBank(ust.toFixed(2).toString());
+      });
+    } else {
+      setBank(null);
+    }
+  }, [connectedWallet, lcd]);
 
   type Button = { label: string; image: ReactNode; onClick: () => void };
   const buttons = ([] as Button[])
@@ -107,7 +156,19 @@ const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
           </button>
         </>
       ) : status === WalletStatus.WALLET_CONNECTED ? (
-        <button onClick={() => disconnect()}>Disconnect</button>
+        <>
+          <Popover tw="relative">
+            <Popover.Button css={connectButtonStyles}>
+              <span tw="text-xs mx-4">{bank} UST</span>
+            </Popover.Button>
+
+            <Popover.Panel tw="absolute z-10">
+              <div tw="bg-white p-4">
+                <button onClick={() => disconnect()}>Disconnect</button>
+              </div>
+            </Popover.Panel>
+          </Popover>
+        </>
       ) : null}
 
       <DialogOverlay
@@ -126,10 +187,7 @@ const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
               duration: 0.5,
             }}
           >
-            <DialogContent
-              aria-label="dialog"
-              tw="m-auto md:mt-11 focus:outline-none"
-            >
+            <DialogContent aria-label="dialog" tw="m-auto focus:outline-none">
               <div tw="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <span
                   tw="hidden sm:inline-block sm:align-middle sm:h-screen"
@@ -137,8 +195,8 @@ const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
                 >
                   &#8203;
                 </span>
-                <div tw="inline-block align-bottom bg-blue-dark rounded-lg px-4  pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
-                  <div tw="pb-8 text-white text-center text-xl font-bold">
+                <div css={bgConnectOptionStyles}>
+                  <div tw="pb-8 text-white text-center text-lg font-bold">
                     Connect to a wallet
                   </div>
                   <div>
@@ -151,8 +209,8 @@ const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
                             key={key}
                             tw="w-80"
                           >
-                            {image}
-                            <span tw="ml-4 text-white font-bold">{label}</span>
+                            <span tw="ml-4 mr-6">{image}</span>
+                            <span tw="text-white font-bold">{label}</span>
                           </button>
                         )
                       )}
@@ -164,36 +222,6 @@ const ConnectedButton: React.FC<ConnectedButtonProps> = (props) => {
           </motion.div>
         </AnimatePresence>
       </DialogOverlay>
-
-      {/** 
-      <section>
-        <pre>
-          {JSON.stringify(
-            {
-              status,
-              network,
-              wallets,
-              availableConnectTypes,
-            },
-            null,
-            2
-          )}
-        </pre>
-      </section>
-
-      <section>
-        {status === WalletStatus.WALLET_NOT_CONNECTED ? (
-          <>
-            {availableConnectTypes.map((connectType) => (
-              <button key={connectType} onClick={() => connect(connectType)}>
-                Connect with {connectType}
-              </button>
-            ))}
-          </>
-        ) : status === WalletStatus.WALLET_CONNECTED ? (
-          <button onClick={() => disconnect()}>Disconnect</button>
-        ) : null}
-      </section>*/}
     </>
   );
 };
