@@ -1,34 +1,27 @@
 import tw, { css } from "twin.macro";
 import { useEffect, useState, useCallback } from "react";
-import useCountDown from "../hooks/useCountDown";
-
-const toDays = (duration) => {
-  return Math.floor(duration / (1000 * 60 * 60 * 24));
-};
-const toHours = (duration) => {
-  return Math.floor((duration / (1000 * 60 * 60)) % 24);
-};
-const toMinutes = (duration) => {
-  return Math.floor((duration / 1000 / 60) % 60);
-};
-const toSeconds = (duration) => {
-  return Math.floor((duration / 1000) % 60);
-};
+import { useTimer } from "react-timer-hook";
 
 export interface CountdownProps {
-  targetDate: number;
+  expiryTimestamp: number;
 }
 
 const Countdown: React.FC<CountdownProps> = (props) => {
-  const { targetDate } = props;
-  const [timeLeft, { start }] = useCountDown(
-    targetDate - new Date().getTime(),
-    1000
-  );
+  const { expiryTimestamp } = props;
+
+  const { seconds, minutes, hours, days, restart } = useTimer({
+    autoStart: false,
+    expiryTimestamp,
+    onExpire: () => console.warn("onExpire called"),
+  });
 
   useEffect(() => {
-    start();
-  }, []);
+    if (
+      expiryTimestamp >
+      1 /** in ordder to avoid unnecessary re-rendering/ layout */
+    )
+      restart(expiryTimestamp);
+  }, [expiryTimestamp]);
 
   return (
     <div tw="w-96">
@@ -45,28 +38,28 @@ const Countdown: React.FC<CountdownProps> = (props) => {
         <div tw=" p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Days</div>
           <div tw="font-bold" x-text="days">
-            {toDays(timeLeft)}
+            {expiryTimestamp > 1 ? days.toString().padStart(2, 0) : "-"}
           </div>
         </div>
         <div tw="text-5xl md:text-6xl text-white font-bold">:</div>
         <div tw=" p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Hours</div>
           <div tw="font-bold" x-text="hours">
-            {toHours(timeLeft)}
+            {expiryTimestamp > 1 ? hours.toString().padStart(2, 0) : "-"}
           </div>
         </div>
         <div tw="text-5xl md:text-6xl text-white font-bold">:</div>
         <div tw=" p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Minutes</div>
           <div tw="font-bold" x-text="minutes">
-            {toMinutes(timeLeft)}
+            {expiryTimestamp > 1 ? minutes.toString().padStart(2, 0) : "-"}
           </div>
         </div>
         <div tw="text-5xl md:text-6xl text-white font-bold">:</div>
         <div tw="p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Seconds</div>
           <div tw="font-bold" x-text="seconds">
-            {toSeconds(timeLeft)}
+            {expiryTimestamp > 1 ? seconds.toString().padStart(2, 0) : "-"}
           </div>
         </div>
       </div>

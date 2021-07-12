@@ -18,7 +18,9 @@ export default function Home() {
   const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
-  const [date, setDate] = useState(0);
+  const [expiryTimestamp, setExpiryTimestamp] = useState(
+    1
+  ); /** default timestamp need to be > 1 */
 
   const fetchContractQuery = useCallback(async () => {
     const terra = new LCDClient({
@@ -34,7 +36,7 @@ export default function Home() {
         }
       );
 
-      setDate(parseInt(contractConfigInfo.block_time_play * 1000));
+      setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
 
       const contractJackpotInfo = await api.contractQuery(
         process.env.NEXT_PUBLIC_LOTTERY_ADDRESS_V2,
@@ -95,7 +97,7 @@ export default function Home() {
                   </StatCard>
                 </div>
                 <div tw="my-12 flex justify-center">
-                  {date > 0 && <Countdown targetDate={date} />}
+                  <Countdown expiryTimestamp={expiryTimestamp} />
                 </div>
                 <div tw="flex justify-center">
                   <Button label="Buy tickets" />
