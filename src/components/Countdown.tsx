@@ -1,8 +1,35 @@
 import tw, { css } from "twin.macro";
+import { useEffect, useState, useCallback } from "react";
+import useCountDown from "../hooks/useCountDown";
 
-export interface CountdownProps {}
+const toDays = (duration) => {
+  return Math.floor(duration / (1000 * 60 * 60 * 24));
+};
+const toHours = (duration) => {
+  return Math.floor((duration / (1000 * 60 * 60)) % 24);
+};
+const toMinutes = (duration) => {
+  return Math.floor((duration / 1000 / 60) % 60);
+};
+const toSeconds = (duration) => {
+  return Math.floor((duration / 1000) % 60);
+};
+
+export interface CountdownProps {
+  targetDate: number;
+}
 
 const Countdown: React.FC<CountdownProps> = (props) => {
+  const { targetDate } = props;
+  const [timeLeft, { start }] = useCountDown(
+    targetDate - new Date().getTime(),
+    1000
+  );
+
+  useEffect(() => {
+    start();
+  }, []);
+
   return (
     <div tw="w-96">
       <div tw="text-center text-white opacity-50 text-lg md:text-xl">
@@ -18,28 +45,28 @@ const Countdown: React.FC<CountdownProps> = (props) => {
         <div tw=" p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Days</div>
           <div tw="font-bold" x-text="days">
-            02
+            {toDays(timeLeft)}
           </div>
         </div>
         <div tw="text-5xl md:text-6xl text-white font-bold">:</div>
         <div tw=" p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Hours</div>
           <div tw="font-bold" x-text="hours">
-            09
+            {toHours(timeLeft)}
           </div>
         </div>
         <div tw="text-5xl md:text-6xl text-white font-bold">:</div>
         <div tw=" p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Minutes</div>
           <div tw="font-bold" x-text="minutes">
-            53
+            {toMinutes(timeLeft)}
           </div>
         </div>
         <div tw="text-5xl md:text-6xl text-white font-bold">:</div>
         <div tw="p-2 text-white rounded-lg">
           <div tw="text-sm text-gray-500">Seconds</div>
           <div tw="font-bold" x-text="seconds">
-            07
+            {toSeconds(timeLeft)}
           </div>
         </div>
       </div>

@@ -15,13 +15,12 @@ const backgroundStyles = css`
 `;
 
 export default function Home() {
-  const [jackpotTotalReward, setJackpotTotalReward] = useState(0);
+  const [jackpot, setJackpot] = useState(0);
+  const [tickets, setTickets] = useState(0);
+  const [players, setPlayers] = useState(0);
+  const [date, setDate] = useState(0);
 
   const fetchContractQuery = useCallback(async () => {
-    console.log(
-      "process.env.LOTTERY_ADDRESS_V2",
-      process.env.LOTTERY_ADDRESS_V2
-    );
     const terra = new LCDClient({
       URL: "https://lcd.terra.dev/",
       chainID: "columbus-4",
@@ -34,13 +33,32 @@ export default function Home() {
           config: {},
         }
       );
+
+      setDate(parseInt(contractConfigInfo.block_time_play * 1000));
+
       const contractJackpotInfo = await api.contractQuery(
         process.env.NEXT_PUBLIC_LOTTERY_ADDRESS_V2,
         {
           jackpot: { lottery_id: contractConfigInfo.lottery_counter - 1 },
         }
       );
-      setJackpotTotalReward(parseInt(contractJackpotInfo) / 1000000);
+      setJackpot(parseInt(contractJackpotInfo) / 1000000);
+
+      const contractTicketsInfo = await api.contractQuery(
+        process.env.NEXT_PUBLIC_LOTTERY_ADDRESS_V2,
+        {
+          count_ticket: { lottery_id: contractConfigInfo.lottery_counter - 1 },
+        }
+      );
+      setTickets(parseInt(contractTicketsInfo));
+
+      const contractPlayersInfo = await api.contractQuery(
+        process.env.NEXT_PUBLIC_LOTTERY_ADDRESS_V2,
+        {
+          count_player: { lottery_id: contractConfigInfo.lottery_counter - 1 },
+        }
+      );
+      setPlayers(parseInt(contractPlayersInfo));
     } catch (e) {
       console.log(e);
     }
@@ -63,21 +81,21 @@ export default function Home() {
           <div tw="flex justify-center">
             <div tw="w-full overflow-x-hidden relative">
               <div tw="px-4 sm:px-6 lg:px-8 z-10">
-                <Jackpot label="Jackpot" amount={jackpotTotalReward} />
+                <Jackpot label="Jackpot" amount={jackpot} />
                 <div tw="flex justify-center mt-4">
-                  <StatCard label="Tickets sold" amount={3426366}>
+                  <StatCard label="Tickets sold" amount={tickets}>
                     <div tw="h-16 w-16 rounded-full text-green-light">
                       <TicketIcon />
                     </div>
                   </StatCard>
-                  <StatCard label="Players" amount={26366455}>
+                  <StatCard label="Players" amount={players}>
                     <div tw="h-14 w-14 rounded-full text-green-light">
                       <UsersIcon />
                     </div>
                   </StatCard>
                 </div>
                 <div tw="my-12 flex justify-center">
-                  <Countdown />
+                  {date > 0 && <Countdown targetDate={date} />}
                 </div>
                 <div tw="flex justify-center">
                   <Button label="Buy tickets" />
