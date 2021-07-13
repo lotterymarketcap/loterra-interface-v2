@@ -7,10 +7,11 @@ import {
   TrashIcon,
 } from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { ticketListDisplayState } from "../state/dialog";
 import { ticketsState } from "../state/user";
+import { removeItemAtIndex, randomNumber } from "../utils";
 import Button from "../components/Button";
 
 const bgStyles = css`
@@ -23,11 +24,27 @@ export interface TicketListProps {}
 
 const TicketList: React.FC<TicketListProps> = (props) => {
   const [open, setOpen] = useRecoilState(ticketListDisplayState);
-  const tickets = useRecoilValue(ticketsState);
+  const [tickets, setTickets] = useRecoilState(ticketsState);
 
   const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
+  };
+
+  const deleteTicket = (t: string) => {
+    setTickets(removeItemAtIndex(tickets, tickets.indexOf(t)));
+  };
+
+  const addTickets = (t: string[]) => {
+    setTickets([...tickets, ...t]);
+  };
+
+  const generateRandomTickets = (num: number) => {
+    const t = [];
+    for (let x = 0; x < num; x++) {
+      t.push(randomNumber());
+    }
+    addTickets(t);
   };
 
   return (
@@ -78,6 +95,7 @@ const TicketList: React.FC<TicketListProps> = (props) => {
                     <button
                       type="button"
                       tw="w-full sm:w-32 h-8 inline-flex items-center justify-center border border-pink-light text-sm font-medium rounded-md bg-gray-900 hover:bg-gray-800"
+                      onClick={() => generateRandomTickets(1)}
                     >
                       <PlusCircleIcon tw="h-4 w-4 mr-2" aria-hidden="true" />
                       Random
@@ -88,6 +106,7 @@ const TicketList: React.FC<TicketListProps> = (props) => {
                     <button
                       type="button"
                       tw="w-full sm:w-32 h-8 inline-flex items-center justify-center border border-pink-light text-sm font-medium rounded-md  bg-gray-900 hover:bg-gray-800"
+                      onClick={() => generateRandomTickets(10)}
                     >
                       <PlusCircleIcon tw="h-4 w-4 mr-2" aria-hidden="true" />
                       X10
@@ -98,6 +117,7 @@ const TicketList: React.FC<TicketListProps> = (props) => {
                     <button
                       type="button"
                       tw="w-full sm:w-32 h-8 inline-flex items-center justify-center border border-pink-light text-sm font-medium rounded-md bg-gray-900 hover:bg-gray-800"
+                      onClick={() => generateRandomTickets(100)}
                     >
                       <PlusCircleIcon tw="h-4 w-4 mr-2" aria-hidden="true" />
                       X100
@@ -111,7 +131,10 @@ const TicketList: React.FC<TicketListProps> = (props) => {
                 <div>
                   <ul tw="pb-4">
                     {tickets.map((ticket) => (
-                      <li tw="relative text-white font-bold flex p-3 bg-gray-900 bg-opacity-70 rounded-xl my-3">
+                      <li
+                        key={ticket}
+                        tw="relative text-white font-bold flex p-3 bg-gray-900 bg-opacity-70 rounded-xl my-3"
+                      >
                         <TicketIcon
                           tw="h-6 w-6 text-green-light mr-2"
                           aria-hidden="true"
@@ -120,6 +143,9 @@ const TicketList: React.FC<TicketListProps> = (props) => {
                         <button
                           type="button"
                           tw="absolute right-3 top-3 border rounded-md text-gray-600 border-gray-600 hover:text-gray-400 hover:border-gray-400"
+                          onClick={() => {
+                            deleteTicket(ticket);
+                          }}
                         >
                           <TrashIcon tw="h-4 w-4 m-1" aria-hidden="true" />
                         </button>
