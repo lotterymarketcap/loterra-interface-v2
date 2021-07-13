@@ -3,18 +3,26 @@ import tw, { css } from "twin.macro";
 import { TicketIcon, UsersIcon } from "@heroicons/react/outline";
 import { LCDClient, WasmAPI } from "@terra-money/terra.js";
 import { useEffect, useState, useCallback } from "react";
+import { useRecoilState } from "recoil";
 
 import Layout from "../components/Layout";
 import Button from "../components/Button";
 import Jackpot from "../components/Jackpot";
 import StatCard from "../components/StatCard";
 import Countdown from "../components/Countdown";
+import TicketSelect from "../components/TicketSelect/TicketSelect";
+
+import { ticketSelectDisplayState } from "../state/dialog";
 
 const backgroundStyles = css`
   ${tw`w-full h-full absolute z-10 pointer-events-none object-cover`}
 `;
 
 export default function Home() {
+  const [openTicketSelect, setOpenTicketSelect] = useRecoilState(
+    ticketSelectDisplayState
+  );
+
   const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
@@ -100,7 +108,12 @@ export default function Home() {
                   <Countdown expiryTimestamp={expiryTimestamp} />
                 </div>
                 <div tw="flex justify-center">
-                  <Button label="Buy tickets" />
+                  <Button
+                    label="Buy tickets"
+                    onClick={() => {
+                      setOpenTicketSelect(true);
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -111,6 +124,7 @@ export default function Home() {
               />
             </div>
           </div>
+          <TicketSelect />
         </main>
       </Layout>
     </>
