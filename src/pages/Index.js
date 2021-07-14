@@ -21,11 +21,12 @@ export default () => {
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
     }
-    // const obj = new StdFee(1_000_000, { uusd: 200000 })
-    const addToGas = 5000 * cart.length
-    const obj = new StdFee(200_000, { uusd: 30000 + addToGas })
+
     function execute(){
         const cart = combo.split(" ")
+        // const obj = new StdFee(1_000_000, { uusd: 200000 })
+        const addToGas = 5000 * cart.length
+        const obj = new StdFee(200_000, { uusd: 30000 + addToGas })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
