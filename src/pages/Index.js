@@ -21,7 +21,9 @@ export default () => {
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
     }
-    const obj = new StdFee(1_000_000, { uusd: 200000 })
+    // const obj = new StdFee(1_000_000, { uusd: 200000 })
+    const addToGas = 5000 * cart.length
+    const obj = new StdFee(200_000, { uusd: 30000 + addToGas })
     function execute(){
         const cart = combo.split(" ")
         const msg = new MsgExecuteContract(
@@ -37,8 +39,9 @@ export default () => {
 
         connectedWallet.post({
             msgs: [msg],
-            gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.5,
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
         }).then(e => {
             if (e.success) {
                 setResult("register combination success")
