@@ -30,7 +30,7 @@ export default () => {
         const obj = new StdFee(400_000, { uusd: 60000 + addToGas })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
+            "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0",
             {
                 register: {
                     combination: cart,
@@ -157,7 +157,7 @@ export default () => {
              <div style={{display: "flex", flexDirection:"column", alignItems:"center"}}>
                  <div className="text-3xl">LoTerra</div>
                  <div>contract-v2</div>
-                 <div className="text-sm">terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5</div>
+                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div>
                  <button onClick={() => multiplier(1)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>Generate combination</button>
                  <button onClick={() => multiplier(10)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X10</button>
                  <button onClick={() => multiplier(100)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X100</button>
