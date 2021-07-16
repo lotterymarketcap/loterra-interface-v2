@@ -68,8 +68,7 @@ export default () => {
 
         connectedWallet.post({
             msgs: [msg],
-            gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.5,
+            fee: obj
         }).then(e => {
             if (e.success) {
                 setResult("claim success")
@@ -93,8 +92,7 @@ export default () => {
 
         connectedWallet.post({
             msgs: [msg],
-            gasPrices: obj.gasPrices(),
-            gasAdjustment: 1.5,
+            fee: obj
         }).then(e => {
             if (e.success) {
                 setResult("collect success")
