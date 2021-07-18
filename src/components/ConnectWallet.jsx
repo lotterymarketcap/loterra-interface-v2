@@ -68,8 +68,8 @@ export default function ConnectWallet(){
     return(
         <div>
             <div style={{display:"flex"}}>
-                <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension)</button>
-                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile)</button>
+                <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
+                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
             </div>
 
             {/*<button onClick={() => display()}>Connect Wallet</button>
