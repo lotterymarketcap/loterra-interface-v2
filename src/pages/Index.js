@@ -3,7 +3,7 @@ import numeral from "numeral";
 import { Users, Ticket} from "phosphor-react";
 
 // import Jackpot from "../components/Jackpot";
-import {StdFee, MsgExecuteContract,LCDClient, WasmAPI} from "@terra-money/terra.js"
+import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -41,19 +41,18 @@ export default () => {
       );
 
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
+      const bank = new BankAPI(terra.apiRequester);
+      const contractBalance = await bank.balance('terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0');
+      const ustBalance = contractBalance.get('uusd').toData();
+      const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward;
+      const contractJackpotInfo = ((ustBalance.amount * jackpotAlocation) / 100);
 
-      const contractJackpotInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
-        {
-          jackpot: { lottery_id: contractConfigInfo.lottery_counter - 1 },
-        }
-      );
       setJackpot(parseInt(contractJackpotInfo) / 1000000);
 
       const contractTicketsInfo = await api.contractQuery(
         'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
         {
-          count_ticket: { lottery_id: 2 },
+          count_ticket: { lottery_id: contractConfigInfo.lottery_counter },
         }
       );
       setTickets(parseInt(contractTicketsInfo));
@@ -61,7 +60,7 @@ export default () => {
       const contractPlayersInfo = await api.contractQuery(
         'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
         {
-          count_player: { lottery_id: 2 },
+          count_player: { lottery_id: contractConfigInfo.lottery_counter },
         }
       );
       setPlayers(parseInt(contractPlayersInfo));
