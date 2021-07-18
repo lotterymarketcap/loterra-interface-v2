@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 
 // import Jackpot from "../components/Jackpot";
-import {StdFee, MsgExecuteContract} from "@terra-money/terra.js"
+import {StdFee, MsgExecuteContract,LCDClient, WasmAPI} from "@terra-money/terra.js"
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -13,7 +13,65 @@ const HomeCard={
     padding: '30px',
 }
 
+
+
 export default () => {
+
+    const [jackpot, setJackpot] = useState(0);
+  const [tickets, setTickets] = useState(0);
+  const [players, setPlayers] = useState(0);
+  const [expiryTimestamp, setExpiryTimestamp] = useState(
+    1
+  ); /** default timestamp need to be > 1 */
+
+  const fetchContractQuery = useCallback(async () => {
+    const terra = new LCDClient({
+      URL: "https://lcd.terra.dev/",
+      chainID: "columbus-4",
+    });
+    const api = new WasmAPI(terra.apiRequester);
+    try {
+      const contractConfigInfo = await api.contractQuery(
+        'terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5',
+        {
+          config: {},
+        }
+      );
+
+      setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
+
+      const contractJackpotInfo = await api.contractQuery(
+        'terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5',
+        {
+          jackpot: { lottery_id: contractConfigInfo.lottery_counter - 1 },
+        }
+      );
+      setJackpot(parseInt(contractJackpotInfo) / 1000000);
+
+      const contractTicketsInfo = await api.contractQuery(
+        'terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5',
+        {
+          count_ticket: { lottery_id: contractConfigInfo.lottery_counter - 1 },
+        }
+      );
+      setTickets(parseInt(contractTicketsInfo));
+
+      const contractPlayersInfo = await api.contractQuery(
+        'terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5',
+        {
+          count_player: { lottery_id: contractConfigInfo.lottery_counter - 1 },
+        }
+      );
+      setPlayers(parseInt(contractPlayersInfo));
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchContractQuery();
+  }, [fetchContractQuery]);
+
     const [combo, setCombo] = useState("")
     const [result, setResult] = useState("")
     const [amount, setAmount] = useState(0)
@@ -56,55 +114,7 @@ export default () => {
         })
 
     }
-    function claim(){
-
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
-                claim: {},
-            }
-        )
-
-        connectedWallet.post({
-            msgs: [msg],
-            fee: obj
-        }).then(e => {
-            if (e.success) {
-                setResult("claim success")
-            }
-            else{
-                setResult("claim error")
-            }
-        }).catch(e =>{
-            setResult(e.message)
-        })
-
-    }
-    function collect(){
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
-                collect: {},
-            }
-        )
-
-        connectedWallet.post({
-            msgs: [msg],
-            fee: obj
-        }).then(e => {
-            if (e.success) {
-                setResult("collect success")
-            }
-            else{
-                setResult("collect error")
-            }
-        }).catch(e =>{
-            setResult(e.message)
-        })
-
-    }
+ 
 
     function change(e) {
         e.preventDefault();
@@ -156,6 +166,11 @@ export default () => {
                  <div className="text-3xl">LoTerra</div>
                  <div>contract-v2.0.1</div>
                  <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div>
+                 <div className="grid grid-cols-2 gap-4 my-4 stats">
+                 <h2 className="col-span-2">{jackpot}</h2>
+                 <h3>{players}</h3>
+                 <h3>{tickets}</h3>
+                 </div>
                  <div className="grid grid-cols-3 gap-4 my-4">
                     <button onClick={() => multiplier(1)} className="button-pink-outline">Generate combination</button>
                     <button onClick={() => multiplier(10)} className="button-pink-outline">X10</button>

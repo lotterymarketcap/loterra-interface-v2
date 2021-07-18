@@ -70,6 +70,20 @@ code {
   margin-right:50px;
 }
 
+.stats {
+  text-align:center;
+}
+
+.stats h2 {
+  background: linear-gradient(
+    90deg
+    ,#f2135d,#5b3cc4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 5rem;
+
+}
+
 .button-glass{
   padding: 7px 10px;
   background: rgb(84 84 84 / 11%);
