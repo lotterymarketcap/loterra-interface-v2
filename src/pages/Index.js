@@ -156,18 +156,20 @@ export default () => {
                  <div className="text-3xl">LoTerra</div>
                  <div>contract-v2.0.1</div>
                  <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div>
-                 <button onClick={() => multiplier(1)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>Generate combination</button>
-                 <button onClick={() => multiplier(10)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X10</button>
-                 <button onClick={() => multiplier(100)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X100</button>
+                 <div className="grid grid-cols-3 gap-4 my-4">
+                    <button onClick={() => multiplier(1)} className="button-pink-outline">Generate combination</button>
+                    <button onClick={() => multiplier(10)} className="button-pink-outline">X10</button>
+                    <button onClick={() => multiplier(100)} className="button-pink-outline">X100</button>
+                 </div>
                  <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
                  <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                  <div className="text-sm">{result}</div>
-                 <button onClick={()=> execute()} className="button-glass" style={{color:"deeppink"}}>Buy {amount} tickets</button>
+                 <button onClick={()=> execute()} className="button-pink" disabled={amount <= 0}>Buy {amount} tickets</button>
                  <div className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</div>
-                 <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
-                     <button onClick={()=> claim()} className="button-glass" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
-                     <button onClick={()=> collect()} className="button-glass" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
-                 </div>
+                 {/* <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
+                     <button onClick={()=> claim()} className="button-pink-trans" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
+                     <button onClick={()=> collect()} className="button-pink-trans" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
+                 </div> */}
              </div>
          </div>
      );

@@ -71,14 +71,45 @@ code {
 }
 
 .button-glass{
-  padding: 5px;
-  background: rgba( 255, 255, 255, 0.10 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4.0px );
-  -webkit-backdrop-filter: blur( 4.0px );
+  padding: 7px 10px;
+  background: rgb(84 84 84 / 11%);
   border-radius: 10px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  background: rgb(84 84 84 / 11%);
 }
+
+.button-pink-outline {
+  padding: 7px 13px;
+  background: transparent;
+  color:#f2135d;
+  border:1px solid #f2135d;
+  border-radius: 10px;
+  margin:5px 0;
+}
+
+.button-pink{
+  padding: 9px 21px;
+  background: linear-gradient(90deg,#f2135d,#5b3cc4);
+  color:#fff;
+  border-radius: 10px;
+  font-weight:bold;
+  font-size:18px;
+  margin:5px 0;
+}
+
+.button-pink:disabled {
+  opacity:0.5;
+}
+
+.button-pink-trans{
+  padding: 7px 18px;
+  background: rgba(242,20,93,0.2);
+  color: #f2145d;
+  border-radius: 10px;
+  margin:5px 0;
+}
+
+
+
 
 .card-glass {
   background: rgba( 255, 255, 255, 0.10 );
