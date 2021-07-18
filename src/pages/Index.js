@@ -193,7 +193,7 @@ export default () => {
                  
                  <div className="text-sm">{result}</div>
                  <button onClick={()=> execute()} className="button-pink" disabled={amount <= 0}>Buy {amount} tickets</button>
-                 <small className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</small>
+                 <small className="text-sm">We recommend not purchase more than 200 tickets per transaction (gas limit)</small>
                  {/* <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
                      <button onClick={()=> claim()} className="button-pink-trans" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
                      <button onClick={()=> collect()} className="button-pink-trans" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
