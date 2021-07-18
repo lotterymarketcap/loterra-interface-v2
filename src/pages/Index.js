@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
+import numeral from "numeral";
+import { Users, Ticket} from "phosphor-react";
 
 // import Jackpot from "../components/Jackpot";
-import {StdFee, MsgExecuteContract} from "@terra-money/terra.js"
+import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -13,7 +15,64 @@ const HomeCard={
     padding: '30px',
 }
 
+
+
 export default () => {
+
+    const [jackpot, setJackpot] = useState(0);
+  const [tickets, setTickets] = useState(0);
+  const [players, setPlayers] = useState(0);
+  const [expiryTimestamp, setExpiryTimestamp] = useState(
+    1
+  ); /** default timestamp need to be > 1 */
+
+  const fetchContractQuery = useCallback(async () => {
+    const terra = new LCDClient({
+      URL: "https://lcd.terra.dev/",
+      chainID: "columbus-4",
+    });
+    const api = new WasmAPI(terra.apiRequester);
+    try {
+      const contractConfigInfo = await api.contractQuery(
+        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+        {
+          config: {},
+        }
+      );
+
+      setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
+      const bank = new BankAPI(terra.apiRequester);
+      const contractBalance = await bank.balance('terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0');
+      const ustBalance = contractBalance.get('uusd').toData();
+      const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward;
+      const contractJackpotInfo = ((ustBalance.amount * jackpotAlocation) / 100);
+
+      setJackpot(parseInt(contractJackpotInfo) / 1000000);
+
+      const contractTicketsInfo = await api.contractQuery(
+        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+        {
+          count_ticket: { lottery_id: contractConfigInfo.lottery_counter },
+        }
+      );
+      setTickets(parseInt(contractTicketsInfo));
+
+      const contractPlayersInfo = await api.contractQuery(
+        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+        {
+          count_player: { lottery_id: contractConfigInfo.lottery_counter },
+        }
+      );
+      setPlayers(parseInt(contractPlayersInfo));
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchContractQuery();
+  }, [fetchContractQuery]);
+
     const [combo, setCombo] = useState("")
     const [result, setResult] = useState("")
     const [amount, setAmount] = useState(0)
@@ -56,55 +115,7 @@ export default () => {
         })
 
     }
-    function claim(){
-
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
-                claim: {},
-            }
-        )
-
-        connectedWallet.post({
-            msgs: [msg],
-            fee: obj
-        }).then(e => {
-            if (e.success) {
-                setResult("claim success")
-            }
-            else{
-                setResult("claim error")
-            }
-        }).catch(e =>{
-            setResult(e.message)
-        })
-
-    }
-    function collect(){
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            "terra1zcf0d95z02u2r923sgupp28mqrdwmt930gn8x5",
-            {
-                collect: {},
-            }
-        )
-
-        connectedWallet.post({
-            msgs: [msg],
-            fee: obj
-        }).then(e => {
-            if (e.success) {
-                setResult("collect success")
-            }
-            else{
-                setResult("collect error")
-            }
-        }).catch(e =>{
-            setResult(e.message)
-        })
-
-    }
+ 
 
     function change(e) {
         e.preventDefault();
@@ -153,21 +164,36 @@ export default () => {
      return (
          <div>
              <div style={{display: "flex", flexDirection:"column", alignItems:"center"}}>
-                 <div className="text-3xl">LoTerra</div>
+                 <div className="text-4xl font-bold">LoTerra</div>
                  <div>contract-v2.0.1</div>
                  <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div>
-                 <button onClick={() => multiplier(1)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>Generate combination</button>
-                 <button onClick={() => multiplier(10)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X10</button>
-                 <button onClick={() => multiplier(100)} className="button-glass" style={{color:"deeppink", margin: "10px"}}>X100</button>
-                 <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{width: "300px", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
-                 <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
-                 <div className="text-sm">{result}</div>
-                 <button onClick={()=> execute()} className="button-glass" style={{color:"deeppink"}}>Buy {amount} tickets</button>
-                 <div className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</div>
-                 <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
-                     <button onClick={()=> claim()} className="button-glass" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
-                     <button onClick={()=> collect()} className="button-glass" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
+                 <div className="grid grid-cols-2 gap-4 my-4 stats">
+                 <p className="col-span-2 text-center uppercase mt-2 mb-0">Current jackpot</p>
+                 <h2 className="col-span-2">{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
+                 <h3><Users size={48} color="#f2145d" />{players}</h3>
+                 <h3><Ticket size={48} color="#f2145d" />{tickets}</h3>
                  </div>
+                 <div className="grid grid-cols-3 gap-4 my-4">
+                     <div className="col-span-3">
+                        <p className="font-bold m-0 text-2xl">Buy tickets</p>
+                     </div>
+                    <button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
+                    <button onClick={() => multiplier(10)} className="button-glass font-bold">X10</button>
+                    <button onClick={() => multiplier(100)} className="button-glass font-bold">X100</button>
+                    <div className="col-span-3">
+                        <p className="font-bold m-0">Ticket list</p>
+                        <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
+                     </div>
+                 </div>
+                 <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{maxWidth: "500px", width:"100%", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
+                 
+                 <div className="text-sm">{result}</div>
+                 <button onClick={()=> execute()} className="button-pink" disabled={amount <= 0}>Buy {amount} tickets</button>
+                 <small className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</small>
+                 {/* <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
+                     <button onClick={()=> claim()} className="button-pink-trans" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
+                     <button onClick={()=> collect()} className="button-pink-trans" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
+                 </div> */}
              </div>
          </div>
      );
