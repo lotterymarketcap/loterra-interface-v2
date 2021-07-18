@@ -121,8 +121,12 @@ export default () => {
         e.preventDefault();
         setCombo(e.target.value.toLowerCase())
         console.log(combo.split(" "))
-        const cart = combo.split(" ")
+        let cart = e.target.value.toLowerCase().replace( /\s\s+/g, ' ' ).split(" ")
+        if (cart[0] == ""){
+            cart = []
+        }
         setAmount(cart.length)
+
     }
     function generate(){
         const combination = [
