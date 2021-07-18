@@ -14,6 +14,7 @@ class App extends Component {
             <Root>
                 <Head>
                     <meta charSet="UTF-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, shrink-to-fit=no"/>
                     <title>LoTerra interface</title>
                     <meta property="og:title" content="LoTerra" />
                     <meta property="og:image" content="https://loterra.io/loterra.png" />
@@ -23,7 +24,7 @@ class App extends Component {
                     <meta property="og:description" content="LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain."/>
                 </Head>
               <Navbar/>
-              <div className="content">
+              <div className="content px-3">
                   <Routes default />
               </div>
               {/*<Footer/>*/}

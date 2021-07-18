@@ -57,8 +57,8 @@ export default function ConnectWallet(){
             return(
                 <div /*style={Modal}*/ onClick={() => closeModal()}>
                     <div /*style={Dialog}*/ className="card-glass">
-                        <button onClick={() => connectTo("extension")} className="button-glass" style={DialogButton}>Terra Station (extension)</button>
-                        <button onClick={() => connectTo("mobile")} className="button-glass" style={DialogButton}>Terra Station (mobile)</button>
+                        <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension)</button>
+                        <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile)</button>
                     </div>
                 </div>
             )
@@ -68,8 +68,8 @@ export default function ConnectWallet(){
     return(
         <div>
             <div style={{display:"flex"}}>
-                <button onClick={() => connectTo("extension")} className="button-glass" style={DialogButton}>Terra Station (extension)</button>
-                <button onClick={() => connectTo("mobile")} className="button-glass" style={DialogButton}>Terra Station (mobile)</button>
+                <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension)</button>
+                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile)</button>
             </div>
 
             {/*<button onClick={() => display()}>Connect Wallet</button>
