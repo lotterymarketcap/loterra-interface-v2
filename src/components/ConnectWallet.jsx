@@ -39,8 +39,7 @@ export default function ConnectWallet(){
     const connectedWallet = useConnectedWallet();
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     const [bank, setBank] = useState();
-
-    const lcd = useMemo(() => {
+    /*const lcd = useMemo(() => {
         if (!connectedWallet) {
           return null;
         }
@@ -49,7 +48,7 @@ export default function ConnectWallet(){
           URL: connectedWallet.network.lcd,
           chainID: connectedWallet.network.chainID,
         });
-      }, [connectedWallet]);
+      }, [connectedWallet]); */
     
 
     let wallet = ""
