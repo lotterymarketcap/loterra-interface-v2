@@ -111,7 +111,7 @@ export default function ConnectWallet(){
     function returnBank(){
         return(
             <>
-            <Wallet size={21} color="#fff" style={{display:'inline-block', marginTop:'-3px'}} /> {bank} <span className="text-sm">UST</span>
+            <Wallet size={21} color="#f2145d" style={{display:'inline-block', marginTop:'-3px'}} /> {bank} <span className="text-sm">UST</span>
             </>
         )
     }
@@ -121,12 +121,12 @@ export default function ConnectWallet(){
             <div style={{display:"flex"}}>
                 { wallet.status != 'WALLET_CONNECTED' &&
                 <>
-                <button onClick={() => connectTo("extension")} className={wallet.status == 'WALLET_CONNECTED' ? 'button-pink' : 'button-pink-outline'} style={DialogButton}>Terra Station (extension/mobile)</button>
-                <button onClick={() => connectTo("mobile")} className={wallet.status == 'WALLET_CONNECTED' ? 'button-pink' : 'button-pink-outline'} style={DialogButton}>Terra Station (mobile for desktop)</button>
+                <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
+                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
                 </>
                 }
                  { wallet.status == 'WALLET_CONNECTED' &&            
-                <button onClick={() => connectTo("mobile")} className={wallet.status == 'WALLET_CONNECTED' ? 'button-pink' : 'button-pink-outline'} style={DialogButton}>{wallet.status == 'WALLET_CONNECTED' ? returnBank() : '' }</button>
+                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{wallet.status == 'WALLET_CONNECTED' ? returnBank() : '' }</button>
             } 
             </div>
 
