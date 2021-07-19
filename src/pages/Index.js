@@ -4,6 +4,7 @@ import { Users, Ticket} from "phosphor-react";
 
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
+import Countdown from "../components/Countdown";
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -177,6 +178,7 @@ export default () => {
                  <h3><Users size={48} color="#f2145d" />{players}</h3>
                  <h3><Ticket size={48} color="#f2145d" />{tickets}</h3>
                  </div>
+                 <Countdown expiryTimestamp={expiryTimestamp}/>
                  <div className="grid grid-cols-3 gap-4 my-4">
                      <div className="col-span-3">
                         <p className="font-bold m-0 text-2xl">Buy tickets</p>
@@ -189,8 +191,9 @@ export default () => {
                         <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                      </div>
                  </div>
-                 <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{maxWidth: "500px", width:"100%", height:"300px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
-                 
+         
+                 <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{maxWidth: "500px", width:"100%", height:"150px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
+             
                  <div className="text-sm">{result}</div>
                  <button onClick={()=> execute()} className="button-pink" disabled={amount <= 0}>Buy {amount} tickets</button>
                  <small className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</small>
