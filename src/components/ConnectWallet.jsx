@@ -78,22 +78,32 @@ export default function ConnectWallet(){
         setIsDisplayDialog(false)
         console.log(wallet)
     }
+    async function contactBalance(){
+
+            if (connectedWallet && connectedWallet.walletAddress && lcd) {
+                //   setShowConnectOptions(false);
+                console.log(wallet);
+                let coins
+                try {
+                    coins = await lcd.bank.balance(connectedWallet.walletAddress);
+
+                }catch (e) {
+                    console.log(e)
+                }
+
+                let uusd = coins.filter((c) => {
+                    return c.denom === "uusd";
+                });
+                let ust = parseInt(uusd) / 1000000;
+                setBank(numeral(ust).format("0,0.00"));
+            } else {
+                setBank(null);
+            }
+    }
 
     useEffect(() => {
-        if (connectedWallet && connectedWallet.walletAddress && lcd) {
-        //   setShowConnectOptions(false);
-        console.log(wallet);
-          lcd.bank.balance(connectedWallet.walletAddress).then((coins) => {
-            let uusd = coins.filter((c) => {
-              return c.denom === "uusd";
-            });
-            let ust = parseInt(uusd) / 1000000;
-            setBank(numeral(ust).format("0,0.00"));
-          });
-        } else {
-          setBank(null);
-        }
-      }, [connectedWallet, lcd]);
+        contactBalance()
+    }, [connectedWallet]);
 
     function renderDialog(){
         if (isDisplayDialog){
