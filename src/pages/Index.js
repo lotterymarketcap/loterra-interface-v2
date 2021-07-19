@@ -188,8 +188,7 @@ export default () => {
               <div className="buy-tickets">
               <div className="grid grid-cols-3 gap-4">
                      <div className="col-span-3">
-                        <p className="font-bold m-0 text-2xl">Buy tickets</p>
-                        <small className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</small>
+                        <p className="font-bold m-0 text-2xl">Tickets on sale now!</p>
                      </div>
                      {/*<button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
                     <button onClick={() => multiplier(10)} className="button-glass font-bold">X10</button>
