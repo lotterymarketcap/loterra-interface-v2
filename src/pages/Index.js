@@ -190,15 +190,16 @@ export default () => {
                      <div className="col-span-3">
                         <p className="font-bold m-0 text-2xl">Buy tickets</p>
                      </div>
-                    <button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
+                    {/* <button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
                     <button onClick={() => multiplier(10)} className="button-glass font-bold">X10</button>
-                    <button onClick={() => multiplier(100)} className="button-glass font-bold">X100</button>
-                    <div className="col-span-3">
+                    <button onClick={() => multiplier(100)} className="button-glass font-bold">X100</button> */}
+                    {/* <div className="col-span-3">
                         <p className="font-bold m-0">Ticket list</p>
                         <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
-                     </div>
+                     </div> */}
                  </div>
-                 <input type="number" value={amount} onChange={(e) => inputChange(e)} />
+                 <label>Amount of  tickets</label>
+                 <input type="number" className="amount" value={amount} onChange={(e) => inputChange(e)} />
                  {/*<textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{maxWidth: "500px", width:"100%", height:"150px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />*/}
              
                  <div className="text-sm">{result}</div>
