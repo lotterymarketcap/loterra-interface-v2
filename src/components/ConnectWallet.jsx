@@ -36,11 +36,17 @@ const DialogButton = {
     margin: "10px 20px 10px 20px"
 }
 export default function ConnectWallet(){
-    // const connectedWallet = useConnectedWallet();
+    let connectedWallet = "";
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     const [bank, setBank] = useState();
     const [connected, setConnected]= useState(false);
-    /*const lcd = useMemo(() => {
+    let wallet = ""
+    if (typeof document !== 'undefined') {
+        wallet = useWallet();
+        connectedWallet = useConnectedWallet()
+    }
+    const lcd = useMemo(() => {
+
         if (!connectedWallet) {
           return null;
         }
@@ -49,13 +55,10 @@ export default function ConnectWallet(){
           URL: connectedWallet.network.lcd,
           chainID: connectedWallet.network.chainID,
         });
-      }, [connectedWallet]);*/
+      }, [connectedWallet]);
     
 
-    let wallet = ""
-    if (typeof document !== 'undefined') {
-        wallet = useWallet();
-    }
+
 
 
 
@@ -76,11 +79,13 @@ export default function ConnectWallet(){
         }
         else if (to == "mobile") {
             wallet.connect(wallet.availableConnectTypes[2])
+        }else if (to == "disconnect"){
+            wallet.disconnect()
         }
-        setIsDisplayDialog(false)
         setConnected(!connected)
+        setIsDisplayDialog(false)
     }
-    /*async function contactBalance(){
+    async function contactBalance(){
 
             if (connectedWallet && connectedWallet.walletAddress && lcd) {
                 //   setShowConnectOptions(false);
@@ -97,14 +102,16 @@ export default function ConnectWallet(){
                 });
                 let ust = parseInt(uusd) / 1000000;
                 setBank(numeral(ust).format("0,0.00"));
+                // connectTo("extension")
+                setConnected(true)
             } else {
                 setBank(null);
             }
-    } */
+    }
 
-    /*useEffect(() => {
+    useEffect(() => {
         contactBalance()
-    }, [connectedWallet, lcd]); */
+    }, [connectedWallet, lcd]);
 
     function renderDialog(){
         if (isDisplayDialog){
@@ -138,7 +145,7 @@ export default function ConnectWallet(){
                 </>
                 }
                  { connected &&
-                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{connected ? returnBank() : '' }</button>
+                <button onClick={() => connectTo("disconnect")} className="button-pink-outline" style={DialogButton}>{connected ? returnBank() : '' }</button>
             }
             </div>
 
