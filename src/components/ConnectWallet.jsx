@@ -36,11 +36,11 @@ const DialogButton = {
     margin: "10px 20px 10px 20px"
 }
 export default function ConnectWallet(){
-    const connectedWallet = useConnectedWallet();
+    // const connectedWallet = useConnectedWallet();
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     const [bank, setBank] = useState();
-    const [connected, setConnected] = useState(false)
-    const lcd = useMemo(() => {
+    const [connected, setConnected]= useState(false);
+    /*const lcd = useMemo(() => {
         if (!connectedWallet) {
           return null;
         }
@@ -49,7 +49,7 @@ export default function ConnectWallet(){
           URL: connectedWallet.network.lcd,
           chainID: connectedWallet.network.chainID,
         });
-      }, [connectedWallet]);
+      }, [connectedWallet]);*/
     
 
     let wallet = ""
@@ -80,7 +80,7 @@ export default function ConnectWallet(){
         setIsDisplayDialog(false)
         setConnected(!connected)
     }
-    async function contactBalance(){
+    /*async function contactBalance(){
 
             if (connectedWallet && connectedWallet.walletAddress && lcd) {
                 //   setShowConnectOptions(false);
@@ -100,11 +100,11 @@ export default function ConnectWallet(){
             } else {
                 setBank(null);
             }
-    }
+    } */
 
-    useEffect(() => {
+    /*useEffect(() => {
         contactBalance()
-    }, [connectedWallet, lcd]);
+    }, [connectedWallet, lcd]); */
 
     function renderDialog(){
         if (isDisplayDialog){
@@ -130,19 +130,16 @@ export default function ConnectWallet(){
     return(
         <div>
             <div style={{display:"flex"}}>
-                <>
-                    <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
-                    <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
-                </>
-                { /*!connected &&
+
+                { !connected &&
                 <>
                 <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
                 <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
                 </>
-                */}
-                 { /*connected &&
+                }
+                 { connected &&
                 <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{connected ? returnBank() : '' }</button>
-            */}
+            }
             </div>
 
             {/*<button onClick={() => display()}>Connect Wallet</button>
