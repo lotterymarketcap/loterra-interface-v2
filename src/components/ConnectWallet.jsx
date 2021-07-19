@@ -9,7 +9,7 @@ import {
 } from "@terra-money/wallet-provider";
 
 import { Wallet} from "phosphor-react";
-
+import numeral from "numeral"
 
 // let useWallet = {}
 // if (typeof document !== 'undefined') {
@@ -88,7 +88,7 @@ export default function ConnectWallet(){
               return c.denom === "uusd";
             });
             let ust = parseInt(uusd) / 1000000;
-            setBank(ust.toFixed(2).toString());
+            setBank(numeral(ust).format("0,0.00"));
           });
         } else {
           setBank(null);
