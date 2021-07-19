@@ -212,9 +212,9 @@ textarea::placeholder {
 }
 
 .countdown {
-  background: #fff;
+  background: #f2145d12;
+  border: 1px solid #f2145d47;
   border-radius: 10px;
-  box-shadow: 0px 5px 11px #ffdee9;
 }
 
 .countdown .time-start {
@@ -227,8 +227,8 @@ textarea::placeholder {
 
 .countdown .time-low {
   color: #f2145d;
-  opacity: 0.3;
-  font-size: 13px;
+  opacity: 0.6;
+  font-size: 10px;
   text-transform: uppercase;
 }
 
