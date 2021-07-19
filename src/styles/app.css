@@ -225,6 +225,14 @@ textarea::placeholder {
   margin-bottom: -10px;
 }
 
+.amount {
+  padding: 7px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 7px;
+  border: 1px solid #f2135d;
+}
+
 .countdown .time-low {
   color: #f2145d;
   opacity: 0.6;
