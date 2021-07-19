@@ -137,7 +137,7 @@ export default function ConnectWallet(){
                 </>
                 }
                  { connected &&
-                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{wallet.status == 'WALLET_CONNECTED' ? returnBank() : '' }</button>
+                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{connected ? returnBank() : '' }</button>
             } 
             </div>
 
