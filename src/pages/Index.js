@@ -177,8 +177,7 @@ export default () => {
          <div>
              <div style={{display: "flex", flexDirection:"column", alignItems:"center"}}>
                  <div className="text-4xl font-bold">LoTerra</div>
-                 <div>contract-v2.0.1</div>
-                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div>
+                 
                  <div className="grid grid-cols-2 gap-4 my-4 stats">
                  <p className="col-span-2 text-center uppercase mt-2 mb-0">Current jackpot</p>
                  <h2 className="col-span-2">{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
@@ -186,9 +185,11 @@ export default () => {
                  <h3><Ticket size={48} color="#f2145d" />{tickets}</h3>
                  </div>
                  <Countdown expiryTimestamp={expiryTimestamp}/>
-                 <div className="grid grid-cols-3 gap-4 my-4">
+              <div className="buy-tickets">
+              <div className="grid grid-cols-3 gap-4">
                      <div className="col-span-3">
                         <p className="font-bold m-0 text-2xl">Buy tickets</p>
+                        <small className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</small>
                      </div>
                      {/*<button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
                     <button onClick={() => multiplier(10)} className="button-glass font-bold">X10</button>
@@ -198,17 +199,21 @@ export default () => {
                         <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                      </div>*/}
                  </div>
-                 <label>Amount of  tickets</label>
-                 <input type="number" className="amount" value={amount} onChange={(e) => inputChange(e)} />
-                 {/*<textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{maxWidth: "500px", width:"100%", height:"150px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />*/}
+                 <div className="amount-block">
+                  <label>Amount of  tickets</label>
+                  <Ticket size={24} color="#f2145d" />
+                  <input type="number" className="amount" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
+                  <p className="mb-4 text-sm">Total: {amount}.00 UST</p>
+                 </div>
+                 
              
                  <div className="text-sm">{result}</div>
-                 <button onClick={()=> execute()} className="button-pink" disabled={amount <= 0}>Buy {amount} tickets</button>
-                 <small className="text-sm">We recommend to not buy more than 200 tickets per transactions (gas limit)</small>
-                 {/* <div style={{display:"flex", marginTop: "10px", marginBottom: "10px"}}>
-                     <button onClick={()=> claim()} className="button-pink-trans" style={{color:"deeppink", marginRight: "10px"}}>Claim</button>
-                     <button onClick={()=> collect()} className="button-pink-trans" style={{color:"deeppink", marginLeft: "10px"}}>Collect</button>
-                 </div> */}
+                 <button onClick={()=> execute()} className="button-pink mt-5" disabled={amount <= 0}>Buy {amount} tickets</button>
+         
+              </div>
+
+              <div className="mt-4">contract-v2.0.1</div>
+                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div>
              </div>
          </div>
      );
