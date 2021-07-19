@@ -1,9 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useMemo} from "react";
 
-let useWallet = {}
-if (typeof document !== 'undefined') {
-    useWallet = require('@terra-money/wallet-provider').useWallet
-}
+import { LCDClient } from "@terra-money/terra.js";
+import {
+  useWallet,
+  WalletStatus,
+  useConnectedWallet,
+  ConnectType,
+} from "@terra-money/wallet-provider";
+
+import { Wallet} from "phosphor-react";
+import numeral from "numeral"
+
+// let useWallet = {}
+// if (typeof document !== 'undefined') {
+//     useWallet = require('@terra-money/wallet-provider').useWallet
+// }
 /*const Modal = {
     position: "absolute",
     width: "100%",
@@ -25,7 +36,22 @@ const DialogButton = {
     margin: "10px 20px 10px 20px"
 }
 export default function ConnectWallet(){
+    const connectedWallet = useConnectedWallet();
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
+    const [bank, setBank] = useState();
+
+    const lcd = useMemo(() => {
+        if (!connectedWallet) {
+          return null;
+        }
+    
+        return new LCDClient({
+          URL: connectedWallet.network.lcd,
+          chainID: connectedWallet.network.chainID,
+        });
+      }, [connectedWallet]);
+    
+
     let wallet = ""
     if (typeof document !== 'undefined') {
         wallet = useWallet();
@@ -50,7 +76,24 @@ export default function ConnectWallet(){
             wallet.connect(wallet.availableConnectTypes[2])
         }
         setIsDisplayDialog(false)
+        console.log(wallet)
     }
+
+    useEffect(() => {
+        if (connectedWallet && connectedWallet.walletAddress && lcd) {
+        //   setShowConnectOptions(false);
+        console.log(wallet);
+          lcd.bank.balance(connectedWallet.walletAddress).then((coins) => {
+            let uusd = coins.filter((c) => {
+              return c.denom === "uusd";
+            });
+            let ust = parseInt(uusd) / 1000000;
+            setBank(numeral(ust).format("0,0.00"));
+          });
+        } else {
+          setBank(null);
+        }
+      }, [connectedWallet, lcd]);
 
     function renderDialog(){
         if (isDisplayDialog){
@@ -64,12 +107,27 @@ export default function ConnectWallet(){
             )
         }
     }
+    
+    function returnBank(){
+        return(
+            <>
+            <Wallet size={21} color="#f2145d" style={{display:'inline-block', marginTop:'-3px'}} /> {bank} <span className="text-sm">UST</span>
+            </>
+        )
+    }
 
     return(
         <div>
             <div style={{display:"flex"}}>
+                { wallet.status != 'WALLET_CONNECTED' &&
+                <>
                 <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
                 <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
+                </>
+                }
+                 { wallet.status == 'WALLET_CONNECTED' &&            
+                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{wallet.status == 'WALLET_CONNECTED' ? returnBank() : '' }</button>
+            } 
             </div>
 
             {/*<button onClick={() => display()}>Connect Wallet</button>
