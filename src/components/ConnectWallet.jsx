@@ -101,9 +101,9 @@ export default function ConnectWallet(){
             }
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         contactBalance()
-    }, [connectedWallet]);
+    }, [connectedWallet, lcd]);*/
 
     function renderDialog(){
         if (isDisplayDialog){
