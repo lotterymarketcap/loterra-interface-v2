@@ -39,7 +39,8 @@ export default function ConnectWallet(){
     const connectedWallet = useConnectedWallet();
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     const [bank, setBank] = useState();
-    /*const lcd = useMemo(() => {
+    const [connected, setConnected] = useState(false)
+    const lcd = useMemo(() => {
         if (!connectedWallet) {
           return null;
         }
@@ -48,13 +49,15 @@ export default function ConnectWallet(){
           URL: connectedWallet.network.lcd,
           chainID: connectedWallet.network.chainID,
         });
-      }, [connectedWallet]); */
+      }, [connectedWallet]);
     
 
     let wallet = ""
     if (typeof document !== 'undefined') {
         wallet = useWallet();
     }
+
+
 
     //const installChrome = useInstallChromeExtension();
     //const connectedWallet = ConnectedWallet ? useConnectedWallet() : undefined;
@@ -75,13 +78,12 @@ export default function ConnectWallet(){
             wallet.connect(wallet.availableConnectTypes[2])
         }
         setIsDisplayDialog(false)
-        console.log(wallet)
+        setConnected(!connected)
     }
     async function contactBalance(){
 
             if (connectedWallet && connectedWallet.walletAddress && lcd) {
                 //   setShowConnectOptions(false);
-                console.log(wallet);
                 let coins
                 try {
                     coins = await lcd.bank.balance(connectedWallet.walletAddress);
@@ -100,9 +102,9 @@ export default function ConnectWallet(){
             }
     }
 
-    /*useEffect(() => {
+    useEffect(() => {
         contactBalance()
-    }, [connectedWallet, lcd]);*/
+    }, [connectedWallet, lcd]);
 
     function renderDialog(){
         if (isDisplayDialog){
@@ -128,13 +130,13 @@ export default function ConnectWallet(){
     return(
         <div>
             <div style={{display:"flex"}}>
-                { wallet.status != 'WALLET_CONNECTED' &&
+                { !connected &&
                 <>
                 <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
                 <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
                 </>
                 }
-                 { wallet.status == 'WALLET_CONNECTED' &&            
+                 { connected &&
                 <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{wallet.status == 'WALLET_CONNECTED' ? returnBank() : '' }</button>
             } 
             </div>
