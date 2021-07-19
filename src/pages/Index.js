@@ -208,7 +208,7 @@ export default () => {
              
                  <div className="text-sm">{result}</div>
                  <button onClick={()=> execute()} className="button-pink mt-5" disabled={amount <= 0}>Buy {amount} tickets</button>
-         
+      
               </div>
 
               <div className="mt-4">contract-v2.0.1</div>
