@@ -210,3 +210,35 @@ footer{
 textarea::placeholder {
   color: dimgrey;
 }
+
+.countdown {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 11px #ffdee9;
+}
+
+.countdown .time-start {
+  color: #f2145d;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 2px;
+  margin-bottom: -10px;
+}
+
+.countdown .time-low {
+  color: #f2145d;
+  opacity: 0.3;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.countdown .time {
+  color: #f2145d;
+  font-size:36px;
+}
+
+.countdown .time-dot {
+  color: #f2145d;
+  font-size:36px;
+  margin-top:15px;
+}
