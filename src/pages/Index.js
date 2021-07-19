@@ -118,7 +118,7 @@ export default () => {
     }
  
 
-    function change(e) {
+    /*function change(e) {
         e.preventDefault();
         setCombo(e.target.value.toLowerCase())
         console.log(combo.split(" "))
@@ -127,7 +127,7 @@ export default () => {
             cart = []
         }
         setAmount(cart.length)
-    }
+    } */
     function inputChange(e){
         e.preventDefault();
         let ticketAmount = e.target.value
@@ -164,7 +164,7 @@ export default () => {
     }
 
     function multiplier(mul){
-        let allCombo = combo;
+        let allCombo = "";
         for (let x=0; x < mul; x++ ){
             let newCombo = generate()
             allCombo = allCombo == "" ? newCombo : allCombo + " " + newCombo
@@ -190,13 +190,13 @@ export default () => {
                      <div className="col-span-3">
                         <p className="font-bold m-0 text-2xl">Buy tickets</p>
                      </div>
-                    {/* <button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
+                     {/*<button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
                     <button onClick={() => multiplier(10)} className="button-glass font-bold">X10</button>
-                    <button onClick={() => multiplier(100)} className="button-glass font-bold">X100</button> */}
-                    {/* <div className="col-span-3">
+                    <button onClick={() => multiplier(100)} className="button-glass font-bold">X100</button>
+                    <div className="col-span-3">
                         <p className="font-bold m-0">Ticket list</p>
                         <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
-                     </div> */}
+                     </div>*/}
                  </div>
                  <label>Amount of  tickets</label>
                  <input type="number" className="amount" value={amount} onChange={(e) => inputChange(e)} />
