@@ -127,8 +127,15 @@ export default () => {
             cart = []
         }
         setAmount(cart.length)
-
     }
+    function inputChange(e){
+        e.preventDefault();
+        let ticketAmount = e.target.value
+        if (ticketAmount > 200) ticketAmount = 200
+        multiplier(ticketAmount)
+        setAmount(ticketAmount)
+    }
+
     function generate(){
         const combination = [
             '0',
@@ -191,8 +198,8 @@ export default () => {
                         <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
                      </div>
                  </div>
-         
-                 <textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{maxWidth: "500px", width:"100%", height:"150px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />
+                 <input type="number" value={amount} onChange={(e) => inputChange(e)} />
+                 {/*<textarea placeholder="Enter a list of ticket within this format: 123456 abcdef 1abce2..." style={{maxWidth: "500px", width:"100%", height:"150px", marginBottom:"20px", padding:"10px"}} className="card-glass" type="text" value={combo} onChange={(e) => change(e)}  />*/}
              
                  <div className="text-sm">{result}</div>
                  <button onClick={()=> execute()} className="button-pink" disabled={amount <= 0}>Buy {amount} tickets</button>
