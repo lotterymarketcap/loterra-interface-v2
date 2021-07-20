@@ -36,11 +36,17 @@ const DialogButton = {
     margin: "10px 20px 10px 20px"
 }
 export default function ConnectWallet(){
-    const connectedWallet = useConnectedWallet();
+    let connectedWallet = "";
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     const [bank, setBank] = useState();
-
+    const [connected, setConnected]= useState(false);
+    let wallet = ""
+    if (typeof document !== 'undefined') {
+        wallet = useWallet();
+        connectedWallet = useConnectedWallet()
+    }
     const lcd = useMemo(() => {
+
         if (!connectedWallet) {
           return null;
         }
@@ -52,10 +58,9 @@ export default function ConnectWallet(){
       }, [connectedWallet]);
     
 
-    let wallet = ""
-    if (typeof document !== 'undefined') {
-        wallet = useWallet();
-    }
+
+
+
 
     //const installChrome = useInstallChromeExtension();
     //const connectedWallet = ConnectedWallet ? useConnectedWallet() : undefined;
@@ -74,26 +79,39 @@ export default function ConnectWallet(){
         }
         else if (to == "mobile") {
             wallet.connect(wallet.availableConnectTypes[2])
+        }else if (to == "disconnect"){
+            wallet.disconnect()
         }
+        setConnected(!connected)
         setIsDisplayDialog(false)
-        console.log(wallet)
+    }
+    async function contactBalance(){
+
+            if (connectedWallet && connectedWallet.walletAddress && lcd) {
+                //   setShowConnectOptions(false);
+                let coins
+                try {
+                    coins = await lcd.bank.balance(connectedWallet.walletAddress);
+
+                }catch (e) {
+                    console.log(e)
+                }
+
+                let uusd = coins.filter((c) => {
+                    return c.denom === "uusd";
+                });
+                let ust = parseInt(uusd) / 1000000;
+                setBank(numeral(ust).format("0,0.00"));
+                // connectTo("extension")
+                setConnected(true)
+            } else {
+                setBank(null);
+            }
     }
 
     useEffect(() => {
-        if (connectedWallet && connectedWallet.walletAddress && lcd) {
-        //   setShowConnectOptions(false);
-        console.log(wallet);
-          lcd.bank.balance(connectedWallet.walletAddress).then((coins) => {
-            let uusd = coins.filter((c) => {
-              return c.denom === "uusd";
-            });
-            let ust = parseInt(uusd) / 1000000;
-            setBank(numeral(ust).format("0,0.00"));
-          });
-        } else {
-          setBank(null);
-        }
-      }, [connectedWallet, lcd]);
+        contactBalance()
+    }, [connectedWallet, lcd]);
 
     function renderDialog(){
         if (isDisplayDialog){
@@ -119,15 +137,16 @@ export default function ConnectWallet(){
     return(
         <div>
             <div style={{display:"flex"}}>
-                { wallet.status != 'WALLET_CONNECTED' &&
+
+                { !connected &&
                 <>
                 <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
                 <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
                 </>
                 }
-                 { wallet.status == 'WALLET_CONNECTED' &&            
-                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>{wallet.status == 'WALLET_CONNECTED' ? returnBank() : '' }</button>
-            } 
+                 { connected &&
+                <button onClick={() => connectTo("disconnect")} className="button-pink-outline" style={DialogButton}>{connected ? returnBank() : '' }</button>
+            }
             </div>
 
             {/*<button onClick={() => display()}>Connect Wallet</button>

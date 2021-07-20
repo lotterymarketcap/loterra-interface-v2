@@ -23,6 +23,7 @@ export default () => {
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
+  const [price, setPrice] = useState(0);
   const [expiryTimestamp, setExpiryTimestamp] = useState(
     1
   ); /** default timestamp need to be > 1 */
@@ -40,7 +41,7 @@ export default () => {
           config: {},
         }
       );
-
+      setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
       const bank = new BankAPI(terra.apiRequester);
       const contractBalance = await bank.balance('terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0');
@@ -65,6 +66,8 @@ export default () => {
         }
       );
       setPlayers(parseInt(contractPlayersInfo));
+      // Set default tickets to buy is an average bag
+      multiplier(parseInt(contractTicketsInfo / contractPlayersInfo))
     } catch (e) {
       console.log(e);
     }
@@ -202,7 +205,7 @@ export default () => {
                   <label>Amount of  tickets</label>
                   <Ticket size={24} color="#f2145d" />
                   <input type="number" className="amount" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
-                  <p className="mb-4 text-sm">Total: {amount}.00 UST</p>
+                  <p className="mb-4 text-sm">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
                  </div>
                  
              
