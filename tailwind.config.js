@@ -14,6 +14,7 @@ module.exports = {
         "blue-dark": "#1B025F",
         "pink-light": "#F257F2",
         "pink-dark": "#F038F0",
+        "indigo-dark": "#10003B",
         "green-light": "#20FF93",
       },
       fontFamily: {
