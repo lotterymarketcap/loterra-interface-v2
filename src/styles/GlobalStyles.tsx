@@ -3,7 +3,7 @@ import tw, { theme, GlobalStyles as BaseStyles } from "twin.macro";
 
 const CustomStyles = createGlobalStyle`
   body {
-    ${tw`antialiased bg-blue-dark font-body`}
+    ${tw`antialiased bg-indigo-dark font-body`}
   }
 `;
 

@@ -9,7 +9,7 @@ const bgStyles = css`
   ${tw`inline-block align-bottom bg-blue-dark rounded-3xl p-12 text-left shadow-xl transform transition-all sm:align-middle max-w-2xl`}
 `;
 
-export default function Home() {
+export default function Staking() {
   return (
     <>
       <Head>
