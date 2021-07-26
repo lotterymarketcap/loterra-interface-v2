@@ -236,6 +236,7 @@ textarea::placeholder {
   box-shadow: 0px 11px 27px #f2145d0d;
   display: flex;
   flex-direction: column;
+  background-image: url("/public/ticket.png");
 }
 
 

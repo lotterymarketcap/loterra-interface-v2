@@ -90,9 +90,9 @@ export default function ConnectWallet(){
             if (connectedWallet && connectedWallet.walletAddress && lcd) {
                 //   setShowConnectOptions(false);
                 let coins
+                let token
                 try {
                     coins = await lcd.bank.balance(connectedWallet.walletAddress);
-
                 }catch (e) {
                     console.log(e)
                 }
