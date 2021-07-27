@@ -30,9 +30,9 @@ class App extends Component {
                     <meta property="og:description" content="LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain."/>
                 </Head>
               <Navbar/>
-              <div className="content px-3">
+              
                   <Routes default />
-              </div>
+              
               {/*<Footer/>*/}
             </Root>
         </Suspense>

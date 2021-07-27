@@ -143,7 +143,7 @@ export default function ConnectWallet(){
                     <>                       
                         <div className="btn-group">
                             <button
-                                className="btn btn-outline-primary nav-item dropdown-toggle"
+                                className="btn btn-green nav-item dropdown-toggle"
                                 type="button"
                                 id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown"

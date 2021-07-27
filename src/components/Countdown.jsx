@@ -26,7 +26,7 @@ export default function Countdown(props){
     return (
       <div className="countdown">
       <div className="row">
-          <div className="col-12 text-center">
+          <div className="col-12 text-center mb-3">
               <div className="title">Next draw in</div>
           </div>
           <div className="col-12">
@@ -46,45 +46,49 @@ export default function Countdown(props){
           <div className="col-12">
               <div className="row text-center">
                   <div className="col px-1">
+                      <div className="text-sm time-low">Days</div>
                       <div className="font-bold time" x-text="days">
                           {expiryTimestamp > 1
                               ? days.toString().padStart(2, 0)
                               : '-'}
                       </div>
-                      <div className="text-sm time-low">Days</div>
+                      
                   </div>
                   <div className="col px-1">
-                      <span className="spacer"></span>
+                      <span className="spacer">:</span>
                   </div>
                   <div className="col px-1">
+                      <div className="text-sm time-low">Hours</div>
                       <div className="font-bold time" x-text="hours">
                           {expiryTimestamp > 1
                               ? hours.toString().padStart(2, 0)
                               : '-'}
                       </div>
-                      <div className="text-sm time-low">Hours</div>
+                      
                   </div>
                   <div className="col px-1">
-                      <span className="spacer"></span>
+                      <span className="spacer">:</span>
                   </div>
                   <div className="col px-1">
+                  <div className="text-sm time-low">Minutes</div>
                       <div className="font-bold time" x-text="minutes">
                           {expiryTimestamp > 1
                               ? minutes.toString().padStart(2, 0)
                               : '-'}
                       </div>
-                      <div className="text-sm time-low">Minutes</div>
+                      
                   </div>
                   <div className="col px-1">
-                      <span className="spacer"></span>
+                      <span className="spacer">:</span>
                   </div>
                   <div className="col px-1">
+                  <div className="text-sm time-low">Seconds</div>
                       <div className="font-bold time" x-text="seconds">
                           {expiryTimestamp > 1
                               ? seconds.toString().padStart(2, 0)
                               : '-'}
                       </div>
-                      <div className="text-sm time-low">Seconds</div>
+                     
                   </div>
               </div>
           </div>

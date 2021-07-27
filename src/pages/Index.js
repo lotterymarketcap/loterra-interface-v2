@@ -178,10 +178,10 @@ export default () => {
     }
      return (
          <>
-         <div className="hero">                
+         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>                
                 <div className="container">
                   <div className="row">
-                    <div className="col-12 text-center">
+                    <div className="col-md-8 mx-auto text-center">
                       <div className="jackpot">
                         <p>Current jackpot</p>
                         <h2>{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
@@ -216,24 +216,14 @@ export default () => {
                         </div>
                     </div>
                   </div>
-                  <div className="col-md-8 mx-auto">
+                  <div className="col-md-4 mx-auto mt-4">
                     <Countdown expiryTimestamp={expiryTimestamp}/>
                   </div>
-                  <div className="col-md-8 mx-auto">
-                  <div className="amount-block">
-                 <label>Amount of  tickets</label>
-                 <small><span>HINT</span> Assure your prize! Average buying ticket {(tickets / players)}</small>
-                 <Ticket size={24} color="#f2145d" />
-                 <input type="number" className="form-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
-                 <p >Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
-                </div>
+                 
                 
-            
-                <div className="text-sm">{result}</div>
-                <button onClick={()=> execute()} className="btn btn-primary" disabled={amount <= 0}>Buy {amount} tickets</button>
-                  </div>
                 </div>              
                  
+               
                 
 
               
@@ -243,6 +233,27 @@ export default () => {
                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div> */}
            
         </div>
+        <div className="container">
+                   <div className="row">
+                   <div className="col-md-4 mx-auto">
+                    <div className="card amount-block">
+                      <div className="card-body">
+                        <h4>Amount of  tickets</h4>
+                        <small><span>HINT</span> Assure your prize! Average buying ticket is {numeral((tickets / players)).format('0')}</small>                     
+                        <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
+                        <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
+                        <div className="text-sm">{result}</div>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" style={{marginBottom:'-45px'}} disabled={amount <= 0}>Buy {amount} tickets</button>
+                      </div>
+                    </div>               
+            
+                      
+                  </div>
+                      <div className="col-12 text-center">
+                          
+                      </div>
+                   </div>
+                 </div>
          </>
      );
 }
