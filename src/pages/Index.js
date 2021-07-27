@@ -181,20 +181,20 @@ export default () => {
          <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>                
                 <div className="container">
                   <div className="row">
-                    <div className="col-md-8 mx-auto text-center">
+                    <div className="col-xl-8 mx-auto text-center">
                       <div className="jackpot">
                         <p>Current jackpot</p>
                         <h2>{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
                       </div>
                     </div>
-                    <div className="col-md-8 mx-auto">
+                    <div className="col-xl-8 mx-auto">
                         <div className="row">
                           <div className="col-6">
                             <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
                                   <div className="col text-center"><Users size={48} color="#73FFC1" /></div>
-                                  <div className="col-8">
+                                  <div className="col-md-8 text-center text-md-start">
                                     <h3><span>Players</span>{players}</h3>
                                   </div>
                                 </div>                                
@@ -206,7 +206,7 @@ export default () => {
                               <div className="card-body">
                                 <div className="row">
                                   <div className="col text-center"><Ticket size={48} color="#73FFC1" /></div>
-                                  <div className="col-8">
+                                  <div className="col-md-8 text-center text-md-start">
                                     <h3><span>Tickets</span>{tickets}</h3>
                                   </div>
                                 </div>
@@ -216,7 +216,7 @@ export default () => {
                         </div>
                     </div>
                   </div>
-                  <div className="col-md-4 mx-auto mt-4">
+                  <div className="col-10 col-lg-5 col-xl-4 mx-auto mt-4">
                     <Countdown expiryTimestamp={expiryTimestamp}/>
                   </div>
                  
@@ -235,7 +235,7 @@ export default () => {
         </div>
         <div className="container">
                    <div className="row">
-                   <div className="col-md-4 mx-auto">
+                   <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
                       <div className="card-body">
                         <h4>Amount of  tickets</h4>

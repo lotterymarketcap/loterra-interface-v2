@@ -25,6 +25,9 @@
         font-weight: 900;
         font-size: 53px;
         color: #FFFFFF;
+        @media(max-width:500px){
+            font-size:34px;        
+          }
     }
     .time-low {
         font-weight: normal;
@@ -38,6 +41,10 @@
         font-weight: 900;
         color: #fff;
         line-height: 93px;
+        @media(max-width:500px){
+            font-size:34px;    
+            line-height:68px;    
+          }
     }
 }
 

@@ -137,7 +137,7 @@ export default function ConnectWallet(){
     return(
         <div className="navbar navbar-expand p-2 p-md-3">
         <div className="container-fluid">
-            <a className="navbar-brand"><img src="logo.png"/></a>
+            <a className="navbar-brand"><img src="logo.png"/> <span>LOTERRA</span></a>
             <div className="navbar-nav ms-auto">
                 {!connected && (
                     <>                       
