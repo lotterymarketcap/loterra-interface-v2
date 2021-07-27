@@ -39,7 +39,7 @@ export default function Countdown(props){
                       aria-valuemin="0"
                       aria-valuemax="100"
                   >
-                      10%
+                     
                   </div>
               </div>
           </div>

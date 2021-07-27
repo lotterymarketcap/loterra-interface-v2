@@ -43,6 +43,8 @@ width: 100%;
 .navbar {
   position:fixed;
   width:100%;
+  z-index:999;
+  transition:background 150ms linear;
   .navbar-brand {
     span {
       color: #fff;
@@ -53,6 +55,9 @@ width: 100%;
       width:80px;
     }
   }
+  &.sticky {
+    background: #0f003870;
+  }
 }
 
 .hero {
@@ -62,16 +67,17 @@ width: 100%;
 
 .jackpot {  
   p {
-    font-weight: normal;
-    font-size: 36px;
-    line-height: 42px;
-    text-align: center;    
-    color:$primary;    
-    text-shadow: 0px 0px 26px $primary; 
-    text-transform:uppercase;
+    color: #f038f0;
+    text-transform: uppercase;
+    font-size: 41px;
+    line-height: 30px;
+    margin-top: 45px;
+    font-weight: 300;
+    text-shadow: 0px 0px 26px #ff36ff;
     @media(max-width:500px){
       font-size:24px;
       margin:0;
+      line-height: 0px;
     }
   }
   h2 {
@@ -122,8 +128,8 @@ width: 100%;
   color:#fff;
   h3 {
     font-weight: bold;
-    font-size: 24px;
-    line-height: 28px;    
+    font-size: 34px;
+    line-height: 35px; 
     color: #FFFFFF;
       span{
         display:block;
@@ -141,6 +147,7 @@ width: 100%;
 box-sizing: border-box;
 box-shadow: 0px 16px 47px #10003A;
 border-radius: 10px;
+margin-bottom: 50px;
   label {
     display:block;
     font-weight:bold;    
@@ -154,6 +161,21 @@ border-radius: 10px;
       padding:4px;
       border-radius:10px;
       margin-right:3px;
+    }
+  }
+}
+
+
+
+.dropdown-menu {
+  background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
+  border-radius: 10px;
+  box-shadow: 0px 28px 48px #0F0038;
+  color:#fff;
+  .dropdown-item {
+    color:#fff;
+    &:hover {
+      background:#0F0038;
     }
   }
 }

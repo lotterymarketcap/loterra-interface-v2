@@ -129,13 +129,28 @@ export default function ConnectWallet(){
     function returnBank(){
         return(
             <>
-            <Wallet size={21} color="#f2145d" style={{display:'inline-block', marginTop:'-3px'}} /> {bank} <span className="text-sm">UST</span>
+            <Wallet size={21} color="#0F0038" style={{display:'inline-block', marginTop:'-3px'}} /> {bank} <span className="text-sm">UST</span>
             </>
         )
     }
 
+    const [scrolled,setScrolled]= React.useState(false);
+    const handleScroll=() => {
+        const offset=window.scrollY;
+        if(offset > 25 ){
+          setScrolled(true);
+        }
+        else{
+          setScrolled(false);
+        }
+      }
+    
+      useEffect(() => {
+        window.addEventListener('scroll',handleScroll)
+      })
+
     return(
-        <div className="navbar navbar-expand p-2 p-md-3">
+        <div className={scrolled ? 'navbar navbar-expand p-2 p-md-3 sticky' : 'navbar navbar-expand p-2 p-md-3'}>
         <div className="container-fluid">
             <a className="navbar-brand"><img src="logo.png"/> <span>LOTERRA</span></a>
             <div className="navbar-nav ms-auto">
@@ -189,7 +204,7 @@ export default function ConnectWallet(){
                 {connected && (
                     <button
                         onClick={() => connectTo('disconnect')}
-                        className="btn btn-outline-primary nav-item"
+                        className="btn btn-green nav-item"
                     >
                         {connected ? returnBank() : ''}
                     </button>
