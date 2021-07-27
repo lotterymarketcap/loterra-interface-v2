@@ -76,14 +76,13 @@ export default () => {
   useEffect(() => {
     fetchContractQuery();
   }, [fetchContractQuery]);
-
-    const [combo, setCombo] = useState("")
-    const [result, setResult] = useState("")
-    const [amount, setAmount] = useState(0)
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
     }
+    const [combo, setCombo] = useState("")
+    const [result, setResult] = useState("")
+    const [amount, setAmount] = useState(0)
 
     function execute(){
         const cart = combo.split(" ")
