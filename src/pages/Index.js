@@ -179,13 +179,17 @@ export default () => {
      return (
          <div>
              <div style={{display: "flex", flexDirection:"column", alignItems:"center"}}>
-                 <div className="text-4xl font-bold">LoTerra</div>
+                 <div className="text-4xl font-bold"><img src="logo.png"/></div>
                  
                  <div className="grid grid-cols-2 gap-4 my-4 stats">
                  <p className="col-span-2 text-center uppercase mt-2 mb-0">Current jackpot</p>
                  <h2 className="col-span-2">{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
-                 <h3><Users size={48} color="#f2145d" />{players}</h3>
-                 <h3><Ticket size={48} color="#f2145d" />{tickets}</h3>
+                  <div>
+                    <h3><span>Players</span><Users size={48} color="#f2145d" />{players}</h3>
+                  </div>
+                  <div>
+                    <h3><span>Tickets</span><Ticket size={48} color="#f2145d" />{tickets}</h3>
+                  </div>
                  </div>
                  <Countdown expiryTimestamp={expiryTimestamp}/>
               <div className="buy-tickets">
@@ -203,9 +207,10 @@ export default () => {
                  </div>
                  <div className="amount-block">
                   <label>Amount of  tickets</label>
+                  <small><span>HINT</span> Assure your prize! Average buying ticket {(tickets / players)}</small>
                   <Ticket size={24} color="#f2145d" />
                   <input type="number" className="amount" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
-                  <p className="mb-4 text-sm">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
+                  <p className="my-2 opacity-50 text-sm">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
                  </div>
                  
              

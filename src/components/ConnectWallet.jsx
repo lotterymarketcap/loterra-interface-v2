@@ -8,7 +8,7 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet} from "phosphor-react";
+import { Wallet, CaretRight } from 'phosphor-react'
 import numeral from "numeral"
 
 // let useWallet = {}
@@ -135,23 +135,70 @@ export default function ConnectWallet(){
     }
 
     return(
-        <div>
-            <div style={{display:"flex"}}>
-
-                { !connected &&
-                <>
-                <button onClick={() => connectTo("extension")} className="button-pink-outline" style={DialogButton}>Terra Station (extension/mobile)</button>
-                <button onClick={() => connectTo("mobile")} className="button-pink-outline" style={DialogButton}>Terra Station (mobile for desktop)</button>
-                </>
-                }
-                 { connected &&
-                <button onClick={() => connectTo("disconnect")} className="button-pink-outline" style={DialogButton}>{connected ? returnBank() : '' }</button>
-            }
+        <div className="navbar navbar-expand p-2 p-md-3">
+        <div className="container-fluid">
+            <div className="navbar-nav ms-auto">
+                {!connected && (
+                    <>                       
+                        <div className="btn-group">
+                            <button
+                                className="btn btn-outline-primary nav-item dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <Wallet
+                                    size={18}
+                                    style={{
+                                        marginTop: '-4px',
+                                        marginRight: '4px',
+                                    }}
+                                />
+                                Connect
+                            </button>
+                            <ul
+                                className="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="dropdownMenuButton1"
+                            >
+                                <button
+                                    onClick={() => connectTo('extension')}
+                                    className="dropdown-item"
+                                >
+                                    <CaretRight
+                                        size={16}
+                                        style={{ marginTop: '-4px' }}
+                                    />{' '}
+                                    Terra Station (extension/mobile)
+                                </button>
+                                <button
+                                    onClick={() => connectTo('mobile')}
+                                    className="dropdown-item"
+                                >
+                                    <CaretRight
+                                        size={16}
+                                        style={{ marginTop: '-4px' }}
+                                    />{' '}
+                                    Terra Station (mobile for desktop)
+                                </button>
+                            </ul>
+                        </div>
+                    </>
+                )}
+                {connected && (
+                    <button
+                        onClick={() => connectTo('disconnect')}
+                        className="btn btn-outline-primary nav-item"
+                    >
+                        {connected ? returnBank() : ''}
+                    </button>
+                )}
             </div>
-
-            {/*<button onClick={() => display()}>Connect Wallet</button>
-            {renderDialog()}*/}
         </div>
+
+        {/*<button onClick={() => display()}>Connect Wallet</button>
+        {renderDialog()}*/}
+    </div>
 
     )
 }

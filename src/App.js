@@ -4,8 +4,14 @@ import { Router, Link } from '@reach/router'
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import './styles/app.css'
+import './styles/base.scss'
 import {Head} from "react-static";
+import { popper } from '@popperjs/core'
+
+let bootstrap = {}
+if (typeof document !== 'undefined') {
+    bootstrap = require('bootstrap')
+}
 
 class App extends Component {
   render() {

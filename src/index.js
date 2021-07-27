@@ -38,7 +38,13 @@ if (typeof document !== 'undefined') {
         <Wallet defaultNetwork={mainnet} walletConnectChainIds={{
           0: testnet,
           1: mainnet,
-        }}>
+        }}
+        connectorOpts={{
+          bridge: true
+              ? 'https://walletconnect.terra.dev/'
+              : 'https://tequila-walletconnect.terra.dev/',
+        }}
+        >
           <AppContainer>
             <Provider store={store}>
                 <Comp />
