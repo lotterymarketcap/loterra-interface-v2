@@ -177,50 +177,72 @@ export default () => {
         setAmount(cart.length)
     }
      return (
-         <div>
-             <div style={{display: "flex", flexDirection:"column", alignItems:"center"}}>
-                 <div className="text-4xl font-bold"><img src="logo.png"/></div>
-                 
-                 <div className="grid grid-cols-2 gap-4 my-4 stats">
-                 <p className="col-span-2 text-center uppercase mt-2 mb-0">Current jackpot</p>
-                 <h2 className="col-span-2">{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
-                  <div>
-                    <h3><span>Players</span><Users size={48} color="#f2145d" />{players}</h3>
+         <>
+         <div className="hero">                
+                <div className="container">
+                  <div className="row">
+                    <div className="col-12 text-center">
+                      <div className="jackpot">
+                        <p>Current jackpot</p>
+                        <h2>{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
+                      </div>
+                    </div>
+                    <div className="col-md-8 mx-auto">
+                        <div className="row">
+                          <div className="col-6">
+                            <div className="card stats-card">
+                              <div className="card-body">
+                                <div className="row">
+                                  <div className="col text-center"><Users size={48} color="#73FFC1" /></div>
+                                  <div className="col-8">
+                                    <h3><span>Players</span>{players}</h3>
+                                  </div>
+                                </div>                                
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                          <div className="card stats-card">
+                              <div className="card-body">
+                                <div className="row">
+                                  <div className="col text-center"><Ticket size={48} color="#73FFC1" /></div>
+                                  <div className="col-8">
+                                    <h3><span>Tickets</span>{tickets}</h3>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3><span>Tickets</span><Ticket size={48} color="#f2145d" />{tickets}</h3>
+                  <div className="col-md-8 mx-auto">
+                    <Countdown expiryTimestamp={expiryTimestamp}/>
                   </div>
-                 </div>
-                 <Countdown expiryTimestamp={expiryTimestamp}/>
-              <div className="buy-tickets">
-              <div className="grid grid-cols-3 gap-4">
-                     <div className="col-span-3">
-                        <p className="font-bold m-0 text-2xl">Tickets on sale now!</p>
-                     </div>
-                     {/*<button onClick={() => multiplier(1)} className="button-glass font-bold">Generate combination</button>
-                    <button onClick={() => multiplier(10)} className="button-glass font-bold">X10</button>
-                    <button onClick={() => multiplier(100)} className="button-glass font-bold">X100</button>
-                    <div className="col-span-3">
-                        <p className="font-bold m-0">Ticket list</p>
-                        <div className="text-sm">hint: Enter ticket number from [0-9][a-f] max 6 symbols and spaced</div>
-                     </div>*/}
-                 </div>
-                 <div className="amount-block">
-                  <label>Amount of  tickets</label>
-                  <small><span>HINT</span> Assure your prize! Average buying ticket {(tickets / players)}</small>
-                  <Ticket size={24} color="#f2145d" />
-                  <input type="number" className="amount" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
-                  <p className="my-2 opacity-50 text-sm">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
-                 </div>
+                  <div className="col-md-8 mx-auto">
+                  <div className="amount-block">
+                 <label>Amount of  tickets</label>
+                 <small><span>HINT</span> Assure your prize! Average buying ticket {(tickets / players)}</small>
+                 <Ticket size={24} color="#f2145d" />
+                 <input type="number" className="form-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
+                 <p >Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
+                </div>
+                
+            
+                <div className="text-sm">{result}</div>
+                <button onClick={()=> execute()} className="btn btn-primary" disabled={amount <= 0}>Buy {amount} tickets</button>
+                  </div>
+                </div>              
                  
-             
-                 <div className="text-sm">{result}</div>
-                 <button onClick={()=> execute()} className="button-pink mt-5" disabled={amount <= 0}>Buy {amount} tickets</button>
-              </div>
+                
 
-              <div className="mt-4">contract-v2.0.1</div>
-                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div>
-             </div>
-         </div>
+              
+
+{/* 
+             <div className="mt-4">contract-v2.0.1</div>
+                <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div> */}
+           
+        </div>
+         </>
      );
 }
