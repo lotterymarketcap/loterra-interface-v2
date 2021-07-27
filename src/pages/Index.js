@@ -47,7 +47,7 @@ export default () => {
       const contractBalance = await bank.balance('terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0');
       const ustBalance = contractBalance.get('uusd').toData();
       const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward;
-      const contractJackpotInfo = ((ustBalance.amount * jackpotAlocation) / 100);
+      const contractJackpotInfo = (ustBalance.amount * jackpotAlocation) / 100;
 
       setJackpot(parseInt(contractJackpotInfo) / 1000000);
 
@@ -238,7 +238,7 @@ export default () => {
                     <div className="card amount-block">
                       <div className="card-body">
                         <h4>Amount of  tickets</h4>
-                        <small><span>HINT</span> Assure your prize! Average buying ticket is {numeral((tickets / players)).format('0')}</small>                     
+                        <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
                         <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
                         <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
                         <div className="text-sm">{result}</div>
