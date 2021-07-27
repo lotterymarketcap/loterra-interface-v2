@@ -4,8 +4,14 @@ import { Router, Link } from '@reach/router'
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import './styles/app.css'
+import './styles/base.scss'
 import {Head} from "react-static";
+import { popper } from '@popperjs/core'
+
+let bootstrap = {}
+if (typeof document !== 'undefined') {
+    bootstrap = require('bootstrap')
+}
 
 class App extends Component {
   render() {
@@ -24,9 +30,9 @@ class App extends Component {
                     <meta property="og:description" content="LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain."/>
                 </Head>
               <Navbar/>
-              <div className="content px-3">
+              
                   <Routes default />
-              </div>
+              
               {/*<Footer/>*/}
             </Root>
         </Suspense>
