@@ -76,7 +76,10 @@ export default () => {
   useEffect(() => {
     fetchContractQuery();
   }, [fetchContractQuery]);
-
+    let connectedWallet = ""
+    if (typeof document !== 'undefined') {
+        connectedWallet = useConnectedWallet()
+    }
     const [combo, setCombo] = useState("")
     const [result, setResult] = useState("")
     const [amount, setAmount] = useState(0)
