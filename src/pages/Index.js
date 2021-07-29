@@ -87,9 +87,9 @@ export default () => {
     function execute(){
         const cart = combo.split(" ")
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
-        const addToGas = 5000 * cart.length
+        const addToGas = 5300 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        const obj = new StdFee(600_000, { uusd: 100000 + addToGas })
+        const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0",
