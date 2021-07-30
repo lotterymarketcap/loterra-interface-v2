@@ -23,6 +23,7 @@ export default () => {
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
+  const [winners, setWinners] = useState(0);
   const [price, setPrice] = useState(0);
   const [expiryTimestamp, setExpiryTimestamp] = useState(
     1
@@ -68,6 +69,19 @@ export default () => {
       setPlayers(parseInt(contractPlayersInfo));
       // Set default tickets to buy is an average bag
       multiplier(parseInt(contractTicketsInfo / contractPlayersInfo))
+
+
+      //Get Winners
+      const contractWinnersInfo = await api.contractQuery(
+        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+        {
+          winner: { lottery_id: contractConfigInfo.lottery_counter - 1  },
+        }
+      );
+      setWinners(contractWinnersInfo)
+      console.log('winners',winners)
+
+      
     } catch (e) {
       console.log(e);
     }
@@ -245,14 +259,40 @@ export default () => {
                         <div className="text-sm">{result}</div>
                         <button onClick={()=> execute()} className="btn btn-special w-100" style={{marginBottom:'-45px'}} disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
-                    </div>               
-            
-                      
-                  </div>
-                      <div className="col-12 text-center">
-                          
-                      </div>
+                    </div>                          
+                  </div>                      
                    </div>
+                 </div>
+
+
+                 <div className="container">
+                    <div className="col-12">
+                        <div className="card lota-card">
+                          <div className="card-body">
+                            <h3>Jackpot winners</h3>
+                            <table className="table">
+                                <thead>
+                                  <tr>
+                                  <th scope="col">Rank</th>
+                                  <th scope="col">Symbols</th>
+                                  <th scope="col">Prizes</th>
+                                  <th scope="col">Gross</th>
+                                  <th scope="col">Tax</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">#1</th>
+                                    <td>6 Symbols</td>
+                                    <td>0.00 <span>UST</span></td>
+                                    <td>0.00 <span>UST</span></td>
+                                    <td>0.00 <span>UST</span></td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                        </div>
+                    </div>
                  </div>
          </>
      );
