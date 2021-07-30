@@ -107,15 +107,16 @@ export default () => {
     fetchContractQuery();
    
   }, [fetchContractQuery]);
-
-    const [combo, setCombo] = useState("")
-    const [result, setResult] = useState("")
-    const [amount, setAmount] = useState(0)
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
     }
-    
+
+    const [combo, setCombo] = useState("")
+    const [result, setResult] = useState("")
+    const [amount, setAmount] = useState(0)
+
+
     function execute(){
         const cart = combo.split(" ")
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
