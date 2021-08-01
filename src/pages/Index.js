@@ -1,10 +1,11 @@
 import React, {useEffect, useState, useCallback} from "react";
 import numeral from "numeral";
-import { Users, Ticket} from "phosphor-react";
+import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
 
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
+import config from "../store/config";
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -16,17 +17,22 @@ const HomeCard={
     padding: '30px',
 }
 
-
-
+const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
+const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 export default () => {
 
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
+  const [winners, setWinners] = useState(0);
+  const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
   const [price, setPrice] = useState(0);
+  const [contractBalance, setContractBalance] = useState(0);
+  const [lotaPrice, setLotaPrice] = useState(0);
   const [expiryTimestamp, setExpiryTimestamp] = useState(
     1
   ); /** default timestamp need to be > 1 */
+  const [tokenHolderFee, setTokenHolderFee] = useState(0);
 
   const fetchContractQuery = useCallback(async () => {
     const terra = new LCDClient({
@@ -36,7 +42,7 @@ export default () => {
     const api = new WasmAPI(terra.apiRequester);
     try {
       const contractConfigInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+          loterra_contract_address,
         {
           config: {},
         }
@@ -44,15 +50,19 @@ export default () => {
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
       const bank = new BankAPI(terra.apiRequester);
-      const contractBalance = await bank.balance('terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0');
+      const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
       const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward;
       const contractJackpotInfo = (ustBalance.amount * jackpotAlocation) / 100;
 
+
+      setContractBalance(ustBalance.amount / 1000000);
+      setTokenHolderFee(contractConfigInfo.token_holder_percentage_fee_reward);
       setJackpot(parseInt(contractJackpotInfo) / 1000000);
+      setPrizeRankWinnerPercentage(contractConfigInfo.prize_rank_winner_percentage);
 
       const contractTicketsInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+          loterra_contract_address,
         {
           count_ticket: { lottery_id: contractConfigInfo.lottery_counter },
         }
@@ -60,7 +70,7 @@ export default () => {
       setTickets(parseInt(contractTicketsInfo));
 
       const contractPlayersInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+        loterra_contract_address,
         {
           count_player: { lottery_id: contractConfigInfo.lottery_counter },
         }
@@ -68,21 +78,48 @@ export default () => {
       setPlayers(parseInt(contractPlayersInfo));
       // Set default tickets to buy is an average bag
       multiplier(parseInt(contractTicketsInfo / contractPlayersInfo))
+
+
+      //Get Winners
+      const contractWinnersInfo = await api.contractQuery(
+          loterra_contract_address,
+        {
+          winner: { lottery_id: contractConfigInfo.lottery_counter - 1  },
+        }
+      );
+      setWinners(contractWinnersInfo)
+
+      //Get current lota price
+      const currentLotaPrice = await api.contractQuery(
+          loterra_pool_address,
+        {
+          pool: {},
+        }
+      );
+      setLotaPrice(currentLotaPrice)
+
+      //Dev purposes disable for production
+      console.log('contract info',contractConfigInfo)
     } catch (e) {
       console.log(e);
     }
   }, []);
 
+ 
+
   useEffect(() => {
     fetchContractQuery();
+   
   }, [fetchContractQuery]);
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
     }
+
     const [combo, setCombo] = useState("")
     const [result, setResult] = useState("")
     const [amount, setAmount] = useState(0)
+
 
     function execute(){
         const cart = combo.split(" ")
@@ -92,7 +129,7 @@ export default () => {
         const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0",
+            loterra_contract_address,
             {
                 register: {
                     combination: cart,
@@ -136,6 +173,25 @@ export default () => {
         if (ticketAmount > 200) ticketAmount = 200
         multiplier(ticketAmount)
         setAmount(ticketAmount)
+    }
+
+    function getPrizePerRank(nr){
+        let rank = nr-1;
+        return numeral(
+          (prizeRankWinnerPercentage[rank] * parseInt(jackpot)) / 100
+        ).format('0,0.00')
+    }
+    function getPrizePerRankGross(nr){
+        let rank = nr-1;
+        return numeral(
+            (prizeRankWinnerPercentage[rank] * parseInt(jackpot) - (prizeRankWinnerPercentage[rank] * parseInt(jackpot) * tokenHolderFee / 100)) / 100
+        ).format('0,0.00')
+    }
+    function getPrizePerRankTax(nr){
+        let rank = nr-1;
+        return numeral(
+            (prizeRankWinnerPercentage[rank] * parseInt(jackpot) / 100) * (tokenHolderFee / 100)
+        ).format('0,0.00')
     }
 
     function generate(){
@@ -244,15 +300,135 @@ export default () => {
                         <div className="text-sm">{result}</div>
                         <button onClick={()=> execute()} className="btn btn-special w-100" style={{marginBottom:'-45px'}} disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
-                    </div>               
-            
-                      
-                  </div>
-                      <div className="col-12 text-center">
-                          
-                      </div>
+                    </div>                          
+                  </div>                      
                    </div>
                  </div>
+
+
+                 <div className="container" style={{marginTop:'7rem'}}>                    
+                        <div className="card lota-card">
+                          <div className="card-header text-center">
+                            <div className="card-header-icon">
+                              <Trophy size={90} color="#20FF93"/>
+                            </div>
+                            <h3>Latest jackpot results</h3>
+                          </div>
+                          <div className="card-body">
+                          <h4 className="mt-4">Rewards</h4>
+                          <div class="table-responsive">
+                            <table className="table text-white mb-3">
+                              <thead>
+                                <tr>
+                                  <th>Ranks</th>
+                                  <th>Symbols</th>
+                                  <th>Prizes</th>
+                                  <th>Gross</th>
+                                  <th>LOTA tax</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                <th scope="row" className="text-white">#1</th>
+                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>6 Symbols</td>
+                                  <td>{getPrizePerRank(1)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(1)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(1)}<span>UST</span></td>
+                                </tr>
+                                <tr>
+                                <th scope="row" className="text-white">#2</th>
+                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>5 Symbols</td>
+                                  <td>{getPrizePerRank(2)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(2)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(2)}<span>UST</span></td>
+                                </tr>
+                                <tr>
+                                <th scope="row" className="text-white">#3</th>
+                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>4 Symbols</td>
+                                  <td>{getPrizePerRank(3)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(3)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(3)}<span>UST</span></td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" className="text-white">#4</th>
+                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>3 Symbols</td>
+                                  <td>{getPrizePerRank(4)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(4)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(4)}<span>UST</span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+                            <h4 className="mt-4">Winners</h4>
+                            <div class="table-responsive">
+                            <table className="table text-white">
+                                <thead>
+                                  <tr>
+                                  <th scope="col">Rank</th>
+                                  <th scope="col">Address</th>
+                                  <th scope="col">Collected</th>                             
+                                  </tr>
+                                </thead>
+                                <tbody>                                
+                                  {winners.winners && winners.winners.map((obj,key) => {
+                                    return (
+                                      <tr key={key}>
+                                        <th scope="row" style={{minWidth:'100px'}}><Trophy size={24} color="#4EDC97" className="me-2"/>{obj.claims.ranks.map((r,key) => {
+                                          if(key == obj.claims.ranks.length - 1) {
+                                            return (r)
+                                          } else {
+                                            return (r+',')
+                                          }
+                                          
+                                        })}</th>
+                                        <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
+                                        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>                                  
+                                    </tr>
+                                    )
+                                  })}
+                                </tbody>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                    
+                 </div>
+
+                 <div className="container" style={{marginTop:'8rem'}}>
+                              <div className="card lota-card">
+                              <div className="card-header text-center">
+                            <div className="card-header-icon">
+                              <ChartPie size={90} color="#20FF93"/>
+                            </div>
+                            <h3>Loterra stats</h3>
+                          </div>
+                                  <div className="card-body">
+                                      <div className="row">
+                                        <div className="col-md-6">
+                                          <div className="lota-stats mb-4 mb-md-0">
+                                          { lotaPrice.assets &&
+                                            <>
+                                            <p>Current LOTA price</p>
+                                            <h5>{numeral((lotaPrice.assets[1].amount/lotaPrice.assets[0].amount)).format('0.000')}<span>UST</span></h5>
+                                            {/* <p>{contractJackpotInfo}</p> */}
+                                            </>
+                                          }
+                                          </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="lota-stats">
+                                              <p>Current lottery balance</p>
+                                              <h5>{numeral(contractBalance).format("0,0.00")}<span>UST</span></h5>
+                                            </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
+                 </div>
+
+
+
+                 
          </>
      );
 }

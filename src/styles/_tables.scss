@@ -1,0 +1,39 @@
+.table {
+    thead {
+        th {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.26);
+            text-transform:uppercase;
+            border:0;
+        }
+    }
+    tbody {
+        tr {
+            border-bottom: 8px solid #1f104d;
+            background:#180943;
+            td {
+                border:0;
+                &.collected {
+                    color: #20FF93;
+                }
+                &.uncollected {
+                    color: rgba(255, 255, 255, 0.53);
+                }
+                span {
+                    opacity:0.5;
+                    font-size:13px;
+                    margin-left:3px;
+                }
+            }
+            th {
+                border: 0;
+                background: #0F0038;
+                color: #FF36FF;
+                font-size:18px;
+            }
+            &:last-child {
+                border-bottom:0;
+            }
+        }
+    }
+}
