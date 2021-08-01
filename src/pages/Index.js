@@ -5,6 +5,7 @@ import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
+import config from "../store/config";
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -16,8 +17,8 @@ const HomeCard={
     padding: '30px',
 }
 
-
-
+const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
+const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 export default () => {
 
     const [jackpot, setJackpot] = useState(0);
@@ -26,11 +27,12 @@ export default () => {
   const [winners, setWinners] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
   const [price, setPrice] = useState(0);
-  // const [balance, ]
+  const [contractBalance, setContractBalance] = useState(0);
   const [lotaPrice, setLotaPrice] = useState(0);
   const [expiryTimestamp, setExpiryTimestamp] = useState(
     1
   ); /** default timestamp need to be > 1 */
+  const [tokenHolderFee, setTokenHolderFee] = useState(0);
 
   const fetchContractQuery = useCallback(async () => {
     const terra = new LCDClient({
@@ -40,7 +42,7 @@ export default () => {
     const api = new WasmAPI(terra.apiRequester);
     try {
       const contractConfigInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+          loterra_contract_address,
         {
           config: {},
         }
@@ -48,16 +50,19 @@ export default () => {
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
       const bank = new BankAPI(terra.apiRequester);
-      const contractBalance = await bank.balance('terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0');
+      const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
       const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward;
+
       const contractJackpotInfo = ((ustBalance.amount * jackpotAlocation) / 100);
 
+      setContractBalance(ustBalance.amount / 1000000);
+      setTokenHolderFee(contractConfigInfo.token_holder_percentage_fee_reward);
       setJackpot(parseInt(contractJackpotInfo) / 1000000);
       setPrizeRankWinnerPercentage(contractConfigInfo.prize_rank_winner_percentage);
 
       const contractTicketsInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+          loterra_contract_address,
         {
           count_ticket: { lottery_id: contractConfigInfo.lottery_counter },
         }
@@ -65,7 +70,7 @@ export default () => {
       setTickets(parseInt(contractTicketsInfo));
 
       const contractPlayersInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+        loterra_contract_address,
         {
           count_player: { lottery_id: contractConfigInfo.lottery_counter },
         }
@@ -77,7 +82,7 @@ export default () => {
 
       //Get Winners
       const contractWinnersInfo = await api.contractQuery(
-        'terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0',
+          loterra_contract_address,
         {
           winner: { lottery_id: contractConfigInfo.lottery_counter - 1  },
         }
@@ -86,16 +91,15 @@ export default () => {
 
       //Get current lota price
       const currentLotaPrice = await api.contractQuery(
-        'terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta',
+          loterra_pool_address,
         {
           pool: {},
         }
       );
       setLotaPrice(currentLotaPrice)
-        
+
       //Dev purposes disable for production
       console.log('contract info',contractConfigInfo)
-     
     } catch (e) {
       console.log(e);
     }
@@ -125,7 +129,7 @@ export default () => {
         const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0",
+            loterra_contract_address,
             {
                 register: {
                     combination: cart,
@@ -175,6 +179,18 @@ export default () => {
         let rank = nr-1;
         return numeral(
           (prizeRankWinnerPercentage[rank] * parseInt(jackpot)) / 100
+        ).format('0,0.00')
+    }
+    function getPrizePerRankGross(nr){
+        let rank = nr-1;
+        return numeral(
+            (prizeRankWinnerPercentage[rank] * parseInt(jackpot) - (prizeRankWinnerPercentage[rank] * parseInt(jackpot) * tokenHolderFee / 100)) / 100
+        ).format('0,0.00')
+    }
+    function getPrizePerRankTax(nr){
+        let rank = nr-1;
+        return numeral(
+            (prizeRankWinnerPercentage[rank] * parseInt(jackpot) / 100) * (tokenHolderFee / 100)
         ).format('0,0.00')
     }
 
@@ -308,7 +324,7 @@ export default () => {
                                   <th>Symbols</th>
                                   <th>Prizes</th>
                                   <th>Gross</th>
-                                  <th>Tax</th>
+                                  <th>LOTA tax</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -316,29 +332,29 @@ export default () => {
                                 <th scope="row" className="text-white">#1</th>
                                   <td style={{color:'#FF36FF',minWidth:'100px'}}>6 Symbols</td>
                                   <td>{getPrizePerRank(1)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(1)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(1)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(1)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(1)}<span>UST</span></td>
                                 </tr>
                                 <tr>
                                 <th scope="row" className="text-white">#2</th>
                                   <td style={{color:'#FF36FF',minWidth:'100px'}}>5 Symbols</td>
                                   <td>{getPrizePerRank(2)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(2)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(2)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(2)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(2)}<span>UST</span></td>
                                 </tr>
                                 <tr>
                                 <th scope="row" className="text-white">#3</th>
                                   <td style={{color:'#FF36FF',minWidth:'100px'}}>4 Symbols</td>
                                   <td>{getPrizePerRank(3)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(3)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(3)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(3)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(3)}<span>UST</span></td>
                                 </tr>
                                 <tr>
                                   <th scope="row" className="text-white">#4</th>
                                   <td style={{color:'#FF36FF',minWidth:'100px'}}>3 Symbols</td>
                                   <td>{getPrizePerRank(4)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(4)}<span>UST</span></td>
-                                  <td>{getPrizePerRank(4)}<span>UST</span></td>
+                                  <td>{getPrizePerRankGross(4)}<span>UST</span></td>
+                                  <td>{getPrizePerRankTax(4)}<span>UST</span></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -402,7 +418,7 @@ export default () => {
                                         <div className="col-md-6">
                                             <div className="lota-stats">
                                               <p>Current lottery balance</p>
-                                              <h5>100000<span>UST</span></h5>
+                                              <h5>{numeral(contractBalance).format("0,0.00")}<span>UST</span></h5>
                                             </div>
                                         </div>
                                       </div>
