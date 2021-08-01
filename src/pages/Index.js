@@ -400,7 +400,7 @@ export default () => {
                             <div className="card-header-icon">
                               <ChartPie size={90} color="#20FF93"/>
                             </div>
-                            <h3>Loterra stats</h3>
+                            <h3>LoTerra stats</h3>
                           </div>
                                   <div className="card-body">
                                       <div className="row">
