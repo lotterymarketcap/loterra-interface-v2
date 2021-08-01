@@ -77,7 +77,7 @@ export default () => {
       );
       setPlayers(parseInt(contractPlayersInfo));
       // Set default tickets to buy is an average bag
-      multiplier(parseInt(contractTicketsInfo / contractPlayersInfo))
+      multiplier(parseInt(isNaN(contractTicketsInfo / contractPlayersInfo) ? 1 : contractTicketsInfo / contractPlayersInfo ))
 
 
       //Get Winners
