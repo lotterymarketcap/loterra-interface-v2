@@ -53,8 +53,8 @@ export default () => {
       const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
       const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward;
+      const contractJackpotInfo = (ustBalance.amount * jackpotAlocation) / 100;
 
-      const contractJackpotInfo = ((ustBalance.amount * jackpotAlocation) / 100);
 
       setContractBalance(ustBalance.amount / 1000000);
       setTokenHolderFee(contractConfigInfo.token_holder_percentage_fee_reward);
@@ -124,7 +124,7 @@ export default () => {
     function execute(){
         const cart = combo.split(" ")
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
-        const addToGas = 5000 * cart.length
+        const addToGas = 5300 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
         const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
         const msg = new MsgExecuteContract(
@@ -294,7 +294,7 @@ export default () => {
                     <div className="card amount-block">
                       <div className="card-body">
                         <h4>Amount of  tickets</h4>
-                        <small><span>HINT</span> Assure your prize! Average buying ticket is {numeral((tickets / players)).format('0')}</small>                     
+                        <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
                         <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
                         <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
                         <div className="text-sm">{result}</div>
