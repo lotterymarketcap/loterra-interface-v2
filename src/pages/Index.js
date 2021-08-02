@@ -322,8 +322,8 @@ export default () => {
                                 <tr>
                                   <th>Ranks</th>
                                   <th>Symbols</th>
-                                  <th>Prizes</th>
-                                  <th>Gross</th>
+                                  <th>Gross prizes</th>
+                                  <th>Net prizes</th>
                                   <th>LOTA tax</th>
                                 </tr>
                               </thead>
