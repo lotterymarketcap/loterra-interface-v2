@@ -8,8 +8,9 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet, CaretRight } from 'phosphor-react'
+import { Wallet, CaretRight, UserCircle } from 'phosphor-react'
 import numeral from "numeral"
+import UserModal from "./UserModal";
 
 // let useWallet = {}
 // if (typeof document !== 'undefined') {
@@ -38,6 +39,7 @@ const DialogButton = {
 export default function ConnectWallet(){
     let connectedWallet = "";
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
+    const [isModal, setIsModal] = useState(false);
     const [bank, setBank] = useState();
     const [connected, setConnected]= useState(false);
     let wallet = ""
@@ -202,18 +204,25 @@ export default function ConnectWallet(){
                     </>
                 )}
                 {connected && (
+                    <>
+                    <button className="btn btn-default nav-item me-2" onClick={() => setIsModal(!isModal)}><UserCircle size={26}
+                    style={{
+                        marginTop: '-4px'
+                    }} /></button>                        
                     <button
                         onClick={() => connectTo('disconnect')}
                         className="btn btn-green nav-item"
                     >
                         {connected ? returnBank() : ''}
                     </button>
+                    </>
                 )}
             </div>
         </div>
 
         {/*<button onClick={() => display()}>Connect Wallet</button>
         {renderDialog()}*/}
+        <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)}/>
     </div>
 
     )
