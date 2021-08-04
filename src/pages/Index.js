@@ -316,7 +316,7 @@ export default () => {
                           </div>
                           <div className="card-body">
                           <h4 className="mt-4">Rewards</h4>
-                          <div class="table-responsive">
+                          <div className="table-responsive">
                             <table className="table text-white mb-3">
                               <thead>
                                 <tr>
@@ -360,7 +360,7 @@ export default () => {
                             </table>
                             </div>
                             <h4 className="mt-4">Winners</h4>
-                            <div class="table-responsive">
+                            <div className="table-responsive">
                             <table className="table text-white">
                                 <thead>
                                   <tr>

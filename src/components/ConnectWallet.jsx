@@ -111,8 +111,11 @@ export default function ConnectWallet(){
             }
     }
 
+ 
+
     useEffect(() => {
         contactBalance()
+        console.log(connectedWallet)
     }, [connectedWallet, lcd]);
 
     function renderDialog(){
@@ -222,7 +225,9 @@ export default function ConnectWallet(){
 
         {/*<button onClick={() => display()}>Connect Wallet</button>
         {renderDialog()}*/}
-        <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)}/>
+        {connected &&
+            <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)} connetedWallet={connectedWallet}/>
+        }
     </div>
 
     )

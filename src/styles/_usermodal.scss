@@ -27,6 +27,11 @@
            }
         }
     }
+    .usermodal_content {
+        width:100%;
+        position:relative;
+        padding:35px 15px;
+    }
     &.show {
         right:0;
         visibility: visible;
