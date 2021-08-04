@@ -10,6 +10,10 @@
     transition:all 200ms linear;
     background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
     box-shadow: 0px 28px 0px #0F0038;
+    @media(max-width:660px){
+        width:330px;
+        right:-330px;
+    }
     .toggle {
         background:transparent;
         border:0;
@@ -17,6 +21,7 @@
         right:0;
         top:0;
         padding:5px;
+        z-index:3;
         svg {
             opacity:0.5;
             color:#fff;          
@@ -31,6 +36,32 @@
         width:100%;
         position:relative;
         padding:35px 15px;
+        .start {
+            svg {
+                fill:#fff;
+                opacity:0.5;
+            }
+        }
+        .list-group {
+            .list-group-item {
+                background:#180943;
+                color:#fff;
+                font-weight:bold;
+                svg {
+                    margin-right:3px;
+                    margin-top:-2px;
+                }                                
+            }
+        }
+        .claim {
+            h4{
+                font-weight:bold;
+            }
+            p {
+                font-size:14px;
+                opacity:0.5;
+            }
+        }
     }
     &.show {
         right:0;
