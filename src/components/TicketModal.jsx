@@ -16,7 +16,11 @@ export default function TicketModal(props){
                 <ul className="list-group">
             {combo && combo.split(" ").map(obj => {
                           return (
-                            <li className="list-group-item">{obj}</li>
+                            <li className="list-group-item">{obj && Array.from(obj).map( c => {
+                                return (
+                                    <input defaultValue={c} className="form-control text-center" />
+                                )
+                            })}</li>
                           )
                         })}    
                         </ul>
