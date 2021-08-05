@@ -37,7 +37,8 @@ export default () => {
     1
   ); /** default timestamp need to be > 1 */
   const [tokenHolderFee, setTokenHolderFee] = useState(0);
-  const [allWinners, setAllWinners] = useState([])
+  const [allWinners, setAllWinners] = useState([]);
+  const {state, dispatch} = useStore();
 
   const fetchContractQuery = useCallback(async () => {
     const terra = new LCDClient({
@@ -54,6 +55,7 @@ export default () => {
       );
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
+      dispatch({type: "setExpiryTimestamp", message: parseInt(contractConfigInfo.block_time_play * 1000)})
       const bank = new BankAPI(terra.apiRequester);
       const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
@@ -115,14 +117,20 @@ export default () => {
       //Dev purposes disable for production
       console.log('contract info',contractConfigInfo)
 
-        // Check if the player address is in winners
-        const winners = await api.contractQuery(loterra_contract_address, {
-            winners:{
+        // Query all winners
+        const {winners} = await api.contractQuery(loterra_contract_address, {
+            winner:{
                 lottery_id: contractConfigInfo.lottery_counter - 1
             }
         });
-      setAllWinners(winners)
-        console.log(winners)
+      dispatch({type: "setAllWinners", message: winners})
+        // Query all players
+        const players = await api.contractQuery(loterra_contract_address, {
+            players:{
+                lottery_id: contractConfigInfo.lottery_counter - 1
+            }
+        });
+      dispatch({type: "setAllPlayers", message: players})
 
     } catch (e) {
       console.log(e);
@@ -257,7 +265,6 @@ export default () => {
     }
 
   
-    const {state, dispatch} = useStore();
 
 
      return (

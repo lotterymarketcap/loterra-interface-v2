@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useMemo, useCallback} from "react";
 import { X, Ticket,UserCircle } from 'phosphor-react'
 import {LCDClient, WasmAPI} from "@terra-money/terra.js";
+import {useStore} from "../store";
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
 }
-
 
 export default function UserModal(props){
 
@@ -15,7 +15,7 @@ export default function UserModal(props){
     }
 
     const { open, toggleModal } = props;
-
+    const store = useStore();
 
     return(
         <>

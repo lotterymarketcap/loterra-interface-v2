@@ -1,10 +1,31 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 const StoreContext = createContext();
-const initialState = {count: 0, message: ""};
+const initialState = {
+  count: 0,
+  message: "",
+  allWinners: [],
+  allPlayers: [],
+  expiryTimestamp: 0
+};
 
 const reducer = (state, action) => {
   switch(action.type) {
+    case "setAllWinners":
+      return {
+        ...state,
+        allWinners: action.message
+      }
+    case "setAllPlayers":
+      return {
+        ...state,
+        allPlayers: action.message
+      }
+    case "setExpiryTimestamp":
+      return {
+        ...state,
+        expiryTimestamp: action.message
+      }
     case "increment":
       return {
         count: state.count + 1,
