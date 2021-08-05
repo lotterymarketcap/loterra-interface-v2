@@ -5,7 +5,6 @@ import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
-import config from "../store/config";
 import TicketModal from "../components/TicketModal";
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -21,7 +20,6 @@ const HomeCard={
 const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 export default () => {
-
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
@@ -36,6 +34,7 @@ export default () => {
     1
   ); /** default timestamp need to be > 1 */
   const [tokenHolderFee, setTokenHolderFee] = useState(0);
+  const [allWinners, setAllWinners] = useState([])
 
   const fetchContractQuery = useCallback(async () => {
     const terra = new LCDClient({
@@ -112,6 +111,16 @@ export default () => {
 
       //Dev purposes disable for production
       console.log('contract info',contractConfigInfo)
+
+        // Check if the player address is in winners
+        const winners = await api.contractQuery(loterra_contract_address, {
+            winners:{
+                lottery_id: contractConfigInfo.lottery_counter - 1
+            }
+        });
+      setAllWinners(winners)
+        console.log(winners)
+
     } catch (e) {
       console.log(e);
     }

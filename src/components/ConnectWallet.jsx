@@ -11,7 +11,6 @@ import {
 import { Wallet, CaretRight, UserCircle } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
-
 // let useWallet = {}
 // if (typeof document !== 'undefined') {
 //     useWallet = require('@terra-money/wallet-provider').useWallet

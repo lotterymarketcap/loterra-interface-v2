@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { Provider } from 'react-redux'
-import store from './store'
+
 let Wallet = {}
 if (typeof document !== 'undefined') {
   Wallet = require("@terra-money/wallet-provider").WalletProvider
@@ -46,9 +45,7 @@ if (typeof document !== 'undefined') {
         }}
         >
           <AppContainer>
-            <Provider store={store}>
                 <Comp />
-            </Provider>
           </AppContainer>
         </Wallet>,
       target
