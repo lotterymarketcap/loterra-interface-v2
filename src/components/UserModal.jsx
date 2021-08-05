@@ -44,9 +44,10 @@ export default function UserModal(props){
                                 </div>
 
                                 <div className="col-12 text-center mt-4 claim">
-                                    <h4>Claim rewards</h4>
+                                    <h4>Claim & Collect</h4>
                                     <p>By clicking this button loterra will check if you won any prizes, if you did we will claim them automatically for you</p>
-                                    <button className="btn btn-special w-100" style={{boxShadow:'none'}}>Claim</button>
+                                    <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}}>Claim</button>
+                                    <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}}>Collect</button>
                                 </div>
                             </>
                         )
