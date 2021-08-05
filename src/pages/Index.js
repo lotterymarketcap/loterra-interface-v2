@@ -25,6 +25,7 @@ export default () => {
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
   const [winners, setWinners] = useState(0);
+  const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
   const [price, setPrice] = useState(0);
   const [contractBalance, setContractBalance] = useState(0);
@@ -88,6 +89,15 @@ export default () => {
         }
       );
       setWinners(contractWinnersInfo)
+
+      //Get latest winning combination
+      const winningCombination = await api.contractQuery(
+        loterra_contract_address,
+      {
+        winning_combination: { lottery_id: contractConfigInfo.lottery_counter - 1  },
+      }
+    );
+    setLatestWinningCombination(winningCombination)
 
       //Get current lota price
       const currentLotaPrice = await api.contractQuery(
@@ -315,6 +325,10 @@ export default () => {
                             <h3>Latest jackpot results</h3>
                           </div>
                           <div className="card-body">
+                            <div className="w-100 text-center latest-combination">
+                            <h4>Latest winning combination</h4>
+                            <p>{LatestWinningCombination ? LatestWinningCombination : '...' }</p>
+                            </div>
                           <h4 className="mt-4">Rewards</h4>
                           <div className="table-responsive">
                             <table className="table text-white mb-3">

@@ -73,6 +73,22 @@ width: 100%;
     padding: 105px 0;
 }
 
+.latest-combination {
+  p {
+    color: #f038f0;
+    font-weight: bold;
+    font-size: 35px;
+    display: inline-block;
+    background: #0E0034;
+    border: 1px solid #25135F;
+    box-sizing: border-box;
+    box-shadow: inset 0px 4px 23px 9px rgba(0, 0, 0, 0.25);
+    padding: 10px 30px;
+    letter-spacing: 8px;
+    border-radius:10px;
+  }
+}
+
 .jackpot {  
   p {
     color: #f038f0;
