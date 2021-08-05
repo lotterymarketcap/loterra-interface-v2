@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useCallback} from "react";
 import numeral from "numeral";
 import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
-
+const {Consumer } = React.createContext();
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -254,7 +254,14 @@ export default () => {
     }
      return (
          <>
-         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>                
+             <Consumer>
+                 {MyDataConsumer => (
+                     <div>
+                         {MyDataConsumer.hello}
+                     </div>
+                 )}
+             </Consumer>
+         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
                 <div className="container">
                   <div className="row">
                     <div className="col-xl-7 mx-auto text-center">
@@ -273,7 +280,7 @@ export default () => {
                                   <div className="col-md-8 text-center text-md-start">
                                     <h3><span>Players</span>{players}</h3>
                                   </div>
-                                </div>                                
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -295,19 +302,19 @@ export default () => {
                   <div className="col-10 col-lg-5 col-xl-4 mx-auto mt-4">
                     <Countdown expiryTimestamp={expiryTimestamp}/>
                   </div>
-                 
-                
-                </div>              
-                 
-               
-                
 
-              
 
-{/* 
+                </div>
+
+
+
+
+
+
+{/*
              <div className="mt-4">contract-v2.0.1</div>
                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div> */}
-           
+
         </div>
         <div className="container">
                    <div className="row">
@@ -321,15 +328,15 @@ export default () => {
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} combo={combo} toggleModal={() => setTicketModal(!ticketModal)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>                                         
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
-                    </div>                          
-                  </div>                      
+                    </div>
+                  </div>
                    </div>
                  </div>
 
 
-                 <div className="container" style={{marginTop:'7rem'}}>                    
+                 <div className="container" style={{marginTop:'7rem'}}>
                         <div className="card lota-card">
                           <div className="card-header text-center">
                             <div className="card-header-icon">
@@ -393,10 +400,10 @@ export default () => {
                                   <tr>
                                   <th scope="col">Rank</th>
                                   <th scope="col">Address</th>
-                                  <th scope="col">Collected</th>                             
+                                  <th scope="col">Collected</th>
                                   </tr>
                                 </thead>
-                                <tbody>                                
+                                <tbody>
                                   {winners.winners && winners.winners.map((obj,key) => {
                                     return (
                                       <tr key={key}>
@@ -406,10 +413,10 @@ export default () => {
                                           } else {
                                             return (r+',')
                                           }
-                                          
+
                                         })}</th>
                                         <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
-                                        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>                                  
+                                        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>
                                     </tr>
                                     )
                                   })}
@@ -418,7 +425,7 @@ export default () => {
                             </div>
                           </div>
                         </div>
-                    
+
                  </div>
 
                  <div className="container" style={{marginTop:'8rem'}}>
@@ -453,9 +460,6 @@ export default () => {
                               </div>
                  </div>
 
-
-              
-                 
          </>
      );
 }
