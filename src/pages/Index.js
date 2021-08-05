@@ -6,6 +6,7 @@ import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
 import config from "../store/config";
+import TicketModal from "../components/TicketModal";
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -27,6 +28,7 @@ export default () => {
   const [winners, setWinners] = useState(0);
   const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
+  const [ticketModal, setTicketModal] = useState(0);
   const [price, setPrice] = useState(0);
   const [contractBalance, setContractBalance] = useState(0);
   const [lotaPrice, setLotaPrice] = useState(0);
@@ -308,7 +310,9 @@ export default () => {
                         <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
                         <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
                         <div className="text-sm">{result}</div>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" style={{marginBottom:'-45px'}} disabled={amount <= 0}>Buy {amount} tickets</button>                        
+                        <TicketModal open={ticketModal} combo={combo} toggleModal={() => setTicketModal(!ticketModal)}/>
+                        <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>                                         
                       </div>
                     </div>                          
                   </div>                      
