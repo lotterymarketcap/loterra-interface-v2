@@ -1,11 +1,14 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState, useCallback, useContext} from "react";
 import numeral from "numeral";
 import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
-const {Consumer } = React.createContext();
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
 import TicketModal from "../components/TicketModal";
+
+import { useStore } from "../store";
+
+
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -252,17 +255,20 @@ export default () => {
         const cart = allCombo.split(" ")
         setAmount(cart.length)
     }
+
+  
+    const {state, dispatch} = useStore();
+
+
      return (
-         <>
-             <Consumer>
-                 {MyDataConsumer => (
-                     <div>
-                         {MyDataConsumer.hello}
-                     </div>
-                 )}
-             </Consumer>
+         <>   
          <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
                 <div className="container">
+                {state.count}
+      <button onClick={() => dispatch({type: "increment", message:"Incremented"})}>+</button>
+      <button onClick={() => dispatch({type: "decrement", message: "Decremented"})}>-</button>
+      <button onClick={() => dispatch({type: "reset", message: "Reset"})}>Reset</button>
+      {state.message}
                   <div className="row">
                     <div className="col-xl-7 mx-auto text-center">
                       <div className="jackpot">

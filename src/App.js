@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react'
+import React, { Component, Suspense, useContext } from 'react'
 import { Root, Routes } from 'react-static'
 import { Router, Link } from '@reach/router'
 import Navbar from "./components/Navbar";
@@ -7,17 +7,20 @@ import Footer from "./components/Footer";
 import './styles/base.scss'
 import {Head} from "react-static";
 import { popper } from '@popperjs/core'
-const { Provider } = React.createContext();
 
 let bootstrap = {}
 if (typeof document !== 'undefined') {
     bootstrap = require('bootstrap')
 }
+import { StoreProvider } from "./store";
+
+
 
 class App extends Component {
+
   render() {
     return (
-        <Provider value={{hello: "hello"}}>
+
             <Suspense fallback={<div>Loading... </div>}>
                 <Root>
                     <Head>
@@ -31,14 +34,15 @@ class App extends Component {
                         <meta property="og:site_name" content="LoTerra interface" />
                         <meta property="og:description" content="LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain."/>
                     </Head>
+                    <StoreProvider>
                   <Navbar/>
-
-                      <Routes default />
+                  <Routes default />
+                  </StoreProvider>
 
                   {/*<Footer/>*/}
                 </Root>
             </Suspense>
-        </Provider>
+    
     )
   }
 }
