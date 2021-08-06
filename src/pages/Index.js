@@ -267,8 +267,18 @@ export default () => {
 
     function updateCombos(new_code,index){
       console.log('updating combos', new_code, index)
+      let copy = state.combination;
+      copy.split(" ").map((obj,k) => {
+        if(k == index){
+          console.log(obj,' will be ',new_code)
+          obj = new_code
+        }
+      })
+      dispatch({type: "setAllCombinations", message: copy})
+      console.log(copy)
+      console.log(state.combination)      
     }  
-    
+
      return (
          <>   
          <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
