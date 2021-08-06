@@ -19,12 +19,11 @@ export default function TicketModal(props){
                 <ul className="list-group">
             {store.state.combination && store.state.combination.split(" ").map((obj,k) => {
                             let x = obj;
-                            function inputChange (e, count){
+                            function inputChange (e){
                                 e.preventDefault();
-                                x.substring(count, e.target.value)
+                                x.substring(k, e.target.value)
                                 console.log(x)
                                 console.log(obj)
-                                console.log(count)
                                 console.log(k)
                                 console.log('handle change called')
                             }
