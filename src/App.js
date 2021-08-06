@@ -15,7 +15,6 @@ if (typeof document !== 'undefined') {
 import { StoreProvider } from "./store";
 
 
-
 class App extends Component {
 
   render() {
@@ -53,6 +52,8 @@ class App extends Component {
                   </StoreProvider>
 
                   {/*<Footer/>*/}
+                 
+
                 </Root>
             </Suspense>
     

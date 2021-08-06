@@ -22,6 +22,7 @@
     "react-chartjs-2": "^3.0.4",
     "react-dom": "^16.14.0",
     "react-hot-loader": "^4.13.0",
+    "react-hot-toast": "^2.1.0",
     "react-static": "^7.5.1",
     "react-static-plugin-reach-router": "^7.5.1",
     "react-static-plugin-sass": "^7.3.0",

@@ -45,7 +45,7 @@ export default function TicketModal(props){
                                     updateCombos(new_code.join(""),k)
                                 }
                                 return (
-                                    <input defaultValue={c} key={ck} className="form-control text-center" onChange={(e) => inputChange(e,ck,obj,k)}/>
+                                    <input defaultValue={c} key={ck} className="form-control text-center" maxLength="1" onChange={(e) => inputChange(e,ck,obj,k)}/>
                                 )
                             })}</li>
                           )

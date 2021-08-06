@@ -8,7 +8,8 @@ import TicketModal from "../components/TicketModal";
 
 import { useStore } from "../store";
 
-
+import toast, { Toaster } from 'react-hot-toast';
+ 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -187,6 +188,7 @@ export default () => {
         })
 
     }
+
  
 
     /*function change(e) {
@@ -274,6 +276,7 @@ export default () => {
           obj = new_code
         }
       })
+      toast('you changed a ticket code')
       dispatch({type: "setAllCombinations", message: copy})
       console.log(copy)
       console.log(state.combination)      
@@ -479,7 +482,7 @@ export default () => {
                                   </div>
                               </div>
                  </div>
-
+                 <Toaster />
          </>
      );
 }
