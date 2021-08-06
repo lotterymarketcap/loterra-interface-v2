@@ -2,13 +2,10 @@ import React, {useState, useEffect, useMemo} from "react";
 import { X, Ticket,UserCircle } from 'phosphor-react'
 import {useStore} from "../store";
 
-
 export default function TicketModal(props){
 
     const { open, toggleModal, amount, updateCombos } = props;
     const store = useStore();
-
-    
 
     return (
         <>
@@ -20,8 +17,8 @@ export default function TicketModal(props){
             <div className="ticketmodal_content">
                 <ul className="list-group">
             {store.state.combination && store.state.combination.split(" ").map((obj,k) => {
-                                                     
-                          return (
+                                let combo = store.state.combination.split(" ");
+                return (
                             <li className="list-group-item" key={k}><Ticket size={24} color={'#4EDC97'} style={{marginRight:'5px'}}/>
                             {obj && Array.from(obj).map( (c,ck) => {
                                 const inputChange = (e,ck,obj,k) => {
@@ -42,7 +39,12 @@ export default function TicketModal(props){
                                         new_code.push(item);
                                     })
                                     console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
-                                    updateCombos(new_code.join(""),k)
+                                    if (new_code.join("").length == 6){
+                                        combo[k] = new_code.join("");
+                                        store.dispatch({type: "setCombination", message: combo.join(" ")})
+                                    }
+                                    //updateCombos(new_code.join(""),k)
+
                                 }
                                 return (
                                     <input defaultValue={c} key={ck} className="form-control text-center" maxLength="1" onChange={(e) => inputChange(e,ck,obj,k)}/>

@@ -277,7 +277,7 @@ export default () => {
         }
       })
       toast('you changed a ticket code')
-      dispatch({type: "setAllCombinations", message: copy})
+      dispatch({type: "setCombination", message: copy})
       console.log(copy)
       console.log(state.combination)      
     }  
