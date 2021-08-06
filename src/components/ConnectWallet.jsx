@@ -12,6 +12,7 @@ import { Wallet, CaretRight, UserCircle } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
 import {useStore} from "../store";
+import { Link } from "@reach/router";
 // let useWallet = {}
 // if (typeof document !== 'undefined') {
 //     useWallet = require('@terra-money/wallet-provider').useWallet
@@ -169,6 +170,11 @@ export default function ConnectWallet(){
         <div className={scrolled ? 'navbar navbar-expand p-2 p-md-3 sticky' : 'navbar navbar-expand p-2 p-md-3'}>
         <div className="container-fluid">
             <a className="navbar-brand"><img src="logo.png"/> <span>LOTERRA</span></a>
+            <nav className="navbar-nav main-nav me-auto">                
+                <li className="nav-item"><a href="/" className="nav-link">Lottery</a></li>
+                <li className="nav-item"><a href="/staking" className="nav-link">Staking</a></li>
+                <li className="nav-item"><a href="/dao" className="nav-link">DAO</a></li>
+            </nav>
             <div className="navbar-nav ms-auto">
                 {!connected && (
                     <>                       

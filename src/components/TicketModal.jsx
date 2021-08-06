@@ -14,9 +14,9 @@ export default function TicketModal(props){
             </div>
             <div className="ticketmodal_content">
                 <ul className="list-group">
-            {combo && combo.split(" ").map(obj => {
+            {combo && combo.split(" ").map((obj,k) => {
                           return (
-                            <li className="list-group-item">{obj && Array.from(obj).map( c => {
+                            <li className="list-group-item" key={k}>{obj && Array.from(obj).map( c => {
                                 return (
                                     <input defaultValue={c} className="form-control text-center" />
                                 )
