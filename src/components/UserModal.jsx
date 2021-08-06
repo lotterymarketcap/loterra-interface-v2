@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo, useCallback} from "react";
 import { X, Ticket,UserCircle } from 'phosphor-react'
-import {LCDClient, WasmAPI} from "@terra-money/terra.js";
+import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra.js";
 import {useStore} from "../store";
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -8,7 +8,7 @@ if (typeof document !== 'undefined') {
 }
 
 export default function UserModal(props){
-
+    const [result, setResult] = useState("");
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
@@ -20,8 +20,58 @@ export default function UserModal(props){
     const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
     const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
 
-    console.log(store.state.allCombinations)
+    const addToGas = 5300
+    const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
+    function claim(){
+        const msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            store.state.loterraContractAddress,
+            {
+                claim: {},
+            })
 
+        connectedWallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {
+                setResult("Claim success")
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            setResult(e.message)
+        })
+    }
+    function collect(){
+        const msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            store.state.loterraContractAddress,
+            {
+                collect: {},
+            })
+
+        connectedWallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {
+                setResult("Collect success")
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            setResult(e.message)
+        })
+    }
     return(
         <>
         <div className={open ? 'usermodal show' : 'usermodal'}>
