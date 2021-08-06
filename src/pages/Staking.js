@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState, useEffect, useMemo} from "react";
+
 import { Pie, Line } from 'react-chartjs-2';
+import ProposalModal from "../components/ProposalModal";
 
 
 export default function Staking (){
 
-    //Chart code 
+   
+
+    const [modal, setModal] = useState(false);
+
+     //Chart code 
 
     const lineOptions = {
     
@@ -162,7 +168,7 @@ export default function Staking (){
                                 <h3>Proposals</h3>
                             </div>
                             <div className="col-md-6 text-end">
-                                <button className="btn btn-default">Create proposal</button>
+                                <button className="btn btn-default" onClick={() => setModal(!modal)}>Create proposal</button>
                             </div>
                         </div>
                         
@@ -177,7 +183,9 @@ export default function Staking (){
                                         <p className="desc">New upcoming design for LoTerra frontend interface preview here https://drive.google.com/file/d/1JDVwEVQLjQSASunLgb6rXu2QPvvEm2k3/view?usp=drivesdk</p>
                                     </div>
                                     <div className="col-md-8">
+                                            <div className="table-responsive">
                                             <table className="table">
+                                                <tbody>
                                                 <tr>
                                                     <td>Creator</td>
                                                     <td>terra1ar45r5e8y55ku847xvet6ny2psv6fkflhchzxk</td>
@@ -210,7 +218,9 @@ export default function Staking (){
                                                     <td>No votes</td>
                                                     <td>0</td>
                                                 </tr>
+                                                </tbody>
                                             </table>
+                                            </div>
                                     </div>
                                     <div className="col-md-4 text-center d-flex">
                                         <div className="vote-box align-self-center w-100">
@@ -228,6 +238,7 @@ export default function Staking (){
                 </div>
             </div>
         </section>
+        <ProposalModal open={modal} toggleModal={() => setModal(!modal)}/>
         </>
     )
 }
