@@ -334,7 +334,7 @@ export default () => {
                         <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
                         <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
                         <div className="text-sm">{result}</div>
-                        <TicketModal open={ticketModal} combo={combo} toggleModal={() => setTicketModal(!ticketModal)}/>
+                        <TicketModal open={ticketModal} combo={combo} amount={amount} toggleModal={() => setTicketModal(!ticketModal)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
                         <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>

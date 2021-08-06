@@ -12,6 +12,15 @@ transform: translate(-50%, -50%);
     opacity:0;
     .ticketmodal_heading {
         padding:15px;
+        h2 {
+            font-weight: bold;
+            font-size: 31px;
+        }
+         p{
+            font-size: 14px;
+            line-height: 20px;
+            color: rgba(255, 255, 255, 0.44);
+         }
     }
     .ticketmodal_content {
         padding:15px;
@@ -23,7 +32,7 @@ transform: translate(-50%, -50%);
                 background: #180943;
                 color:#fff;
                 .form-control {
-                    width:calc(100%/6);
+                    width:calc(100%/7);
                     display:inline-block;
                     font-weight:bold;
                     color:#FF36FF;
