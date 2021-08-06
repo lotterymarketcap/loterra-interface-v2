@@ -21,7 +21,20 @@ class App extends Component {
   render() {
     return (
 
-            <Suspense fallback={<div>Loading... </div>}>
+            <Suspense fallback={<div className="vh-100 d-flex">
+              <div className="align-self-center w-100 text-center">
+                <img src="logo.png" className="img-fluid mb-4"/>
+                <p style={{
+                color: '#f038f0',
+                textTransform: 'uppercase',
+                fontSize: '36px',                
+                fontWeight: '300',
+                textShadow: '0px 0px 26px #ff36ff',
+                fontFamily: "'Monoton', cursive",      
+                       
+            }} className="loading_animation">Loading... </p>
+              </div>
+            </div>}>
                 <Root>
                     <Head>
                         <meta charSet="UTF-8" />
