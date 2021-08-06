@@ -8,6 +8,8 @@ export default function TicketModal(props){
     const { open, toggleModal, amount } = props;
     const store = useStore();
 
+    
+
     return (
         <>
         <div className={open ? 'ticketmodal show' : 'ticketmodal'}>
@@ -18,20 +20,31 @@ export default function TicketModal(props){
             <div className="ticketmodal_content">
                 <ul className="list-group">
             {store.state.combination && store.state.combination.split(" ").map((obj,k) => {
-                            let x = obj;
-                            function inputChange (e){
-                                e.preventDefault();
-                                x.substring(k, e.target.value)
-                                console.log(x)
-                                console.log(obj)
-                                console.log(k)
-                                console.log('handle change called')
-                            }
+                                                     
                           return (
                             <li className="list-group-item" key={k}><Ticket size={24} color={'#4EDC97'} style={{marginRight:'5px'}}/>
-                            {obj && Array.from(obj).map( c => {
+                            {obj && Array.from(obj).map( (c,ck) => {
+                                const inputChange = (e,ck,obj,k) => {
+                                    let x = obj;
+                                    e.preventDefault();
+                                    x.substring(k, e.target.value)
+                                    console.log('x',x)
+                                    console.log('obj',obj)
+                                    console.log('key',k)
+                                    //Check for the values we want
+                                    console.log('handle change called',ck,e.target.value,obj)
+                                    //Trial replacing current string with new
+                                    const new_code = [];
+                                    Array.from(obj).map((item,key) => {
+                                        if(key==ck){
+                                            item = e.target.value
+                                        }
+                                        new_code.push(item);
+                                    })
+                                    console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
+                                }
                                 return (
-                                    <input defaultValue={c} className="form-control text-center" onChange={(e) => inputChange(e)}/>
+                                    <input defaultValue={c} key={ck} className="form-control text-center" onChange={(e) => inputChange(e,ck,obj,k)}/>
                                 )
                             })}</li>
                           )
