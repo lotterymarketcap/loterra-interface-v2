@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function TicketModal(props){
-
+    const [combo, setCombo] = useState("")
     const { open, toggleModal, amount, updateCombos, buyTickets } = props;
     const store = useStore();
 
@@ -30,7 +30,9 @@ export default function TicketModal(props){
     ]
 
     useEffect(() => {
-    }, [store.state.combination]);
+        // console.log(store.state.combination)
+        setCombo(store.state.combination)
+    }, [store.state.combination, combo]);
 
     return (
         <>
@@ -43,10 +45,16 @@ export default function TicketModal(props){
             </div>
             <div className="ticketmodal_content">
                 <ul className="list-group">
-            {store.state.combination && store.state.combination.split(" ").map((obj,k) => {
-                                let combo = store.state.combination.split(" ");
+            {combo && combo.split(" ").map((obj,k) => {
+                console.log("combo combo bo ")
+                console.log(combo)
+                console.log(store.state.combination)
+                console.log(obj)
+
+                                let comboUpdate = combo.split(" ");
                 return (
-                            <li className="list-group-item" key={k}><Ticket size={24} color={'#4EDC97'} style={{marginRight:'5px'}}/>
+                            <li className="list-group-item" key={k}>
+                                <span style={{marginRight:'5px'}}>{k+1}</span>
                             {obj && Array.from(obj).map( (c,ck) => {
                                 const inputChange = (e,ck,obj,k,c) => {
                                     let x = obj;
@@ -72,8 +80,8 @@ export default function TicketModal(props){
                                     })
                                     console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
                                     if (new_code.join("").length == 6){
-                                        combo[k] = new_code.join("");
-                                        store.dispatch({type: "setCombination", message: combo.join(" ")})
+                                        comboUpdate[k] = new_code.join("");
+                                        store.dispatch({type: "setCombination", message: comboUpdate.join(" ")})
                                     }
                                     //updateCombos(new_code.join(""),k)
 
@@ -81,7 +89,9 @@ export default function TicketModal(props){
                                 return (
                                     <input defaultValue={c} key={ck} className="form-control text-center" maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
                                 )
-                            })}</li>
+                            })}
+                                <Ticket size={24} color={'#4EDC97'} style={{marginLeft:'5px'}}/>
+                            </li>
                           )
                         })
             }
