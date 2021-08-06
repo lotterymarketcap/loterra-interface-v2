@@ -369,7 +369,7 @@ export default () => {
                           </div>
                           <div className="card-body">
                             <div className="w-100 text-center latest-combination">
-                            <h4>Latest winning combination</h4>
+                            <h4>Winning combination</h4>
                             <p>{LatestWinningCombination ? LatestWinningCombination : '...' }</p>
                             </div>
                           <h4 className="mt-4">Rewards</h4>

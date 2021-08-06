@@ -43,6 +43,8 @@
             }
         }
         .list-group {
+            max-height: 180px;
+            overflow-y: auto;
             .list-group-item {
                 background:#180943;
                 color:#fff;

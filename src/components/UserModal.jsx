@@ -90,7 +90,7 @@ export default function UserModal(props){
 
                                 <div className="col-12 text-center claim">
                                     <h4 className="mb-2">Current lottery tickets</h4>
-                                    <ul className="list-group text-left" style={{height:'250px', overflowY:'scroll'}}>
+                                    <ul className="list-group text-left">
                                         {store.state.allCombinations.combination ? store.state.allCombinations.combination.map((element, i) =>
                                             <li key={i} className="list-group-item"><Ticket size={18} color={'#20FF93'} />{element}</li>):
                                             <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />No ticket found</li>
