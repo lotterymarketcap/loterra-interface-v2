@@ -242,7 +242,7 @@ export default function ConnectWallet(){
 
         {/*<button onClick={() => display()}>Connect Wallet</button>
         {renderDialog()}*/}
-        {connected &&
+        {connected && connectedWallet &&
             <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)} connetedWallet={connectedWallet}/>
         }
     </div>

@@ -16,8 +16,10 @@ export default function UserModal(props){
 
     const { open, toggleModal } = props;
     const store = useStore();
+   
     const isPlayer = store.state.allPlayers.includes(connectedWallet.walletAddress);
     const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
+    
     const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
 
     const addToGas = 5300
