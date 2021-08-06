@@ -2,6 +2,7 @@ import React, {useState, useEffect, useMemo, useCallback} from "react";
 import { X, Ticket,UserCircle } from 'phosphor-react'
 import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra.js";
 import {useStore} from "../store";
+
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -16,7 +17,7 @@ export default function UserModal(props){
 
     const { open, toggleModal } = props;
     const store = useStore();
-   
+
     const isPlayer = store.state.allPlayers.includes(connectedWallet.walletAddress);
     const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
     

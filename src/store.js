@@ -8,7 +8,8 @@ const initialState = {
   allWinners: [],
   allPlayers: [],
   config: {},
-  allCombinations: []
+  allCombinations: [],
+  combination: ""
 };
 
 const reducer = (state, action) => {
@@ -32,6 +33,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         allCombinations: action.message
+      }
+    case "setCombination":
+      return {
+        ...state,
+        combination: action.message
       }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);

@@ -154,7 +154,7 @@ export default () => {
 
 
     function execute(){
-        const cart = combo.split(" ")
+        const cart = state.combination.split(" ") // combo.split(" ")
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5300 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
@@ -259,7 +259,8 @@ export default () => {
             let newCombo = generate()
             allCombo = allCombo == "" ? newCombo : allCombo + " " + newCombo
         }
-        setCombo(allCombo)
+        // setCombo(allCombo)
+        dispatch({type: "setCombination", message: allCombo})
         const cart = allCombo.split(" ")
         setAmount(cart.length)
     }
@@ -334,7 +335,7 @@ export default () => {
                         <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
                         <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
                         <div className="text-sm">{result}</div>
-                        <TicketModal open={ticketModal} combo={combo} amount={amount} toggleModal={() => setTicketModal(!ticketModal)}/>
+                        <TicketModal open={ticketModal} amount={amount} toggleModal={() => setTicketModal(!ticketModal)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
                         <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
