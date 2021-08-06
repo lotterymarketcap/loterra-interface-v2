@@ -5,7 +5,7 @@ import {useStore} from "../store";
 
 export default function TicketModal(props){
 
-    const { open, toggleModal, amount } = props;
+    const { open, toggleModal, amount, updateCombos } = props;
     const store = useStore();
 
     
@@ -42,6 +42,7 @@ export default function TicketModal(props){
                                         new_code.push(item);
                                     })
                                     console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
+                                    updateCombos(new_code.join(""),k)
                                 }
                                 return (
                                     <input defaultValue={c} key={ck} className="form-control text-center" onChange={(e) => inputChange(e,ck,obj,k)}/>
