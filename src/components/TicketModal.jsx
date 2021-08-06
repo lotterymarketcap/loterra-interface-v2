@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export default function TicketModal(props){
 
-    const { open, toggleModal, amount, updateCombos } = props;
+    const { open, toggleModal, amount, updateCombos, buyTickets } = props;
     const store = useStore();
 
     const combination = [
@@ -29,6 +29,9 @@ export default function TicketModal(props){
         'f',
     ]
 
+    useEffect(() => {
+    }, [store.state.combination]);
+
     return (
         <>
         <div className={open ? 'ticketmodal show' : 'ticketmodal'}>
@@ -48,7 +51,7 @@ export default function TicketModal(props){
                                 const inputChange = (e,ck,obj,k,c) => {
                                     let x = obj;
                                     e.preventDefault();
-                                    if(!combination.includes(e.target.value)){
+                                    if(!combination.includes(e.target.value) && e.target.value != ""){
                                         toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
                                         e.target.value = c;
                                         return;
@@ -83,7 +86,7 @@ export default function TicketModal(props){
                         })
             }
                         </ul>
-                        <button className="btn btn-special w-100 my-3">Buy {amount} Tickets</button>
+                        <button className="btn btn-special w-100 my-3" onClick={() => {buyTickets(); toggleModal()}}>Buy {amount} Tickets</button>
             </div>
         </div>
         <div className={open ? 'backdrop show' : 'backdrop'} onClick={() => toggleModal()}></div>
