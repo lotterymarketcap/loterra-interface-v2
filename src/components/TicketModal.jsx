@@ -2,14 +2,38 @@ import React, {useState, useEffect, useMemo} from "react";
 import { X, Ticket,UserCircle } from 'phosphor-react'
 import {useStore} from "../store";
 
+import toast, { Toaster } from 'react-hot-toast';
+
+
 export default function TicketModal(props){
 
     const { open, toggleModal, amount, updateCombos } = props;
     const store = useStore();
 
+    const combination = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+    ]
+
     return (
         <>
         <div className={open ? 'ticketmodal show' : 'ticketmodal'}>
+            <button className="toggle" onClick={() => toggleModal()}><X size={36} /></button>
+
             <div className="ticketmodal_heading text-center">
                 <h2>Personalize tickets</h2>
                 <p>Rather have your own codes, you can edit your codes to your wishes and buy them right away</p>
@@ -21,9 +45,14 @@ export default function TicketModal(props){
                 return (
                             <li className="list-group-item" key={k}><Ticket size={24} color={'#4EDC97'} style={{marginRight:'5px'}}/>
                             {obj && Array.from(obj).map( (c,ck) => {
-                                const inputChange = (e,ck,obj,k) => {
+                                const inputChange = (e,ck,obj,k,c) => {
                                     let x = obj;
                                     e.preventDefault();
+                                    if(!combination.includes(e.target.value)){
+                                        toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
+                                        e.target.value = c;
+                                        return;
+                                    }
                                     x.substring(k, e.target.value)
                                     console.log('x',x)
                                     console.log('obj',obj)
@@ -47,7 +76,7 @@ export default function TicketModal(props){
 
                                 }
                                 return (
-                                    <input defaultValue={c} key={ck} className="form-control text-center" maxLength="1" onChange={(e) => inputChange(e,ck,obj,k)}/>
+                                    <input defaultValue={c} key={ck} className="form-control text-center" maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
                                 )
                             })}</li>
                           )
