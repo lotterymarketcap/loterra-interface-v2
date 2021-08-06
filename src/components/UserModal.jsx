@@ -16,6 +16,11 @@ export default function UserModal(props){
 
     const { open, toggleModal } = props;
     const store = useStore();
+    const isPlayer = store.state.allPlayers.includes(connectedWallet.walletAddress);
+    const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
+    const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
+
+    console.log(store.state.allCombinations)
 
     return(
         <>
@@ -33,23 +38,27 @@ export default function UserModal(props){
                                 <div className="col-12 text-center claim">
                                     <h4 className="mb-2">Current lottery tickets</h4>
                                     <ul className="list-group text-left" style={{height:'250px', overflowY:'scroll'}}>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
-                                        <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />abcdef</li>
+                                        {store.state.allCombinations.combination ? store.state.allCombinations.combination.map((element, i) =>
+                                            <li key={i} className="list-group-item"><Ticket size={18} color={'#20FF93'} />{element}</li>):
+                                            <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />No ticket found</li>
+                                        }
                                     </ul>
                                 </div>
 
                                 <div className="col-12 text-center mt-4 claim">
                                     <h4>Claim & Collect</h4>
-                                    <p>By clicking this button loterra will check if you won any prizes, if you did we will claim them automatically for you</p>
-                                    <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}}>Claim</button>
-                                    <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}}>Collect</button>
+                                    <p>By clicking this button LoTerra will check if you won any prizes, if you did we will claim them automatically for you</p>
+                                    {
+                                        isPlayer && Date.now() < timeStampHalf && !isWinner ?
+                                            <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} onClick={() => claim()} >Claim</button> :
+                                            <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} disabled>Claim closed</button>
+                                    }
+                                    {
+                                        isWinner && Date.now() > timeStampHalf ?
+                                            <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} onClick={() => collect()}>Collect</button> :
+                                            <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} disabled>Collect closed</button>
+                                    }
+
                                 </div>
                             </>
                         )

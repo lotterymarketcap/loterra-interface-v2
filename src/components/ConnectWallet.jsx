@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo} from "react";
 
-import { LCDClient } from "@terra-money/terra.js";
+import {LCDClient, WasmAPI} from "@terra-money/terra.js";
 import {
   useWallet,
   WalletStatus,
@@ -11,6 +11,7 @@ import {
 import { Wallet, CaretRight, UserCircle } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
+import {useStore} from "../store";
 // let useWallet = {}
 // if (typeof document !== 'undefined') {
 //     useWallet = require('@terra-money/wallet-provider').useWallet
@@ -41,6 +42,7 @@ export default function ConnectWallet(){
     const [isModal, setIsModal] = useState(false);
     const [bank, setBank] = useState();
     const [connected, setConnected]= useState(false);
+    const store = useStore();
     let wallet = ""
     if (typeof document !== 'undefined') {
         wallet = useWallet();
@@ -86,6 +88,7 @@ export default function ConnectWallet(){
         setConnected(!connected)
         setIsDisplayDialog(false)
     }
+
     async function contactBalance(){
 
             if (connectedWallet && connectedWallet.walletAddress && lcd) {
@@ -94,6 +97,15 @@ export default function ConnectWallet(){
                 let token
                 try {
                     coins = await lcd.bank.balance(connectedWallet.walletAddress);
+                    const api = new WasmAPI(lcd.apiRequester);
+                    const combinations = await api.contractQuery(
+                        store.state.loterraContractAddress,
+                        {
+                            combination: { lottery_id: store.state.config.lottery_counter, address: connectedWallet.walletAddress},
+                        }
+                    );
+                    store.dispatch({type: "setAllCombinations", message: combinations})
+
                 }catch (e) {
                     console.log(e)
                 }
@@ -113,9 +125,9 @@ export default function ConnectWallet(){
  
 
     useEffect(() => {
-        contactBalance()
-        console.log(connectedWallet)
-    }, [connectedWallet, lcd]);
+            contactBalance()
+            console.log(connectedWallet)
+    }, [connectedWallet, lcd, store.state.config]);
 
     function renderDialog(){
         if (isDisplayDialog){

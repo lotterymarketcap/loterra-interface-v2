@@ -55,7 +55,7 @@ export default () => {
       );
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
-      dispatch({type: "setExpiryTimestamp", message: parseInt(contractConfigInfo.block_time_play * 1000)})
+      dispatch({type: "setConfig", message: contractConfigInfo})
       const bank = new BankAPI(terra.apiRequester);
       const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
@@ -271,11 +271,6 @@ export default () => {
          <>   
          <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
                 <div className="container">
-                {state.count}
-      <button onClick={() => dispatch({type: "increment", message:"Incremented"})}>+</button>
-      <button onClick={() => dispatch({type: "decrement", message: "Decremented"})}>-</button>
-      <button onClick={() => dispatch({type: "reset", message: "Reset"})}>Reset</button>
-      {state.message}
                   <div className="row">
                     <div className="col-xl-7 mx-auto text-center">
                       <div className="jackpot">

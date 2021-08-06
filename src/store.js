@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 const StoreContext = createContext();
+
 const initialState = {
-  count: 0,
-  message: "",
+  loterraContractAddress: "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0",
+  loterraPoolAddress: "terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta",
   allWinners: [],
   allPlayers: [],
-  expiryTimestamp: 0
+  config: {},
+  allCombinations: []
 };
 
 const reducer = (state, action) => {
@@ -21,26 +23,16 @@ const reducer = (state, action) => {
         ...state,
         allPlayers: action.message
       }
-    case "setExpiryTimestamp":
+    case "setConfig":
       return {
         ...state,
-        expiryTimestamp: action.message
+        config: action.message
       }
-    case "increment":
+    case "setAllCombinations":
       return {
-        count: state.count + 1,
-        message: action.message
+        ...state,
+        allCombinations: action.message
       }
-    case "decrement":
-      return {
-        count: state.count - 1,
-        message: action.message
-      }
-      case "reset":
-        return {
-          count: 0,
-          message: action.message
-        }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
