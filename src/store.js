@@ -9,11 +9,17 @@ const initialState = {
   allPlayers: [],
   config: {},
   allCombinations: [],
-  combination: ""
+  combination: "",
+  modal: false,
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
+    case "setModal":
+      return {
+        ...state,
+        modal: action.message
+      }
     case "setAllWinners":
       return {
         ...state,

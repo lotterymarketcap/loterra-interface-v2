@@ -18,6 +18,7 @@ import { StoreProvider } from "./store";
 class App extends Component {
 
   render() {
+    
     return (
 
             <Suspense fallback={<div className="vh-100 d-flex">
