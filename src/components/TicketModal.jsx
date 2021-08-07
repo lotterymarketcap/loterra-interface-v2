@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect, useMemo, useRef} from "react";
 import { X, Ticket,UserCircle } from 'phosphor-react'
 import {useStore} from "../store";
 
@@ -7,6 +7,7 @@ import {useStore} from "../store";
 
 export default function TicketModal(props){
     const [combo, setCombo] = useState([])
+    const [scrollPosition, setScrollPosition] = useState(null)
     const { open, toggleModal, amount, updateCombos, buyTickets } = props;
     const store = useStore();
 
@@ -29,21 +30,28 @@ export default function TicketModal(props){
         'f',
     ]
 
+    let combinationListDiv = useRef(null);
+
+    const setScroll = (a) => {
+        combinationListDiv.current.scrollTop = a
+    }
     
 
     useEffect(() => {
-        // console.log(store.state.combination)
-
+        // console.log(store.state.combination)     
         const data = store.state.combination.split(" ");
         console.log(data )
-        setCombo(data)
+        setCombo(data)        
+        setScroll(scrollPosition)    
+        console.log(combinationListDiv)
+        console.log(scrollPosition, combinationListDiv.current.scrollTop)
         /*if (combo){
             setCombo(["123456", ...data])
         }
         if (combo.length == 1){
             setCombo(["123456", "123454"])
         } */
-    }, [store.state.combination]);
+    }, [store.state.combination, scrollPosition]);
 
     return (
         <>
@@ -55,7 +63,7 @@ export default function TicketModal(props){
                 <p>Rather have your own codes, you can edit your codes to your wishes and buy them right away</p>
             </div>
             <div className="ticketmodal_content">
-                <ul className="list-group">
+                <ul className="list-group" ref={combinationListDiv} style={{height:'180px'}}>
             {
                 combo && combo.map((obj,k) => {
                 console.log("combo combo bo ")
@@ -63,11 +71,13 @@ export default function TicketModal(props){
                 let comboUpdate = combo;
                 return (
                             <li className="list-group-item" key={k}>
-                                <span style={{marginRight:'5px'}}>{k+1}</span>
+                                <span style={{marginRight:'5px', marginLeft:'-10px', fontWeight:'strong'}}>{k+1}</span>
                             {obj && Array.from(obj).map( (c,ck) => {
                                 const inputChange = (e,ck,obj,k,c) => {
+                                    setScrollPosition(combinationListDiv.current.scrollTop)
                                     let x = obj;
                                     e.preventDefault();
+                                  
                                     if(!combination.includes(e.target.value) && e.target.value != ""){
                                         // toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
                                         e.target.value = c;

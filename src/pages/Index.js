@@ -213,10 +213,15 @@ export default () => {
       console.log(state.combination,amount)
       let copy = state.combination.split(" ");
       if(amount < copy.length){
-        copy.splice(-1);
+        let nr = copy.length - amount;
+        copy.splice(-nr);
       } else {
-        let newCombo = generate()
-        copy.push(newCombo)
+        let nr = amount - copy.length;
+        for (let index = 0; index < nr; index++) {
+          let newCombo = generate()
+          copy.push(newCombo)
+        }
+        
       }
       let string = copy.join(" ");
       dispatch({type: "setCombination", message: string})
