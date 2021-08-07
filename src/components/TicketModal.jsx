@@ -2,11 +2,11 @@ import React, {useState, useEffect, useMemo} from "react";
 import { X, Ticket,UserCircle } from 'phosphor-react'
 import {useStore} from "../store";
 
-import toast, { Toaster } from 'react-hot-toast';
+// import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function TicketModal(props){
-    const [combo, setCombo] = useState("")
+    const [combo, setCombo] = useState([])
     const { open, toggleModal, amount, updateCombos, buyTickets } = props;
     const store = useStore();
 
@@ -29,10 +29,18 @@ export default function TicketModal(props){
         'f',
     ]
 
-    useEffect(() => {
+    /*useEffect(() => {
         // console.log(store.state.combination)
-        setCombo(store.state.combination)
-    }, [store.state.combination, combo]);
+        const data = store.state.combination.split(" ");
+        console.log(data )
+        setCombo(data)
+        if (combo){
+            setCombo(["123456", ...data])
+        }
+        if (combo.length == 1){
+            setCombo(["123456", "123454"])
+        }
+    }, [store.state.combination]); */
 
     return (
         <>
@@ -45,13 +53,11 @@ export default function TicketModal(props){
             </div>
             <div className="ticketmodal_content">
                 <ul className="list-group">
-            {combo && combo.split(" ").map((obj,k) => {
+            {
+                combo && combo.map((obj,k) => {
                 console.log("combo combo bo ")
-                console.log(combo)
-                console.log(store.state.combination)
-                console.log(obj)
 
-                                let comboUpdate = combo.split(" ");
+                let comboUpdate = combo;
                 return (
                             <li className="list-group-item" key={k}>
                                 <span style={{marginRight:'5px'}}>{k+1}</span>
@@ -60,7 +66,7 @@ export default function TicketModal(props){
                                     let x = obj;
                                     e.preventDefault();
                                     if(!combination.includes(e.target.value) && e.target.value != ""){
-                                        toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
+                                        // toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
                                         e.target.value = c;
                                         return;
                                     }
@@ -81,6 +87,7 @@ export default function TicketModal(props){
                                     console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
                                     if (new_code.join("").length == 6){
                                         comboUpdate[k] = new_code.join("");
+                                        setCombo(["123456"])
                                         store.dispatch({type: "setCombination", message: comboUpdate.join(" ")})
                                     }
                                     //updateCombos(new_code.join(""),k)

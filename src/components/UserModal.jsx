@@ -21,7 +21,10 @@ export default function UserModal(props){
     const isPlayer = store.state.allPlayers.includes(connectedWallet.walletAddress);
     const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
     
-    const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
+    const timeStampHalf = store.state.config.block_time_play - (store.state.config.every_block_time_play / 2);
+    console.log("--------------------------------")
+    console.log(Date.now())
+    console.log(timeStampHalf)
 
     const addToGas = 5300
     const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
