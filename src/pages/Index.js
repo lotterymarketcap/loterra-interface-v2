@@ -377,6 +377,37 @@ export default () => {
                    </div>
                  </div>
 
+                 <div className="container">
+                    <div className="how">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <h2>How it works</h2>
+                          </div>
+                          <div className="col-md-4 my-2">
+                            <div className="step">
+                              <label>Step 1</label>
+                                <h3>Participate in loterry</h3>
+                                <p>Buy max 100 tickets</p>
+                            </div>
+                          </div>
+                          <div className="col-md-4 my-2">
+                            <div className="step">
+                            <label>Step 2</label>
+                                <h3>Wait for draw</h3>
+                                <p>We draw a lottery every 4 days</p>
+                            </div>
+                          </div>
+                          <div className="col-md-4 my-2">
+                            <div className="step">
+                            <label>Step 3</label>
+                                <h3>Check your prizes</h3>
+                                <p>Prizes from 3 symbol matches</p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
 
                  <div className="container" style={{marginTop:'7rem'}}>
                         <div className="card lota-card">
@@ -501,6 +532,9 @@ export default () => {
                                   </div>
                               </div>
                  </div>
+
+                
+
                  <Toaster />
          </>
      );
