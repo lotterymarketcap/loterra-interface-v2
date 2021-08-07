@@ -205,8 +205,21 @@ export default () => {
         e.preventDefault();
         let ticketAmount = e.target.value
         if (ticketAmount > 200) ticketAmount = 200
-        multiplier(ticketAmount)
+        addCode(ticketAmount)
         setAmount(ticketAmount)
+    }
+
+    function addCode(amount){
+      console.log(state.combination,amount)
+      let copy = state.combination.split(" ");
+      if(amount < copy.length){
+        copy.splice(-1);
+      } else {
+        let newCombo = generate()
+        copy.push(newCombo)
+      }
+      let string = copy.join(" ");
+      dispatch({type: "setCombination", message: string})
     }
 
     function getPrizePerRank(nr){
@@ -266,6 +279,7 @@ export default () => {
         const cart = allCombo.split(" ")
         setAmount(cart.length)
     }
+
 
     function updateCombos(new_code,index){
       console.log('updating combos', new_code, index)

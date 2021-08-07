@@ -29,6 +29,8 @@ export default function TicketModal(props){
         'f',
     ]
 
+    
+
     useEffect(() => {
         // console.log(store.state.combination)
 
@@ -88,6 +90,7 @@ export default function TicketModal(props){
                                     console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
                                     if (new_code.join("").length == 6){
                                         comboUpdate[k] = new_code.join("");
+                                        console.log('check combo update', comboUpdate[k])
                                         setCombo([])
                                         store.dispatch({type: "setCombination", message: comboUpdate.join(" ")});
                                     }
