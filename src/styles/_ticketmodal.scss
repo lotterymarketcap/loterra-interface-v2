@@ -50,7 +50,7 @@ transform: translate(-50%, -50%);
         padding:15px;
         .list-group {
             max-height: 180px;
-            overflow-y: auto;
+            overflow-y: scroll;
             .list-group-item {
                 border-bottom: 8px solid #1f104d;
                 background: #180943;
