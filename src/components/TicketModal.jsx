@@ -29,18 +29,19 @@ export default function TicketModal(props){
         'f',
     ]
 
-    /*useEffect(() => {
+    useEffect(() => {
         // console.log(store.state.combination)
+
         const data = store.state.combination.split(" ");
         console.log(data )
         setCombo(data)
-        if (combo){
+        /*if (combo){
             setCombo(["123456", ...data])
         }
         if (combo.length == 1){
             setCombo(["123456", "123454"])
-        }
-    }, [store.state.combination]); */
+        } */
+    }, [store.state.combination]);
 
     return (
         <>
@@ -87,8 +88,8 @@ export default function TicketModal(props){
                                     console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
                                     if (new_code.join("").length == 6){
                                         comboUpdate[k] = new_code.join("");
-                                        setCombo(["123456"])
-                                        store.dispatch({type: "setCombination", message: comboUpdate.join(" ")})
+                                        setCombo([])
+                                        store.dispatch({type: "setCombination", message: comboUpdate.join(" ")});
                                     }
                                     //updateCombos(new_code.join(""),k)
 
@@ -103,7 +104,7 @@ export default function TicketModal(props){
                         })
             }
                         </ul>
-                        <button className="btn btn-special w-100 my-3" onClick={() => {buyTickets(); toggleModal()}}>Buy {amount} Tickets</button>
+                        <button className="btn btn-special w-100 my-3" onClick={() => {buyTickets(); toggleModal();}}>Buy {amount} Tickets</button>
             </div>
         </div>
         <div className={open ? 'backdrop show' : 'backdrop'} onClick={() => toggleModal()}></div>
