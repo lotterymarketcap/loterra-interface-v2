@@ -10,6 +10,9 @@ transform: translate(-50%, -50%);
     background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
     box-shadow: 0px 20px 56px #0f0038;
     opacity:0;
+    border-radius:10px;
+    padding:25px 0;
+    margin-top:-100px;
     @media(max-width:660px){
         width:330px;
     }
@@ -66,6 +69,7 @@ transform: translate(-50%, -50%);
     }
     &.show {
         opacity:1;
+        margin-top:0;
         visibility: visible;
     }
 }
