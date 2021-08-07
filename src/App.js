@@ -39,8 +39,10 @@ class App extends Component {
                     <Head>
                         <meta charSet="UTF-8" />
                         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, shrink-to-fit=no"/>
-                        <title>LoTerra interface</title>
-                        <meta property="og:title" content="LoTerra" />
+                        <title>LoTerra - Decentralized lottery on Terra blockchain</title>
+                        <link rel="icon" type="image/x-icon" href="https://loterra.io/favicon.ico"/>
+                        <link data-hid="shortcut-icon" rel="shortcut icon" href="https://loterra.io/favicon.ico"/>
+                        <meta property="og:title" content="LoTerra" />                        
                         <meta property="og:image" content="https://loterra.io/loterra.png" />
                         <meta property="og:image:alt" content="LoTerra icon" />
                         <meta property="og:type" content="website" />
