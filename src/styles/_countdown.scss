@@ -13,7 +13,7 @@
         background: linear-gradient(90deg, #73FFC1 0%, #00FF82 100%);
         border-radius: 36px;
         position:absolute;
-      
+        color: #0e0034;
         left:0;
         top:0;
         bottom:0;
@@ -23,7 +23,7 @@
 .countdown {
     .time {
         font-weight: 900;
-        font-size: 53px;
+        font-size: 41px;
         color: #FFFFFF;
         @media(max-width:500px){
             font-size:34px;        
@@ -37,10 +37,10 @@
         margin-bottom:-10px;
     }
     .spacer {
-        font-size: 53px;
+        font-size: 41px;
         font-weight: 900;
         color: #fff;
-        line-height: 93px;
+        line-height: 78px;
         @media(max-width:500px){
             font-size:34px;    
             line-height:68px;    

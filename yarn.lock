@@ -1109,16 +1109,6 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@reduxjs/toolkit@^1.5.1":
-  version "1.5.1"
-  resolved "https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-1.5.1.tgz"
-  integrity sha512-PngZKuwVZsd+mimnmhiOQzoD0FiMjqVks6ituO1//Ft5UEX5Ca9of13NEjo//pU22Jk7z/mdXVsmDfgsig1osA==
-  dependencies:
-    immer "^8.0.1"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-    reselect "^4.0.0"
-
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-0.7.0.tgz"
@@ -2739,6 +2729,11 @@ chardet@^0.7.0:
   version "0.7.0"
   resolved "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+
+chart.js@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-3.5.0.tgz"
+  integrity sha512-J1a4EAb1Gi/KbhwDRmoovHTRuqT8qdF0kZ4XgwxpGethJHUdDrkqyPYwke0a+BuvSeUxPf8Cos6AX2AB8H8GLA==
 
 check-types@^8.0.3:
   version "8.0.3"
@@ -5109,6 +5104,11 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
+goober@^2.0.35:
+  version "2.0.39"
+  resolved "https://registry.npmjs.org/goober/-/goober-2.0.39.tgz"
+  integrity sha512-ryw0VaZaehKmnjL4ZEJaiUVQc+XFa5dXIAbf2QC3F+WVKRbzaSuJyq7w28bdlwqYctiZ0Ok5QL/Pap5M2pCHQg==
+
 got@^8.3.1:
   version "8.3.2"
   resolved "https://registry.npmjs.org/got/-/got-8.3.2.tgz"
@@ -5508,11 +5508,6 @@ ignore@^4.0.6:
   version "4.0.6"
   resolved "https://registry.npmjs.org/ignore/-/ignore-4.0.6.tgz"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
-
-immer@^8.0.1:
-  version "8.0.4"
-  resolved "https://registry.npmjs.org/immer/-/immer-8.0.4.tgz"
-  integrity sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -6761,7 +6756,12 @@ mute-stream@0.0.7:
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.7.tgz"
   integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
 
-nan@^2.12.1, nan@^2.13.2:
+nan@^2.12.1:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.15.0.tgz#3f34a473ff18e15c1b5626b62903b5ad6e665fee"
+  integrity sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==
+
+nan@^2.13.2:
   version "2.14.2"
   resolved "https://registry.npmjs.org/nan/-/nan-2.14.2.tgz"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
@@ -8276,6 +8276,13 @@ rc@^1.0.1, rc@^1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-chartjs-2@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-3.0.4.tgz"
+  integrity sha512-pcbFNpkPMTkGXXJ7k7hnukbRD0ZV01qB6JQY1ontITc2IYvhGlK6BBDy28VeydYs1Dl/c5ZpRgRVEtT5GUnxcQ==
+  dependencies:
+    lodash "^4.17.19"
+
 react-dom@^16.14.0:
   version "16.14.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.14.0.tgz"
@@ -8315,6 +8322,13 @@ react-hot-loader@^4.13.0:
     shallowequal "^1.1.0"
     source-map "^0.7.3"
 
+react-hot-toast@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/react-hot-toast/-/react-hot-toast-2.1.0.tgz"
+  integrity sha512-/wUoUVUC/qCYmkJvMzl/oXBIJe47vYqtwOpA76Pz8SrklrF8RBUTLG2eS+ivznzQzY8YlsyODIV7Qk3vOnFf1g==
+  dependencies:
+    goober "^2.0.35"
+
 react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -8336,6 +8350,11 @@ react-redux@^7.2.4:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.13.1"
+
+react-scroll-position@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/react-scroll-position/-/react-scroll-position-1.0.2.tgz"
+  integrity sha512-lSyC5LRoXDlAeQDzfTIxClvldDgCHXcBVnJVJDBuXy/+3V8rrAyTU81Bfu6X+vIWtb3784cMllDMF0VsWALRIw==
 
 react-side-effect@^2.1.0:
   version "2.1.1"
@@ -8576,12 +8595,7 @@ reduce-css-calc@^2.1.6:
     css-unit-converter "^1.1.1"
     postcss-value-parser "^3.3.0"
 
-redux-thunk@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz"
-  integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
-
-redux@^4.0.0, redux@^4.1.0:
+redux@^4.0.0:
   version "4.1.0"
   resolved "https://registry.npmjs.org/redux/-/redux-4.1.0.tgz"
   integrity sha512-uI2dQN43zqLWCt6B/BMGRMY6db7TTY4qeHHfGeKb3EOhmOKjU3KdWvNLJyqaHRksv/ErdNH7cFZWg9jXtewy4g==
@@ -8770,11 +8784,6 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
-
-reselect@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/reselect/-/reselect-4.0.0.tgz"
-  integrity sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

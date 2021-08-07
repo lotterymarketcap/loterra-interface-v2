@@ -1,0 +1,41 @@
+.proposal-item {
+    padding:25px;
+    background: #180943;
+    border-radius: 4px;
+    h4 {
+        font-weight: bold;
+        font-size: 24px;       
+        color: #FFFFFF;
+    }
+    p {
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 21px;
+        color: rgba(255, 255, 255, 0.55);
+    }
+    table {
+        tr {
+            td {
+                &:first-child {
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 19px;                    
+                    color: rgba(255, 255, 255, 0.58);
+                }
+                &:last-child {
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 19px;                    
+                    color: #FFFFFF;
+                }
+            }
+        }
+    }
+    .vote-box {
+        background: #21124F;
+border: 1px solid #10003B;
+box-sizing: border-box;
+border-radius: 10px;
+padding:25px;
+    }
+}

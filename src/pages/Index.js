@@ -1,11 +1,15 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState, useCallback, useContext} from "react";
 import numeral from "numeral";
 import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
-
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
-import config from "../store/config";
+import TicketModal from "../components/TicketModal";
+
+import { useStore } from "../store";
+
+import toast, { Toaster } from 'react-hot-toast';
+ 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
     useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
@@ -20,12 +24,13 @@ const HomeCard={
 const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 export default () => {
-
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
   const [winners, setWinners] = useState(0);
+  const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
+  const [ticketModal, setTicketModal] = useState(0);
   const [price, setPrice] = useState(0);
   const [contractBalance, setContractBalance] = useState(0);
   const [lotaPrice, setLotaPrice] = useState(0);
@@ -33,6 +38,8 @@ export default () => {
     1
   ); /** default timestamp need to be > 1 */
   const [tokenHolderFee, setTokenHolderFee] = useState(0);
+  const [allWinners, setAllWinners] = useState([]);
+  const {state, dispatch} = useStore();
 
   const fetchContractQuery = useCallback(async () => {
     const terra = new LCDClient({
@@ -49,6 +56,7 @@ export default () => {
       );
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
+      dispatch({type: "setConfig", message: contractConfigInfo})
       const bank = new BankAPI(terra.apiRequester);
       const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
@@ -89,6 +97,15 @@ export default () => {
       );
       setWinners(contractWinnersInfo)
 
+      //Get latest winning combination
+      const winningCombination = await api.contractQuery(
+        loterra_contract_address,
+      {
+        winning_combination: { lottery_id: contractConfigInfo.lottery_counter - 1  },
+      }
+    );
+    setLatestWinningCombination(winningCombination)
+
       //Get current lota price
       const currentLotaPrice = await api.contractQuery(
           loterra_pool_address,
@@ -100,6 +117,22 @@ export default () => {
 
       //Dev purposes disable for production
       console.log('contract info',contractConfigInfo)
+
+        // Query all winners
+        const {winners} = await api.contractQuery(loterra_contract_address, {
+            winner:{
+                lottery_id: contractConfigInfo.lottery_counter - 1
+            }
+        });
+      dispatch({type: "setAllWinners", message: winners})
+        // Query all players
+        const players = await api.contractQuery(loterra_contract_address, {
+            players:{
+                lottery_id: contractConfigInfo.lottery_counter - 1
+            }
+        });
+      dispatch({type: "setAllPlayers", message: players})
+
     } catch (e) {
       console.log(e);
     }
@@ -122,7 +155,7 @@ export default () => {
 
 
     function execute(){
-        const cart = combo.split(" ")
+        const cart = state.combination.split(" ") // combo.split(" ")
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5300 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
@@ -155,6 +188,7 @@ export default () => {
         })
 
     }
+
  
 
     /*function change(e) {
@@ -171,8 +205,26 @@ export default () => {
         e.preventDefault();
         let ticketAmount = e.target.value
         if (ticketAmount > 200) ticketAmount = 200
-        multiplier(ticketAmount)
+        addCode(ticketAmount)
         setAmount(ticketAmount)
+    }
+
+    function addCode(amount){
+      console.log(state.combination,amount)
+      let copy = state.combination.split(" ");
+      if(amount < copy.length){
+        let nr = copy.length - amount;
+        copy.splice(-nr);
+      } else {
+        let nr = amount - copy.length;
+        for (let index = 0; index < nr; index++) {
+          let newCombo = generate()
+          copy.push(newCombo)
+        }
+        
+      }
+      let string = copy.join(" ");
+      dispatch({type: "setCombination", message: string})
     }
 
     function getPrizePerRank(nr){
@@ -227,13 +279,31 @@ export default () => {
             let newCombo = generate()
             allCombo = allCombo == "" ? newCombo : allCombo + " " + newCombo
         }
-        setCombo(allCombo)
+        // setCombo(allCombo)
+        dispatch({type: "setCombination", message: allCombo})
         const cart = allCombo.split(" ")
         setAmount(cart.length)
     }
+
+
+    function updateCombos(new_code,index){
+      console.log('updating combos', new_code, index)
+      let copy = state.combination;
+      copy.split(" ").map((obj,k) => {
+        if(k == index){
+          console.log(obj,' will be ',new_code)
+          obj = new_code
+        }
+      })
+      toast('you changed a ticket code')
+      dispatch({type: "setCombination", message: copy})
+      console.log(copy)
+      console.log(state.combination)      
+    }  
+
      return (
-         <>
-         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>                
+         <>   
+         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
                 <div className="container">
                   <div className="row">
                     <div className="col-xl-7 mx-auto text-center">
@@ -252,7 +322,7 @@ export default () => {
                                   <div className="col-md-8 text-center text-md-start">
                                     <h3><span>Players</span>{players}</h3>
                                   </div>
-                                </div>                                
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -274,39 +344,72 @@ export default () => {
                   <div className="col-10 col-lg-5 col-xl-4 mx-auto mt-4">
                     <Countdown expiryTimestamp={expiryTimestamp}/>
                   </div>
-                 
-                
-                </div>              
-                 
-               
-                
 
-              
 
-{/* 
+                </div>
+
+
+
+
+
+
+{/*
              <div className="mt-4">contract-v2.0.1</div>
                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div> */}
-           
+
         </div>
         <div className="container">
                    <div className="row">
                    <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
                       <div className="card-body">
-                        <h4>Amount of  tickets</h4>
+                        <h3>Your tickets</h3>
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
-                        <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
-                        <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
+                        <input type="number" className="form-control amount-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
+                        <p className="my-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                         <div className="text-sm">{result}</div>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" style={{marginBottom:'-45px'}} disabled={amount <= 0}>Buy {amount} tickets</button>
+                        <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)}/>
+                        <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
-                    </div>                          
-                  </div>                      
+                    </div>
+                  </div>
                    </div>
                  </div>
 
+                 <div className="container">
+                    <div className="how">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <h2>How it works</h2>
+                          </div>
+                          <div className="col-md-4 my-2">
+                            <div className="step">
+                              <label>Step 1</label>
+                                <h3>Participate in loterry</h3>
+                                <p>Buy max 200 tickets per transaction</p>
+                            </div>
+                          </div>
+                          <div className="col-md-4 my-2">
+                            <div className="step">
+                            <label>Step 2</label>
+                                <h3>Wait for draw</h3>
+                                <p>The contract draw a lottery every 3 days</p>
+                            </div>
+                          </div>
+                          <div className="col-md-4 my-2">
+                            <div className="step">
+                            <label>Step 3</label>
+                                <h3>Check your prizes</h3>
+                                <p>Prizes from 3 to 6 symbols</p>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
-                 <div className="container" style={{marginTop:'7rem'}}>                    
+
+                 <div className="container" style={{marginTop:'7rem'}}>
                         <div className="card lota-card">
                           <div className="card-header text-center">
                             <div className="card-header-icon">
@@ -315,8 +418,12 @@ export default () => {
                             <h3>Latest jackpot results</h3>
                           </div>
                           <div className="card-body">
+                            <div className="w-100 text-center latest-combination">
+                            <h4 style={{color:'#ff36ff'}}>Winning combination</h4>
+                            <p>{LatestWinningCombination ? LatestWinningCombination.split('').map(obj => {return(<span>{obj}</span>)}) : '...' }</p>
+                            </div>
                           <h4 className="mt-4">Rewards</h4>
-                          <div class="table-responsive">
+                          <div className="table-responsive">
                             <table className="table text-white mb-3">
                               <thead>
                                 <tr>
@@ -360,16 +467,16 @@ export default () => {
                             </table>
                             </div>
                             <h4 className="mt-4">Winners</h4>
-                            <div class="table-responsive">
+                            <div className="table-responsive">
                             <table className="table text-white">
                                 <thead>
                                   <tr>
                                   <th scope="col">Rank</th>
                                   <th scope="col">Address</th>
-                                  <th scope="col">Collected</th>                             
+                                  <th scope="col">Collected</th>
                                   </tr>
                                 </thead>
-                                <tbody>                                
+                                <tbody>
                                   {winners.winners && winners.winners.map((obj,key) => {
                                     return (
                                       <tr key={key}>
@@ -379,10 +486,10 @@ export default () => {
                                           } else {
                                             return (r+',')
                                           }
-                                          
+
                                         })}</th>
                                         <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
-                                        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>                                  
+                                        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>
                                     </tr>
                                     )
                                   })}
@@ -391,7 +498,7 @@ export default () => {
                             </div>
                           </div>
                         </div>
-                    
+
                  </div>
 
                  <div className="container" style={{marginTop:'8rem'}}>
@@ -426,9 +533,9 @@ export default () => {
                               </div>
                  </div>
 
+                
 
-
-                 
+                 <Toaster />
          </>
      );
 }
