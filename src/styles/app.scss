@@ -76,6 +76,13 @@ width: 100%;
 .hero {
     background-size: cover;
     padding: 105px 0;
+    height: 935px;
+    @media(max-width:768px){
+      height:975px;
+    }
+    @media(max-width:501px){
+      height:855px;
+    }
 }
 
 .main-nav {
@@ -150,6 +157,11 @@ padding: 0.375rem 0.75rem;
       }
     }
   }
+}
+
+.amount-control {
+  font-size: 24px;
+  font-weight: 900;
 }
 
 .jackpot {  
@@ -243,12 +255,19 @@ padding: 0.375rem 0.75rem;
 }
 
 .amount-block {
-  margin-top: -75px;
-  background: linear-gradient(95.45deg, #3B2E73 -92.2%, #10003B 105.35%);
-box-sizing: border-box;
-box-shadow: 0px 16px 47px #10003A;
-border-radius: 10px;
-margin-bottom: 50px;
+  margin-top: -268px;
+  background: linear-gradient(
+95.45deg
+, #3B2E73 -92.2%, #10003B 105.35%);
+  box-sizing: border-box;
+  box-shadow: 0px 16px 47px #10003a;
+  border-radius: 10px;
+  margin-bottom: 50px;
+h3 {
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 15px;
+}
   label {
     display:block;
     font-weight:bold;    

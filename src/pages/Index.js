@@ -363,10 +363,10 @@ export default () => {
                    <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
                       <div className="card-body">
-                        <h4>Amount of  tickets</h4>
+                        <h3>Your tickets</h3>
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
-                        <input type="number" className="form-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
-                        <p className="my-2">Total: {numeral((amount * price) / 1000000).format("0,0.00")} UST</p>
+                        <input type="number" className="form-control amount-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
+                        <p className="my-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
