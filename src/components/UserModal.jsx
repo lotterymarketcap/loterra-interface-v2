@@ -21,8 +21,10 @@ export default function UserModal(props){
     const isPlayer = store.state.allPlayers.includes(connectedWallet.walletAddress);
     const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
     
-    const timeStampHalf = store.state.config.block_time_play - (store.state.config.every_block_time_play / 2);
-
+    const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
+    console.log(timeStampHalf)
+    console.log("now")
+    console.log(Date.now())
     const addToGas = 5300
     const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
     function claim(){
@@ -102,7 +104,7 @@ export default function UserModal(props){
                                     <h4>Claim & Collect</h4>
                                     <p>By clicking this button LoTerra will check if you won any prizes, if you did we will claim them automatically for you</p>
                                     {
-                                        isPlayer && Date.now() < timeStampHalf && !isWinner ?
+                                        Date.now() < timeStampHalf ?
                                             <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} onClick={() => claim()} >Claim</button> :
                                             <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} disabled>Claim closed</button>
                                     }
