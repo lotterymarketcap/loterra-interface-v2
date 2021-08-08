@@ -210,7 +210,7 @@ export default () => {
     }
 
     function addCode(amount){
-      if (amount >1) {
+      if (amount >=1) {
       console.log(state.combination,amount)
       let copy = state.combination.split(" ");
       if(amount < copy.length){
