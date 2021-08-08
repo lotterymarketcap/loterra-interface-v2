@@ -210,6 +210,7 @@ export default () => {
     }
 
     function addCode(amount){
+      if (amount >1) {
       console.log(state.combination,amount)
       let copy = state.combination.split(" ");
       if(amount < copy.length){
@@ -228,6 +229,7 @@ export default () => {
 });
       let string = filtered.join(" ");
       dispatch({type: "setCombination", message: string})
+      }
     }
 
     function getPrizePerRank(nr){
