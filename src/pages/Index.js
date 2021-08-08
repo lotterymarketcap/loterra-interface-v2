@@ -223,7 +223,10 @@ export default () => {
         }
         
       }
-      let string = copy.join(" ");
+      let filtered = copy.filter(function (el) {
+  return el != null;
+});
+      let string = filtered.join(" ");
       dispatch({type: "setCombination", message: string})
     }
 
