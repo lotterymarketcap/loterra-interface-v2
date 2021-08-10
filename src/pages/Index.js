@@ -8,7 +8,7 @@ import TicketModal from "../components/TicketModal";
 
 import { useStore } from "../store";
 
-import toast, { Toaster } from 'react-hot-toast';
+import Notification from "../components/Notification";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -28,6 +28,7 @@ export default () => {
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
   const [winners, setWinners] = useState(0);
+  const [notification,setNotification] = useState({type:'success',message:'',show:false})
   const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
   const [ticketModal, setTicketModal] = useState(0);
@@ -178,13 +179,16 @@ export default () => {
             // gasAdjustment: 1.5,
         }).then(e => {
             if (e.success) {
-                setResult("register combination success")
+                //setResult("register combination success")
+                showNotification("register combination success", 'success', 4000)
             }
             else{
-                setResult("register combination error")
+                //setResult("register combination error")
+                showNotification("register combination error", 'error', 4000)
             }
         }).catch(e =>{
-            setResult(e.message)
+            //setResult(e.message)
+            showNotification(e.message, 'error', 4000)
         })
 
     }
@@ -300,6 +304,33 @@ export default () => {
       console.log(copy)
       console.log(state.combination)      
     }  
+
+    function hideNotification(){
+      setNotification({
+          message:notification.message,
+          type: notification.type,
+          show: false
+      })
+  }
+
+  function showNotification(message,type,duration){
+      console.log('fired notification')
+      setNotification({
+          message:message,
+          type: type,
+          show: true
+      })
+      console.log(notification)
+      //Disable after $var seconds
+      setTimeout(() => {           
+          setNotification({ 
+              message:message,
+              type: type,              
+              show: false
+          })        
+          console.log('disabled',notification)
+      },duration)
+  }
 
      return (
          <>   
@@ -535,7 +566,7 @@ export default () => {
 
                 
 
-                 <Toaster />
+                 <Notification notification={notification} close={() => hideNotification()}/>                 
          </>
      );
 }

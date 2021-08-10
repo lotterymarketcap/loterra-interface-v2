@@ -8,7 +8,7 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet, CaretRight, UserCircle } from 'phosphor-react'
+import { Wallet, CaretRight, UserCircle, Power } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
 import {useStore} from "../store";
@@ -229,12 +229,29 @@ export default function ConnectWallet(){
                     style={{
                         marginTop: '-4px'
                     }} /></button>                        
-                    <button
-                        onClick={() => connectTo('disconnect')}
-                        className="btn btn-green nav-item"
+                    <button                       
+                        className="btn btn-green nav-item dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                     >
                         {connected ? returnBank() : ''}
                     </button>
+                    <ul
+                        className="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="dropdownMenuButton2"
+                        style={{top:'70px'}}
+                        >
+                            <button
+                                        onClick={() => connectTo('disconnect')}
+                                        className="dropdown-item"
+                                    >
+                                        <Power
+                                            size={16}
+                                            style={{ marginTop: '-4px' }}
+                                        />{' '}
+                                        Disconnect
+                                    </button>
+                        </ul>
                     </>
                 )}
             </div>
