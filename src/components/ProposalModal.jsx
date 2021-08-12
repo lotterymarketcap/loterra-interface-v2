@@ -6,14 +6,38 @@ export default function ProposalModal(props){
 
     const { open,  toggleModal } = props;
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        console.log(data);
+        //Getting specific data by field name
+        //data.get('fieldName')
+    }
+
     return (
         <>
         <div className={open ? 'proposalmodal show' : 'proposalmodal'}>
+        <button className="toggle" onClick={() => toggleModal()}><X size={36} /></button>
+
             <div className="proposalmodal_heading text-center">
                 <h2>Create proposal</h2>
             </div>
             <div className="proposalmodal_content">
-               
+               <form className='proposal_form' onSubmit={(e) => handleSubmit(e)}>
+                   <label>Description</label>
+                   <textarea name="description" className="form-control" required></textarea>
+                   <label>Proposal</label>
+                   <select name="proposal" className="form-control" required>
+                       <option>Value</option>
+                   </select>
+                   <label>Amount</label>
+                   <input name="amount" className="form-control" required/>
+                   <label>Prize per rank</label>
+                   <input name="prize_per_rank" className="form-control" required/>
+                   <label>Recipient</label>
+                   <input name="recipient" className="form-control" required/>
+                   <button type="submit" className="btn btn-special w-100 mt-4" style={{boxShadow:'none'}}>Create proposal</button>
+               </form>
             </div>
         </div>
         <div className={open ? 'backdrop show' : 'backdrop'} onClick={() => toggleModal()}></div>

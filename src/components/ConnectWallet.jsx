@@ -8,7 +8,7 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet, CaretRight, UserCircle } from 'phosphor-react'
+import { Wallet, CaretRight, UserCircle, Power } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
 import {useStore} from "../store";
@@ -99,6 +99,15 @@ export default function ConnectWallet(){
                 try {
                     coins = await lcd.bank.balance(connectedWallet.walletAddress);
                     const api = new WasmAPI(lcd.apiRequester);
+                    
+                    const holder = await api.contractQuery(
+                        store.state.loterraStakingAddress,
+                        {
+                            holder: { address: connectedWallet.walletAddress },
+                        }
+                    );
+                    store.dispatch({type: "setAllHolder", message: holder})               
+
                     const combinations = await api.contractQuery(
                         store.state.loterraContractAddress,
                         {
@@ -107,9 +116,15 @@ export default function ConnectWallet(){
                     );
                     store.dispatch({type: "setAllCombinations", message: combinations})
 
+                    
+
                 }catch (e) {
                     console.log(e)
                 }
+
+                //Store coins global state
+                store.dispatch({type: "setAllCoins", message: coins}) 
+                console.log(store.state.allCoins)
 
                 let uusd = coins.filter((c) => {
                     return c.denom === "uusd";
@@ -170,11 +185,10 @@ export default function ConnectWallet(){
         <div className={scrolled ? 'navbar navbar-expand p-2 p-md-3 sticky' : 'navbar navbar-expand p-2 p-md-3'}>
         <div className="container-fluid">
             <a className="navbar-brand"><img src="logo.png"/> <span>LOTERRA</span></a>
-            {/* <nav className="navbar-nav main-nav me-auto">                
-                <li className="nav-item"><a href="/" className="nav-link">Lottery</a></li>
-                <li className="nav-item"><a href="/staking" className="nav-link">Staking</a></li>
-                <li className="nav-item"><a href="/dao" className="nav-link">DAO</a></li>
-            </nav> */}
+             <nav className="navbar-nav main-nav me-auto">                  
+                <li className="nav-item"><a href="/" className="nav-link">Lottery</a></li>                 
+                <li className="nav-item"><a href="/staking" className="nav-link">Staking & DAO</a></li>                
+            </nav> 
             <div className="navbar-nav ms-auto">
                 {!connected && (
                     <>                       
@@ -229,12 +243,29 @@ export default function ConnectWallet(){
                     style={{
                         marginTop: '-4px'
                     }} /></button>                        
-                    <button
-                        onClick={() => connectTo('disconnect')}
-                        className="btn btn-green nav-item"
+                    <button                       
+                        className="btn btn-green nav-item dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                     >
                         {connected ? returnBank() : ''}
                     </button>
+                    <ul
+                        className="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="dropdownMenuButton2"
+                        style={{top:'70px'}}
+                        >
+                            <button
+                                        onClick={() => connectTo('disconnect')}
+                                        className="dropdown-item"
+                                    >
+                                        <Power
+                                            size={16}
+                                            style={{ marginTop: '-4px' }}
+                                        />{' '}
+                                        Disconnect
+                                    </button>
+                        </ul>
                     </>
                 )}
             </div>

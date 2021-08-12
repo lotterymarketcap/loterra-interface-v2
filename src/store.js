@@ -1,14 +1,19 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js";
 
 const StoreContext = createContext();
 
 const initialState = {
   loterraContractAddress: "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0",
   loterraPoolAddress: "terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta",
+  loterraStakingAddress: "terra1342fp86c3z3q0lksq92lncjxpkfl9hujwh6xfn",
   allWinners: [],
   allPlayers: [],
+  allProposals: [],
+  allCoins: [],
   config: {},
   allCombinations: [],
+  allHolder: {},
   combination: "",
   modal: false,
 };
@@ -30,6 +35,11 @@ const reducer = (state, action) => {
         ...state,
         allPlayers: action.message
       }
+    case "setAllProposals":
+      return {
+        ...state,
+        allProposals: action.message
+      }
     case "setConfig":
       return {
         ...state,
@@ -39,6 +49,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         allCombinations: action.message
+      }
+    case "setAllHolder":
+      return {
+        ...state,
+        allHolder: action.message
+      }
+    case "setAllCoins":
+      return {
+        ...state,
+        allCoins: action.message
       }
     case "setCombination":
       return {
