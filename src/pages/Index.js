@@ -88,6 +88,8 @@ export default () => {
       // Set default tickets to buy is an average bag
       multiplier(parseInt(contractTicketsInfo / contractPlayersInfo))
 
+      //Get poll data
+
 
       //Get Winners
       const contractWinnersInfo = await api.contractQuery(

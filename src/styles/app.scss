@@ -83,6 +83,9 @@ width: 100%;
     @media(max-width:501px){
       height:855px;
     }
+    &.staking {
+      height:765px;
+    }
 }
 
 .main-nav {
@@ -95,8 +98,11 @@ box-sizing: border-box;
 border-radius: 7px;
 color:#fff;
 padding: 0.375rem 0.75rem;
+transition:all 150ms linear;
 &:hover {
-  color: #f038f0;
+  color: #fff;
+  background: linear-gradient(328.75deg, #F042F0 -5.49%, #8A249D 19.13%, #0F0038 104.44%);
+  border: 1px solid #FF36FF;
 }
     }
   }

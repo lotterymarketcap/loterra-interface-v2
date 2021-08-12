@@ -26,5 +26,74 @@
                 }
             }
         }
+        &.proposals {
+            padding:35px 35px;
+            h3 {
+                font-weight: bold;
+                font-size: 46px;
+            }
+        }
+        &.staking {
+            padding:35px 35px;
+            h3 {
+                font-weight: bold;
+                font-size: 46px;
+                line-height: 54px;             
+                text-align: center;                
+                color: #FFFFFF;
+            }
+            .slogan {
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 21px;               
+                text-align: center;                
+                color: rgba(255, 255, 255, 0.52);
+            }
+            .form-control {
+                font-size: 21px;
+                padding: 10px 15px;
+                font-weight:bold;
+            }
+            .btn-plain {
+                transition:all 150ms linear;
+                box-shadow: 0px 0px 0px #ff36ff;
+                &:hover {
+                    color:#FF36FF;
+                    box-shadow: 0px 0px 10px #ff36ff;
+                }
+            }
+        }
+        &.staking-rewards {
+            padding:35px 35px;
+            margin-top:-130px;
+            h2 {
+                font-weight: bold;
+                font-size: 46px;
+                line-height: 54px;
+                color: #FFFFFF;
+            }
+            p {
+                font-weight: normal;
+                font-size: 33px;
+                margin-top: 15px;
+                color: #f035f0;
+            }
+            .current-value {
+                font-weight: bold;
+                font-size: 32px;
+                margin-left: 15px;
+                margin-top: 15px;
+                color: #FFFFFF;
+                position: absolute;
+                background: #090023a8;
+                padding: 0px 10px;
+                border-radius: 10px;
+                span {
+                    font-weight: normal;
+                    font-size: 15px;
+                    color: #20FF93;
+                }
+            }
+        }
     }
 }
