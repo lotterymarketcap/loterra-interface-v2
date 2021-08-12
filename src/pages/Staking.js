@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect, useMemo, useCallback} from "react";
 
 import { Pie, Line } from 'react-chartjs-2';
 import ProposalModal from "../components/ProposalModal";
@@ -6,6 +6,7 @@ import { Plus } from "phosphor-react";
 import ProposalItem from "../components/ProposalItem";
 import { lineOptions, lineData, pieData } from "../components/chart/Chart.js";
 import {useStore} from "../store";
+import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -22,20 +23,51 @@ export default function Staking (){
     const [modal, setModal] = useState(false);
 
     
-    const stake = () => {
+    const stakeOrUnstake = () => {
         console.log('stake');
-    }
-
-    const unstake = () => {
-        console.log('unstake');
+        const amount = parseInt(this.value * 1000000)
+        let msg
+        if (cmd === 'stake') {
+          msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            store.state.loterraStakingAddress,
+            {
+              send: {
+                contract: store.state.loterraStakingAddress,
+                amount: amount.toString(),
+                msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
+              },
+            }
+          )
+        } else {
+          msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            store.state.loterraStakingAddress,
+            {
+              unbond_stake: { amount: amount.toString() },
+            }
+          )
+        }
     }
 
     const claimUnstake = () => {
-        console.log('claim unstake');
+        const msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            store.state.loterraStakingAddress,
+            {
+              withdraw_stake: {},
+            }
+          )
     }
 
     const claimRewards = () => {
-        console.log('claim rewards');
+        const msg = new MsgExecuteContract(
+            connectedWallet.walletAddress,
+            store.state.loterraStakingAddress,
+            {
+              claim_rewards: {},
+            }
+          )
     }
 
  
@@ -63,12 +95,12 @@ export default function Staking (){
                                             </div>
                                             <div className="col-md-4 my-3">
                                                 <p className="shortcut float-end">MAX</p>
-                                                <button className="btn btn-plain w-100" onClick={() => stake()}>Stake</button>
+                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('stake')}>Stake</button>
                                                 <small className="float-end text-muted mt-2">Available: <strong> LOTA</strong></small>
                                             </div>
                                             <div className="col-md-4 my-3">
                                                 <p className="shortcut float-end">MAX</p>
-                                                <button className="btn btn-plain w-100" onClick={() => unstake()}>Unstake</button>
+                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('unstake')}>Unstake</button>
                                                 
                                                 <small className="float-end text-muted mt-2">Available: <strong>{ connectedWallet && connectedWallet.walletAddress &&
                                         (<>{store.state.allHolder.balance}</>)
