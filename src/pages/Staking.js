@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo, useCallback} from "react";
+import React, {useState} from "react";
 
 import { Pie, Line } from 'react-chartjs-2';
 import ProposalModal from "../components/ProposalModal";
@@ -6,7 +6,7 @@ import { Plus } from "phosphor-react";
 import ProposalItem from "../components/ProposalItem";
 import { lineOptions, lineData, pieData } from "../components/chart/Chart.js";
 import {useStore} from "../store";
-import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
+import { MsgExecuteContract} from "@terra-money/terra.js"
 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -21,14 +21,14 @@ export default function Staking (){
 
     const store = useStore();
     const [modal, setModal] = useState(false);
-
     
-    const stakeOrUnstake = () => {
-        console.log('stake');
-        const amount = parseInt(this.value * 1000000)
+    function stakeOrUnstake(type) {
+        var input = document.querySelector('.amount-input')
+        console.log(type,input.value);
+        const amount = parseInt(input.value * 1000000)
         let msg
-        if (cmd === 'stake') {
-          msg = new MsgExecuteContract(
+        if (type === 'stake') {
+            msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             store.state.loterraStakingAddress,
             {
@@ -40,7 +40,7 @@ export default function Staking (){
             }
           )
         } else {
-          msg = new MsgExecuteContract(
+            msg = MsgExecuteContract(
             connectedWallet.walletAddress,
             store.state.loterraStakingAddress,
             {
@@ -48,9 +48,11 @@ export default function Staking (){
             }
           )
         }
+
+        console.log(msg)
     }
 
-    const claimUnstake = () => {
+    function claimUnstake() {
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             store.state.loterraStakingAddress,
@@ -60,7 +62,7 @@ export default function Staking (){
           )
     }
 
-    const claimRewards = () => {
+    function claimRewards() {
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             store.state.loterraStakingAddress,
@@ -89,9 +91,8 @@ export default function Staking (){
                                                 <h3>Staking</h3>
                                                 <p className="slogan">Unstake or stake your LOTA in order to get rewards and voting weight</p>
                                             </div>
-                                            <div className="col-md-12">
-                                            
-                                                <input className="form-control"/>
+                                            <div className="col-md-12">                                            
+                                                <input className="form-control amount-input" name="amount"/>
                                             </div>
                                             <div className="col-md-4 my-3">
                                                 <p className="shortcut float-end">MAX</p>

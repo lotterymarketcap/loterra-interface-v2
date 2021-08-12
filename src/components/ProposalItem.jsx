@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function ProposalItem(props){
+export default function ProposalItem(){
 
     return (
         <div className="proposal-item">

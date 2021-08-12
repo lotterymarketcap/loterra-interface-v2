@@ -23,7 +23,7 @@ export default function ProposalModal(props){
                 <h2>Create proposal</h2>
             </div>
             <div className="proposalmodal_content">
-               <form className='proposal_form' onSubmit={(e) => handleSubmit(e)}>
+               <form className='proposal_form'>
                    <label>Description</label>
                    <textarea name="description" className="form-control" required></textarea>
                    <label>Proposal</label>
