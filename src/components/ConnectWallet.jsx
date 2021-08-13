@@ -52,7 +52,10 @@ export default function ConnectWallet(){
     const lcd = useMemo(() => {
 
         if (!connectedWallet) {
-          return null;
+            return new LCDClient({
+                URL: "https://lcd.terra.dev/",
+                chainID: "columbus-4",
+              });
         }
     
         return new LCDClient({
@@ -64,15 +67,17 @@ export default function ConnectWallet(){
   
 
       async function baseData(){ 
-        //Get proposals and save to state            
-        const api = new WasmAPI(lcd.apiRequester);
-        
+        //Get proposals and save to state       
+        const api = new WasmAPI(lcd.apiRequester);        
+       
+
         const contractConfigInfo = await api.contractQuery(
             state.loterraContractAddress,
           {
             config: {},
           }
         );
+        dispatch({type: "setConfig", message: contractConfigInfo})  
 
         let pollCount = contractConfigInfo.poll_count;
         console.log('count',pollCount)

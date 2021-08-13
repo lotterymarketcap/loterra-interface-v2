@@ -72,7 +72,7 @@ export default function ProposalItem(props){
                                         <div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
                                             <div className="btn-group w-100">
-                                                {state.wallet && 
+                                                {state.wallet.walletAddress && 
                                                 (
                                                     <>
                                                         <button className="btn btn-plain" onClick={() => vote(true,i+1)}>Yes</button>
@@ -80,7 +80,7 @@ export default function ProposalItem(props){
                                                     </>
                                                 )
                                                 }
-                                                {!state.wallet && 
+                                                {state.wallet.walletAddress === undefined && 
                                                 (
                                                     <>
                                                         <button className="btn btn-plain">Connect wallet</button>                                                        
