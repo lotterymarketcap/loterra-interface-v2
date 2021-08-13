@@ -6,17 +6,46 @@ import { Plus } from "phosphor-react";
 import ProposalItem from "../components/ProposalItem";
 import { lineOptions, lineData, pieData } from "../components/chart/Chart.js";
 import {useStore} from "../store";
-import { MsgExecuteContract} from "@terra-money/terra.js"
+import { MsgExecuteContract, StdFee} from "@terra-money/terra.js"
 import numeral from "numeral";
+import Notification from "../components/Notification";
 
 
 
 export default function Staking (){
 
-   
-
+    const addToGas = 5300
+    const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
+    const [notification,setNotification] = useState({type:'success',message:'',show:false})
     const {state, dispatch} = useStore();
     const [modal, setModal] = useState(false);
+
+    function hideNotification(){
+        setNotification({
+            message:notification.message,
+            type: notification.type,
+            show: false
+        })
+    }
+  
+    function showNotification(message,type,duration){
+        console.log('fired notification')
+        setNotification({
+            message:message,
+            type: type,
+            show: true
+        })
+        console.log(notification)
+        //Disable after $var seconds
+        setTimeout(() => {           
+            setNotification({ 
+                message:message,
+                type: type,              
+                show: false
+            })        
+            console.log('disabled',notification)
+        },duration)
+    }
     
     function stakeOrUnstake(type) {
         var input = document.querySelector('.amount-input')
@@ -45,7 +74,26 @@ export default function Staking (){
           )
         }
 
-        console.log(msg)
+        state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {    
+                if(type == 'stake')          {
+                    showNotification('Stake succes','success',4000)
+                } else {
+                    showNotification('Unstake succes','success',4000)
+                }                
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
     }
 
     function claimUnstake() {
@@ -56,6 +104,22 @@ export default function Staking (){
               withdraw_stake: {},
             }
           )
+          state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {              
+                showNotification('Claim unstake succes','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
     }
 
     function claimRewards() {
@@ -66,6 +130,22 @@ export default function Staking (){
               claim_rewards: {},
             }
           )
+          state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {              
+                showNotification('Claim rewards succes','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
     }
 
     function setInputAmount(amount){
@@ -172,6 +252,7 @@ export default function Staking (){
             </div>
         </section>
         <ProposalModal open={modal} toggleModal={() => setModal(!modal)}/>
+        <Notification notification={notification} close={() => hideNotification()}/>            
         </>
     )
 }
