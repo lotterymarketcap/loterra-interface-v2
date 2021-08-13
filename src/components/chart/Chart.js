@@ -1,7 +1,9 @@
 
 
     export const lineOptions = {
-    
+      animation: {
+        duration: 0
+    },
         scales:{
           xAxis:{
             beginAtZero:true,
@@ -63,6 +65,7 @@
         gradientGreen.addColorStop(1, '#1BC472'); 
     
         return {
+        
           labels: ['Available', 'Staked'],
         datasets: [
           {

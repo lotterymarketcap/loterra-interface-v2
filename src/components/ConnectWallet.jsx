@@ -43,7 +43,7 @@ export default function ConnectWallet(){
     const [isModal, setIsModal] = useState(false);
     const [bank, setBank] = useState();
     const [connected, setConnected]= useState(false);
-    const store = useStore();
+    const {state, dispatch} = useStore();
     let wallet = ""
     if (typeof document !== 'undefined') {
         wallet = useWallet();
@@ -61,9 +61,35 @@ export default function ConnectWallet(){
         });
       }, [connectedWallet]);
     
+  
 
+      async function baseData(){ 
+        //Get proposals and save to state            
+        const api = new WasmAPI(lcd.apiRequester);
+        
+        const contractConfigInfo = await api.contractQuery(
+            state.loterraContractAddress,
+          {
+            config: {},
+          }
+        );
 
-
+        let pollCount = contractConfigInfo.poll_count;
+        console.log('count',pollCount)
+        let allProposals = [];
+        for (let index = 1; index < pollCount + 1; index++) {
+            const proposal = await api.contractQuery(
+                state.loterraContractAddress,
+                {
+                get_poll: { poll_id: index },
+                }
+        );
+        allProposals.push(proposal);
+        console.log('single', proposal)
+        }
+        dispatch({type: "setAllProposals", message: allProposals})
+        console.log('proposals',allProposals)
+    }
 
 
     //const installChrome = useInstallChromeExtension();
@@ -85,37 +111,63 @@ export default function ConnectWallet(){
             wallet.connect(wallet.availableConnectTypes[2])
         }else if (to == "disconnect"){
             wallet.disconnect()
+            dispatch({type: "setWallet", message: {}})  
         }
         setConnected(!connected)
         setIsDisplayDialog(false)
     }
 
     async function contactBalance(){
-
+       
             if (connectedWallet && connectedWallet.walletAddress && lcd) {
                 //   setShowConnectOptions(false);
+                dispatch({type: "setWallet", message: connectedWallet})    
+
                 let coins
+             
                 let token
                 try {
-                    coins = await lcd.bank.balance(connectedWallet.walletAddress);
                     const api = new WasmAPI(lcd.apiRequester);
+                    coins = await lcd.bank.balance(connectedWallet.walletAddress);
+
+                    const contractConfigInfo = await api.contractQuery(
+                        state.loterraContractAddress,
+                      {
+                        config: {},
+                      }
+                    );
+                
+
                     
                     const holder = await api.contractQuery(
-                        store.state.loterraStakingAddress,
+                        state.loterraStakingAddress,
                         {
                             holder: { address: connectedWallet.walletAddress },
                         }
                     );
-                    store.dispatch({type: "setAllHolder", message: holder})               
+                    dispatch({type: "setAllHolder", message: holder})    
+                    console.log(holder)     
+              
+                    const token = await api.contractQuery(
+                        state.loterraContractAddressCw20, 
+                        {
+                        balance: { address: connectedWallet.walletAddress},
+                    })
+                    dispatch({type: "setLotaBalance", message: token}) 
+                    console.log(token)
+
+                    
+
 
                     const combinations = await api.contractQuery(
-                        store.state.loterraContractAddress,
+                        state.loterraContractAddress,
                         {
-                            combination: { lottery_id: store.state.config.lottery_counter, address: connectedWallet.walletAddress},
+                            combination: { lottery_id: contractConfigInfo.lottery_counter, address: connectedWallet.walletAddress},
                         }
                     );
-                    store.dispatch({type: "setAllCombinations", message: combinations})
+                    dispatch({type: "setAllCombinations", message: combinations})
 
+                    
                     
 
                 }catch (e) {
@@ -123,8 +175,8 @@ export default function ConnectWallet(){
                 }
 
                 //Store coins global state
-                store.dispatch({type: "setAllCoins", message: coins}) 
-                console.log(store.state.allCoins)
+                dispatch({type: "setAllNativeCoins", message: coins}) 
+                console.log(state.allCoins)
 
                 let uusd = coins.filter((c) => {
                     return c.denom === "uusd";
@@ -135,15 +187,10 @@ export default function ConnectWallet(){
                 setConnected(true)
             } else {
                 setBank(null);
+                dispatch({type: "setWallet", message: {}})  
             }
     }
 
- 
-
-    useEffect(() => {
-            contactBalance()
-            console.log(connectedWallet)
-    }, [connectedWallet, lcd, store.state.config]);
 
     function renderDialog(){
         if (isDisplayDialog){
@@ -180,6 +227,16 @@ export default function ConnectWallet(){
       useEffect(() => {
         window.addEventListener('scroll',handleScroll)
       })
+
+ 
+
+    useEffect(() => {
+            baseData()
+            contactBalance()            
+            console.log(connectedWallet)
+    }, [connectedWallet, lcd, state.config]);
+
+    
 
     return(
         <div className={scrolled ? 'navbar navbar-expand p-2 p-md-3 sticky' : 'navbar navbar-expand p-2 p-md-3'}>

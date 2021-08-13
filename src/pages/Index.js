@@ -50,14 +50,14 @@ export default () => {
     const api = new WasmAPI(terra.apiRequester);
     try {
       const contractConfigInfo = await api.contractQuery(
-          loterra_contract_address,
-        {
-          config: {},
-        }
-      );
+        loterra_contract_address,
+      {
+        config: {},
+      }
+    );
+
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
-      dispatch({type: "setConfig", message: contractConfigInfo})
       const bank = new BankAPI(terra.apiRequester);
       const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
@@ -117,6 +117,9 @@ export default () => {
         }
       );
       setLotaPrice(currentLotaPrice)
+
+     
+
 
       //Dev purposes disable for production
       console.log('contract info',contractConfigInfo)
