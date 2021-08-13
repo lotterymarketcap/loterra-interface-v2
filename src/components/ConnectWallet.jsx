@@ -52,10 +52,7 @@ export default function ConnectWallet(){
     const lcd = useMemo(() => {
 
         if (!connectedWallet) {
-            return new LCDClient({
-                URL: "https://lcd.terra.dev/",
-                chainID: "columbus-4",
-              });
+          return null;
         }
     
         return new LCDClient({
@@ -67,8 +64,12 @@ export default function ConnectWallet(){
   
 
       async function baseData(){ 
-        //Get proposals and save to state       
-        const api = new WasmAPI(lcd.apiRequester);        
+        //Get proposals and save to state   
+        const terra = new LCDClient({
+            URL: "https://lcd.terra.dev/",
+            chainID: "columbus-4",
+          });
+          const api = new WasmAPI(terra.apiRequester);        
        
 
         const contractConfigInfo = await api.contractQuery(
@@ -77,7 +78,6 @@ export default function ConnectWallet(){
             config: {},
           }
         );
-        dispatch({type: "setConfig", message: contractConfigInfo})  
 
         let pollCount = contractConfigInfo.poll_count;
         console.log('count',pollCount)
@@ -230,15 +230,18 @@ export default function ConnectWallet(){
       }
     
       useEffect(() => {
-        window.addEventListener('scroll',handleScroll)
+       
       })
 
  
 
     useEffect(() => {
-            baseData()
-            contactBalance()            
+        if(connectedWallet){
+            contactBalance()  
+        }            
+            baseData()             
             console.log(connectedWallet)
+            window.addEventListener('scroll',handleScroll)
     }, [connectedWallet, lcd, state.config]);
 
     

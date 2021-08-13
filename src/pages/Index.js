@@ -49,7 +49,12 @@ export default () => {
     });
     const api = new WasmAPI(terra.apiRequester);
     try {
-      const contractConfigInfo = state.config;
+      const contractConfigInfo = await api.contractQuery(
+        loterra_contract_address,
+      {
+        config: {},
+      }
+    );
 
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
