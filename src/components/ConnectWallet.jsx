@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect, useMemo, useRef} from "react";
 
 import {LCDClient, WasmAPI} from "@terra-money/terra.js";
 import {
@@ -8,7 +8,7 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet, CaretRight, UserCircle, Power } from 'phosphor-react'
+import { Wallet, CaretRight, UserCircle, Power, List,X } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
 import {useStore} from "../store";
@@ -41,9 +41,13 @@ export default function ConnectWallet(){
     let connectedWallet = "";
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     const [isModal, setIsModal] = useState(false);
+    const [sideNav, setSideNav] = useState(false);
     const [bank, setBank] = useState();
     const [connected, setConnected]= useState(false);
-    const {state, dispatch} = useStore();
+    const {state, dispatch} = useStore();    
+
+
+
     let wallet = ""
     if (typeof document !== 'undefined') {
         wallet = useWallet();
@@ -229,11 +233,9 @@ export default function ConnectWallet(){
         }
       }
     
-      useEffect(() => {
-       
-      })
-
- 
+      function showSideNav(){
+            setSideNav(!sideNav);
+      }
 
     useEffect(() => {
         if(connectedWallet){
@@ -250,10 +252,12 @@ export default function ConnectWallet(){
         <div className={scrolled ? 'navbar navbar-expand p-2 p-md-3 sticky' : 'navbar navbar-expand p-2 p-md-3'}>
         <div className="container-fluid">
             <a className="navbar-brand"><img src="logo.png"/> <span>LOTERRA</span></a>
-             <nav className="navbar-nav main-nav me-auto">                  
+             <nav className={sideNav ? 'navbar-nav main-nav me-auto open' : 'navbar-nav main-nav me-auto'}>   
+                <button className="main-nav-close-toggle" onClick={() => showSideNav()}><X size={36} /></button>               
                 <li className="nav-item"><a href="/" className="nav-link">Lottery</a></li>                 
                 <li className="nav-item"><a href="/staking" className="nav-link">Staking & DAO</a></li>                
-            </nav> 
+            </nav>
+             
             <div className="navbar-nav ms-auto">
                 {!connected && (
                     <>                       
@@ -331,6 +335,7 @@ export default function ConnectWallet(){
                                         Disconnect
                                     </button>
                         </ul>
+                        <button className="btn btn-default nav-item ms-2 main-nav-toggle" onClick={() => showSideNav()}><List size={26} /></button>
                     </>
                 )}
             </div>
