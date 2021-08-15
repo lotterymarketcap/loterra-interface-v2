@@ -179,7 +179,11 @@ export default function Staking (){
             <div className="container h-100 d-md-flex">
                         <div className="row align-self-center">
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
-                                <Pie data={pieData} data-staked={getStakedNr()} data-total={getNotStaked()} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                { state.tokenInfo.total_supply &&
+                                     (
+                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                    )
+                                }                                
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
                             </div>
                             <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">
