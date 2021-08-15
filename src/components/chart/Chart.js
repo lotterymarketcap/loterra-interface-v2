@@ -70,7 +70,7 @@
         datasets: [
           {
             label: '# of Lota',
-            data: [35,65],
+            data: [canvas.dataset.staked,canvas.dataset.total],
             backgroundColor: [
               gradientGreen,
               gradientBlack,          

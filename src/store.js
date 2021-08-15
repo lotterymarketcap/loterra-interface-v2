@@ -9,6 +9,7 @@ const initialState = {
   loterraPoolAddress: "terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta",
   loterraStakingAddress: "terra1342fp86c3z3q0lksq92lncjxpkfl9hujwh6xfn",
   allWinners: [],
+  tokenInfo: {},
   allPlayers: [],
   allProposals: [],
   allNativeCoins: [],
@@ -33,6 +34,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         staking: action.message
+      }
+    case "setTokenInfo":
+      return {
+        ...state,
+        tokenInfo: action.message
       }
     case "setAllWinners":
       return {

@@ -157,6 +157,20 @@ export default function Staking (){
         input.value = amount;
     }
 
+    function getStakedNr(){
+         let total = parseInt(state.tokenInfo.total_supply)/ 1000000;
+         let staked = parseInt(state.staking.total_balance) / 1000000;
+         let sum = total - staked;
+        return sum;
+    }
+
+    function getNotStaked(){
+        let total = parseInt(state.tokenInfo.total_supply)/ 1000000;
+        let staked = parseInt(state.staking.total_balance) / 1000000;
+        let first = total - staked;
+        let sum = total - first;
+        return sum;
+    }
  
 
     return(
@@ -165,7 +179,7 @@ export default function Staking (){
             <div className="container h-100 d-md-flex">
                         <div className="row align-self-center">
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
-                                <Pie data={pieData} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                <Pie data={pieData} data-staked={getStakedNr()} data-total={getNotStaked()} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
                             </div>
                             <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">

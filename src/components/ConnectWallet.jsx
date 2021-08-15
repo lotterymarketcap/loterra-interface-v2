@@ -110,11 +110,12 @@ export default function ConnectWallet(){
         console.log('staking',staking)
 
         const token_info = await api.contractQuery(
-            state.loterraContractAddress, 
+            state.loterraContractAddressCw20, 
             {
                 token_info: {},
             }
         );
+        dispatch({type: "setTokenInfo", message: token_info})
 
         console.log(token_info)
 
