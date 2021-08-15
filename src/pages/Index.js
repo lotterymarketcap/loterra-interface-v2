@@ -159,9 +159,16 @@ export default () => {
     const [result, setResult] = useState("")
     const [amount, setAmount] = useState(0)
 
+    function checkIfDuplicateExists(w){
+      return new Set(w).size !== w.length 
+    }
 
     function execute(){
         const cart = state.combination.split(" ") // combo.split(" ")
+        if(checkIfDuplicateExists(cart)){
+          showNotification('Combinations contain duplicate','error',4000);
+          return;
+        }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5300 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
