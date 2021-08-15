@@ -226,7 +226,7 @@ export default function Staking (){
                                     { state.wallet && state.wallet.walletAddress &&
                                         (<p>{state.allHolder.pending_rewards} UST</p>)
                                     }
-                                    <button className=" btn btn-special mt-3" onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
+                                    <button className=" btn btn-special mt-3" disabled={state.allHolder.pending_rewards <= 0 ? true : false} onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
                                     </div>
                             </div>
                         </div>
