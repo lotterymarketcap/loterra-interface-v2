@@ -51,6 +51,10 @@ export default function Staking (){
         var input = document.querySelector('.amount-input')
         console.log(type,input.value);
         const amount = parseInt(input.value * 1000000)
+        if(amount <= 0){
+            showNotification('Input amount empty','error',4000)
+            return;
+        }
         let msg
         if (type === 'stake') {
             msg = new MsgExecuteContract(
