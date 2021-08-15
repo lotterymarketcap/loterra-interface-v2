@@ -85,6 +85,9 @@ width: 100%;
     }
     &.staking {
       height:765px;
+      @media(max-width:990px){
+        height:1305px;
+      }
     }
 }
 
