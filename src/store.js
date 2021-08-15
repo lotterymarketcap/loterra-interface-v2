@@ -12,6 +12,7 @@ const initialState = {
   allPlayers: [],
   allProposals: [],
   allNativeCoins: [],
+  staking: {},
   wallet: {},
   LotaBalance: {},
   config: {},
@@ -27,6 +28,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         modal: action.message
+      }
+    case "setStaking":
+      return {
+        ...state,
+        staking: action.message
       }
     case "setAllWinners":
       return {

@@ -103,10 +103,19 @@ border-radius: 7px;
 color:#fff;
 padding: 0.375rem 0.75rem;
 transition:all 150ms linear;
+font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    svg {
+      color:#a69fbb;
+    }
 &:hover {
   color: #fff;
   background: linear-gradient(328.75deg, #F042F0 -5.49%, #8A249D 19.13%, #0F0038 104.44%);
   border: 1px solid #FF36FF;
+  svg {
+    color:#fff;
+  }
 }
     }
   }

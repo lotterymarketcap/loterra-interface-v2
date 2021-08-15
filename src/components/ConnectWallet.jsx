@@ -8,7 +8,7 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet, CaretRight, UserCircle, Power, List,X } from 'phosphor-react'
+import { Wallet, CaretRight, UserCircle, Power, List,X, Ticket, Bank } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
 import {useStore} from "../store";
@@ -82,6 +82,7 @@ export default function ConnectWallet(){
             config: {},
           }
         );
+        console.log('config',contractConfigInfo)
 
         let pollCount = contractConfigInfo.poll_count;
         console.log('count',pollCount)
@@ -98,6 +99,25 @@ export default function ConnectWallet(){
         }
         dispatch({type: "setAllProposals", message: allProposals})
         console.log('proposals',allProposals)
+
+        const staking = await api.contractQuery(
+            state.loterraStakingAddress,
+          {
+            state: {},
+          }
+        );
+        dispatch({type: "setStaking", message: staking})
+        console.log('staking',staking)
+
+        const token_info = await api.contractQuery(
+            state.loterraContractAddress, 
+            {
+                token_info: {},
+            }
+        );
+
+        console.log(token_info)
+
     }
 
 
@@ -254,8 +274,8 @@ export default function ConnectWallet(){
             <a className="navbar-brand"><img src="logo.png"/> <span>LOTERRA</span></a>
              <nav className={sideNav ? 'navbar-nav main-nav me-auto open' : 'navbar-nav main-nav me-auto'}>   
                 <button className="main-nav-close-toggle" onClick={() => showSideNav()}><X size={36} /></button>               
-                <li className="nav-item"><a href="/" className="nav-link">Lottery</a></li>                 
-                <li className="nav-item"><a href="/staking" className="nav-link">Staking & DAO</a></li>                
+                <li className="nav-item"><a href="/" className="nav-link"><Ticket size={24} style={{marginRight:'3px',position:'relative',top:'-1px'}} /> Lottery</a></li>                 
+                <li className="nav-item"><a href="/staking" className="nav-link"><Bank size={24} style={{marginRight:'3px',position:'relative',top:'-1px'}} /> Staking & DAO</a></li>                
             </nav>
              
             <div className="navbar-nav ms-auto">
