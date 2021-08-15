@@ -304,6 +304,8 @@ export default function ConnectWallet(){
                                 </button>
                             </ul>
                         </div>
+                        <button className="btn btn-default nav-item ms-2 main-nav-toggle" onClick={() => showSideNav()}><List size={26} /></button>
+
                     </>
                 )}
                 {connected && (
