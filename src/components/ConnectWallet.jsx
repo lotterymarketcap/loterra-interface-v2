@@ -112,7 +112,7 @@ export default function ConnectWallet(){
         const token_info = await api.contractQuery(
             state.loterraContractAddressCw20, 
             {
-                token_info: {},
+                balance: {address:'terra1e7hzp3tnsswpfcu6gt4wlgfm20lcsqqywhaagu'},
             }
         );
         dispatch({type: "setTokenInfo", message: token_info})

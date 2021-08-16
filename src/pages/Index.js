@@ -348,13 +348,23 @@ export default () => {
 
      return (
          <>   
-         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
+         <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>
                 <div className="container">
                   <div className="row">
                     <div className="col-xl-7 mx-auto text-center">
                       <div className="jackpot">
                         <p>Jackpot</p>
-                        <h2>{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
+                        <h2>{numeral(jackpot).format("0,0.00").split("").map(obj => {
+                          return (
+                            <div className="roller">
+                              {obj} 
+                            </div>
+                          )
+                        })}
+                        <div className="roller">
+                          <span>UST</span>
+                        </div>
+                        </h2>
                       </div>
                     </div>
                     <div className="col-xl-7 mx-auto">
