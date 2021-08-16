@@ -5,7 +5,7 @@ import { TwitterLogo,TelegramLogo, Files } from "phosphor-react";
 export default function Footer(){    
 
     return (
-        <footer className="container">
+        <footer className="container-fluid" style={{background:'#10003b'}}>
             <div className="social-share py-5">
             <p className="mb-2">Stay in touch with <strong>LoTerra</strong></p>
             <ul>                
