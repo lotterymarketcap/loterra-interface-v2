@@ -112,7 +112,7 @@ export default function ConnectWallet(){
         const token_info = await api.contractQuery(
             state.loterraContractAddressCw20, 
             {
-                balance: {address:'terra1e7hzp3tnsswpfcu6gt4wlgfm20lcsqqywhaagu'},
+                token_info:{},
             }
         );
         dispatch({type: "setTokenInfo", message: token_info})
@@ -186,7 +186,18 @@ export default function ConnectWallet(){
                     dispatch({type: "setLotaBalance", message: token}) 
                     console.log(token)
 
-                    
+                    const claims = await api.contractQuery(
+                        state.loterraStakingAddress,
+                        {
+                            claims: { address: connectedWallet.walletAddress },
+                        }
+                    );
+                    console.log(claims)
+                    dispatch({type: "setHolderClaims", message: claims})
+
+
+
+
 
 
                     const combinations = await api.contractQuery(

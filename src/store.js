@@ -19,6 +19,7 @@ const initialState = {
   config: {},
   allCombinations: [],
   allHolder: {},
+  holderClaims: {},
   combination: "",
   modal: false,
 };
@@ -74,6 +75,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         allHolder: action.message
+      }
+    case "setHolderClaims":
+      return {
+        ...state,
+        holderClaims: action.message
       }
     case "setAllNativeCoins":
       return {

@@ -11,6 +11,7 @@ import numeral from "numeral";
 import Notification from "../components/Notification";
 import Footer from "../components/Footer";
 
+const BURNED_LOTA = 4301383550000;
 
 
 export default function Staking (){
@@ -155,7 +156,7 @@ export default function Staking (){
 
     function setInputAmount(amount){
         const input = document.querySelector('.amount-input');
-        input.value = amount;
+        input.value = amount / 1000000;
     }
 
     function getStakedNr(){
@@ -165,7 +166,9 @@ export default function Staking (){
     }
 
     function getNotStaked(){
-        let total = parseInt(state.tokenInfo.balance)/ 1000000;
+        let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000;
+        console.log("parseInt(state.tokenInfo.balance) - BURNED_LOTA")
+        console.log(state.tokenInfo.total_supply)
         let staked = parseInt(state.staking.total_balance) / 1000000;
         let sum = total - staked;
         return sum;
@@ -178,9 +181,9 @@ export default function Staking (){
             <div className="container h-100 d-md-flex">
                         <div className="row align-self-center">
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
-                                { state.tokenInfo.balance &&
+                                { state.tokenInfo.total_supply &&
                                      (
-                                        <Pie data={pieData} data-staked={state.tokenInfo.balance ? getStakedNr() : '0'} data-total={state.tokenInfo.balance ? getNotStaked() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
                                     )
                                 }                                
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
@@ -197,24 +200,24 @@ export default function Staking (){
                                                 <input type="number" className="form-control amount-input" name="amount"/>
                                             </div>
                                             <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end" onClick={() => setInputAmount(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}>MAX</p>
+                                                <p className="shortcut float-end" onClick={() => setInputAmount(parseInt(state.LotaBalance.balance) / 1000000)}>MAX</p>
                                                 <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('stake')}>Stake</button>
                                                 <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
                                         (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
                                     } LOTA</strong></small>
                                             </div>
                                             <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end" onClick={() => setInputAmount(numeral(state.allHolder.balance).format('0.00'))}>MAX</p>
+                                                <p className="shortcut float-end" onClick={() => setInputAmount(state.allHolder.balance)}>MAX</p>
                                                 <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('unstake')}>Unstake</button>
                                                 
                                                 <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
-                                        (<>{numeral(state.allHolder.balance).format('0.00')}</>)
+                                        (<>{numeral(parseInt(state.allHolder.balance) / 1000000).format('0.00')}</>)
                                     } LOTA</strong></small>
                                             </div>
                                             <div className="col-md-4 my-3">                                                
                                                 <button className="btn btn-plain w-100" onClick={() => claimUnstake()} style={{marginTop:'21px'}}>Claim unstake</button>
                                                 <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
-                                        (<>{numeral(state.allHolder.balance).format('0.00')}</>)
+                                        (<>{state.holderClaims.claims / 1000000}</>)
                                     } LOTA</strong></small>
                                             </div>
                                         </div>
@@ -241,7 +244,7 @@ export default function Staking (){
                                     <div className="align-self-center w-100">
                                     <h2>Staking rewards</h2>
                                     { state.wallet && state.wallet.walletAddress &&
-                                        (<p>{state.allHolder.pending_rewards} UST</p>)
+                                        (<p>{parseInt(state.allHolder.pending_rewards) / 1000000} UST</p>)
                                     }
                                     <button className=" btn btn-special mt-3" disabled={state.allHolder.pending_rewards <= 0 ? true : false} onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
                                     </div>
