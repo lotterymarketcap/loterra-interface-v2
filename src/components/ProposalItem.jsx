@@ -49,8 +49,8 @@ export default function ProposalItem(props){
                                                     <td>{data.status}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Price per rank</td>
-                                                    <td>{data.prize_per_rank}</td>
+                                                    <td>Prize per rank</td>
+                                                    <td>[{data.prize_per_rank.toString()}]</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Proposal</td>
