@@ -9,6 +9,7 @@ import {useStore} from "../store";
 import { MsgExecuteContract, StdFee} from "@terra-money/terra.js"
 import numeral from "numeral";
 import Notification from "../components/Notification";
+import Footer from "../components/Footer";
 
 
 
@@ -195,7 +196,7 @@ export default function Staking (){
                                                 <p className="slogan">Unstake or stake your LOTA in order to get rewards and voting weight</p>
                                             </div>
                                             <div className="col-md-12">                                            
-                                                <input className="form-control amount-input" name="amount"/>
+                                                <input type="number" className="form-control amount-input" name="amount"/>
                                             </div>
                                             <div className="col-md-4 my-3">
                                                 <p className="shortcut float-end" onClick={() => setInputAmount(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}>MAX</p>
@@ -273,6 +274,7 @@ export default function Staking (){
                 </div>
             </div>
         </section>
+        <Footer/>
         <ProposalModal open={modal} toggleModal={() => setModal(!modal)}/>
         <Notification notification={notification} close={() => hideNotification()}/>            
         </>

@@ -9,6 +9,8 @@ import TicketModal from "../components/TicketModal";
 import { useStore } from "../store";
 
 import Notification from "../components/Notification";
+import SocialShare from "../components/SocialShare";
+import Footer from "../components/Footer";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -416,6 +418,7 @@ export default () => {
                         <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
                     </div>
+                    <SocialShare/>
                   </div>
                    </div>
                  </div>
@@ -575,7 +578,7 @@ export default () => {
                                   </div>
                               </div>
                  </div>
-
+                <Footer/>
                 
 
                  <Notification notification={notification} close={() => hideNotification()}/>                 
