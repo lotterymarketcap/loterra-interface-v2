@@ -1,13 +1,32 @@
+import numeral from "numeral";
 import React from "react"
+import { MsgExecuteContract} from "@terra-money/terra.js"
+import { useStore } from "../store";
 
 export default function ProposalItem(props){
 
+    const {data,i} = props;
+    const {state, dispatch} = useStore();
+
+    const vote = (approve,id) => {
+        const msg = new MsgExecuteContract(
+            state.wallet.senderAddress,
+            state.loterraContractAddress,
+            {
+              vote: {
+                poll_id: id,
+                approve,
+              },
+            }
+          )
+    }
+
     return (
-        <div className="proposal-item">
+        <div className="proposal-item" key={i}>
                             <div className="row">
                                     <div className="col-12">
-                                        <h4>Proposal title</h4>
-                                        <p className="desc">New upcoming design for LoTerra frontend interface preview here https://drive.google.com/file/d/1JDVwEVQLjQSASunLgb6rXu2QPvvEm2k3/view?usp=drivesdk</p>
+                                        <h4>Proposal number {i+1}</h4>
+                                        <p className="desc">{data.description}</p>
                                     </div>
                                     <div className="col-md-8">
                                             <div className="table-responsive">
@@ -15,35 +34,35 @@ export default function ProposalItem(props){
                                                 <tbody>
                                                 <tr>
                                                     <td>Creator</td>
-                                                    <td>terra1ar45r5e8y55ku847xvet6ny2psv6fkflhchzxk</td>
+                                                    <td>{data.creator}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>End block height</td>
-                                                    <td>3371352</td>
+                                                    <td>{data.end_height}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Amount</td>
-                                                    <td>50</td>
+                                                    <td>{data.amount}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Status</td>
-                                                    <td>Passed</td>
+                                                    <td>{data.status}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Price per rank</td>
-                                                    <td>[]</td>
+                                                    <td>{data.prize_per_rank}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Proposal</td>
-                                                    <td>DaoFunding</td>
+                                                    <td>{data.proposal}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Yes votes</td>
-                                                    <td>2</td>
+                                                    <td>{data.yes_vote}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>No votes</td>
-                                                    <td>0</td>
+                                                    <td>{data.no_vote}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -53,8 +72,21 @@ export default function ProposalItem(props){
                                         <div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
                                             <div className="btn-group w-100">
-                                                <button className="btn btn-plain">Yes</button>
-                                                <button className="btn btn-plain">No</button>
+                                                {state.wallet.walletAddress && 
+                                                (
+                                                    <>
+                                                        <button className="btn btn-plain" onClick={() => vote(true,i+1)}>Yes</button>
+                                                        <button className="btn btn-plain" onClick={() => vote(false,i+1)}>No</button>
+                                                    </>
+                                                )
+                                                }
+                                                {state.wallet.walletAddress === undefined && 
+                                                (
+                                                    <>
+                                                        <button className="btn btn-plain">Connect wallet</button>                                                        
+                                                    </>
+                                                )
+                                                }
                                             </div>
                                         </div>
                                     </div>

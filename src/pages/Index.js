@@ -9,6 +9,8 @@ import TicketModal from "../components/TicketModal";
 import { useStore } from "../store";
 
 import Notification from "../components/Notification";
+import SocialShare from "../components/SocialShare";
+import Footer from "../components/Footer";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -50,14 +52,14 @@ export default () => {
     const api = new WasmAPI(terra.apiRequester);
     try {
       const contractConfigInfo = await api.contractQuery(
-          loterra_contract_address,
-        {
-          config: {},
-        }
-      );
+        loterra_contract_address,
+      {
+        config: {},
+      }
+    );
+
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
-      dispatch({type: "setConfig", message: contractConfigInfo})
       const bank = new BankAPI(terra.apiRequester);
       const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
@@ -118,6 +120,9 @@ export default () => {
       );
       setLotaPrice(currentLotaPrice)
 
+     
+
+
       //Dev purposes disable for production
       console.log('contract info',contractConfigInfo)
 
@@ -156,9 +161,16 @@ export default () => {
     const [result, setResult] = useState("")
     const [amount, setAmount] = useState(0)
 
+    function checkIfDuplicateExists(w){
+      return new Set(w).size !== w.length 
+    }
 
     function execute(){
         const cart = state.combination.split(" ") // combo.split(" ")
+        if(checkIfDuplicateExists(cart)){
+          showNotification('Combinations contain duplicate','error',4000);
+          return;
+        }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5300 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
@@ -336,13 +348,23 @@ export default () => {
 
      return (
          <>   
-         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
-                <div className="container">
+         <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>
+                <div className="container-fluid container-md">
                   <div className="row">
-                    <div className="col-xl-7 mx-auto text-center">
+                    <div className="col-lg-12 col-xl-8 mx-auto text-center">
                       <div className="jackpot">
                         <p>Jackpot</p>
-                        <h2>{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
+                        <h2>{numeral(jackpot).format("0,0.00").split("").map(obj => {
+                          return (
+                            <div className="roller">
+                              {obj} 
+                            </div>
+                          )
+                        })}
+                        <div className="roller">
+                          <span>UST</span>
+                        </div>
+                        </h2>
                       </div>
                     </div>
                     <div className="col-xl-7 mx-auto">
@@ -351,8 +373,8 @@ export default () => {
                             <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col text-center"><Users size={55} color="#73FFC1" /></div>
-                                  <div className="col-md-8 text-center text-md-start">
+                                  <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
+                                  <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>Players</span>{players}</h3>
                                   </div>
                                 </div>
@@ -363,8 +385,8 @@ export default () => {
                           <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col text-center"><Ticket size={55} color="#73FFC1" /></div>
-                                  <div className="col-md-8 text-center text-md-start">
+                                  <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
+                                  <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>Tickets</span>{tickets}</h3>
                                   </div>
                                 </div>
@@ -406,6 +428,7 @@ export default () => {
                         <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
                     </div>
+                    <SocialShare/>
                   </div>
                    </div>
                  </div>
@@ -565,7 +588,7 @@ export default () => {
                                   </div>
                               </div>
                  </div>
-
+                <Footer/>
                 
 
                  <Notification notification={notification} close={() => hideNotification()}/>                 

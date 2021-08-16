@@ -1,39 +1,19 @@
 import React, {useState} from "react";
 
-const FootBar = {
-    display: "flex",
-    justifyContent: "flex-end"
-}
-const FootContent = {
-    width: "500px",
-    display: "flex",
-    flex: "wrap",
-    justifyContent: "space-between"
-}
-export default function Footer(){
-    const [isDarkMode, setDarkMode] = useState(false)
+import { TwitterLogo,TelegramLogo, Files } from "phosphor-react";
 
-    function darkMode (){
-        setDarkMode(!isDarkMode)
-        isDarkMode ? localStorage.theme = 'dark' : localStorage.theme = 'light'
-        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    }
+export default function Footer(){    
 
     return (
-        <footer className="container">
-            <div style={FootBar}>
-                <div style={FootContent}>
-                    <a href="">Discord</a>
-                    <a href="">GitHub</a>
-                    <a href="">Twitter</a>
-                    <a href="">Telegram</a>
-                    <button onClick={()=> darkMode()}>Dark Mode</button>
-                </div>
+        <footer className="container-fluid" style={{background:'#10003b'}}>
+            <div className="social-share py-5">
+            <p className="mb-2">Stay in touch with <strong>LoTerra</strong></p>
+            <ul>                
+                <li><a target="_blank" href="https://twitter.com/LoTerra_LOTA"><TwitterLogo size={31} /></a></li>
+                <li><a target="_blank" href="https://t.me/LoTerra"><TelegramLogo size={31} /></a></li>
+            </ul>
+            <p className="mt-4 mb-2">Learn more about <strong>LoTerra</strong>?</p>
+            <a href="https://docs.loterra.io" target="_blank" className="btn btn-plain" style={{fontSize:'16px', color:'#a69fbb'}}>Documentation <Files size={21} /></a>
             </div>
         </footer>
     )

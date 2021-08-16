@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect, useMemo, useRef} from "react";
 
 import {LCDClient, WasmAPI} from "@terra-money/terra.js";
 import {
@@ -8,7 +8,7 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet, CaretRight, UserCircle, Power } from 'phosphor-react'
+import { Wallet, CaretRight, UserCircle, Power, List,X, Ticket, Bank } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
 import {useStore} from "../store";
@@ -41,9 +41,13 @@ export default function ConnectWallet(){
     let connectedWallet = "";
     const [isDisplayDialog, setIsDisplayDialog] = useState(false);
     const [isModal, setIsModal] = useState(false);
+    const [sideNav, setSideNav] = useState(false);
     const [bank, setBank] = useState();
     const [connected, setConnected]= useState(false);
-    const store = useStore();
+    const {state, dispatch} = useStore();    
+
+
+
     let wallet = ""
     if (typeof document !== 'undefined') {
         wallet = useWallet();
@@ -61,9 +65,61 @@ export default function ConnectWallet(){
         });
       }, [connectedWallet]);
     
+  
 
+      async function baseData(){ 
+        //Get proposals and save to state   
+        const terra = new LCDClient({
+            URL: "https://lcd.terra.dev/",
+            chainID: "columbus-4",
+          });
+          const api = new WasmAPI(terra.apiRequester);        
+       
 
+        const contractConfigInfo = await api.contractQuery(
+            state.loterraContractAddress,
+          {
+            config: {},
+          }
+        );
+        console.log('config',contractConfigInfo)
 
+        let pollCount = contractConfigInfo.poll_count;
+        console.log('count',pollCount)
+        let allProposals = [];
+        for (let index = 1; index < pollCount + 1; index++) {
+            const proposal = await api.contractQuery(
+                state.loterraContractAddress,
+                {
+                get_poll: { poll_id: index },
+                }
+        );
+        allProposals.push(proposal);
+        console.log('single', proposal)
+        }
+        dispatch({type: "setAllProposals", message: allProposals})
+        console.log('proposals',allProposals)
+
+        const staking = await api.contractQuery(
+            state.loterraStakingAddress,
+          {
+            state: {},
+          }
+        );
+        dispatch({type: "setStaking", message: staking})
+        console.log('staking',staking)
+
+        const token_info = await api.contractQuery(
+            state.loterraContractAddressCw20, 
+            {
+                balance: {address:'terra1e7hzp3tnsswpfcu6gt4wlgfm20lcsqqywhaagu'},
+            }
+        );
+        dispatch({type: "setTokenInfo", message: token_info})
+
+        console.log(token_info)
+
+    }
 
 
     //const installChrome = useInstallChromeExtension();
@@ -85,37 +141,63 @@ export default function ConnectWallet(){
             wallet.connect(wallet.availableConnectTypes[2])
         }else if (to == "disconnect"){
             wallet.disconnect()
+            dispatch({type: "setWallet", message: {}})  
         }
         setConnected(!connected)
         setIsDisplayDialog(false)
     }
 
     async function contactBalance(){
-
+       
             if (connectedWallet && connectedWallet.walletAddress && lcd) {
                 //   setShowConnectOptions(false);
+                dispatch({type: "setWallet", message: connectedWallet})    
+
                 let coins
+             
                 let token
                 try {
-                    coins = await lcd.bank.balance(connectedWallet.walletAddress);
                     const api = new WasmAPI(lcd.apiRequester);
+                    coins = await lcd.bank.balance(connectedWallet.walletAddress);
+
+                    const contractConfigInfo = await api.contractQuery(
+                        state.loterraContractAddress,
+                      {
+                        config: {},
+                      }
+                    );
+                
+
                     
                     const holder = await api.contractQuery(
-                        store.state.loterraStakingAddress,
+                        state.loterraStakingAddress,
                         {
                             holder: { address: connectedWallet.walletAddress },
                         }
                     );
-                    store.dispatch({type: "setAllHolder", message: holder})               
+                    dispatch({type: "setAllHolder", message: holder})    
+                    console.log(holder)     
+              
+                    const token = await api.contractQuery(
+                        state.loterraContractAddressCw20, 
+                        {
+                        balance: { address: connectedWallet.walletAddress},
+                    })
+                    dispatch({type: "setLotaBalance", message: token}) 
+                    console.log(token)
+
+                    
+
 
                     const combinations = await api.contractQuery(
-                        store.state.loterraContractAddress,
+                        state.loterraContractAddress,
                         {
-                            combination: { lottery_id: store.state.config.lottery_counter, address: connectedWallet.walletAddress},
+                            combination: { lottery_id: contractConfigInfo.lottery_counter, address: connectedWallet.walletAddress},
                         }
                     );
-                    store.dispatch({type: "setAllCombinations", message: combinations})
+                    dispatch({type: "setAllCombinations", message: combinations})
 
+                    
                     
 
                 }catch (e) {
@@ -123,8 +205,8 @@ export default function ConnectWallet(){
                 }
 
                 //Store coins global state
-                store.dispatch({type: "setAllCoins", message: coins}) 
-                console.log(store.state.allCoins)
+                dispatch({type: "setAllNativeCoins", message: coins}) 
+                console.log(state.allCoins)
 
                 let uusd = coins.filter((c) => {
                     return c.denom === "uusd";
@@ -135,15 +217,10 @@ export default function ConnectWallet(){
                 setConnected(true)
             } else {
                 setBank(null);
+                dispatch({type: "setWallet", message: {}})  
             }
     }
 
- 
-
-    useEffect(() => {
-            contactBalance()
-            console.log(connectedWallet)
-    }, [connectedWallet, lcd, store.state.config]);
 
     function renderDialog(){
         if (isDisplayDialog){
@@ -177,18 +254,31 @@ export default function ConnectWallet(){
         }
       }
     
-      useEffect(() => {
-        window.addEventListener('scroll',handleScroll)
-      })
+      function showSideNav(){
+            setSideNav(!sideNav);
+      }
+
+    useEffect(() => {
+        if(connectedWallet){
+            contactBalance()  
+        }            
+            baseData()             
+            console.log(connectedWallet)
+            window.addEventListener('scroll',handleScroll)
+    }, [connectedWallet, lcd, state.config]);
+
+    
 
     return(
         <div className={scrolled ? 'navbar navbar-expand p-2 p-md-3 sticky' : 'navbar navbar-expand p-2 p-md-3'}>
         <div className="container-fluid">
             <a className="navbar-brand"><img src="logo.png"/> <span>LOTERRA</span></a>
-             <nav className="navbar-nav main-nav me-auto">                  
-                <li className="nav-item"><a href="/" className="nav-link">Lottery</a></li>                 
-                <li className="nav-item"><a href="/staking" className="nav-link">Staking & DAO</a></li>                
-            </nav> 
+             <nav className={sideNav ? 'navbar-nav main-nav me-auto open' : 'navbar-nav main-nav me-auto'}>   
+                <button className="main-nav-close-toggle" onClick={() => showSideNav()}><X size={36} /></button>               
+                <li className="nav-item"><a href="/" className="nav-link"><Ticket size={24} style={{marginRight:'3px',position:'relative',top:'-1px'}} /> Lottery</a></li>                 
+                <li className="nav-item"><a href="/staking" className="nav-link"><Bank size={24} style={{marginRight:'3px',position:'relative',top:'-1px'}} /> Staking & DAO</a></li>                
+            </nav>
+             
             <div className="navbar-nav ms-auto">
                 {!connected && (
                     <>                       
@@ -235,6 +325,8 @@ export default function ConnectWallet(){
                                 </button>
                             </ul>
                         </div>
+                        <button className="btn btn-default nav-item ms-2 main-nav-toggle" onClick={() => showSideNav()}><List size={26} /></button>
+
                     </>
                 )}
                 {connected && (
@@ -266,6 +358,7 @@ export default function ConnectWallet(){
                                         Disconnect
                                     </button>
                         </ul>
+                        <button className="btn btn-default nav-item ms-2 main-nav-toggle" onClick={() => showSideNav()}><List size={26} /></button>
                     </>
                 )}
             </div>

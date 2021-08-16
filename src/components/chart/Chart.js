@@ -1,7 +1,9 @@
 
 
     export const lineOptions = {
-    
+      animation: {
+        duration: 0
+    },
         scales:{
           xAxis:{
             beginAtZero:true,
@@ -63,11 +65,12 @@
         gradientGreen.addColorStop(1, '#1BC472'); 
     
         return {
+        
           labels: ['Available', 'Staked'],
         datasets: [
           {
             label: '# of Lota',
-            data: [35,65],
+            data: [canvas.dataset.staked,canvas.dataset.total],
             backgroundColor: [
               gradientGreen,
               gradientBlack,          

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useEffect, useState, useCallback, useContext} from "react";
 
 import { Pie, Line } from 'react-chartjs-2';
 import ProposalModal from "../components/ProposalModal";
@@ -6,50 +6,186 @@ import { Plus } from "phosphor-react";
 import ProposalItem from "../components/ProposalItem";
 import { lineOptions, lineData, pieData } from "../components/chart/Chart.js";
 import {useStore} from "../store";
+import { MsgExecuteContract, StdFee} from "@terra-money/terra.js"
+import numeral from "numeral";
+import Notification from "../components/Notification";
+import Footer from "../components/Footer";
 
-let useConnectedWallet = {}
-if (typeof document !== 'undefined') {
-    useConnectedWallet = require('@terra-money/wallet-provider').useConnectedWallet
-}
+
 
 export default function Staking (){
-    let connectedWallet = ""
-    if (typeof document !== 'undefined') {
-        connectedWallet = useConnectedWallet()
-    }
 
-    const store = useStore();
+    const addToGas = 5300
+    const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
+    const [notification,setNotification] = useState({type:'success',message:'',show:false})
+    const {state, dispatch} = useStore();
     const [modal, setModal] = useState(false);
 
+    function hideNotification(){
+        setNotification({
+            message:notification.message,
+            type: notification.type,
+            show: false
+        })
+    }
+  
+    function showNotification(message,type,duration){
+        console.log('fired notification')
+        setNotification({
+            message:message,
+            type: type,
+            show: true
+        })
+        console.log(notification)
+        //Disable after $var seconds
+        setTimeout(() => {           
+            setNotification({ 
+                message:message,
+                type: type,              
+                show: false
+            })        
+            console.log('disabled',notification)
+        },duration)
+    }
     
-    const stake = () => {
-        console.log('stake');
+    function stakeOrUnstake(type) {
+        var input = document.querySelector('.amount-input')
+        console.log(type,input.value);
+        const amount = parseInt(input.value * 1000000)
+        if(amount <= 0){
+            showNotification('Input amount empty','error',4000)
+            return;
+        }
+        let msg
+        if (type === 'stake') {
+            msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              send: {
+                contract: state.loterraStakingAddress,
+                amount: amount.toString(),
+                msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
+              },
+            }
+          )
+        } else {
+            msg = MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              unbond_stake: { amount: amount.toString() },
+            }
+          )
+        }
+
+        state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {    
+                if(type == 'stake')          {
+                    showNotification('Stake succes','success',4000)
+                } else {
+                    showNotification('Unstake succes','success',4000)
+                }                
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
     }
 
-    const unstake = () => {
-        console.log('unstake');
+    function claimUnstake() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              withdraw_stake: {},
+            }
+          )
+          state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {              
+                showNotification('Claim unstake succes','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
     }
 
-    const claimUnstake = () => {
-        console.log('claim unstake');
+    function claimRewards() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              claim_rewards: {},
+            }
+          )
+          state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {              
+                showNotification('Claim rewards succes','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
     }
 
-    const claimRewards = () => {
-        console.log('claim rewards');
+    function setInputAmount(amount){
+        const input = document.querySelector('.amount-input');
+        input.value = amount;
     }
 
+    function getStakedNr(){
+         let staked = parseInt(state.staking.total_balance) / 1000000;
+         let sum = staked;
+        return sum;
+    }
+
+    function getNotStaked(){
+        let total = parseInt(state.tokenInfo.balance)/ 1000000;
+        let staked = parseInt(state.staking.total_balance) / 1000000;
+        let sum = total - staked;
+        return sum;
+    }
  
 
     return(
         <>
         <div className="hero staking" style={{backgroundImage:'url(bg.svg)'}}>
-            <div className="container h-100 d-flex">
+            <div className="container h-100 d-md-flex">
                         <div className="row align-self-center">
-                            <div className="col-md-4">
-                                <Pie data={pieData} />
+                            <div className="col-md-12 order-2 order-lg-1 col-lg-4">
+                                { state.tokenInfo.balance &&
+                                     (
+                                        <Pie data={pieData} data-staked={state.tokenInfo.balance ? getStakedNr() : '0'} data-total={state.tokenInfo.balance ? getNotStaked() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                    )
+                                }                                
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
                             </div>
-                            <div className="col-md-8 p-5">
+                            <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">
                                 <div className="card lota-card staking">
                                     <div className="card-body">
                                         <div className="row">
@@ -57,27 +193,28 @@ export default function Staking (){
                                                 <h3>Staking</h3>
                                                 <p className="slogan">Unstake or stake your LOTA in order to get rewards and voting weight</p>
                                             </div>
-                                            <div className="col-md-12">
-                                            
-                                                <input className="form-control"/>
+                                            <div className="col-md-12">                                            
+                                                <input type="number" className="form-control amount-input" name="amount"/>
                                             </div>
                                             <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end">MAX</p>
-                                                <button className="btn btn-plain w-100" onClick={() => stake()}>Stake</button>
-                                                <small className="float-end text-muted mt-2">Available: <strong> LOTA</strong></small>
+                                                <p className="shortcut float-end" onClick={() => setInputAmount(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}>MAX</p>
+                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('stake')}>Stake</button>
+                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
+                                        (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
+                                    } LOTA</strong></small>
                                             </div>
                                             <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end">MAX</p>
-                                                <button className="btn btn-plain w-100" onClick={() => unstake()}>Unstake</button>
+                                                <p className="shortcut float-end" onClick={() => setInputAmount(numeral(state.allHolder.balance).format('0.00'))}>MAX</p>
+                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('unstake')}>Unstake</button>
                                                 
-                                                <small className="float-end text-muted mt-2">Available: <strong>{ connectedWallet && connectedWallet.walletAddress &&
-                                        (<>{store.state.allHolder.balance}</>)
+                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
+                                        (<>{numeral(state.allHolder.balance).format('0.00')}</>)
                                     } LOTA</strong></small>
                                             </div>
                                             <div className="col-md-4 my-3">                                                
                                                 <button className="btn btn-plain w-100" onClick={() => claimUnstake()} style={{marginTop:'21px'}}>Claim unstake</button>
-                                                <small className="float-end text-muted mt-2">Available: <strong>{ connectedWallet && connectedWallet.walletAddress &&
-                                        (<>{store.state.allHolder.balance}</>)
+                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
+                                        (<>{numeral(state.allHolder.balance).format('0.00')}</>)
                                     } LOTA</strong></small>
                                             </div>
                                         </div>
@@ -94,19 +231,19 @@ export default function Staking (){
                 <div className="card lota-card staking-rewards">
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-md-6">
+                            {/* <div className="col-md-6">
                                 <div className="current-value">
                                     10.00<span>UST</span>
                                 </div>
                             <Line data={lineData} options={lineOptions} style={{background:'#10003b', borderRadius:'10px'}}/>
-                            </div>
-                            <div className="col-md-6 text-center d-flex">
+                            </div> */}
+                            <div className="col-md-12 text-center d-flex">
                                     <div className="align-self-center w-100">
                                     <h2>Staking rewards</h2>
-                                    { connectedWallet && connectedWallet.walletAddress &&
-                                        (<p>{store.state.allHolder.pending_rewards} UST</p>)
+                                    { state.wallet && state.wallet.walletAddress &&
+                                        (<p>{state.allHolder.pending_rewards} UST</p>)
                                     }
-                                    <button className=" btn btn-special mt-3" onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
+                                    <button className=" btn btn-special mt-3" disabled={state.allHolder.pending_rewards <= 0 ? true : false} onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
                                     </div>
                             </div>
                         </div>
@@ -128,14 +265,16 @@ export default function Staking (){
                         </div>
                  
                     <div className="card-body">
-                        {/* Start item */}
-                        <ProposalItem/>
-                        {/* End item */}
+                        {state.allProposals && state.allProposals.map((obj,key) =>{
+                            return(<ProposalItem data={obj} i={key} key={key}/>)
+                        })}
                     </div>
                 </div>
             </div>
         </section>
+        <Footer/>
         <ProposalModal open={modal} toggleModal={() => setModal(!modal)}/>
+        <Notification notification={notification} close={() => hideNotification()}/>            
         </>
     )
 }

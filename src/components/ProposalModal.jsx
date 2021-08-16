@@ -24,19 +24,33 @@ export default function ProposalModal(props){
             </div>
             <div className="proposalmodal_content">
                <form className='proposal_form' onSubmit={(e) => handleSubmit(e)}>
-                   <label>Description</label>
+                   <div className="row">
+                       <div className="col-12">
+                       <label>Description</label>
                    <textarea name="description" className="form-control" required></textarea>
                    <label>Proposal</label>
                    <select name="proposal" className="form-control" required>
                        <option>Value</option>
                    </select>
-                   <label>Amount</label>
+                       </div>
+                       <div className="col-6">
+                       <label>Amount</label>
                    <input name="amount" className="form-control" required/>
-                   <label>Prize per rank</label>
-                   <input name="prize_per_rank" className="form-control" required/>
-                   <label>Recipient</label>
+                  
+                       </div>
+                       <div className="col-6">
+                       <label>Prize per rank</label>
+                   <input name="prize_per_rank" className="form-control" required/> 
+                       </div>
+                       <div className="col-12">
+                       <label>Recipient</label>
                    <input name="recipient" className="form-control" required/>
                    <button type="submit" className="btn btn-special w-100 mt-4" style={{boxShadow:'none'}}>Create proposal</button>
+                       </div>
+                   </div>
+                   
+                   
+                 
                </form>
             </div>
         </div>
