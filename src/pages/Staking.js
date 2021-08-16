@@ -216,6 +216,8 @@ export default function Staking (){
                                             </div>
                                             <div className="col-md-4 my-3">                                                
                                                 <button className="btn btn-plain w-100" onClick={() => claimUnstake()} style={{marginTop:'21px'}}>Claim unstake</button>
+                                                {/* If unstake claiming condition */}
+                                                <span className="info">Your claim unstake will be available in: <strong>00-00-00</strong></span>
                                                 <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
                                         (<>{state.holderClaims.claims / 1000000}</>)
                                     } LOTA</strong></small>

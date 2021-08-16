@@ -209,7 +209,6 @@ font-style: normal;
     background: #43367D;
     padding: 11px 11px;
     box-sizing: border-box;
-    border-bottom: 8px solid #0f032f;
     border-radius: 15px 15px 20px 20px;
     width: auto;
     margin: 2rem auto;
@@ -274,6 +273,17 @@ font-style: normal;
       }
   }
   
+}
+
+.info {
+  font-size: 12px;
+  border: 1px solid #44377e;
+  padding: 8px;
+  background: #10003b7d;
+  display: block;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: #ffffff73;
 }
 
 .loading_animation{
