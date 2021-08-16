@@ -29,7 +29,7 @@ export default function ProposalModal(props){
                         <label>Description</label>
                         <textarea name="description" className="form-control" required></textarea>
                         <label>Proposal</label>
-                        <select name="proposal" className="form-control" required>
+                        <select defaultValue={''} name="proposal" className="form-control" required>
                             <option value="" disabled selected>Select...</option>
                             <option value="LotteryEveryBlockTime">LotteryEveryBlockTime</option>
                             <option value="HolderFeePercentage">HolderFeePercentage</option>

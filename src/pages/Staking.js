@@ -2,7 +2,7 @@ import React, {useEffect, useState, useCallback, useContext} from "react";
 
 import { Pie, Line } from 'react-chartjs-2';
 import ProposalModal from "../components/ProposalModal";
-import { Plus } from "phosphor-react";
+import { Plus, Info } from "phosphor-react";
 import ProposalItem from "../components/ProposalItem";
 import { lineOptions, lineData, pieData } from "../components/chart/Chart.js";
 import {useStore} from "../store";
@@ -173,7 +173,10 @@ export default function Staking (){
         let sum = total - staked;
         return sum;
     }
- 
+    
+    function getDao(){
+        return 1000000;
+    }
 
     return(
         <>
@@ -183,7 +186,7 @@ export default function Staking (){
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
                                 { state.tokenInfo.total_supply &&
                                      (
-                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao={state.tokenInfo.total_supply ? getDao() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
                                     )
                                 }                                
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
@@ -217,7 +220,11 @@ export default function Staking (){
                                             <div className="col-md-4 my-3">                                                
                                                 <button className="btn btn-plain w-100" onClick={() => claimUnstake()} style={{marginTop:'21px'}}>Claim unstake</button>
                                                 {/* If unstake claiming condition */}
-                                                <span className="info">Your claim unstake will be available in: <strong>00-00-00</strong></span>
+                                                <span className="info">
+                                                    <Info size={14} weight="fill" className="me-1" />
+                                                    Your claim unstake will be available in: 
+                                                    <strong>00-00-00</strong>
+                                                </span>
                                                 <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
                                         (<>{state.holderClaims.claims / 1000000}</>)
                                     } LOTA</strong></small>
