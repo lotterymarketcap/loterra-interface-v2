@@ -220,8 +220,9 @@ font-style: normal;
     display: inline-block;
   @media(max-width:500px){
     padding: 5px;
-    font-size: 32px;
-    line-height: 44px;
+    font-size: 37px;
+    line-height: 46px;
+    border-bottom: 4px solid #0f032f;
   }
   .roller {
     display: inline-block;

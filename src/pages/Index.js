@@ -351,7 +351,7 @@ export default () => {
          <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>
                 <div className="container">
                   <div className="row">
-                    <div className="col-xl-7 mx-auto text-center">
+                    <div className="col-12 col-xl-7 mx-auto text-center">
                       <div className="jackpot">
                         <p>Jackpot</p>
                         <h2>{numeral(jackpot).format("0,0.00").split("").map(obj => {
