@@ -12,6 +12,10 @@ transform: translate(-50%, -50%);
     border-radius: 10px;
     padding: 25px 0;
     opacity:0;
+    @media(max-width:510px){
+        width:315px;
+        padding: 5px 0;
+    }
     .toggle {
         background:transparent;
         border:0;

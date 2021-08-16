@@ -82,12 +82,15 @@ width: 100%;
       height:975px;
     }
     @media(max-width:501px){
-      height:855px;
+      height:785px;
     }
     &.staking {
-      height:765px;
+      height:765px;      
       @media(max-width:990px){
         height:1305px;
+      }
+      @media(max-width:510px){
+        height: 1223px;
       }
     }
 }
@@ -218,6 +221,9 @@ font-style: normal;
     letter-spacing: 0.05em;
     color: #FFFFFF;
     display: inline-block;
+    @media(max-width:710px){
+      font-size: 38px;
+    }
   @media(max-width:500px){
     padding: 5px;
     font-size: 37px;
@@ -239,6 +245,9 @@ font-style: normal;
     &:last-child {
       border-top-right-radius: 10px;
       border-bottom-right-radius:10px;
+    }
+    @media(max-width:710px){
+      padding: 5px 6px;
     }
     @media(max-width:500px){
       padding: 5px 3px;
@@ -289,6 +298,7 @@ font-style: normal;
     font-size: 34px;
     line-height: 35px; 
     color: #FFFFFF;
+    margin:0;
       span{
         display:block;
         font-weight: normal;
@@ -296,6 +306,17 @@ font-style: normal;
         line-height: 19px;
         color: #FF36FF;
       }
+  }
+  @media(max-width:510px){
+    .card-body {
+      padding: 7px 15px;
+    }
+    h3 {
+      font-size:27px;
+    }
+    svg {
+      width:155%;
+    }
   }
 }
 

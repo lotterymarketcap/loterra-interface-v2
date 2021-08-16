@@ -349,9 +349,9 @@ export default () => {
      return (
          <>   
          <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>
-                <div className="container">
+                <div className="container-fluid container-md">
                   <div className="row">
-                    <div className="col-12 col-xl-7 mx-auto text-center">
+                    <div className="col-lg-12 col-xl-8 mx-auto text-center">
                       <div className="jackpot">
                         <p>Jackpot</p>
                         <h2>{numeral(jackpot).format("0,0.00").split("").map(obj => {
@@ -373,8 +373,8 @@ export default () => {
                             <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col text-center"><Users size={55} color="#73FFC1" /></div>
-                                  <div className="col-md-8 text-center text-md-start">
+                                  <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
+                                  <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>Players</span>{players}</h3>
                                   </div>
                                 </div>
@@ -385,8 +385,8 @@ export default () => {
                           <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col text-center"><Ticket size={55} color="#73FFC1" /></div>
-                                  <div className="col-md-8 text-center text-md-start">
+                                  <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
+                                  <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>Tickets</span>{tickets}</h3>
                                   </div>
                                 </div>
