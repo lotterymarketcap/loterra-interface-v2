@@ -5,6 +5,7 @@ import { X, Ticket,UserCircle } from 'phosphor-react'
 export default function ProposalModal(props){
 
     const { open,  toggleModal } = props;
+    const [prizePerRank, setPrizePerRank] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,6 +13,14 @@ export default function ProposalModal(props){
         console.log(data);
         //Getting specific data by field name
         //data.get('fieldName')
+    }
+
+    const handleChange = (e) => {
+        if(e.target.value == 'PrizePerRank'){
+            setPrizePerRank(true)
+        } else {
+            setPrizePerRank(false)
+        }
     }
 
     return (
@@ -29,7 +38,7 @@ export default function ProposalModal(props){
                         <label>Description</label>
                         <textarea name="description" className="form-control" required></textarea>
                         <label>Proposal</label>
-                        <select defaultValue={''} name="proposal" className="form-control" required>
+                        <select defaultValue={''} onChange={(e) => handleChange(e)} name="proposal" className="form-control" required>
                             <option value="" disabled selected>Select...</option>
                             <option value="LotteryEveryBlockTime">LotteryEveryBlockTime</option>
                             <option value="HolderFeePercentage">HolderFeePercentage</option>
@@ -44,6 +53,28 @@ export default function ProposalModal(props){
                             <option value="NotExist">NotExist</option>
                         </select>
                     </div>
+                    { prizePerRank &&
+                        (
+                            <>
+                            <div className="col-3">
+                            <label>1</label>
+                            <input type="number" className="form-control" name="prize_1" required/>
+                            </div>
+                            <div className="col-3">
+                            <label>2</label>
+                            <input type="number" className="form-control" name="prize_2" required/>
+                            </div>
+                            <div className="col-3">
+                            <label>3</label>
+                            <input type="number" className="form-control" name="prize_3" required/>
+                            </div>
+                            <div className="col-3">
+                            <label>4</label>
+                            <input type="number" className="form-control" name="prize_4" required/>
+                            </div>
+                            </>
+                        )
+                    }
                     <div className="col-6">
                         <label>Amount</label>
                         <input name="amount" className="form-control" required/>
