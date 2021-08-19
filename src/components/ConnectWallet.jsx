@@ -82,6 +82,17 @@ export default function ConnectWallet(){
             config: {},
           }
         );
+
+        const contractDaoBalance = await api.contractQuery(
+            state.loterraContractAddressCw20,
+          {
+              balance: {
+                  address: state.loterraContractAddress
+              }
+          }
+        )
+          dispatch({type: "setDaoFunds", message: contractDaoBalance.balance})
+
         console.log('config',contractConfigInfo)
 
         let pollCount = contractConfigInfo.poll_count;

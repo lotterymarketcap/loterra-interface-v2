@@ -22,6 +22,11 @@ const initialState = {
   holderClaims: {},
   combination: "",
   modal: false,
+  daoFunds: 0,
+  lcd_client: new LCDClient({
+    URL: "https://lcd.terra.dev/",
+    chainID: "columbus-4",
+  })
 };
 
 const reducer = (state, action) => {
@@ -30,6 +35,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         modal: action.message
+      }
+    case "setDaoFunds":
+      return {
+        ...state,
+        daoFunds: action.message
       }
     case "setStaking":
       return {

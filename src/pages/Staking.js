@@ -6,15 +6,14 @@ import { Plus, Info } from "phosphor-react";
 import ProposalItem from "../components/ProposalItem";
 import { lineOptions, lineData, pieData } from "../components/chart/Chart.js";
 import {useStore} from "../store";
-import { MsgExecuteContract, StdFee} from "@terra-money/terra.js"
+import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra.js"
 import numeral from "numeral";
 import Notification from "../components/Notification";
 import Footer from "../components/Footer";
 
 const BURNED_LOTA = 4301383550000;
 
-
-export default function Staking (){
+export default () =>  {
 
     const addToGas = 5300
     const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
@@ -159,24 +158,26 @@ export default function Staking (){
         input.value = amount / 1000000;
     }
 
-    function getStakedNr(){
+    function getNotStaked(){
          let staked = parseInt(state.staking.total_balance) / 1000000;
          let sum = staked;
         return sum;
     }
 
-    function getNotStaked(){
+    function getStakedNr (){
         let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000;
         console.log("parseInt(state.tokenInfo.balance) - BURNED_LOTA")
         console.log(state.tokenInfo.total_supply)
         let staked = parseInt(state.staking.total_balance) / 1000000;
-        let sum = total - staked;
+        let daoFunds = parseInt(state.daoFunds / 1000000);
+        let sum = total - staked - daoFunds;
         return sum;
     }
-    
-    function getDao(){
-        return 1000000;
+
+    function getDaoFunds(){
+        return parseInt(state.daoFunds / 1000000)
     }
+
 
     return(
         <>
@@ -186,7 +187,7 @@ export default function Staking (){
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
                                 { state.tokenInfo.total_supply &&
                                      (
-                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao={state.tokenInfo.total_supply ? getDao() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
                                     )
                                 }                                
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>

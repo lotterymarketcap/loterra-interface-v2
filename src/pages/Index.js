@@ -25,6 +25,7 @@ const HomeCard={
 
 const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
+
 export default () => {
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);

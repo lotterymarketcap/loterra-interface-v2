@@ -21,6 +21,8 @@ const testnet = {
   lcd: 'https://tequila-lcd.terra.dev',
 };
 
+
+
 // Export your top level component as JSX (for static rendering)
 export default App
 

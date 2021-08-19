@@ -8,7 +8,7 @@
 export default {
   plugins: ["react-static-plugin-sass"],
   getSiteData: async ({ dev }) => ({
-    title: 'LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain.',
+    title: 'LoTerra is a lottery contract, buy tickets as a player or join the governance! DAO allows making decisions together! Manage the casino 🎰 Set the prize 🏆 Up the ticket price or go cheap 🏷 Extract max profits 🤑 Keep the vault secure at all times!',
     lastBuilt: Date.now(),
   }),
   //maxThreads: 1, // Remove this when you start doing any static generation
@@ -19,20 +19,12 @@ export default {
       template: 'src/pages/Index',
     },
     {
-      path: 'public-sale',
-      template: 'src/pages/PublicSale',
-    },
-    {
       path: 'staking',
       template: 'src/pages/Staking',
     },
     {
       path: 'terrand-oracle',
       template: 'src/pages/Terrand',
-    },
-    {
-      path: 'dao',
-      template: 'src/pages/DAO',
     },
     // A 404 component
     {
