@@ -303,13 +303,13 @@ export default () =>  {
                                 <h3>Proposals</h3>
                             </div>
                             <div className="col-md-6 text-end">
-                                <button className="btn btn-plain p-3" onClick={() => setModal(!modal)}>Create proposal <Plus size={24} /></button>
+                                { /*<button className="btn btn-plain p-3" onClick={() => setModal(!modal)}>Create proposal <Plus size={24} /></button>*/}
                             </div>
                         </div>
                  
                     <div className="card-body">
-                        {state.allProposals && state.allProposals.map((obj,key) =>{
-                            return(<ProposalItem data={obj} i={key} key={key}/>)
+                        {state.allProposals && state.allProposals.map((element,key) =>{
+                            return(<ProposalItem fees={obj} data={element} i={key} key={key}/>)
                         })}
                     </div>
                 </div>

@@ -1,16 +1,15 @@
-import numeral from "numeral";
 import React from "react"
-import { MsgExecuteContract} from "@terra-money/terra.js"
 import { useStore } from "../store";
+import {MsgExecuteContract} from "@terra-money/terra.js"
+
 
 export default function ProposalItem(props){
-
-    const {data,i} = props;
+    const {data,i, fees} = props;
     const {state, dispatch} = useStore();
 
     const vote = (approve,id) => {
         const msg = new MsgExecuteContract(
-            state.wallet.senderAddress,
+            state.wallet.walletAddress,
             state.loterraContractAddress,
             {
               vote: {
@@ -19,6 +18,22 @@ export default function ProposalItem(props){
               },
             }
           )
+        state.wallet.post({
+            msgs: [msg],
+            fee: fees
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {
+                // showNotification('Vote approved','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            //showNotification(e.message,'error',4000)
+        })
     }
 
     return (
