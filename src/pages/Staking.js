@@ -1,136 +1,264 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useEffect, useState, useCallback, useContext} from "react";
 
 import { Pie, Line } from 'react-chartjs-2';
 import ProposalModal from "../components/ProposalModal";
+import { Plus, Info } from "phosphor-react";
+import ProposalItem from "../components/ProposalItem";
+import { lineOptions, lineData, pieData } from "../components/chart/Chart.js";
+import {useStore} from "../store";
+import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra.js"
+import numeral from "numeral";
+import Notification from "../components/Notification";
+import Footer from "../components/Footer";
+import {parse} from "postcss";
 
+const BURNED_LOTA = 4301383550000;
 
-export default function Staking (){
+export default () =>  {
 
-   
-
+    const addToGas = 5300
+    const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
+    const [notification,setNotification] = useState({type:'success',message:'',show:false})
+    const {state, dispatch} = useStore();
     const [modal, setModal] = useState(false);
 
-     //Chart code 
-
-    const lineOptions = {
-    
-        scales:{
-          xAxis:{
-            beginAtZero:true,
-            display:false
-          },
-          yAxis:{
-            beginAtZero:true,
-            display:false 
-          },
-          },
-        plugins : {
-      
-          legend: {
-            display: false
-        },
-        title: {
-            display: false
-        }
-        },
-        
+    function hideNotification(){
+        setNotification({
+            message:notification.message,
+            type: notification.type,
+            show: false
+        })
     }
-      
+  
+    function showNotification(message,type,duration){
+        console.log('fired notification')
+        setNotification({
+            message:message,
+            type: type,
+            show: true
+        })
+        console.log(notification)
+        //Disable after $var seconds
+        setTimeout(() => {           
+            setNotification({ 
+                message:message,
+                type: type,              
+                show: false
+            })        
+            console.log('disabled',notification)
+        },duration)
+    }
     
-      const lineData = canvas => {
-        const ctx = canvas.getContext('2d');  
-        let gradientGreen = ctx.createLinearGradient(500, 0, 100, 0);
-        gradientGreen.addColorStop(0, '#4DF6A4');
-        gradientGreen.addColorStop(1, '#1BC472'); 
-    
-        return {
-          labels: [75,25,10,21,35,40,77],
-       
-        datasets: [
-          {      
-            data: [75,25,10,21,35,40,77],
-            fill:true,
-            backgroundColor:'rgba(32, 255, 147, 0.2)',
-            borderColor: [
-              gradientGreen,   
-            ],
-            pointBackgroundColor: '#FFFFFF',
-            lineTension: .4,
-            borderWidth: 5,
-          },
-        ],
-      
-      }
-      };
-    
-      const data = canvas => {
-        const ctx = canvas.getContext('2d');
-     
-        let gradientBlack = ctx.createLinearGradient(500, 0, 100, 0);
-        gradientBlack.addColorStop(0, '#3B2E5D');
-        gradientBlack.addColorStop(1, '#271A49');
-    
-        let gradientGreen = ctx.createLinearGradient(500, 0, 100, 0);
-        gradientGreen.addColorStop(0, '#4DF6A4');
-        gradientGreen.addColorStop(1, '#1BC472'); 
-    
-        return {
-          labels: ['Red', 'Blue'],
-        datasets: [
-          {
-            label: '# of Votes',
-            data: [75,25],
-            backgroundColor: [
-              gradientGreen,
-              gradientBlack,          
-            ],
-            borderColor: [
-              gradientGreen,
-              gradientBlack,       
-            ],
-            borderWidth: 1,
-          },
-        ],
-      }
-      };
+    function stakeOrUnstake(type) {
+        var input = document.querySelector('.amount-input')
+        console.log(type,input.value);
+        const amount = parseInt(input.value * 1000000)
+        if(amount <= 0){
+            showNotification('Input amount empty','error',4000)
+            return;
+        }
+        let msg
+        if (type === 'stake') {
+            msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              send: {
+                contract: state.loterraStakingAddress,
+                amount: amount.toString(),
+                msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
+              },
+            }
+          )
+        } else {
+            msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              unbond_stake: { amount: amount.toString() },
+            }
+          )
+        }
+
+        state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {    
+                if(type == 'stake')          {
+                    showNotification('Stake succes','success',4000)
+                } else {
+                    showNotification('Unstake succes','success',4000)
+                }                
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
+    }
+
+    function claimUnstake() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              withdraw_stake: {},
+            }
+          )
+          state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {              
+                showNotification('Claim unstake succes','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
+    }
+
+    function claimRewards() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+              claim_rewards: {},
+            }
+          )
+          state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {              
+                showNotification('Claim rewards succes','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
+    }
+
+    function setInputAmount(amount){
+        const input = document.querySelector('.amount-input');
+        input.value = amount / 1000000;
+    }
+
+    function getNotStaked(){
+         let staked = parseInt(state.staking.total_balance) / 1000000;
+         let sum = staked;
+        return sum;
+    }
+
+    function getStakedNr (){
+        let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000;
+        console.log("parseInt(state.tokenInfo.balance) - BURNED_LOTA")
+        console.log(state.tokenInfo.total_supply)
+        let staked = parseInt(state.staking.total_balance) / 1000000;
+        let daoFunds = parseInt(state.daoFunds / 1000000);
+        let sum = total - staked - daoFunds;
+        return sum;
+    }
+
+    function getDaoFunds(){
+        return parseInt(state.daoFunds / 1000000)
+    }
+
+    function claimInfo (){
+        if (state.holderClaims){
+            let total_amount_claimable = 0
+            state.holderClaims.map(e => {
+                if (e.release_at.at_height < state.blockHeight ) {
+                    total_amount_claimable += parseInt(e.amount)
+                }
+            })
+            return  (<>{total_amount_claimable/ 1000000}</>)
+        }
+        return  (<>0</>)
+
+    }
+    function pendingClaim (){
+        if (state.holderClaims){
+            let total_amount_pending = 0
+            state.holderClaims.map(e => {
+                if (e.release_at.at_height > state.blockHeight ) {
+                    total_amount_pending += parseInt(e.amount)
+                }
+            })
+            return  (<>{total_amount_pending/ 1000000}</>)
+        }
+        return  (<>0</>)
+
+    }
+
 
     return(
         <>
-        <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
-            <div className="container">
-                
-                   
-                   
-                        <div className="row">
-                            <div className="col-md-4">
-                                <Pie data={data} />
+        <div className="hero staking" style={{backgroundImage:'url(bg.svg)'}}>
+            <div className="container h-100 d-md-flex">
+                        <div className="row align-self-center">
+                            <div className="col-md-12 order-2 order-lg-1 col-lg-4">
+                                { state.tokenInfo.total_supply &&
+                                     (
+                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                    )
+                                }                                
+                                <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
                             </div>
-                            <div className="col-md-8">
-                                <div className="card lota-card">
+                            <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">
+                                <div className="card lota-card staking">
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-12 text-center">
                                                 <h3>Staking</h3>
-                                                <p>Unstake or stake your LOTA in order to get rewards and voting weight</p>
+                                                <p className="slogan">Unstake or stake your LOTA in order to get rewards and voting weight</p>
                                             </div>
-                                            <div className="col-md-12">
-                                            
-                                                <input className="form-control"/>
-                                            </div>
-                                            <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end">MAX</p>
-                                                <button className="btn btn-default w-100">Stake</button>
-                                                <small className="float-end text-muted mt-2">Available: <strong>100 LOTA</strong></small>
+                                            <div className="col-md-12">                                            
+                                                <input type="number" className="form-control amount-input" name="amount"/>
                                             </div>
                                             <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end">MAX</p>
-                                                <button className="btn btn-default w-100">Unstake</button>
+                                                <p className="shortcut float-end" onClick={() => setInputAmount(parseInt(state.LotaBalance.balance))}>MAX</p>
+                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('stake')}>Stake</button>
+                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
+                                        (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
+                                    } LOTA</strong></small>
+                                            </div>
+                                            <div className="col-md-4 my-3">
+                                                <p className="shortcut float-end" onClick={() => setInputAmount(state.allHolder.balance)}>MAX</p>
+                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('unstake')}>Unstake</button>
                                                 
-                                                <small className="float-end text-muted mt-2">Available: <strong>100 LOTA</strong></small>
+                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
+                                        (<>{numeral(parseInt(state.allHolder.balance) / 1000000).format('0.00')}</>)
+                                    } LOTA</strong></small>
                                             </div>
                                             <div className="col-md-4 my-3">                                                
-                                                <button className="btn btn-default w-100" style={{marginTop:'21px'}}>Claim unstake</button>
-                                                <small className="float-end text-muted mt-2">Available: <strong>100 LOTA</strong></small>
+                                                <button className="btn btn-plain w-100" onClick={() => claimUnstake()} style={{marginTop:'21px'}}>Claim unstake</button>
+                                                {/* If unstake claiming condition */}
+                                                <span className="info">
+                                                    <Info size={14} weight="fill" className="me-1" />
+                                                    Your pending claim amount available soon:
+                                                    <strong>{pendingClaim()} LOTA</strong>
+                                                </span>
+                                                <small className="float-end text-muted mt-2">Available: <strong>
+                                                    {
+                                                      state.wallet && state.wallet.walletAddress && claimInfo()
+                                                    }
+                                                  LOTA</strong></small>
                                             </div>
                                         </div>
                                     </div>
@@ -143,16 +271,23 @@ export default function Staking (){
         </div>
         <section className="stakingrewards my-5">
             <div className="container">
-                <div className="card lota-card">
+                <div className="card lota-card staking-rewards">
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-md-4">
-                            <Line data={lineData} options={lineOptions}/>
-                            </div>
-                            <div className="col-md-8 text-center">
+                            {/* <div className="col-md-6">
+                                <div className="current-value">
+                                    10.00<span>UST</span>
+                                </div>
+                            <Line data={lineData} options={lineOptions} style={{background:'#10003b', borderRadius:'10px'}}/>
+                            </div> */}
+                            <div className="col-md-12 text-center d-flex">
+                                    <div className="align-self-center w-100">
                                     <h2>Staking rewards</h2>
-                                    <p>Claim what is yours, or perhaps another nice sentence</p>
-                                    <button className=" btn btn-special" style={{boxShadow:'none'}}>Claim rewards</button>
+                                    { state.wallet && state.wallet.walletAddress &&
+                                        (<p>{parseInt(state.allHolder.pending_rewards) / 1000000} UST</p>)
+                                    }
+                                    <button className=" btn btn-special mt-3" disabled={state.allHolder.pending_rewards <= 0 ? true : false} onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -161,84 +296,28 @@ export default function Staking (){
         </section>
         <section className="proposals my-5">
             <div className="container">
-                <div className="card lota-card">
-                    <div className="card-header">
+                <div className="card lota-card proposals">
+                    
                         <div className="row">
                             <div className="col-md-6">
                                 <h3>Proposals</h3>
                             </div>
                             <div className="col-md-6 text-end">
-                                <button className="btn btn-default" onClick={() => setModal(!modal)}>Create proposal</button>
+                                { /*<button className="btn btn-plain p-3" onClick={() => setModal(!modal)}>Create proposal <Plus size={24} /></button>*/}
                             </div>
                         </div>
-                        
-                        
-                    </div>
+                 
                     <div className="card-body">
-                        {/* Start item */}
-                        <div className="proposal-item">
-                            <div className="row">
-                                    <div className="col-12">
-                                        <h4>Proposal title</h4>
-                                        <p className="desc">New upcoming design for LoTerra frontend interface preview here https://drive.google.com/file/d/1JDVwEVQLjQSASunLgb6rXu2QPvvEm2k3/view?usp=drivesdk</p>
-                                    </div>
-                                    <div className="col-md-8">
-                                            <div className="table-responsive">
-                                            <table className="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Creator</td>
-                                                    <td>terra1ar45r5e8y55ku847xvet6ny2psv6fkflhchzxk</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>End block height</td>
-                                                    <td>3371352</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Amount</td>
-                                                    <td>50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Status</td>
-                                                    <td>Passed</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Price per rank</td>
-                                                    <td>[]</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Proposal</td>
-                                                    <td>DaoFunding</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Yes votes</td>
-                                                    <td>2</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>No votes</td>
-                                                    <td>0</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </div>
-                                    </div>
-                                    <div className="col-md-4 text-center d-flex">
-                                        <div className="vote-box align-self-center w-100">
-                                            <h5>Vote</h5>
-                                            <div className="btn-group w-100">
-                                                <button className="btn btn-default">Yes</button>
-                                                <button className="btn btn-default">No</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        {/* End item */}
+                        {state.allProposals && state.allProposals.map((element,key) =>{
+                            return(<ProposalItem fees={obj} data={element} i={key} key={key}/>)
+                        })}
                     </div>
                 </div>
             </div>
         </section>
+        <Footer/>
         <ProposalModal open={modal} toggleModal={() => setModal(!modal)}/>
+        <Notification notification={notification} close={() => hideNotification()}/>            
         </>
     )
 }

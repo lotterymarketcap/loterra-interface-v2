@@ -8,7 +8,9 @@ import TicketModal from "../components/TicketModal";
 
 import { useStore } from "../store";
 
-import toast, { Toaster } from 'react-hot-toast';
+import Notification from "../components/Notification";
+import SocialShare from "../components/SocialShare";
+import Footer from "../components/Footer";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -23,11 +25,13 @@ const HomeCard={
 
 const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
+
 export default () => {
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
   const [winners, setWinners] = useState(0);
+  const [notification,setNotification] = useState({type:'success',message:'',show:false})
   const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
   const [ticketModal, setTicketModal] = useState(0);
@@ -49,14 +53,14 @@ export default () => {
     const api = new WasmAPI(terra.apiRequester);
     try {
       const contractConfigInfo = await api.contractQuery(
-          loterra_contract_address,
-        {
-          config: {},
-        }
-      );
+        loterra_contract_address,
+      {
+        config: {},
+      }
+    );
+
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
-      dispatch({type: "setConfig", message: contractConfigInfo})
       const bank = new BankAPI(terra.apiRequester);
       const contractBalance = await bank.balance(loterra_contract_address);
       const ustBalance = contractBalance.get('uusd').toData();
@@ -87,6 +91,8 @@ export default () => {
       // Set default tickets to buy is an average bag
       multiplier(parseInt(isNaN(contractTicketsInfo / contractPlayersInfo) ? 1 : contractTicketsInfo / contractPlayersInfo ))
 
+      //Get poll data
+
 
       //Get Winners
       const contractWinnersInfo = await api.contractQuery(
@@ -114,6 +120,9 @@ export default () => {
         }
       );
       setLotaPrice(currentLotaPrice)
+
+     
+
 
       //Dev purposes disable for production
       console.log('contract info',contractConfigInfo)
@@ -153,9 +162,16 @@ export default () => {
     const [result, setResult] = useState("")
     const [amount, setAmount] = useState(0)
 
+    function checkIfDuplicateExists(w){
+      return new Set(w).size !== w.length 
+    }
 
     function execute(){
         const cart = state.combination.split(" ") // combo.split(" ")
+        if(checkIfDuplicateExists(cart)){
+          showNotification('Combinations contain duplicate','error',4000);
+          return;
+        }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5700 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
@@ -178,13 +194,16 @@ export default () => {
             // gasAdjustment: 1.5,
         }).then(e => {
             if (e.success) {
-                setResult("register combination success")
+                //setResult("register combination success")
+                showNotification("register combination success", 'success', 4000)
             }
             else{
-                setResult("register combination error")
+                //setResult("register combination error")
+                showNotification("register combination error", 'error', 4000)
             }
         }).catch(e =>{
-            setResult(e.message)
+            //setResult(e.message)
+            showNotification(e.message, 'error', 4000)
         })
 
     }
@@ -306,15 +325,52 @@ export default () => {
       console.log(state.combination)      
     }  
 
+    function hideNotification(){
+      setNotification({
+          message:notification.message,
+          type: notification.type,
+          show: false
+      })
+  }
+
+  function showNotification(message,type,duration){
+      console.log('fired notification')
+      setNotification({
+          message:message,
+          type: type,
+          show: true
+      })
+      console.log(notification)
+      //Disable after $var seconds
+      setTimeout(() => {           
+          setNotification({ 
+              message:message,
+              type: type,              
+              show: false
+          })        
+          console.log('disabled',notification)
+      },duration)
+  }
+
      return (
          <>   
-         <div className="hero" style={{backgroundImage:'url(bg.svg)'}}>
-                <div className="container">
+         <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>
+                <div className="container-fluid container-md">
                   <div className="row">
-                    <div className="col-xl-7 mx-auto text-center">
+                    <div className="col-lg-12 col-xl-8 mx-auto text-center">
                       <div className="jackpot">
                         <p>Jackpot</p>
-                        <h2>{numeral(jackpot).format("0,0.00")}<span>UST</span></h2>
+                        <h2>{numeral(jackpot).format("0,0.00").split("").map(obj => {
+                          return (
+                            <div className="roller">
+                              {obj} 
+                            </div>
+                          )
+                        })}
+                        <div className="roller">
+                          <span>UST</span>
+                        </div>
+                        </h2>
                       </div>
                     </div>
                     <div className="col-xl-7 mx-auto">
@@ -323,8 +379,8 @@ export default () => {
                             <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col text-center"><Users size={55} color="#73FFC1" /></div>
-                                  <div className="col-md-8 text-center text-md-start">
+                                  <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
+                                  <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>Players</span>{players}</h3>
                                   </div>
                                 </div>
@@ -335,8 +391,8 @@ export default () => {
                           <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col text-center"><Ticket size={55} color="#73FFC1" /></div>
-                                  <div className="col-md-8 text-center text-md-start">
+                                  <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
+                                  <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>Tickets</span>{tickets}</h3>
                                   </div>
                                 </div>
@@ -378,6 +434,7 @@ export default () => {
                         <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
                     </div>
+                    <SocialShare/>
                   </div>
                    </div>
                  </div>
@@ -537,10 +594,10 @@ export default () => {
                                   </div>
                               </div>
                  </div>
-
+                <Footer/>
                 
 
-                 <Toaster />
+                 <Notification notification={notification} close={() => hideNotification()}/>                 
          </>
      );
 }
