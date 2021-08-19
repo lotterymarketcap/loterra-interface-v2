@@ -10,6 +10,7 @@ if (typeof document !== 'undefined') {
 
 export default function UserModal(props){
     const [result, setResult] = useState("");
+    const [claimed, setClaimed] = useState(false);
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
@@ -22,9 +23,6 @@ export default function UserModal(props){
     const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
     
     const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
-    console.log(timeStampHalf)
-    console.log("now")
-    console.log(Date.now())
     const addToGas = 5300
     const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
     function claim(){
@@ -42,7 +40,8 @@ export default function UserModal(props){
             // gasAdjustment: 1.5,
         }).then(e => {
             if (e.success) {
-                setResult("Claim success")
+                setResult(`Claim success, please verify transaction on the blockchain explorer https://finder.terra.money/columbus-4/tx/${e.result.txhash}`)
+                setClaimed(true)
             }
             else{
                 console.log(e)
@@ -72,6 +71,7 @@ export default function UserModal(props){
             else{
                 console.log(e)
             }
+            console.log(e)
         }).catch(e =>{
             console.log(e.message)
             setResult(e.message)
@@ -104,7 +104,7 @@ export default function UserModal(props){
                                     <h4>Claim & Collect</h4>
                                     <p>By clicking this button LoTerra will check if you won any prizes, if you did we will claim them automatically for you</p>
                                     {
-                                        Date.now() < timeStampHalf ?
+                                        isPlayer && Date.now() < timeStampHalf && !isWinner && !claimed ?
                                             <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} onClick={() => claim()} >Claim</button> :
                                             <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} disabled>Claim closed</button>
                                     }
@@ -113,7 +113,7 @@ export default function UserModal(props){
                                             <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} onClick={() => collect()}>Collect</button> :
                                             <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} disabled>Collect closed</button>
                                     }
-
+                                    {result}
                                 </div>
                             </>
                         )
