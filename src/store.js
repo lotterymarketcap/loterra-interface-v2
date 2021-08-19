@@ -19,23 +19,30 @@ const initialState = {
   config: {},
   allCombinations: [],
   allHolder: {},
-  holderClaims: {},
+  holderClaims: [],
   combination: "",
   modal: false,
   daoFunds: 0,
   lcd_client: new LCDClient({
     URL: "https://lcd.terra.dev/",
     chainID: "columbus-4",
-  })
+  }),
+  blockHeight: 0
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
+    case "setBlockHeight":
+      return {
+        ...state,
+        blockHeight: action.message
+      }
     case "setModal":
       return {
         ...state,
         modal: action.message
       }
+
     case "setDaoFunds":
       return {
         ...state,

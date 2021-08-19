@@ -10,6 +10,7 @@ import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra
 import numeral from "numeral";
 import Notification from "../components/Notification";
 import Footer from "../components/Footer";
+import {parse} from "postcss";
 
 const BURNED_LOTA = 4301383550000;
 
@@ -178,6 +179,33 @@ export default () =>  {
         return parseInt(state.daoFunds / 1000000)
     }
 
+    function claimInfo (){
+        if (state.holderClaims){
+            let total_amount_claimable = 0
+            state.holderClaims.map(e => {
+                if (e.release_at.at_height < state.blockHeight ) {
+                    total_amount_claimable += parseInt(e.amount)
+                }
+            })
+            return  (<>{total_amount_claimable/ 1000000}</>)
+        }
+        return  (<>0</>)
+
+    }
+    function pendingClaim (){
+        if (state.holderClaims){
+            let total_amount_pending = 0
+            state.holderClaims.map(e => {
+                if (e.release_at.at_height > state.blockHeight ) {
+                    total_amount_pending += parseInt(e.amount)
+                }
+            })
+            return  (<>{total_amount_pending/ 1000000}</>)
+        }
+        return  (<>0</>)
+
+    }
+
 
     return(
         <>
@@ -204,7 +232,7 @@ export default () =>  {
                                                 <input type="number" className="form-control amount-input" name="amount"/>
                                             </div>
                                             <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end" onClick={() => setInputAmount(parseInt(state.LotaBalance.balance) / 1000000)}>MAX</p>
+                                                <p className="shortcut float-end" onClick={() => setInputAmount(parseInt(state.LotaBalance.balance))}>MAX</p>
                                                 <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('stake')}>Stake</button>
                                                 <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
                                         (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
@@ -223,12 +251,14 @@ export default () =>  {
                                                 {/* If unstake claiming condition */}
                                                 <span className="info">
                                                     <Info size={14} weight="fill" className="me-1" />
-                                                    Your claim unstake will be available in: 
-                                                    <strong>00-00-00</strong>
+                                                    Your pending claim amount available soon:
+                                                    <strong>{pendingClaim()} LOTA</strong>
                                                 </span>
-                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
-                                        (<>{state.holderClaims.claims / 1000000}</>)
-                                    } LOTA</strong></small>
+                                                <small className="float-end text-muted mt-2">Available: <strong>
+                                                    {
+                                                      state.wallet && state.wallet.walletAddress && claimInfo()
+                                                    }
+                                                  LOTA</strong></small>
                                             </div>
                                         </div>
                                     </div>

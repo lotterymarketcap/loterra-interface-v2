@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo, useRef} from "react";
-
+import axios from "axios"
 import {LCDClient, WasmAPI} from "@terra-money/terra.js";
 import {
   useWallet,
@@ -67,7 +67,10 @@ export default function ConnectWallet(){
     
   
 
-      async function baseData(){ 
+      async function baseData(){
+          const latestBlocks = await axios.get('https://lcd.terra.dev/blocks/latest')
+
+          dispatch({type: "setBlockHeight", message: latestBlocks.data.block.header.height})
         //Get proposals and save to state   
         const terra = new LCDClient({
             URL: "https://lcd.terra.dev/",
@@ -92,6 +95,8 @@ export default function ConnectWallet(){
           }
         )
           dispatch({type: "setDaoFunds", message: contractDaoBalance.balance})
+          
+
 
         console.log('config',contractConfigInfo)
 
@@ -203,8 +208,9 @@ export default function ConnectWallet(){
                             claims: { address: connectedWallet.walletAddress },
                         }
                     );
+                    console.log("claims")
                     console.log(claims)
-                    dispatch({type: "setHolderClaims", message: claims})
+                    dispatch({type: "setHolderClaims", message: claims.claims})
 
 
 
