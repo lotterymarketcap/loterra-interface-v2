@@ -116,7 +116,7 @@ export default function TicketModal(props){
             }
                         </ul>
                        
-                        <button className="btn btn-special w-100 my-3" onClick={() => {buyTickets(); toggleModal();}}>Buy {amount} Tickets</button>
+                        <button className="btn btn-special w-100 my-3" onClick={() => {buyTickets(); toggleModal();}}>Buy {combo.length} Tickets</button>
             </div>
         </div>
         <div className={open ? 'backdrop show' : 'backdrop'} onClick={() => toggleModal()}></div>

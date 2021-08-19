@@ -89,7 +89,7 @@ export default () => {
       );
       setPlayers(parseInt(contractPlayersInfo));
       // Set default tickets to buy is an average bag
-      multiplier(parseInt(contractTicketsInfo / contractPlayersInfo))
+      multiplier(parseInt(isNaN(contractTicketsInfo / contractPlayersInfo) ? 1 : contractTicketsInfo / contractPlayersInfo ))
 
       //Get poll data
 
@@ -173,7 +173,7 @@ export default () => {
           return;
         }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
-        const addToGas = 5300 * cart.length
+        const addToGas = 5700 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
         const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
         const msg = new MsgExecuteContract(
@@ -229,6 +229,7 @@ export default () => {
     }
 
     function addCode(amount){
+      if (amount >=1) {
       console.log(state.combination,amount)
       let copy = state.combination.split(" ");
       if(amount < copy.length){
@@ -242,8 +243,12 @@ export default () => {
         }
         
       }
-      let string = copy.join(" ");
+      let filtered = copy.filter(function (el) {
+  return el != null;
+});
+      let string = filtered.join(" ");
       dispatch({type: "setCombination", message: string})
+      }
     }
 
     function getPrizePerRank(nr){
@@ -486,8 +491,8 @@ export default () => {
                                 <tr>
                                   <th>Ranks</th>
                                   <th>Symbols</th>
-                                  <th>Prizes</th>
-                                  <th>Gross</th>
+                                  <th>Gross prizes</th>
+                                  <th>Net prizes</th>
                                   <th>LOTA tax</th>
                                 </tr>
                               </thead>
@@ -564,7 +569,7 @@ export default () => {
                             <div className="card-header-icon">
                               <ChartPie size={90} color="#20FF93"/>
                             </div>
-                            <h3>Loterra stats</h3>
+                            <h3>LoTerra stats</h3>
                           </div>
                                   <div className="card-body">
                                       <div className="row">
