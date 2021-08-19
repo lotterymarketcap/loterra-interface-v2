@@ -6,6 +6,7 @@ export default function ProposalModal(props){
 
     const { open,  toggleModal } = props;
     const [prizePerRank, setPrizePerRank] = useState(false);
+    const [amountToRegister,setAmountToRegister] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,6 +21,11 @@ export default function ProposalModal(props){
             setPrizePerRank(true)
         } else {
             setPrizePerRank(false)
+        }
+        if(e.target.value == 'AmountToRegister'){
+            setAmountToRegister(true)
+        } else {
+            setAmountToRegister(false)
         }
     }
 
@@ -41,48 +47,48 @@ export default function ProposalModal(props){
                         <select defaultValue={''} onChange={(e) => handleChange(e)} name="proposal" className="form-control" required>
                             <option value="" disabled selected>Select...</option>
                             <option value="LotteryEveryBlockTime">LotteryEveryBlockTime</option>
-                            <option value="HolderFeePercentage">HolderFeePercentage</option>
-                            <option value="DrandWorkerFeePercentage">DrandWorkerFeePercentage</option>
-                            <option value="PrizePerRank">PrizePerRank</option>
-                            <option value="JackpotRewardPercentage">JackpotRewardPercentage</option>
-                            <option value="AmountToRegister">AmountToRegister</option>
-                            <option value="SecurityMigration">SecurityMigration</option>
-                            <option value="DaoFunding">DaoFunding</option>
-                            <option value="StakingContractMigration">StakingContractMigration</option>
-                            <option value="PollSurvey">PollSurvey</option>
-                            <option value="NotExist">NotExist</option>
+                            <option value="HolderFeePercentage">Holder fee percentage</option>
+                            <option value="DrandWorkerFeePercentage">Drand worker fee percentage</option>
+                            <option value="PrizePerRank">Prize per rank</option>
+                            <option value="JackpotRewardPercentage">Jackpot reward percentage</option>
+                            <option value="AmountToRegister">Amount to register</option>
+                            <option value="SecurityMigration">Security migration</option>
+                            <option value="DaoFunding">Dao funding</option>
+                            <option value="StakingContractMigration">Staking contract migration</option>
+                            <option value="PollSurvey">Poll survey</option>
+                            <option value="NotExist">Not exist</option>
                         </select>
                     </div>
                     { prizePerRank &&
                         (
                             <>
                             <div className="col-3">
-                            <label>1</label>
+                            <label>Rank 1</label>
                             <input type="number" className="form-control" name="prize_1" required/>
                             </div>
                             <div className="col-3">
-                            <label>2</label>
+                            <label>Rank 2</label>
                             <input type="number" className="form-control" name="prize_2" required/>
                             </div>
                             <div className="col-3">
-                            <label>3</label>
+                            <label>Rank 3</label>
                             <input type="number" className="form-control" name="prize_3" required/>
                             </div>
                             <div className="col-3">
-                            <label>4</label>
+                            <label>Rank 4</label>
                             <input type="number" className="form-control" name="prize_4" required/>
                             </div>
                             </>
                         )
                     }
-                    <div className="col-6">
-                        <label>Amount</label>
-                        <input name="amount" className="form-control" required/>
-                    </div>
-                    <div className="col-6">
-                        <label>Prize per rank</label>
-                        <input name="prize_per_rank" className="form-control" required/> 
-                    </div>
+                    { amountToRegister &&
+                        (
+                            <div className="col-12">
+                                <label>Amount</label>
+                                <input name="amount" className="form-control" required/>
+                            </div>  
+                        )
+                    }                  
                     <div className="col-12">
                         <label>Recipient</label>
                         <input name="recipient" className="form-control" required/>
