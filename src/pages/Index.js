@@ -448,7 +448,7 @@ export default () => {
                           <div className="col-md-4 my-2">
                             <div className="step">
                               <label>Step 1</label>
-                                <h3>Participate in loterry</h3>
+                                <h3>Participate in lottery</h3>
                                 <p>Buy max 200 tickets per transaction</p>
                             </div>
                           </div>
