@@ -61,7 +61,7 @@ export default () =>  {
         if (type === 'stake') {
             msg = new MsgExecuteContract(
             state.wallet.walletAddress,
-            state.loterraStakingAddress,
+            state.loterraContractAddressCw20,
             {
               send: {
                 contract: state.loterraStakingAddress,
