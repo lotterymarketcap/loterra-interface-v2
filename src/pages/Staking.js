@@ -71,7 +71,7 @@ export default () =>  {
             }
           )
         } else {
-            msg = MsgExecuteContract(
+            msg = new MsgExecuteContract(
             state.wallet.walletAddress,
             state.loterraStakingAddress,
             {
