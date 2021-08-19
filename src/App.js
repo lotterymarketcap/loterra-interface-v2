@@ -47,7 +47,7 @@ class App extends Component {
                         <meta property="og:image:alt" content="LoTerra icon" />
                         <meta property="og:type" content="website" />
                         <meta property="og:site_name" content="LoTerra interface" />
-                        <meta property="og:description" content="LoTerra is building a lottery gaming ecosystem thanks smart contracts on Terra blockchain."/>
+                        <meta property="og:description" content="LoTerra is a lottery contract, buy tickets as a player or join the governance! DAO allows making decisions together! Manage the casino 🎰 Set the prize 🏆 Up the ticket price or go cheap 🏷 Extract max profits 🤑 Keep the vault secure at all times!"/>
                     </Head>
                     <StoreProvider>
                   <Navbar/>
