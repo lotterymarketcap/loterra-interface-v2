@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useMemo, useRef} from "react";
-import { X, Ticket,UserCircle } from 'phosphor-react'
+import { X, Ticket,Info } from 'phosphor-react'
 import {useStore} from "../store";
 
 // import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function TicketModal(props){
-    const [combo, setCombo] = useState([])
+    const [combo, setCombo] = useState([])  
     // const [scrollPosition, setScrollPosition] = useState(null)
-    const { open, toggleModal, amount, updateCombos, buyTickets } = props;
+    const { open, toggleModal, amount, updateCombos, buyTickets, multiplier } = props;
     const store = useStore();
 
     const combination = [
@@ -31,11 +31,14 @@ export default function TicketModal(props){
     ]
 
     let combinationListDiv = useRef();
+
+
+   
     
 
     useEffect(() => {
         // console.log(store.state.combination)     
-        const data = store.state.combination.split(" ");
+        let data = store.state.combination.split(" ");
         console.log(data)
         setCombo(data)       
  
@@ -54,14 +57,28 @@ export default function TicketModal(props){
             <button className="toggle" onClick={() => toggleModal()}><X size={36} /></button>
 
             <div className="ticketmodal_heading text-center">
-                <h2>Personalize tickets</h2>
-                <p>Rather have your own codes, you can edit your codes to your wishes and buy them right away</p>
+                <h2>Personalize Tickets</h2>
+                <p className="mb-0">Rather have your own codes, you can edit your codes to your wishes and buy them right away</p>
             </div>
             <div className="ticketmodal_content">
-
+                <span className="info">
+                        <Info size={14} weight="fill" className="me-1" />
+                        Available symbol options: 
+                        <strong>{ combination.map( (obj,i) => {
+                            if(combination.length === i + 1){
+                                return (
+                                    <>{obj}</>
+                                )
+                            } else {
+                                return (
+                                    <>{obj},</>
+                                )
+                            }
+                        })}</strong>
+                    </span>                   
                 <ul className="list-group" id="ticket_list" ref={combinationListDiv} style={{height:'180px'}}>
             {
-                combo && combo.map((obj,k) => {
+                combo.map((obj,k) => {
                 console.log("combo combo bo ")
                
                 let comboUpdate = combo;
@@ -107,7 +124,7 @@ export default function TicketModal(props){
                                     <input defaultValue={c} key={ck} className="form-control text-center" maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
                                 )
                             })}
-                                <Ticket size={24} color={'#4EDC97'} style={{marginLeft:'5px'}}/>
+                                <Ticket size={24} color={'#4EDC97'} style={{marginLeft:'5px'}} onClick={() => selectTicket(obj,k)}/>
                             </li>
                           )
                           
