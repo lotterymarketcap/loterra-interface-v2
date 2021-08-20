@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Trophy, UserCircle, ChartPie} from "phosphor-react";
+import { Users, Ticket, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -352,6 +352,19 @@ export default () => {
       },duration)
   }
 
+  function amountChange(type){    
+        let ticketAmount = amount;
+        if(type == 'up'){
+          ticketAmount++;
+        } else {
+          ticketAmount--;
+        }
+        if (ticketAmount <= 1) ticketAmount = 1
+        if (ticketAmount > 200) ticketAmount = 200
+        addCode(ticketAmount)
+        setAmount(ticketAmount)
+  }
+
      return (
          <>   
          <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>
@@ -381,7 +394,7 @@ export default () => {
                                 <div className="row">
                                   <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
-                                    <h3><span>Players</span>{players}</h3>
+                                    <h3><span>PLAYERS</span>{players}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -393,7 +406,7 @@ export default () => {
                                 <div className="row">
                                   <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
-                                    <h3><span>Tickets</span>{tickets}</h3>
+                                    <h3><span>TICKETS</span>{tickets}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -424,9 +437,14 @@ export default () => {
                    <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
                       <div className="card-body">
-                        <h3>Your tickets</h3>
+                        <h3>Your Tickets</h3>
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
-                        <input type="number" className="form-control amount-control mt-3" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />
+                        <div className="input-group mt-3">                         
+                            <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
+                          <input type="number" className="form-control amount-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />                         
+                            <button className="btn btn-default" onClick={() => amountChange('up')}><PlusCircle size={31} color={'#9183d4'} /></button>                         
+                        </div>
+                        
                         <p className="my-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)}/>
@@ -448,21 +466,21 @@ export default () => {
                           <div className="col-md-4 my-2">
                             <div className="step">
                               <label>Step 1</label>
-                                <h3>Participate in lottery</h3>
+                                <h3>Participate In Lottery</h3>
                                 <p>Buy max 200 tickets per transaction</p>
                             </div>
                           </div>
                           <div className="col-md-4 my-2">
                             <div className="step">
                             <label>Step 2</label>
-                                <h3>Wait for draw</h3>
+                                <h3>Wait For Draw</h3>
                                 <p>The contract draw a lottery every 3 days</p>
                             </div>
                           </div>
                           <div className="col-md-4 my-2">
                             <div className="step">
                             <label>Step 3</label>
-                                <h3>Check your prizes</h3>
+                                <h3>Check Your Prizes</h3>
                                 <p>Prizes from 3 to 6 symbols</p>
                             </div>
                           </div>
@@ -477,7 +495,7 @@ export default () => {
                             <div className="card-header-icon">
                               <Trophy size={90} color="#20FF93"/>
                             </div>
-                            <h3>Latest jackpot results</h3>
+                            <h3>Latest Jackpot Results</h3>
                           </div>
                           <div className="card-body">
                             <div className="w-100 text-center latest-combination">
@@ -569,7 +587,7 @@ export default () => {
                             <div className="card-header-icon">
                               <ChartPie size={90} color="#20FF93"/>
                             </div>
-                            <h3>LoTerra stats</h3>
+                            <h3>LoTerra Stats</h3>
                           </div>
                                   <div className="card-body">
                                       <div className="row">
