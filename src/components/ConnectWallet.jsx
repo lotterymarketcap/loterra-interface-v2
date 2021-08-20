@@ -300,7 +300,7 @@ export default function ConnectWallet(){
     return(
         <div className={scrolled ? 'navbar navbar-expand p-2 p-md-3 sticky' : 'navbar navbar-expand p-2 p-md-3'}>
         <div className="container-fluid">
-             <a className="navbar-brand"><img src="/logo.png"/> <span>LOTERRA</span></a>
+             <a className="navbar-brand" href="/"><img src="/logo.png"/> <span>LOTERRA</span></a>
              <nav className={sideNav ? 'navbar-nav main-nav me-auto open' : 'navbar-nav main-nav me-auto'}>   
                 <button className="main-nav-close-toggle" onClick={() => showSideNav()}><X size={36} /></button>               
                 <li className="nav-item"><a href="/" className="nav-link"><Ticket size={24} style={{marginRight:'3px',position:'relative',top:'-1px'}} /> Lottery</a></li>                 
