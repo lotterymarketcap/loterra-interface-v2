@@ -126,7 +126,7 @@ export default function TicketModal(props){
                                    
                                 }
                                 return (
-                                    <input defaultValue={c} value={c} key={ck} className="form-control text-center" style={{borderRadius:'0'}} onFocus={handleFocus} maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
+                                    <input defaultValue={c} value={c} autoCorrect="off" autoCapitalize="none" key={ck} className="form-control text-center" style={{borderRadius:'0'}} onFocus={handleFocus} maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
                                 )
                             })}
                                
