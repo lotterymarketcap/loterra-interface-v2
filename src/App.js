@@ -38,7 +38,7 @@ class App extends Component {
                 <Root>
                     <Head>
                         <meta charSet="UTF-8" />
-                        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, shrink-to-fit=no"/>
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
                         <title>LoTerra - Decentralized lottery on Terra blockchain</title>
                         <link rel="icon" type="image/x-icon" href="https://loterra.io/favicon.ico"/>
                         <link data-hid="shortcut-icon" rel="shortcut icon" href="https://loterra.io/favicon.ico"/>
