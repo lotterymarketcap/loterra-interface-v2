@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo, useRef} from "react";
-import { X, Ticket,Info } from 'phosphor-react'
+import { X, Ticket,Info,Shuffle } from 'phosphor-react'
 import {useStore} from "../store";
 
 // import toast, { Toaster } from 'react-hot-toast';
@@ -32,6 +32,9 @@ export default function TicketModal(props){
 
     let combinationListDiv = useRef();
 
+    function handleFocus(event) {
+         event.target.select();
+    }
 
    
     
@@ -56,14 +59,14 @@ export default function TicketModal(props){
         <div className={open ? 'ticketmodal show' : 'ticketmodal'}>
             <button className="toggle" onClick={() => toggleModal()}><X size={36} /></button>
 
-            <div className="ticketmodal_heading text-center">
+            <div className="ticketmodal_heading text-center pb-0">
                 <h2>Personalize Tickets</h2>
                 <p className="mb-0">Rather have your own codes, you can edit your codes to your wishes and buy them right away</p>
             </div>
             <div className="ticketmodal_content">
                 <span className="info">
                         <Info size={14} weight="fill" className="me-1" />
-                        Available symbol options: 
+                        Available symbol options:<br/>
                         <strong>{ combination.map( (obj,i) => {
                             if(combination.length === i + 1){
                                 return (
@@ -75,7 +78,8 @@ export default function TicketModal(props){
                                 )
                             }
                         })}</strong>
-                    </span>                   
+                    </span>           
+                    <button onClick={() => multiplier(amount)} className="btn btn-default w-100 my-2" style={{fontSize:'18px',fontWeight:'bold',padding:'11px 5px', borderBottom:'4px solid #10003b'}}><Shuffle size={24} color={'#ff36ff'} style={{marginTop:'-1px'}} /> Randomize Combinations</button>        
                 <ul className="list-group" id="ticket_list" ref={combinationListDiv} style={{height:'180px'}}>
             {
                 combo.map((obj,k) => {
@@ -83,8 +87,9 @@ export default function TicketModal(props){
                
                 let comboUpdate = combo;
                 return (
-                            <li className="list-group-item" key={k}>
-                                <span style={{marginRight:'5px', marginLeft:'-10px', fontWeight:'strong'}}>{k+1}</span>
+                            <li className="list-group-item px-0" key={k}>      
+                                <Ticket size={24} color={'#4EDC97'} style={{marginLeft:'5px'}} onClick={() => selectTicket(obj,k)}/>                         
+                                <span style={{fontWeight:'strong', fontSize:'12px', width:'18px', textAlign:'center', display:'inline-block'}}>{k+1}</span>
                             {obj && Array.from(obj).map( (c,ck) => {
                                 const inputChange = (e,ck,obj,k,c) => {
                                   
@@ -121,10 +126,10 @@ export default function TicketModal(props){
                                    
                                 }
                                 return (
-                                    <input defaultValue={c} key={ck} className="form-control text-center" maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
+                                    <input defaultValue={c} value={c} key={ck} className="form-control text-center" style={{borderRadius:'0'}} onFocus={handleFocus} maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
                                 )
                             })}
-                                <Ticket size={24} color={'#4EDC97'} style={{marginLeft:'5px'}} onClick={() => selectTicket(obj,k)}/>
+                               
                             </li>
                           )
                           
@@ -133,7 +138,7 @@ export default function TicketModal(props){
             }
                         </ul>
                        
-                        <button className="btn btn-special w-100 my-3" onClick={() => {buyTickets(); toggleModal();}}>Buy {combo.length} Tickets</button>
+                        <button className="btn btn-special w-100 mt-3" onClick={() => {buyTickets(); toggleModal();}}>Buy {combo.length} Tickets</button>
             </div>
         </div>
         <div className={open ? 'backdrop show' : 'backdrop'} onClick={() => toggleModal()}></div>
