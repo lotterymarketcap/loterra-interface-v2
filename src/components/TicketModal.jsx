@@ -99,6 +99,7 @@ export default function TicketModal(props){
                                     if(!combination.includes(e.target.value) && e.target.value != ""){
                                         // toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
                                         e.target.value = c;
+                                        e.target.select();
                                         return;
                                     }
                                     x.substring(k, e.target.value)
@@ -122,6 +123,8 @@ export default function TicketModal(props){
                                         // setCombo([])
                                         store.dispatch({type: "setCombination", message: comboUpdate.join(" ")});
                                     }
+                                    e.target.select();
+
                                     //updateCombos(new_code.join(""),k)
                                    
                                 }
