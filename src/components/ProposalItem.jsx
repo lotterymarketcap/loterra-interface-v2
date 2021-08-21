@@ -87,13 +87,13 @@ export default function ProposalItem(props){
                                         <div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
                                             <div className="btn-group w-100">
-                                                {state.wallet.walletAddress && 
+                                                {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
                                                     <>
                                                         <button className="btn btn-plain" onClick={() => vote(true,i+1)}>Yes</button>
                                                         <button className="btn btn-plain" onClick={() => vote(false,i+1)}>No</button>
                                                     </>
-                                                )
+                                                ): (<button className="btn btn-plain" disabled>{data.status}</button>)
                                                 }
                                                 {state.wallet.walletAddress === undefined && 
                                                 (
