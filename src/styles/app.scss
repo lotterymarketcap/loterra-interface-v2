@@ -200,6 +200,16 @@ font-style: normal;
 }
 }
 
+::-moz-selection { /* Code for Firefox */
+  color: #4edc97;
+  background: #070019;
+}
+
+::selection {
+  color: #4edc97;
+  background: #070019;
+}
+
 .jackpot {  
   p {
     color: #f038f0;
