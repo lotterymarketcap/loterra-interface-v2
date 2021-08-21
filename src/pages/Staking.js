@@ -284,7 +284,7 @@ export default () =>  {
                                     <div className="align-self-center w-100">
                                     <h2>Staking rewards</h2>
                                     { state.wallet && state.wallet.walletAddress &&
-                                        (<p>{numeral(parseInt(state.allHolder.pending_rewards) / 1000000).format('0.00000')} UST</p>)
+                                        (<p>{numeral(parseInt(state.holderAccruedRewards) / 1000000).format('0.00000')} UST</p>)
                                     }
                                     <button className=" btn btn-special mt-3" disabled={state.holderAccruedRewards <= 0 ? true : false} onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
                                     </div>
