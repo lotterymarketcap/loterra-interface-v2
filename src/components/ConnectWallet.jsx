@@ -193,6 +193,16 @@ export default function ConnectWallet(){
                     );
                     dispatch({type: "setAllHolder", message: holder})    
                     console.log(holder)     
+
+const holderAccruedRewards = await api.contractQuery(
+                        state.loterraStakingAddress,
+                        {
+                            accrued_rewards: { address: connectedWallet.walletAddress },
+                        }
+                    );
+                    dispatch({type: "setHolderAccruedRewards", message: holderAccruedRewards.rewards})    
+                    console.log(holder)  
+
               
                     const token = await api.contractQuery(
                         state.loterraContractAddressCw20, 
