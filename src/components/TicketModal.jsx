@@ -36,6 +36,32 @@ export default function TicketModal(props){
          event.target.select();
     }
 
+    function handleBlur(event) {
+       
+   }
+
+   function handleClick(event) {
+    event.target.select();
+    }
+
+    function handleKeyDown(e,ck,k){
+        const keys = [8,46,32,37,38,39,40]
+        if(keys.includes(e.keyCode)) {
+            let input = document.querySelector('.char'+ck+k)      
+            const lastValue = input.value;
+
+            input.value = 0;
+            const event = new Event("input", {
+                bubbles: true
+            });
+            const tracker = input._valueTracker;
+            if (tracker) {
+                tracker.setValue(lastValue);
+            }
+            input.dispatchEvent(event);
+            input.select()
+        }
+    }
    
     
 
@@ -94,13 +120,18 @@ export default function TicketModal(props){
                                 const inputChange = (e,ck,obj,k,c) => {
                                   
                                     let x = obj;
-                                    e.preventDefault();
+                                    e.preventDefault();                                    
                                 
-                                    if(!combination.includes(e.target.value) && e.target.value != ""){
+                                    if(!combination.includes(e.target.value)){
                                         // toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
-                                        e.target.value = c;
+                                        e.target.value = 0;
                                         e.target.select();
-                                        return;
+                                
+                                    }
+                                    if(e.target.value == ""){
+                                        e.target.value = 0;
+                                        e.target.select();
+                                      
                                     }
                                     x.substring(k, e.target.value)
                                     console.log('x',x)
@@ -129,7 +160,7 @@ export default function TicketModal(props){
                                    
                                 }
                                 return (
-                                    <input defaultValue={c} value={c} autoCorrect="off" autoCapitalize="none" key={ck} className="form-control text-center" style={{borderRadius:'0'}} onFocus={handleFocus} maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
+                                    <input value={c} autoCorrect="off" autoCapitalize="none" key={ck+k} className={"form-control text-center char"+ck+k} style={{borderRadius:'0'}} onClick={handleClick} onKeyDown={(e) => handleKeyDown(e,ck,k)} onFocus={handleFocus} onBlur={handleBlur} maxLength="1" onChange={(e) => inputChange(e,ck,obj,k,c)}/>
                                 )
                             })}
                                
