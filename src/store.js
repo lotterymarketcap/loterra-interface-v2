@@ -20,6 +20,7 @@ const initialState = {
   allCombinations: [],
   allHolder: {},
   holderClaims: [],
+  holderAccruedRewards:0,
   combination: "",
   modal: false,
   daoFunds: 0,
@@ -67,6 +68,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         wallet: action.message
+      }
+    case "setHolderAccruedRewards":
+      return {
+        ...state,
+        holderAccruedRewards: action.message
       }
     case "setAllPlayers":
       return {
