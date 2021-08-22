@@ -173,7 +173,7 @@ export default () => {
           return;
         }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
-        const addToGas = 5700 * cart.length
+        const addToGas = 5800 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
         const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
         const msg = new MsgExecuteContract(
