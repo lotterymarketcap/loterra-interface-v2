@@ -288,6 +288,7 @@ export default () => {
             'd',
             'e',
             'f',
+            'g'
         ]
         let randomCombination = ''
         for (let x = 0; x < 6; x++) {
