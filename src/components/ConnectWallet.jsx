@@ -85,6 +85,9 @@ export default function ConnectWallet(){
             config: {},
           }
         );
+        dispatch({type: "setCurrentLotteryId", message: contractConfigInfo.lottery_counter})
+        dispatch({type: "setHolderPercentageFee", message: contractConfigInfo.token_holder_percentage_fee_reward})
+
 
         const contractDaoBalance = await api.contractQuery(
             state.loterraContractAddressCw20,

@@ -11,6 +11,7 @@ import numeral from "numeral";
 import Notification from "../components/Notification";
 import Footer from "../components/Footer";
 import {parse} from "postcss";
+import ApyStats from "../components/ApyStats";
 
 const BURNED_LOTA = 4301383550000;
 
@@ -31,13 +32,13 @@ export default () =>  {
     }
   
     function showNotification(message,type,duration){
-        console.log('fired notification')
+        //console.log('fired notification')
         setNotification({
             message:message,
             type: type,
             show: true
         })
-        console.log(notification)
+        //console.log(notification)
         //Disable after $var seconds
         setTimeout(() => {           
             setNotification({ 
@@ -45,13 +46,13 @@ export default () =>  {
                 type: type,              
                 show: false
             })        
-            console.log('disabled',notification)
+           // console.log('disabled',notification)
         },duration)
     }
     
     function stakeOrUnstake(type) {
         var input = document.querySelector('.amount-input')
-        console.log(type,input.value);
+        //console.log(type,input.value);
         const amount = parseInt(input.value * 1000000)
         if(amount <= 0){
             showNotification('Input amount empty','error',4000)
@@ -167,8 +168,8 @@ export default () =>  {
 
     function getStakedNr (){
         let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000;
-        console.log("parseInt(state.tokenInfo.balance) - BURNED_LOTA")
-        console.log(state.tokenInfo.total_supply)
+        //console.log("parseInt(state.tokenInfo.balance) - BURNED_LOTA")
+        //console.log(state.tokenInfo.total_supply)
         let staked = parseInt(state.staking.total_balance) / 1000000;
         let daoFunds = parseInt(state.daoFunds / 1000000);
         let sum = total - staked - daoFunds;
@@ -205,6 +206,8 @@ export default () =>  {
         return  (<>0</>)
 
     }
+
+
 
 
     return(
@@ -291,6 +294,13 @@ export default () =>  {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+        <section className="apystats my-5">
+            <div className="container">
+                <div className="card lota-card apy-stats">
+                    <ApyStats/>
                 </div>
             </div>
         </section>

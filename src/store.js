@@ -17,6 +17,8 @@ const initialState = {
   wallet: {},
   LotaBalance: {},
   config: {},
+  currentLotteryId: 0,
+  holderPercentageFee: 0,
   allCombinations: [],
   allHolder: {},
   holderClaims: [],
@@ -42,7 +44,16 @@ const reducer = (state, action) => {
         ...state,
         modal: action.message
       }
-
+      case "setCurrentLotteryId":
+        return {
+          ...state,
+          currentLotteryId: action.message
+        }
+      case "setHolderPercentageFee":
+        return {
+          ...state,
+          holderPercentageFee: action.message
+        }
     case "setDaoFunds":
       return {
         ...state,

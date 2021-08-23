@@ -10,13 +10,20 @@
     position:relative;
     margin-bottom:20px;
     .progress-bar {
-        background: linear-gradient(90deg, #73FFC1 0%, #00FF82 100%);
+        
+        &.special {
+            background: linear-gradient(90deg, #73FFC1 0%, #00FF82 100%);
         border-radius: 36px;
-        position:absolute;
-        color: #0e0034;
-        left:0;
-        top:0;
-        bottom:0;
+        color: #0e0034;      
+        }
+
+        &.danger {
+            background: linear-gradient(
+            92.8deg
+            , rgba(255, 255, 255, 0.6) -1.42%, rgba(205, 21, 205, 0.318) 102.82%), #FF36FF;
+            border-radius: 36px;
+            color: #0e0034;    
+        }
     }
 }
 

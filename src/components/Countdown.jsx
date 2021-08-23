@@ -38,7 +38,7 @@ export default function Countdown(props){
           <div className="col-12">
               <div className="progress">
                   <div
-                      className="progress-bar"
+                      className="progress-bar special"
                       role="progressbar"
                       style={{ width: percentageTillRebase + '%' }}
                       aria-valuenow={percentageTillRebase}

@@ -36,6 +36,18 @@ export default function ProposalItem(props){
         })
     }
 
+    function percentageVotesYes(yes,no){
+        const total = yes + no;
+        return yes/total*100
+        
+    }
+
+    function percentageVotesNo(yes,no){
+        const total = yes + no;
+        return no/total*100
+        
+    }
+
     return (
         <div className="proposal-item" key={i}>
                             <div className="row">
@@ -86,6 +98,28 @@ export default function ProposalItem(props){
                                     <div className="col-md-4 text-center d-flex">
                                         <div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
+                                            <div className="progress">
+                                            <div
+                                                className="progress-bar special"
+                                                role="progressbar"
+                                                style={{ width: percentageVotesYes(data.yes_vote,data.no_vote) + '%' }}
+                                                aria-valuenow={percentageVotesYes(data.yes_vote,data.no_vote)}
+                                                aria-valuemin="0"
+                                                aria-valuemax={data.yes_vote+data.no_vote}
+                                            >
+                                                YES
+                                            </div>
+                                            <div
+                                                className="progress-bar danger"
+                                                role="progressbar"
+                                                style={{ width: percentageVotesNo(data.yes_vote,data.no_vote) + '%' }}
+                                                aria-valuenow={percentageVotesNo(data.yes_vote,data.no_vote)}
+                                                aria-valuemin="0"
+                                                aria-valuemax={data.yes_vote+data.no_vote}
+                                            >
+                                                NO
+                                            </div>
+                                        </div>
                                             <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && 
                                                 (
