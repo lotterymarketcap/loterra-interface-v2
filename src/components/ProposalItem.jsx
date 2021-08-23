@@ -38,14 +38,12 @@ export default function ProposalItem(props){
 
     function percentageVotesYes(yes,no){
         const total = yes + no;
-        return yes/total*100
-        
+        return yes/total*100      
     }
 
     function percentageVotesNo(yes,no){
         const total = yes + no;
-        return no/total*100
-        
+        return no/total*100      
     }
 
     return (
