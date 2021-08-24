@@ -78,6 +78,8 @@ width: 100%;
     background-size: cover;
     padding: 105px 0;
     height: 935px;
+    width:100%;
+    overflow-x:hidden;
     @media(max-width:768px){
       height:975px;
     }
