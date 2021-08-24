@@ -17,8 +17,8 @@ const BURNED_LOTA = 4301383550000;
 
 export default () =>  {
 
-    const addToGas = 5300
-    const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
+    const addToGas = 5800
+    const obj = new StdFee(700_000, { uusd: 319200 + addToGas }) 
     const [notification,setNotification] = useState({type:'success',message:'',show:false})
     const {state, dispatch} = useStore();
     const [modal, setModal] = useState(false);
@@ -212,7 +212,7 @@ export default () =>  {
 
     return(
         <>
-        <div className="hero staking" style={{backgroundImage:'url(bg.svg)'}}>
+        <div className="hero staking" style={{backgroundImage:'url(/bg.svg)'}}>
             <div className="container h-100 d-md-flex">
                         <div className="row align-self-center">
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
