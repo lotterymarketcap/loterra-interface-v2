@@ -24,7 +24,7 @@ export default function UserModal(props){
     
     const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
     const addToGas = 5300
-    const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
+    const obj = new StdFee(600_000, { uusd: 273600 + addToGas })
     function claim(){
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
