@@ -383,6 +383,11 @@ export default () => {
     return sum
   }
 
+  function totalSupply(){
+    let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000; 
+    return total
+  }
+
 
      return (
          <>   
@@ -634,6 +639,12 @@ export default () => {
                                             </div>
                                         </div>
                                         <div className="col-md-6 mb-3">
+                                            <div className="lota-stats">
+                                              <p>Total SUPPLY</p>
+                                              <h5>{numeral(totalSupply()).format("0,0.00")}<span>LOTA</span></h5>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 mb-3">
                                             <div className="lota-stats">
                                             { lotaPrice.assets &&
                                             <>
