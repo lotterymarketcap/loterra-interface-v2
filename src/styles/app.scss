@@ -244,6 +244,7 @@ font-style: normal;
     display: inline-block;
     border-bottom: 6px solid #0f032f;
     margin-bottom: 10px;
+    box-shadow: inset 0px 3px 0px #ffffff2b;
     @media(max-width:710px){
       font-size: 38px;
     }
@@ -366,13 +367,23 @@ font-style: normal;
 95.45deg
 , #3B2E73 -92.2%, #10003B 105.35%);
   box-sizing: border-box;
-  box-shadow: 0px 16px 47px #10003a;
+  box-shadow: 0px 0px 61px #12023e;
   border-radius: 10px;
   margin-bottom: 50px;
-h3 {
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 15px;
+.card-header {
+  padding: 1rem 1rem;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 0px #140440;
+    background: linear-gradient(
+328.75deg
+, #493C85 -5.49%, #0F0038 104.44%);
+
+
+  h3 {
+    font-weight: 900;
+    text-align: center;
+    margin:0;
+  }
 }
   label {
     display:block;
@@ -428,3 +439,33 @@ h3 {
   }
 }
 
+
+//Animation 
+
+.svg{
+  color:#493C84;
+  position:absolute;
+  bottom: -100vh;
+  transform-style: preserve-3d;
+  z-index:-1;
+}
+
+$total: 15;
+@for $i from 1 through $total {
+  $scale:random(2) - .4;
+  
+  .svg:nth-child(#{$i}){
+    left:random(120) * 1% - 20;
+    animation: raise#{$i} 6 + random(15) +s linear infinite;
+    animation-delay:random(5) - 5 + s;
+    transform: scale(.3 * $i - .6) rotate(random(360) + deg);
+    filter: blur($i - 10 + px);
+
+    @keyframes raise#{$i} {
+      to{
+       bottom:150vh;
+       transform: scale(.3 * $i - .6) rotate(random(360) + deg);
+      }
+    } 
+  }
+}
