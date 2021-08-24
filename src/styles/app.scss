@@ -457,7 +457,7 @@ $total: 15;
   $scale:random(2) - .4;
   
   .svg:nth-child(#{$i}){
-    left:random(120) * 1% - 20;
+    left:random(100) * 1% - 20;
     animation: raise#{$i} 6 + random(15) +s linear infinite;
     animation-delay:random(5) - 5 + s;
     transform: scale(.3 * $i - .6) rotate(random(360) + deg);
