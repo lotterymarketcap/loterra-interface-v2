@@ -297,13 +297,13 @@ export default () =>  {
                 </div>
             </div>
         </section>
-        <section className="apystats my-5">
+        {/* <section className="apystats my-5">
             <div className="container">
                 <div className="card lota-card apy-stats">
                     <ApyStats/>
                 </div>
             </div>
-        </section>
+        </section> */}
         <section className="proposals my-5">
             <div className="container">
                 <div className="card lota-card proposals">
