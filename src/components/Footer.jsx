@@ -16,5 +16,6 @@ export default function Footer(){
             <a href="https://docs.loterra.io" target="_blank" className="btn btn-plain" style={{fontSize:'16px', color:'#a69fbb'}}>Documentation <Files size={21} /></a>
             </div>
         </footer>
+        
     )
 }

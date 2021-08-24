@@ -647,6 +647,14 @@ export default () => {
                                   </div>
                               </div>
                  </div>
+                 <div className="container" style={{marginTop:'2rem'}}>
+                   <div className="card lota-card">
+                     <div className="card-body">
+                     
+<coingecko-coin-price-chart-widget currency="usd" coin-id="loterra" locale="en" height="300"></coingecko-coin-price-chart-widget>
+                     </div>
+                   </div>
+                 </div>
                 <Footer/>
                 
 
