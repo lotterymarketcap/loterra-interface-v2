@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -454,14 +454,30 @@ export default () => {
 {/*
              <div className="mt-4">contract-v2.0.1</div>
                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div> */}
-
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
         </div>
         <div className="container">
                    <div className="row">
                    <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
-                      <div className="card-body">
-                        <h3>Book Your Tickets</h3>
+                      <div className="card-header">
+                      <h3>Book Your Tickets</h3>
+                      </div>
+                      <div className="card-body">                        
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
                         <div className="input-group mt-3">                         
                             <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
