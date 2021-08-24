@@ -17,8 +17,8 @@ const BURNED_LOTA = 4301383550000;
 
 export default () =>  {
 
-    const addToGas = 5300
-    const obj = new StdFee(600_000, { uusd: 90000 + addToGas })
+    const addToGas = 5800
+    const obj = new StdFee(700_000, { uusd: 319200 + addToGas }) 
     const [notification,setNotification] = useState({type:'success',message:'',show:false})
     const {state, dispatch} = useStore();
     const [modal, setModal] = useState(false);
