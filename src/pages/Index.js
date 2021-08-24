@@ -443,7 +443,21 @@ export default () => {
                     <Countdown expiryTimestamp={expiryTimestamp}/>
                   </div>
 
-
+                  <Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
+<Coin size={55} className="svg" />
+<Ticket size={55} className="svg" />
                 </div>
 
 
@@ -454,21 +468,7 @@ export default () => {
 {/*
              <div className="mt-4">contract-v2.0.1</div>
                 <div className="text-sm">terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0</div> */}
-<Ticket size={55} className="svg" />
-<Coin size={55} className="svg" />
-<Ticket size={55} className="svg" />
-<Coin size={55} className="svg" />
-<Ticket size={55} className="svg" />
-<Coin size={55} className="svg" />
-<Ticket size={55} className="svg" />
-<Coin size={55} className="svg" />
-<Ticket size={55} className="svg" />
-<Coin size={55} className="svg" />
-<Ticket size={55} className="svg" />
-<Coin size={55} className="svg" />
-<Ticket size={55} className="svg" />
-<Coin size={55} className="svg" />
-<Ticket size={55} className="svg" />
+
         </div>
         <div className="container">
                    <div className="row">
