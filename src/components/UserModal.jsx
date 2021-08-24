@@ -109,7 +109,7 @@ export default function UserModal(props){
                                             <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} disabled>Claim closed</button>
                                     }
                                     {
-                                        Date.now() > timeStampHalf ?
+                                       1 == 1 ?
                                             <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} onClick={() => collect()}>Collect</button> :
                                             <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} disabled>Collect closed</button>
                                     }
