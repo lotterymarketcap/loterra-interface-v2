@@ -212,7 +212,7 @@ export default () =>  {
 
     return(
         <>
-        <div className="hero staking" style={{backgroundImage:'url(bg.svg)'}}>
+        <div className="hero staking" style={{backgroundImage:'url(/bg.svg)'}}>
             <div className="container h-100 d-md-flex">
                         <div className="row align-self-center">
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
