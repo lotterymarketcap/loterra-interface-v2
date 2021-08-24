@@ -175,7 +175,7 @@ export default () => {
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5800 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        const obj = new StdFee(700_000, { uusd: 228000 + addToGas })
+        const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             loterra_contract_address,
