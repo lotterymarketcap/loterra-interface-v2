@@ -19,9 +19,9 @@ export default function Countdown(props){
     const now = Date.now()
     const end = new Date(expiryTimestamp).getTime()
     let percentageTillRebase = Math.round(((now - start) / (end - start)) * 100)
-        console.log(percentageTillRebase)
+        //console.log(percentageTillRebase)
     useEffect(() => {
-        console.log(expiryTimestamp)
+        //console.log(expiryTimestamp)
       if (
         expiryTimestamp >
         1 /** in ordder to avoid unnecessary re-rendering/ layout */
@@ -32,7 +32,7 @@ export default function Countdown(props){
     return (
       <div className="countdown">
       <div className="row">
-          <div className="col-12 text-center mb-3">
+          <div className="col-12 text-center mb-2">
               <div className="title">Next draw in</div>
           </div>
           <div className="col-12">
