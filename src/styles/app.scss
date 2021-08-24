@@ -242,6 +242,8 @@ font-style: normal;
     letter-spacing: 0.05em;
     color: #FFFFFF;
     display: inline-block;
+    border-bottom: 6px solid #0f032f;
+    margin-bottom: 10px;
     @media(max-width:710px){
       font-size: 38px;
     }
