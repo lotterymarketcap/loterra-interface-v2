@@ -53,6 +53,7 @@ class App extends Component {
                         <meta name="twitter:title "content="LoTerra - Decentralized lottery on Terra blockchain" />
                         <meta name="twitter:description" content="LoTerra is a lottery contract, buy tickets as a player or join the governance! DAO allows making decisions together! Manage the casino 🎰 Set the prize 🏆 Up the ticket price or go cheap 🏷 Extract max profits 🤑 Keep the vault secure at all times!"/>
                         <meta name="twitter:image" content="https://loterra.io/loterra.png"/>
+                        <script src="https://widgets.coingecko.com/coingecko-coin-price-chart-widget.js" async/>
                     </Head>
                     <StoreProvider>
                   <Navbar/>

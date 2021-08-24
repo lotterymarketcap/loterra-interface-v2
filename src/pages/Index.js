@@ -26,6 +26,9 @@ const HomeCard={
 const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 
+const BURNED_LOTA = 4301383550000;
+
+
 export default () => {
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
@@ -125,7 +128,7 @@ export default () => {
 
 
       //Dev purposes disable for production
-      console.log('contract info',contractConfigInfo)
+      //console.log('contract info',contractConfigInfo)
 
         // Query all winners
         const {winners} = await api.contractQuery(loterra_contract_address, {
@@ -230,7 +233,7 @@ export default () => {
 
     function addCode(amount){
       if (amount >=1) {
-      console.log(state.combination,amount)
+      //console.log(state.combination,amount)
       let copy = state.combination.split(" ");
       if(amount < copy.length){
         let nr = copy.length - amount;
@@ -311,18 +314,18 @@ export default () => {
 
 
     function updateCombos(new_code,index){
-      console.log('updating combos', new_code, index)
+      //console.log('updating combos', new_code, index)
       let copy = state.combination;
       copy.split(" ").map((obj,k) => {
         if(k == index){
-          console.log(obj,' will be ',new_code)
+          //console.log(obj,' will be ',new_code)
           obj = new_code
         }
       })
       toast('you changed a ticket code')
       dispatch({type: "setCombination", message: copy})
-      console.log(copy)
-      console.log(state.combination)      
+      //console.log(copy)
+      //console.log(state.combination)      
     }  
 
     function hideNotification(){
@@ -334,13 +337,13 @@ export default () => {
   }
 
   function showNotification(message,type,duration){
-      console.log('fired notification')
+      //console.log('fired notification')
       setNotification({
           message:message,
           type: type,
           show: true
       })
-      console.log(notification)
+      //console.log(notification)
       //Disable after $var seconds
       setTimeout(() => {           
           setNotification({ 
@@ -348,7 +351,7 @@ export default () => {
               type: type,              
               show: false
           })        
-          console.log('disabled',notification)
+          //console.log('disabled',notification)
       },duration)
   }
 
@@ -364,6 +367,27 @@ export default () => {
         addCode(ticketAmount)
         setAmount(ticketAmount)
   }
+
+  function marketCap(){
+    if(lotaPrice.assets){
+     let sum = (lotaPrice.assets[1].amount/lotaPrice.assets[0].amount) * circulatingSupply();
+     return sum;
+    }
+     
+  }
+
+  function circulatingSupply(){
+    let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000;
+    let daoFunds = parseInt(state.daoFunds / 1000000);
+    let sum = total - daoFunds;
+    return sum
+  }
+
+  function totalSupply(){
+    let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000; 
+    return total
+  }
+
 
      return (
          <>   
@@ -591,7 +615,7 @@ export default () => {
                           </div>
                                   <div className="card-body">
                                       <div className="row">
-                                        <div className="col-md-6">
+                                        <div className="col-md-6 mb-3">
                                           <div className="lota-stats mb-4 mb-md-0">
                                           { lotaPrice.assets &&
                                             <>
@@ -602,15 +626,45 @@ export default () => {
                                           }
                                           </div>
                                         </div>
-                                        <div className="col-md-6">
+                                        <div className="col-md-6 mb-3">
                                             <div className="lota-stats">
                                               <p>Current lottery balance</p>
                                               <h5>{numeral(contractBalance).format("0,0.00")}<span>UST</span></h5>
                                             </div>
                                         </div>
+                                        <div className="col-md-6 mb-3">
+                                            <div className="lota-stats">
+                                              <p>Circulating SUPPLY</p>
+                                              <h5>{numeral(circulatingSupply()).format("0,0.00")}<span>LOTA</span></h5>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6 mb-3">
+                                            <div className="lota-stats">
+                                              <p>Total SUPPLY</p>
+                                              <h5>{numeral(totalSupply()).format("0,0.00")}<span>LOTA</span></h5>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 mb-3">
+                                            <div className="lota-stats">
+                                            { lotaPrice.assets &&
+                                            <>
+                                              <p>Market Cap</p>
+                                              <h5>{numeral(marketCap()).format("0,0.00")}<span>UST</span></h5>
+                                            </>
+                                            }
+                                            </div>
+                                        </div>
                                       </div>
                                   </div>
                               </div>
+                 </div>
+                 <div className="container" style={{marginTop:'2rem'}}>
+                   <div className="card lota-card">
+                     <div className="card-body">
+                     
+<coingecko-coin-price-chart-widget currency="usd" coin-id="loterra" locale="en" height="300"></coingecko-coin-price-chart-widget>
+                     </div>
+                   </div>
                  </div>
                 <Footer/>
                 
