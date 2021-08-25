@@ -25,9 +25,9 @@ export default function AllowanceModal(props){
             state.wallet.walletAddress,
             'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
             {
-                IncreaseAllowance : {
+                increase_allowance : {
                     spender: state.loterraContractAddress,
-                    amount: parseInt(val),
+                    amount: (parseInt(val) * 1000000).toString(),
                 },
             }      
           )    
@@ -65,7 +65,7 @@ export default function AllowanceModal(props){
                <form className='allowancemodal_form' onSubmit={(e) => handleSubmit(e)}>
                <div className="col-12">
                         <label>Allowance amount</label>
-                        <input name="allowance_amount" defaultValue={100000000} type="number" className="form-control" required/>
+                        <input name="allowance_amount" defaultValue={1000000} type="number" className="form-control" required/>
                         <button type="submit" className="btn btn-special w-100 mt-4" style={{boxShadow:'none'}}>Increase allowance</button>
                     </div>                  
                </form>
