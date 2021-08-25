@@ -37,12 +37,13 @@ export default function ProposalItem(props){
     }
 
     function percentageVotesYes(yes,no){
-        const total = yes + no;
+        const total = parseInt(yes) + parseInt(no);
+
         return yes/total*100      
     }
 
     function percentageVotesNo(yes,no){
-        const total = yes + no;
+        const total = parseInt(yes) + parseInt(no);
         return no/total*100      
     }
 
@@ -104,20 +105,20 @@ export default function ProposalItem(props){
                                             <div
                                                 className="progress-bar special"
                                                 role="progressbar"
-                                                style={{ width: percentageVotesYes(data.yes_vote,data.no_vote) + '%' }}
-                                                aria-valuenow={percentageVotesYes(data.yes_vote,data.no_vote)}
+                                                style={{ width: percentageVotesYes(data.weight_yes_vote,data.weight_no_vote) + '%' }}
+                                                aria-valuenow={percentageVotesYes(data.weight_yes_vote,data.weight_no_vote)}
                                                 aria-valuemin="0"
-                                                aria-valuemax={data.yes_vote+data.no_vote}
+                                                aria-valuemax={data.weight_yes_vote+data.weight_no_vote}
                                             >
                                                 YES
                                             </div>
                                             <div
                                                 className="progress-bar danger"
                                                 role="progressbar"
-                                                style={{ width: percentageVotesNo(data.yes_vote,data.no_vote) + '%' }}
-                                                aria-valuenow={percentageVotesNo(data.yes_vote,data.no_vote)}
+                                                style={{ width: percentageVotesNo(data.weight_yes_vote,data.weight_no_vote) + '%' }}
+                                                aria-valuenow={percentageVotesNo(data.weight_yes_vote,data.weight_no_vote)}
                                                 aria-valuemin="0"
-                                                aria-valuemax={data.yes_vote+data.no_vote}
+                                                aria-valuemax={data.weight_yes_vote+data.weight_no_vote}
                                             >
                                                 NO
                                             </div>
