@@ -34,6 +34,7 @@ export default () => {
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
   const [winners, setWinners] = useState(0);
+  const [alteBonus, setAlteBonus] = useState(false)
   const [notification,setNotification] = useState({type:'success',message:'',show:false})
   const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
@@ -388,6 +389,47 @@ export default () => {
     return total
   }
 
+  function getRanks(ranks) {
+      const rank1 = [];
+      const rank2 = [];
+      const rank3 = [];
+      const rank4 = [];
+      ranks.map((obj,i)=> {
+          if(obj == 4){
+            rank4.push(obj)
+          }
+          if(obj == 3){
+            rank3.push(obj)
+          }
+          if(obj == 2){
+            rank2.push(obj)
+          }
+          if(obj == 1){
+            rank1.push(obj)
+          }
+      })
+      const ranksArray = [rank4,rank3,rank2,rank1]
+      let html = '';
+      for (let index = 0; index < ranksArray.length; index++) {
+        const element = ranksArray[index];
+          if(element.length > 0){
+            html += '<span class="main">'+element[0]+'</span>' + '<span class="special">x'+element.length+'</span>'
+          }
+      }     
+      
+      return (
+        <div className="combos">
+            <span dangerouslySetInnerHTML={{__html : html}}></span>
+        </div>
+      );
+  }
+
+
+  function bonusCheckbox(e,checked) {
+    setAlteBonus(!alteBonus);
+    
+  }
+
 
      return (
          <>   
@@ -486,6 +528,16 @@ export default () => {
                         </div>
                         
                         <p className="my-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                        <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> Use our special ALTE bonus <span class="badge rounded-pill">BONUS</span></label>
+                        { alteBonus &&
+                          (
+                            <>
+                            <p>You selected alte bonus!</p>
+                            <p><strong>Costs:</strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>
+                            <p><strong>Your bonus:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>
+                            </>
+                          )
+                        }
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
@@ -588,7 +640,7 @@ export default () => {
                             </div>
                             <h4 className="mt-4">Winners</h4>
                             <div className="table-responsive">
-                            <table className="table text-white">
+                            <table className="table text-white winners-table">
                                 <thead>
                                   <tr>
                                   <th scope="col">Rank</th>
@@ -600,14 +652,7 @@ export default () => {
                                   {winners.winners && winners.winners.map((obj,key) => {
                                     return (
                                       <tr key={key}>
-                                        <th scope="row" style={{minWidth:'100px'}}><Trophy size={24} color="#4EDC97" className="me-2"/>{obj.claims.ranks.map((r,key) => {
-                                          if(key == obj.claims.ranks.length - 1) {
-                                            return (r)
-                                          } else {
-                                            return (r+',')
-                                          }
-
-                                        })}</th>
+                                        <th scope="row" style={{minWidth:'100px'}}><Trophy size={24} color="#4EDC97" className="me-2"/>{getRanks(obj.claims.ranks)}</th>
                                         <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
                                         <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>
                                     </tr>
