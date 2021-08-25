@@ -2,7 +2,6 @@ import React from "react"
 import { useStore } from "../store";
 import {MsgExecuteContract} from "@terra-money/terra.js"
 
-
 export default function ProposalItem(props){
     const {data,i, fees} = props;
     const {state, dispatch} = useStore();
@@ -123,6 +122,8 @@ export default function ProposalItem(props){
                                                 NO
                                             </div>
                                         </div>
+                                            <div>Instant approval {(parseInt(data.weight_yes_vote) * 100 / parseInt(state.staking.total_balance)).toFixed(0)}% of 50%</div>
+                                            <div>Rejected {(parseInt(data.weight_no_vote) * 100 / parseInt(state.staking.total_balance)).toFixed(0)}% of 33%</div>
                                             <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
