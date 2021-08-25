@@ -477,11 +477,44 @@ $total: 15;
 
 .winners-table {
   .combos {
-    display:inline-block;
+    display:inline-block;  
+    font-family: 'Sigmar One', cursive;
+    .combo-text {
+      background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 24px;
+            line-height: 0px;
+            margin-left: 5px;
+            font-size: 21px;
+            &.medium-text {
+              background: linear-gradient(180deg, #FFFFFF 0%, #01d9ff 27.08%, #39eaf0 43.75%, #37afb3 46.88%, #21b8b8 61.46%, #36ffff 100%);
+                -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 21px;
+            }
+            &.special-text {
+              background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
+                -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 24px;
+            text-shadow: 1px 1px 18px #ffdf00;
+            }
+
+            &.super-special-text {
+              background: linear-gradient(
+                180deg
+                , #FFFFFF 0%, #8bc34a 27.08%, #4df039 43.75%, #128d10 46.88%, #38b821 61.46%, #36ff3c 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-size: 26px;
+                    text-shadow: 1px 1px 18px #00ff13;
+            }
+    }
     .main {
       font-size: 24px;
       margin: 0;
-      line-height: 1;
+      line-height: 0px;
       text-shadow: 1px 1px 13px #ff36ff;
       font-weight: 700;
       position: relative;
