@@ -74,6 +74,10 @@ export default function ProposalItem(props){
                                                     <td>{data.status}</td>
                                                 </tr>
                                                 <tr>
+                                                    <td>Recipient</td>
+                                                    <td>{data.migration_address ? data.migration_address : "NO"}</td>
+                                                </tr>
+                                                <tr>
                                                     <td>Prize per rank</td>
                                                     <td>[{data.prize_per_rank.toString()}]</td>
                                                 </tr>
