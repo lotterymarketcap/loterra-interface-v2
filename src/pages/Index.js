@@ -528,7 +528,7 @@ export default () => {
                         </div>
                         
                         <p className="my-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
-                        <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> Use our special ALTE bonus <span class="badge rounded-pill">BONUS</span></label>
+                        {/* <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> Use our special ALTE bonus <span class="badge rounded-pill">BONUS</span></label>
                         { alteBonus &&
                           (
                             <>
@@ -537,7 +537,7 @@ export default () => {
                             <p><strong>Your bonus:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>
                             </>
                           )
-                        }
+                        } */}
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
