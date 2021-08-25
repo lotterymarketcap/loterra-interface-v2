@@ -12,6 +12,7 @@ import Notification from "../components/Notification";
 import Footer from "../components/Footer";
 import {parse} from "postcss";
 import ApyStats from "../components/ApyStats";
+import axios from "axios";
 
 const BURNED_LOTA = 4301383550000;
 
@@ -22,6 +23,7 @@ export default () =>  {
     const [notification,setNotification] = useState({type:'success',message:'',show:false})
     const {state, dispatch} = useStore();
     const [modal, setModal] = useState(false);
+    const [heightBlock,setBlockHeight] = useState(0)
 
     function hideNotification(){
         setNotification({
@@ -208,6 +210,18 @@ export default () =>  {
     }
 
 
+     async function blockHeight(){
+        const latestBlocks = await axios.get('https://lcd.terra.dev/blocks/latest')
+        setBlockHeight(latestBlocks.data.block.header.height)
+        console.log('Block HEIGHT',latestBlocks)
+     }
+
+
+     useEffect(() => {
+        blockHeight();
+       
+      }, [blockHeight]);
+
 
 
     return(
@@ -228,7 +242,7 @@ export default () =>  {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-12 text-center">
-                                                <h3>Staking</h3>
+                                                <h3>Staking</h3>                                                 
                                                 <p className="slogan">Unstake or stake your LOTA in order to get rewards and voting weight</p>
                                             </div>
                                             <div className="col-md-12">                                            
@@ -262,6 +276,9 @@ export default () =>  {
                                                       state.wallet && state.wallet.walletAddress && claimInfo()
                                                     }
                                                   LOTA</strong></small>
+                                            </div>
+                                            <div classNaame="col-md-12 my-2 text-start">
+                                                <span className="badge rounded-pill" style={{backgroundColor:'#251757',display:'inline-block', color:'#a39dbf', padding:'8px'}}>Latest block height: {heightBlock}</span> 
                                             </div>
                                         </div>
                                     </div>
