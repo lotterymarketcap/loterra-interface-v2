@@ -413,7 +413,7 @@ export default () => {
       const ranksArray = [rank4,rank3,rank2,rank1]
       const comboTexts = [
         {rank: 1, text:'Perfect!', amount: 1 ,class:''},
-        {rank: 2, text:'Unstoppable!', amount: 1,class:''},
+        {rank: 2, text:'Unstoppable', amount: 1,class:''},
         {rank: 3, text:'Boom!', amount: 1,class:''},
         {rank: 4, text:'Good work!', amount: 1,class:''},
         {rank: 4, text:'Smashed!', amount: 2,class:'medium-text'},

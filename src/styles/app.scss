@@ -492,13 +492,20 @@ $total: 15;
                 -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: 21px;
+            font-family: 'Permanent Marker', cursive;
+            position: relative;
+            top: 3px;
             }
             &.special-text {
               background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
                 -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 24px;
+            font-size: 20px;
             text-shadow: 1px 1px 18px #ffdf00;
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+            top: 4px;
+            position: relative;
             }
 
             &.super-special-text {
@@ -509,6 +516,10 @@ $total: 15;
                     -webkit-text-fill-color: transparent;
                     font-size: 26px;
                     text-shadow: 1px 1px 18px #00ff13;
+                    font-family: 'Alfa Slab One', cursive;
+                    text-transform: uppercase;
+                    position: relative;
+                    top: 4px;
             }
     }
     .main {
