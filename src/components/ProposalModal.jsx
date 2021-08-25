@@ -12,7 +12,7 @@ export default function ProposalModal(props){
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-        console.log(data);
+        //console.log(data);
         //Getting specific data by field name
         //data.get('fieldName')
     }

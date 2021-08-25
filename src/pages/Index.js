@@ -11,6 +11,7 @@ import { useStore } from "../store";
 import Notification from "../components/Notification";
 import SocialShare from "../components/SocialShare";
 import Footer from "../components/Footer";
+import AllowanceModal from "../components/AllowanceModal";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -39,6 +40,7 @@ export default () => {
   const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
   const [ticketModal, setTicketModal] = useState(0);
+  const [allowanceModal, setAllowanceModal] = useState(0);
   const [price, setPrice] = useState(0);
   const [contractBalance, setContractBalance] = useState(0);
   const [lotaPrice, setLotaPrice] = useState(0);
@@ -409,6 +411,7 @@ export default () => {
           }
       })
       const ranksArray = [rank4,rank3,rank2,rank1]
+      const comboTexts = [];
       let html = '';
       for (let index = 0; index < ranksArray.length; index++) {
         const element = ranksArray[index];
@@ -425,8 +428,37 @@ export default () => {
   }
 
 
-  function bonusCheckbox(e,checked) {
-    setAlteBonus(!alteBonus);
+
+
+  async function bonusCheckbox(e,checked) {
+    const terra = new LCDClient({
+      URL: "https://lcd.terra.dev/",
+      chainID: "columbus-4",
+    });
+    const api = new WasmAPI(terra.apiRequester);
+    try {
+      const allowance = await api.contractQuery(
+        'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
+      {
+        allowance : {
+        owner: connectedWallet.walletAddress,
+        spender: connectedWallet.walletAddress,
+      }
+    }
+    );
+    console.log(allowance)
+    if(allowance.allowance == 0){
+        setAllowanceModal(true)
+        return showNotification('No allowance yet','error',4000)
+    } else {
+      setAlteBonus(!alteBonus);
+    }    
+    } catch(error){
+      console.log(error)
+      setAlteBonus(false);
+    }
+
+    
     
   }
 
@@ -521,27 +553,31 @@ export default () => {
                       </div>
                       <div className="card-body">                        
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
-                        <div className="input-group mt-3">                         
+                        <div className="input-group mt-3 mb-4">                         
                             <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
                           <input type="number" className="form-control amount-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />                         
                             <button className="btn btn-default" onClick={() => amountChange('up')}><PlusCircle size={31} color={'#9183d4'} /></button>                         
                         </div>
                         
-                        <p className="my-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
-                        {/* <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> Use our special ALTE bonus <span class="badge rounded-pill">BONUS</span></label>
+                        { !alteBonus &&
+                          (
+                        <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                          )
+                        }
+                        <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> Buy x2 with ALTE <span class="badge rounded-pill">BONUS</span></label>
                         { alteBonus &&
                           (
-                            <>
-                            <p>You selected alte bonus!</p>
-                            <p><strong>Costs:</strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>
-                            <p><strong>Your bonus:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>
+                            <>                          
+                            <p className="m-0"><strong>Your bonus:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>       
+                            <p className="mb-2"><strong>Total: </strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>                     
                             </>
                           )
-                        } */}
+                        }
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
+                        <AllowanceModal open={allowanceModal} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {alteBonus ? amount *2 : amount} tickets</button>
                       </div>
                     </div>
                     <SocialShare/>
@@ -573,7 +609,7 @@ export default () => {
                             <div className="step">
                             <label>Step 3</label>
                                 <h3>Check Your Prizes</h3>
-                                <p>Prizes from 3 to 6 symbols</p>
+                                <p>Prizes automatically deposited into wallet</p>
                             </div>
                           </div>
                         </div>
