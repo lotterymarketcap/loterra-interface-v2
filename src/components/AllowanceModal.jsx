@@ -19,7 +19,7 @@ export default function AllowanceModal(props){
     }
 
     function increaseUserAllowance(val){     
-        const addToGas = 5800
+            const addToGas = 5800
             const obj = new StdFee(700_000, { uusd: 319200 + addToGas }) 
           const msg = new MsgExecuteContract(
             state.wallet.walletAddress,

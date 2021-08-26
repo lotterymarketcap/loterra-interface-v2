@@ -68,7 +68,7 @@ export default function TicketModal(props){
     useEffect(() => {
         // console.log(store.state.combination)     
         let data = store.state.combination.split(" ");
-        console.log(data)
+        //console.log(data)
         setCombo(data)       
  
 
@@ -109,7 +109,7 @@ export default function TicketModal(props){
                 <ul className="list-group" id="ticket_list" ref={combinationListDiv} style={{height:'180px'}}>
             {
                 combo.map((obj,k) => {
-                console.log("combo combo bo ")
+                //console.log("combo combo bo ")
                
                 let comboUpdate = combo;
                 return (
@@ -134,11 +134,11 @@ export default function TicketModal(props){
                                       
                                     }
                                     x.substring(k, e.target.value)
-                                    console.log('x',x)
-                                    console.log('obj',obj)
-                                    console.log('key',k)
+                                    //console.log('x',x)
+                                    //console.log('obj',obj)
+                                   // console.log('key',k)
                                     //Check for the values we want
-                                    console.log('handle change called',ck,e.target.value,obj)
+                                   // console.log('handle change called',ck,e.target.value,obj)
                                     //Trial replacing current string with new
                                     const new_code = [];
                                     Array.from(obj).map((item,key) => {
@@ -147,10 +147,10 @@ export default function TicketModal(props){
                                         }
                                         new_code.push(item);
                                     })
-                                    console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
+                                    //console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
                                     if (new_code.join("").length == 6){
                                         comboUpdate[k] = new_code.join("");
-                                        console.log('check combo update', comboUpdate[k])
+                                        //console.log('check combo update', comboUpdate[k])
                                         // setCombo([])
                                         store.dispatch({type: "setCombination", message: comboUpdate.join(" ")});
                                     }
