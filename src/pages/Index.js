@@ -456,6 +456,9 @@ export default () => {
       chainID: "columbus-4",
     });
     const api = new WasmAPI(terra.apiRequester);
+    if(!connectedWallet){
+      return showNotification('Please connect your wallet','error',4000)
+    }
     try {
       const allowance = await api.contractQuery(
         'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
