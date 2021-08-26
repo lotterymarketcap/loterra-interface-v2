@@ -76,13 +76,13 @@ export default function WinnerRow(props){
         function getComboText(rank,amount){
             let text = ''
             if(rank == 1){
-                text = comboTextOne[parseInt(amount)] ? comboTextOne[parseInt(amount)] : comboTextOne[1];
+                text = comboTextOne[parseInt(amount)] != undefined ? comboTextOne[parseInt(amount)] : comboTextOne[1];
             }
             if(rank == 2){
-                text = comboTextTwo[parseInt(amount)] ? comboTextTwo[parseInt(amount)] : comboTextTwo[1];
+                text = comboTextTwo[parseInt(amount)] != undefined ? comboTextTwo[parseInt(amount)] : comboTextTwo[1];
             }
             if(rank == 3){
-                text = comboTextThree[parseInt(amount)] ? comboTextThree[parseInt(amount)] : comboTextThree[1];
+                text = comboTextThree[parseInt(amount)] != undefined ? comboTextThree[parseInt(amount)] : comboTextThree[1];
             }
             if(rank == 4){
                 text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount)] : comboTextFour[1];
