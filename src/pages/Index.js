@@ -391,7 +391,12 @@ export default () => {
     let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000; 
     return total
   }
+
   
+
+
+
+
   async function bonusCheckbox(e,checked) {
     const terra = new LCDClient({
       URL: "https://lcd.terra.dev/",

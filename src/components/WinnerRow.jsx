@@ -26,50 +26,79 @@ export default function WinnerRow(props){
             }
         })
         const ranksArray = [rank4,rank3,rank2,rank1]
-        const comboTexts = [
-          {rank: 1, text:'Perfect!', amount: 1 ,class:'super-special-text'},
-          {rank: 1, text:'Perfect!', amount: 2 ,class:'super-special-text'},
-          {rank: 1, text:'Perfect!', amount: 3 ,class:'super-special-text'},
-          {rank: 1, text:'Perfect!', amount: 4 ,class:'super-special-text'},
-          {rank: 1, text:'Perfect!', amount: 5 ,class:'super-special-text'},
-          {rank: 1, text:'Perfect!', amount: 6 ,class:'super-special-text'},
-  
-  
-          {rank: 2, text:'Galactic!', amount: 1,class:'super-special-text'},
-          {rank: 2, text:'Galactic!', amount: 2,class:'super-special-text'},
-          {rank: 2, text:'Galactic!', amount: 3,class:'super-special-text'},
-          {rank: 2, text:'Galactic!', amount: 4,class:'super-special-text'},
-          {rank: 2, text:'Galactic!', amount: 5,class:'super-special-text'},
-          {rank: 2, text:'Galactic!', amount: 6,class:'super-special-text'},
-          
-          {rank: 3, text:'Boom!', amount: 1,class:'special-text'},
-          {rank: 3, text:'Boom!', amount: 2,class:'special-text'},
-          {rank: 3, text:'Boom!', amount: 3,class:'special-text'},
-          {rank: 3, text:'Boom!', amount: 4,class:'special-text'},
-          {rank: 3, text:'Boom!', amount: 5,class:'special-text'},
-          {rank: 3, text:'Boom!', amount: 6,class:'special-text'},
-  
-  
-          {rank: 4, text:'Good work!', amount: 1,class:''},
-          {rank: 4, text:'Smashed!', amount: 2,class:'medium-text'},
-          {rank: 4, text:'Wipeout!', amount: 3,class:'special-text'},
-          {rank: 4, text:'Boom!', amount: 4,class:'special-text'},
-          {rank: 4, text:'Unstoppable!', amount: 5,class:'special-text'},
-          {rank: 4, text:'Unstoppable!', amount: 6,class:'special-text'},
-        ];
+        const comboClasses = [
+          {rank: 1, class:'super-special-text'},       
+          {rank: 2, class:'special-text'},         
+          {rank: 3, class:'medium-text'},       
+          {rank: 4, class:''},        
+        ];        
+     
+
+        const comboTextFour = [
+            'Perfect!',        
+            'Boom!',
+            'Good work!',
+            'So close!',
+            'Boom!',   
+            'What a combo?!',      
+        ]
+
+        const comboTextThree = [
+            'What a combo?!',
+            'Wipeout!',
+            'Tasty!',
+            'Blasted!',
+            'Thunder!',            
+        ]
+
+        const comboTextTwo = [
+            'Heros!',
+            'Smashed!',
+            'Rocket!',
+            'Master!',
+            'Out of control!',
+            'Ticket Storm!',
+            'Blasted!',
+            'On Fire!',
+            'Crypto mania!',           
+        ]
+
+        const comboTextOne = [
+            'Big bang!',
+            'Destroyer!',
+            'Dynamite!',
+            'Summit!',
+            'Mavericks!',
+            'Galactic!',
+            'Wanted!',
+        ]
+
+        function getComboText(rank,amount){
+            let text = ''
+            if(rank == 1){
+                text = comboTextOne[parseInt(amount)] ? comboTextOne[parseInt(amount)] : comboTextOne[1];
+            }
+            if(rank == 2){
+                text = comboTextTwo[parseInt(amount)] ? comboTextTwo[parseInt(amount)] : comboTextTwo[1];
+            }
+            if(rank == 3){
+                text = comboTextThree[parseInt(amount)] ? comboTextThree[parseInt(amount)] : comboTextThree[1];
+            }
+            if(rank == 4){
+                text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount)] : comboTextFour[1];
+            }            
+            return text;
+        }
   
         function comboTextResponse(rank,amount){
           let result = '';
-          for (let index = 0; index < comboTexts.length; index++) {
-            const element = comboTexts[index];
-              if(parseInt(rank) == element.rank && element.amount == parseInt(amount) ){              
-                result = ('<span class="combo-text '+element.class+'">'+element.text+'</span>')    
+          for (let index = 0; index < comboClasses.length; index++) {
+            const element = comboClasses[index];
+              if(parseInt(rank) == element.rank){              
+                result = ('<span class="combo-text '+element.class+'">'+getComboText(rank,amount)+'</span>')    
                 return result;                      
-              }                        
-              if(parseInt(rank) == element.rank && element.amount > parseInt(amount) ){              
-                result = ('<span class="combo-text '+element.class+'">'+element.text+'</span>')    
-                return result;
-              }
+              }                       
+             
           }          
   
         }
@@ -92,9 +121,9 @@ export default function WinnerRow(props){
 
     return (
         <tr key={key}>
-        <th scope="row" style={{minWidth:'265px'}}>{getRanks(obj.claims.ranks)}</th>
-        <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
-        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>
+            <th scope="row" style={{minWidth:'265px'}}>{getRanks(obj.claims.ranks)}</th>
+            <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
+            <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>
         </tr>         
     )
 }
