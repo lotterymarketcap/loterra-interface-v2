@@ -35,12 +35,13 @@ export default function WinnerRow(props){
      
 
         const comboTextFour = [
-            'Perfect!',        
-            'Boom!',
             'Good work!',
+            'Boom!',
+            'Perfect!',
             'So close!',
-            'Boom!',   
-            'What a combo?!',      
+            'Dynamite!',
+            'On Fire!',
+            'Impossible!',
         ]
 
         const comboTextThree = [
@@ -76,16 +77,16 @@ export default function WinnerRow(props){
         function getComboText(rank,amount){
             let text = ''
             if(rank == 1){
-                text = comboTextOne[parseInt(amount)] != undefined ? comboTextOne[parseInt(amount)] : comboTextOne[1];
+                text = comboTextOne[parseInt(amount)] != undefined ? comboTextOne[parseInt(amount - 1)] : comboTextOne[comboTextFour.length - 1];
             }
             if(rank == 2){
-                text = comboTextTwo[parseInt(amount)] != undefined ? comboTextTwo[parseInt(amount)] : comboTextTwo[1];
+                text = comboTextTwo[parseInt(amount)] != undefined ? comboTextTwo[parseInt(amount - 1 )] : comboTextTwo[comboTextFour.length - 1];
             }
             if(rank == 3){
-                text = comboTextThree[parseInt(amount)] != undefined ? comboTextThree[parseInt(amount)] : comboTextThree[1];
+                text = comboTextThree[parseInt(amount)] != undefined ? comboTextThree[parseInt(amount -1 )] : comboTextThree[comboTextFour.length - 1];
             }
             if(rank == 4){
-                text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount)] : comboTextFour[1];
+                text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount -1 )] : comboTextFour[comboTextFour.length - 1];
             }            
             return text;
         }
@@ -95,7 +96,7 @@ export default function WinnerRow(props){
           for (let index = 0; index < comboClasses.length; index++) {
             const element = comboClasses[index];
               if(parseInt(rank) == element.rank){              
-                result = ('<span class="combo-text '+element.class+'">'+getComboText(rank,amount)+'</span>')    
+                result = ('<span class="combo-text '+element.class+'">'+getComboText(rank,amount)+'</span><br>')
                 return result;                      
               }                       
              
