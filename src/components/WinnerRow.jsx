@@ -96,7 +96,7 @@ export default function WinnerRow(props){
           for (let index = 0; index < comboClasses.length; index++) {
             const element = comboClasses[index];
               if(parseInt(rank) == element.rank){              
-                result = ('<span class="combo-text '+element.class+'">'+getComboText(rank,amount)+'</span><br>')
+                result = ('<span class="combo-text '+element.class+'">'+getComboText(rank,amount)+'</span>')
                 return result;                      
               }                       
              
