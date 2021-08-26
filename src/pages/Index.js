@@ -12,6 +12,7 @@ import Notification from "../components/Notification";
 import SocialShare from "../components/SocialShare";
 import Footer from "../components/Footer";
 import AllowanceModal from "../components/AllowanceModal";
+import WinnerRow from "../components/WinnerRow";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -390,66 +391,7 @@ export default () => {
     let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000; 
     return total
   }
-
-  function getRanks(ranks) {
-      const rank1 = [];
-      const rank2 = [];
-      const rank3 = [];
-      const rank4 = [];
-      ranks.map((obj,i)=> {
-          if(obj == 4){
-            rank4.push(obj)
-          }
-          if(obj == 3){
-            rank3.push(obj)
-          }
-          if(obj == 2){
-            rank2.push(obj)
-          }
-          if(obj == 1){
-            rank1.push(obj)
-          }
-      })
-      const ranksArray = [rank4,rank3,rank2,rank1]
-      const comboTexts = [
-        {rank: 1, text:'Perfect!', amount: 1 ,class:''},
-        {rank: 2, text:'Unstoppable', amount: 1,class:''},
-        {rank: 3, text:'Boom!', amount: 1,class:''},
-        {rank: 4, text:'Good work!', amount: 1,class:''},
-        {rank: 4, text:'Smashed!', amount: 2,class:'medium-text'},
-        {rank: 4, text:'Wipeout!', amount: 3,class:'special-text'},
-        {rank: 4, text:'Boom!', amount: 4,class:'special-text'},
-        {rank: 4, text:'Unstoppable!', amount: 5,class:'super-special-text'},
-      ];
-
-      function comboTextResponse(rank,amount){
-        for (let index = 0; index < comboTexts.length; index++) {
-          const element = comboTexts[index];
-            if(parseInt(rank) == element.rank && amount == element.amount ){
-              return ('<span class="combo-text '+element.class+'">'+element.text+'</span>')
-            }          
-        }          
-      }
-
-      let html = '';
-      for (let index = 0; index < ranksArray.length; index++) {
-        const element = ranksArray[index];
-          if(element.length > 0){
-            html += '<span class="main">'+element[0]+'</span>' + '<span class="special">x'+element.length+'</span>'
-            html += comboTextResponse(element[0],element.length)
-          }
-      }     
-      
-      return (
-        <div className="combos">
-            <span dangerouslySetInnerHTML={{__html : html}}></span>
-        </div>
-      );
-  }
-
-
-
-
+  
   async function bonusCheckbox(e,checked) {
     const terra = new LCDClient({
       URL: "https://lcd.terra.dev/",
@@ -592,7 +534,7 @@ export default () => {
                         { alteBonus &&
                           (
                             <>                          
-                            <p className="m-0"><strong>Your bonus:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>       
+                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>       
                             <p className="mb-2"><strong>Total: </strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>                     
                             </>
                           )
@@ -714,11 +656,7 @@ export default () => {
                                 <tbody>
                                   {winners.winners && winners.winners.map((obj,key) => {
                                     return (
-                                      <tr key={key}>
-                                        <th scope="row" style={{minWidth:'265px'}}>{getRanks(obj.claims.ranks)}</th>
-                                        <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
-                                        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>
-                                    </tr>
+                                      <WinnerRow key={key} obj={obj}/>                                      
                                     )
                                   })}
                                 </tbody>

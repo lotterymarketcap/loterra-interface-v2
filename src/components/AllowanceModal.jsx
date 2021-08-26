@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo} from "react";
-import { X, Ticket,UserCircle } from 'phosphor-react'
+import { X, Ticket,UserCircle, Info } from 'phosphor-react'
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import { useStore } from "../store";
 
@@ -62,6 +62,10 @@ export default function AllowanceModal(props){
                 <h2>Increase Allowance</h2>
             </div>
             <div className="allowancemodal_content">
+            <span className="info">
+                <Info size={14} weight="fill" className="me-1" />
+                You need to increase allowance in order to use the ALTE bonus         
+            </span>
                <form className='allowancemodal_form' onSubmit={(e) => handleSubmit(e)}>
                <div className="col-12">
                         <label>Allowance amount</label>
