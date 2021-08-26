@@ -528,8 +528,8 @@ export default () => {
                           <input type="number" className="form-control amount-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />                         
                             <button className="btn btn-default" onClick={() => amountChange('up')}><PlusCircle size={31} color={'#9183d4'} /></button>                         
                         </div>
-                        
-                        { !alteBonus &&
+                        <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                        {/* { !alteBonus &&
                           (
                         <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                           )
@@ -543,7 +543,7 @@ export default () => {
                             <p className="mb-2"><strong>Total: </strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>                     
                             </>
                           )
-                        }
+                        } */}
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
                         <AllowanceModal open={allowanceModal} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
