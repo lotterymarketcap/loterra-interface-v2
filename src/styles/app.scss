@@ -491,7 +491,7 @@ $total: 15;
               background: linear-gradient(180deg, #FFFFFF 0%, #01d9ff 27.08%, #39eaf0 43.75%, #37afb3 46.88%, #21b8b8 61.46%, #36ffff 100%);
                 -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 21px;
+            font-size: 30px;
             font-family: 'Permanent Marker', cursive;
             position: relative;
             top: 3px;
@@ -552,13 +552,16 @@ $total: 15;
 }
 
 .bonus-label {
-  padding: 5px;
+  padding: 5px 10px;
     display: block;
-    border: 1px solid #26d581;
+    border: 2px solid #26d581;
     margin-bottom: 10px;
     color: #26d581;
     border-radius: 10px;
-    
+    input {
+      margin-right:5px;
+      margin-top:1px;
+    }
     .badge {
       float: right;
       background: #26d581;
