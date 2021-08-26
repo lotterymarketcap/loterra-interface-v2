@@ -14,13 +14,15 @@
         padding: 8px 35px;
     }
     &.btn-special-outline {
-        background: transparent;
-        border:2px solid #FF36FF;
-        border-radius: 7px;
-        font-weight: 900;
-        font-size: 24px;
-        color: #FF36FF;
-        padding: 8px 35px;
+        background: linear-gradient(
+328.75deg
+, #493C85 -5.49%, #0F0038 104.44%);
+    border: 1px solid #180a44;
+    border-radius: 7px;
+    font-weight: 900;
+    font-size: 24px;
+    color: #ffffff;
+    padding: 8px 35px;
     }
     &.btn-plain {
         background: #10003B;

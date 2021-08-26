@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -11,6 +11,8 @@ import { useStore } from "../store";
 import Notification from "../components/Notification";
 import SocialShare from "../components/SocialShare";
 import Footer from "../components/Footer";
+import AllowanceModal from "../components/AllowanceModal";
+import WinnerRow from "../components/WinnerRow";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -39,6 +41,7 @@ export default () => {
   const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
   const [ticketModal, setTicketModal] = useState(0);
+  const [allowanceModal, setAllowanceModal] = useState(0);
   const [price, setPrice] = useState(0);
   const [contractBalance, setContractBalance] = useState(0);
   const [lotaPrice, setLotaPrice] = useState(0);
@@ -389,44 +392,43 @@ export default () => {
     return total
   }
 
-  function getRanks(ranks) {
-      const rank1 = [];
-      const rank2 = [];
-      const rank3 = [];
-      const rank4 = [];
-      ranks.map((obj,i)=> {
-          if(obj == 4){
-            rank4.push(obj)
-          }
-          if(obj == 3){
-            rank3.push(obj)
-          }
-          if(obj == 2){
-            rank2.push(obj)
-          }
-          if(obj == 1){
-            rank1.push(obj)
-          }
-      })
-      const ranksArray = [rank4,rank3,rank2,rank1]
-      let html = '';
-      for (let index = 0; index < ranksArray.length; index++) {
-        const element = ranksArray[index];
-          if(element.length > 0){
-            html += '<span class="main">'+element[0]+'</span>' + '<span class="special">x'+element.length+'</span>'
-          }
-      }     
-      
-      return (
-        <div className="combos">
-            <span dangerouslySetInnerHTML={{__html : html}}></span>
-        </div>
-      );
-  }
+  
 
 
-  function bonusCheckbox(e,checked) {
-    setAlteBonus(!alteBonus);
+
+
+  async function bonusCheckbox(e,checked) {
+    const terra = new LCDClient({
+      URL: "https://lcd.terra.dev/",
+      chainID: "columbus-4",
+    });
+    const api = new WasmAPI(terra.apiRequester);
+    if(!connectedWallet){
+      return showNotification('Please connect your wallet','error',4000)
+    }
+    try {
+      const allowance = await api.contractQuery(
+        'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
+      {
+        allowance : {
+        owner: connectedWallet.walletAddress,
+        spender: state.loterraContractAddress,
+      }
+    }
+    );
+    console.log(allowance)
+    if(allowance.allowance == 0){
+        setAllowanceModal(true)
+        return showNotification('No allowance yet','error',4000)
+    } else {
+      setAlteBonus(!alteBonus);
+    }    
+    } catch(error){
+      console.log(error)
+      setAlteBonus(false);
+    }
+
+    
     
   }
 
@@ -521,27 +523,35 @@ export default () => {
                       </div>
                       <div className="card-body">                        
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
-                        <div className="input-group mt-3">                         
+                        <div className="input-group mt-3 mb-2">                         
                             <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
                           <input type="number" className="form-control amount-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />                         
                             <button className="btn btn-default" onClick={() => amountChange('up')}><PlusCircle size={31} color={'#9183d4'} /></button>                         
                         </div>
-                        
-                        <p className="my-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
-                        {/* <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> Use our special ALTE bonus <span class="badge rounded-pill">BONUS</span></label>
+                        <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                        {/* { !alteBonus &&
+                          (
+                        <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                          )
+                        }
+                        <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.6'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://alteredprotocol.com" target="_blank">Altered</a></p>
+                          <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /><Fire size={24} weight="fill" /> BURN <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">BONUS</span></label>
                         { alteBonus &&
                           (
-                            <>
-                            <p>You selected alte bonus!</p>
-                            <p><strong>Costs:</strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>
-                            <p><strong>Your bonus:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>
+                            <>                          
+                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>       
+                            <p className="mb-2"><strong>Total: </strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>                     
                             </>
                           )
                         } */}
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
-                        <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-special-outline w-100 mb-3">Edit ticket codes</button>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
+                        <AllowanceModal open={allowanceModal} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
+                        <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-default w-100 mb-3 mt-3" style={{fontSize:'18px',fontWeight:'bold',padding:'11px 5px', borderBottom:'4px solid #10003b'}}>
+                          <PencilLine size={24} color={'#ff36ff'} style={{marginTop:'-1px', marginRight:'5px'}} />
+                          Personalize tickets
+                        </button>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {alteBonus ? amount *2 : amount} tickets</button>
                       </div>
                     </div>
                     <SocialShare/>
@@ -573,7 +583,7 @@ export default () => {
                             <div className="step">
                             <label>Step 3</label>
                                 <h3>Check Your Prizes</h3>
-                                <p>Prizes from 3 to 6 symbols</p>
+                                <p>Prizes automatically deposited into wallet</p>
                             </div>
                           </div>
                         </div>
@@ -651,11 +661,7 @@ export default () => {
                                 <tbody>
                                   {winners.winners && winners.winners.map((obj,key) => {
                                     return (
-                                      <tr key={key}>
-                                        <th scope="row" style={{minWidth:'100px'}}><Trophy size={24} color="#4EDC97" className="me-2"/>{getRanks(obj.claims.ranks)}</th>
-                                        <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
-                                        <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>
-                                    </tr>
+                                      <WinnerRow key={key} obj={obj}/>                                      
                                     )
                                   })}
                                 </tbody>

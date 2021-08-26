@@ -29,8 +29,20 @@ a {
     }
   }
 
+  //Combine todo
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: 'Cosmos';
+  src: local('Cosmos'), url('../fonts/AVCosmos-Regular.woff') format('woff');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                          'embedded-opentype', and 'svg' */
+}
 
 @import './countdown';
 @import './buttons';
@@ -39,6 +51,7 @@ a {
 @import './usermodal'; 
 @import './ticketmodal'; 
 @import './proposalmodal'; 
+@import './allowancemodal'; 
 @import './proposals'; 
 @import './notifications'; 
 @import './how';
