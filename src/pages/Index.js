@@ -462,7 +462,7 @@ export default () => {
       {
         allowance : {
         owner: connectedWallet.walletAddress,
-        spender: connectedWallet.walletAddress,
+        spender: state.loterraContractAddress,
       }
     }
     );
@@ -584,7 +584,7 @@ export default () => {
                         <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                           )
                         }
-                        <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> Buy x2 with ALTE <span class="badge rounded-pill">BONUS</span></label>
+                          <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /> 🔥Burn <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.5em'}}>ALTE</span><span class="badge rounded-pill">BONUS</span></label>
                         { alteBonus &&
                           (
                             <>                          
