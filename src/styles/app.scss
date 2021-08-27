@@ -561,9 +561,48 @@ $total: 15;
     margin-bottom: 10px;
     color: #26d581;
     border-radius: 10px;
+    transition:all 200ms linear;
     input {
       margin-right:5px;
       margin-top:1px;
+    }
+    .switch {
+      height: 0;
+	    width: 0;
+	    visibility: hidden;
+      &:checked + .switch-label {
+        background:#26d581;
+      }
+      &:checked + .switch-label:after {
+        left: calc(100% - 5px);
+	      transform: translateX(-100%);
+      }
+    }
+    .switch-label {     
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 40px;
+      height: 20px;
+      background: #0a0123;
+      border-radius: 100px;
+      position: relative;
+      display: inline-block;
+      top: 4px;
+      left: -8px;
+        &:after {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 3px;
+          width: 15px;
+          height: 15px;
+          background: #41347a;
+          border-radius: 90px;
+          transition: 0.3s;
+        }
+        &:active:after{
+          // width:130px;
+        }
     }
     .badge {
       float: right;
@@ -575,5 +614,70 @@ $total: 15;
 
     &:hover {
       cursor:pointer;
+      background:linear-gradient(328.75deg, #26d58140 -5.49%, #0F0038 104.44%);
+    }
+}
+
+.gift-label {
+  padding: 5px 10px;
+    display: block;
+    border: 2px solid #ff36ff;
+    margin-bottom: 10px;
+    color: #ff36ff;
+    border-radius: 10px;
+    transition:all 200ms linear;
+    input {
+      margin-right:5px;
+      margin-top:1px;
+    }
+    .switch {
+      height: 0;
+	    width: 0;
+	    visibility: hidden;
+      &:checked + .switch-label {
+        background:#ff36ff;
+      }
+      &:checked + .switch-label:after {
+        left: calc(100% - 5px);
+	      transform: translateX(-100%);
+      }
+    }
+    .switch-label {     
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 40px;
+      height: 20px;
+      background: #0a0123;
+      border-radius: 100px;
+      position: relative;
+      display: inline-block;
+      top: 4px;
+      left: -8px;
+        &:after {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 3px;
+          width: 15px;
+          height: 15px;
+          background: #41347a;
+          border-radius: 90px;
+          transition: 0.3s;
+        }
+        &:active:after{
+          // width:130px;
+        }
+    }
+    .badge {
+      float: right;
+      background: #ff36ff;
+      color: #150541;
+      margin-top: -15px;
+      box-shadow: 0px 0px 22px #ff36ff;
+    }
+
+    &:hover {
+      cursor:pointer;
+      background:linear-gradient(328.75deg, #ff36ff40 -5.49%, #0F0038 104.44%);
     }
 }
