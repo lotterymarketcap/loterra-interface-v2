@@ -482,6 +482,9 @@ $total: 15;
   .combos {
     display:inline-block;  
     font-family: 'Sigmar One', cursive;
+    .combo-box {
+      display:block;
+    }
     .combo-text {
       background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
             -webkit-background-clip: text;
@@ -500,14 +503,14 @@ $total: 15;
             top: 3px;
             }
             &.special-text {
-              background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
+              background: linear-gradient(180deg, #FFFFFF 0%, #01ff15 27.08%, #39f050 43.75%, #37b352 46.88%, #21b83a 61.46%, #36ff4e 100%);
                 -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 20px;
-            text-shadow: 1px 1px 18px #ffdf00;
+            font-size: 27px;
+            text-shadow: 1px 1px 18px #34ff00; 
             font-family: 'Press Start 2P', cursive;
             text-transform: uppercase;
-            top: 4px;
+            top: 8px;
             position: relative;
             }
 
@@ -523,6 +526,26 @@ $total: 15;
                     text-transform: uppercase;
                     position: relative;
                     top: 4px;
+            }
+
+
+            &.fire {
+              background: linear-gradient(
+                180deg
+                , #FFFFFF 0%, #ff0101 27.08%, #f03939 43.75%, #b33737 46.88%, #b82121 61.46%, #ff3636 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-family: 'Permanent Marker', cursive;
+                    font-size: 26px;
+            }
+
+            &.blue {
+              background: linear-gradient(
+              180deg
+              , #FFFFFF 0%, #01ccff 27.08%, #39f0f0 43.75%, #37b3a9 46.88%, #21a6b8 61.46%, #36f2ff 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-family: 'Press Start 2P', cursive;
             }
     }
     .main {
