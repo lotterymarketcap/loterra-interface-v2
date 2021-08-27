@@ -362,7 +362,7 @@ font-style: normal;
 }
 
 .amount-block {
-  margin-top: -268px;
+  margin-top: -430px;
   background: linear-gradient(
 95.45deg
 , #3B2E73 -92.2%, #10003B 105.35%);
@@ -374,15 +374,12 @@ font-style: normal;
   padding: 1rem 1rem;
     margin-bottom: 0;
     text-shadow: 2px 2px 0px #140440;
-    background: linear-gradient(
-328.75deg
-, #493C85 -5.49%, #0F0038 104.44%);
-
-
   h3 {
     font-weight: 900;
     text-align: center;
-    margin:0;
+    margin: 0;
+    font-size: 33px;
+    color: #ffffff;
   }
 }
   label {

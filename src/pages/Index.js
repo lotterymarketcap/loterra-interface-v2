@@ -509,10 +509,7 @@ export default () => {
                           </div>
                         </div>
                     </div>
-                  </div>
-                  <div className="col-10 col-lg-5 col-xl-4 mx-auto mt-4">
-                    <Countdown expiryTimestamp={expiryTimestamp}/>
-                  </div>
+                  </div>              
 
                   <Ticket size={55} className="svg" />
 <Coin size={55} className="svg" />
@@ -546,9 +543,10 @@ export default () => {
                    <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
                       <div className="card-header">
-                      <h3>Book Your Tickets</h3>
+                      <h3>Book Your Tickets</h3>                      
                       </div>
-                      <div className="card-body">                        
+                      <div className="card-body">       
+                      <Countdown expiryTimestamp={expiryTimestamp}/>                 
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
                         <div className="input-group mt-3 mb-2">                         
                             <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
