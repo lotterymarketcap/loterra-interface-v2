@@ -129,7 +129,7 @@ export default function ProposalItem(props){
                                             >
                                                 NO
                                             </div>
-                                        </div>) }
+                                        </div>
                                             <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
@@ -148,7 +148,7 @@ export default function ProposalItem(props){
                                                 }
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>)}
                             </div>
                         </div>
     )
