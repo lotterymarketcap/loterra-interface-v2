@@ -106,7 +106,7 @@ export default function ProposalItem(props){
                                             </div>
                                     </div>
                                     <div className="col-md-4 text-center d-flex">
-                                        <div className="vote-box align-self-center w-100">
+                                        {i+1 != 5 && (<div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
                                             <div className="progress">
                                             <div
@@ -129,7 +129,7 @@ export default function ProposalItem(props){
                                             >
                                                 NO
                                             </div>
-                                        </div>
+                                        </div>) }
                                             <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
