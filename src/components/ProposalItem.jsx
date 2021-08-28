@@ -106,10 +106,10 @@ export default function ProposalItem(props){
                                             </div>
                                     </div>
                                     <div className="col-md-4 text-center d-flex">
-                                        {i+1 != 5 && (<div className="vote-box align-self-center w-100">
+                                        <div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
                                             <div className="progress">
-                                            <div
+                                            {i+1 != 5 && (<div
                                                 className="progress-bar special"
                                                 role="progressbar"
                                                 style={{ width: percentageVotesYes(data.weight_yes_vote,data.weight_no_vote) + '%' }}
@@ -128,7 +128,7 @@ export default function ProposalItem(props){
                                                 aria-valuemax={data.weight_yes_vote+data.weight_no_vote}
                                             >
                                                 NO
-                                            </div>
+                                            </div>)}
                                         </div>
                                             <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
@@ -148,7 +148,7 @@ export default function ProposalItem(props){
                                                 }
                                             </div>
                                         </div>
-                                    </div>)}
+                                    </div>
                             </div>
                         </div>
     )
