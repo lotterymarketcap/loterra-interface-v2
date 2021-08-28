@@ -128,7 +128,7 @@ export default function ProposalItem(props){
                                                 aria-valuemax={data.weight_yes_vote+data.weight_no_vote}
                                             >
                                                 NO
-                                            </div>)}
+                                            </div>
                                         </div>
 
                                             <div className="btn-group w-100">
