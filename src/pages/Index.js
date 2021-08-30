@@ -1,6 +1,6 @@
-import React, {useEffect, useState, useCallback, useContext} from "react";
+import React, {useEffect, useState, useCallback, useContext, useRef} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -37,6 +37,7 @@ export default () => {
   const [players, setPlayers] = useState(0);
   const [winners, setWinners] = useState(0);
   const [alteBonus, setAlteBonus] = useState(false)
+  const [giftFriend, setGiftFriend] = useState({active: false, wallet:''})
   const [notification,setNotification] = useState({type:'success',message:'',show:false})
   const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
   const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0);
@@ -48,6 +49,9 @@ export default () => {
   const [expiryTimestamp, setExpiryTimestamp] = useState(
     1
   ); /** default timestamp need to be > 1 */
+  const bonusToggle = useRef(null);
+  const friendsToggle = useRef(null);
+
   const [tokenHolderFee, setTokenHolderFee] = useState(0);
   const [allWinners, setAllWinners] = useState([]);
   const {state, dispatch} = useStore();
@@ -175,6 +179,14 @@ export default () => {
 
     function execute(){
         const cart = state.combination.split(" ") // combo.split(" ")
+
+        //Check if friend gift toggle wallet address filled
+        if(giftFriend.active && giftFriend.wallet == ''){
+          showNotification('Gift friends enabled but no friends wallet address','error',4000);
+          return;
+        }
+
+        //Check duplicates
         if(checkIfDuplicateExists(cart)){
           showNotification('Combinations contain duplicate','error',4000);
           return;
@@ -396,6 +408,10 @@ export default () => {
 
 
 
+  function giftCheckbox(e,checked){
+    setGiftFriend({active: !giftFriend.active, wallet:''})
+  }
+
 
   async function bonusCheckbox(e,checked) {
     const terra = new LCDClient({
@@ -431,6 +447,17 @@ export default () => {
     
     
   }
+
+  const clickElement = (ref) => {
+    ref.current.dispatchEvent(
+      new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        buttons: 1,
+      }),
+    );
+  };
 
 
      return (
@@ -482,10 +509,7 @@ export default () => {
                           </div>
                         </div>
                     </div>
-                  </div>
-                  <div className="col-10 col-lg-5 col-xl-4 mx-auto mt-4">
-                    <Countdown expiryTimestamp={expiryTimestamp}/>
-                  </div>
+                  </div>              
 
                   <Ticket size={55} className="svg" />
 <Coin size={55} className="svg" />
@@ -519,23 +543,28 @@ export default () => {
                    <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
                       <div className="card-header">
-                      <h3>Book Your Tickets</h3>
+                      <h3>Book Your Tickets</h3>                      
                       </div>
-                      <div className="card-body">                        
+                      <div className="card-body">       
+                      <Countdown expiryTimestamp={expiryTimestamp}/>                 
                         <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
                         <div className="input-group mt-3 mb-2">                         
                             <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
                           <input type="number" className="form-control amount-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />                         
                             <button className="btn btn-default" onClick={() => amountChange('up')}><PlusCircle size={31} color={'#9183d4'} /></button>                         
                         </div>
-                        <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
-                        {/* { !alteBonus &&
+                        {/* <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p> */}
+                        { !alteBonus &&
                           (
                         <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                           )
                         }
                         <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.6'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://alteredprotocol.com" target="_blank">Altered</a></p>
-                          <label className="bonus-label"><input type="checkbox" checked={alteBonus} name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} /><Fire size={24} weight="fill" /> BURN <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">BONUS</span></label>
+                          <label className="bonus-label">
+                            <input type="checkbox" ref={bonusToggle} checked={alteBonus} className="switch" name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} />
+                          <label className="switch-label" onClick={() => clickElement(bonusToggle)}></label>
+                          <Fire size={24} weight="fill" /> BURN 
+                          <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">BONUS</span></label>
                         { alteBonus &&
                           (
                             <>                          
@@ -543,7 +572,20 @@ export default () => {
                             <p className="mb-2"><strong>Total: </strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>                     
                             </>
                           )
-                        } */}
+                        }
+                        <label className="gift-label">
+                          <input type="checkbox" ref={friendsToggle} checked={giftFriend.active} className="switch" name="gift_friend" onChange={(e,checked) => giftCheckbox(e,checked)} />
+                          <label className="switch-label" onClick={() => clickElement(friendsToggle)}></label>
+                          <Gift size={24} weight="fill" /> Gift tickets to friends
+                          <span class="badge rounded-pill">GIFTS</span></label>
+                        { giftFriend.active &&
+                          (
+                            <>
+                            <p className="m-0">Friends wallet address:</p>
+                            <input type="text" className="form-control" placeholder="yourfriendswalletaddress" name="gift_wallet"/>
+                            </>
+                          )
+                        }
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
                         <AllowanceModal open={allowanceModal} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>

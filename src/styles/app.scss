@@ -150,26 +150,24 @@ font-style: normal;
     font-size: 35px;
     display: inline-block;
     span{
-      background: #ffffff;
-      color: #000;
-      display: inline-block;
-      width: 70px;
-      height: 70px;
-      text-align: center;
-      line-height: 53px;
-      text-transform: uppercase;
-      font-weight: 900;
-      margin: 8px 10px;
-      border-radius: 100px;
-      font-size: 45px;
-      border: 9px solid #ff36ff;
-      box-shadow: 0px 9px 15px #180943;
+      background: #1d0e48;
+    color: #fff;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 63px;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin: 8px 10px;
+    border-radius: 100px;
+    font-size: 45px;
+    border: 4px solid #ff36ff;
+    box-shadow: 0px 9px 15px #180943;
     &:before {
       content: '';
       position: absolute;
-      background: linear-gradient(
-  180deg
-  , rgba(255, 255, 255, 0.76) -1.42%, rgba(255, 255, 255, 0.31) 55.09%, rgba(255, 255, 255, 0.151875) 55.1%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(180deg, #5b138b24 -1.42%, #985cbd26 55.09%, #661b9124 55.1%, #ffffff00 100%);
       margin-left: -20px;
       margin-top: -9px;
       width: 70px;
@@ -364,27 +362,25 @@ font-style: normal;
 }
 
 .amount-block {
-  margin-top: -268px;
+  margin-top: -430px;
   background: linear-gradient(
 95.45deg
 , #3B2E73 -92.2%, #10003B 105.35%);
   box-sizing: border-box;
-  box-shadow: 0px 0px 61px #12023e;
+  box-shadow: 0px -10px 22px #501b7b;
   border-radius: 10px;
   margin-bottom: 50px;
+  border: 1px solid #7f1e9c7a;
 .card-header {
   padding: 1rem 1rem;
     margin-bottom: 0;
     text-shadow: 2px 2px 0px #140440;
-    background: linear-gradient(
-328.75deg
-, #493C85 -5.49%, #0F0038 104.44%);
-
-
   h3 {
     font-weight: 900;
     text-align: center;
-    margin:0;
+    margin: 0;
+    font-size: 33px;
+    color: #ffffff;
   }
 }
   label {
@@ -482,6 +478,9 @@ $total: 15;
   .combos {
     display:inline-block;  
     font-family: 'Sigmar One', cursive;
+    .combo-box {
+      display:block;
+    }
     .combo-text {
       background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
             -webkit-background-clip: text;
@@ -500,14 +499,14 @@ $total: 15;
             top: 3px;
             }
             &.special-text {
-              background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
+              background: linear-gradient(180deg, #FFFFFF 0%, #01ff15 27.08%, #39f050 43.75%, #37b352 46.88%, #21b83a 61.46%, #36ff4e 100%);
                 -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 20px;
-            text-shadow: 1px 1px 18px #ffdf00;
+            font-size: 27px;
+            text-shadow: 1px 1px 18px #34ff00; 
             font-family: 'Press Start 2P', cursive;
             text-transform: uppercase;
-            top: 4px;
+            top: 8px;
             position: relative;
             }
 
@@ -523,6 +522,26 @@ $total: 15;
                     text-transform: uppercase;
                     position: relative;
                     top: 4px;
+            }
+
+
+            &.fire {
+              background: linear-gradient(
+                180deg
+                , #FFFFFF 0%, #ff0101 27.08%, #f03939 43.75%, #b33737 46.88%, #b82121 61.46%, #ff3636 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-family: 'Permanent Marker', cursive;
+                    font-size: 26px;
+            }
+
+            &.blue {
+              background: linear-gradient(
+              180deg
+              , #FFFFFF 0%, #01ccff 27.08%, #39f0f0 43.75%, #37b3a9 46.88%, #21a6b8 61.46%, #36f2ff 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              font-family: 'Press Start 2P', cursive;
             }
     }
     .main {
@@ -561,9 +580,48 @@ $total: 15;
     margin-bottom: 10px;
     color: #26d581;
     border-radius: 10px;
+    transition:all 200ms linear;
     input {
       margin-right:5px;
       margin-top:1px;
+    }
+    .switch {
+      height: 0;
+	    width: 0;
+	    visibility: hidden;
+      &:checked + .switch-label {
+        background:#26d581;
+      }
+      &:checked + .switch-label:after {
+        left: calc(100% - 5px);
+	      transform: translateX(-100%);
+      }
+    }
+    .switch-label {     
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 40px;
+      height: 20px;
+      background: #0a0123;
+      border-radius: 100px;
+      position: relative;
+      display: inline-block;
+      top: 4px;
+      left: -8px;
+        &:after {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 3px;
+          width: 15px;
+          height: 15px;
+          background: #41347a;
+          border-radius: 90px;
+          transition: 0.3s;
+        }
+        &:active:after{
+          // width:130px;
+        }
     }
     .badge {
       float: right;
@@ -575,5 +633,70 @@ $total: 15;
 
     &:hover {
       cursor:pointer;
+      background:linear-gradient(328.75deg, #26d58140 -5.49%, #0F0038 104.44%);
+    }
+}
+
+.gift-label {
+  padding: 5px 10px;
+    display: block;
+    border: 2px solid #ff36ff;
+    margin-bottom: 10px;
+    color: #ff36ff;
+    border-radius: 10px;
+    transition:all 200ms linear;
+    input {
+      margin-right:5px;
+      margin-top:1px;
+    }
+    .switch {
+      height: 0;
+	    width: 0;
+	    visibility: hidden;
+      &:checked + .switch-label {
+        background:#ff36ff;
+      }
+      &:checked + .switch-label:after {
+        left: calc(100% - 5px);
+	      transform: translateX(-100%);
+      }
+    }
+    .switch-label {     
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 40px;
+      height: 20px;
+      background: #0a0123;
+      border-radius: 100px;
+      position: relative;
+      display: inline-block;
+      top: 4px;
+      left: -8px;
+        &:after {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 3px;
+          width: 15px;
+          height: 15px;
+          background: #41347a;
+          border-radius: 90px;
+          transition: 0.3s;
+        }
+        &:active:after{
+          // width:130px;
+        }
+    }
+    .badge {
+      float: right;
+      background: #ff36ff;
+      color: #150541;
+      margin-top: -15px;
+      box-shadow: 0px 0px 22px #ff36ff;
+    }
+
+    &:hover {
+      cursor:pointer;
+      background:linear-gradient(328.75deg, #ff36ff40 -5.49%, #0F0038 104.44%);
     }
 }
