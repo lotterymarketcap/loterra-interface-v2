@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useMemo, useCallback} from "react";
-import { X, Ticket,UserCircle } from 'phosphor-react'
+import { X, Ticket,UserCircle, Info, TwitterLogo, TelegramLogo, WhatsappLogo } from 'phosphor-react'
 import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra.js";
 import {useStore} from "../store";
+import SocialShare from './SocialShare'
 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -91,19 +92,23 @@ export default function UserModal(props){
                                 </div>
 
                                 <div className="col-12 text-center claim">
-                                    <h4 className="mb-2">Current lottery tickets</h4>
+                                    <h4 className="mb-2">Current Lottery Tickets</h4>
                                     <ul className="list-group text-left">
                                         {store.state.allCombinations.combination ? store.state.allCombinations.combination.map((element, i) =>
                                             <li key={i} className="list-group-item"><Ticket size={18} color={'#20FF93'} />{element}</li>):
-                                            <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />No ticket found</li>
+                                            <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />No tickets found</li>
                                         }
                                     </ul>
                                 </div>
 
                                 <div className="col-12 text-center mt-4 claim">
-                                    <h4>Claim & Collect</h4>
-                                    <p>By clicking this button LoTerra will check if you won any prizes, if you did we will claim them automatically for you</p>
-                                    {
+                                <span className="info text-start" style={{color:'#FF36FF', borderColor:'#FF36FF'}}>
+                                                    <Info size={14} weight="fill" className="me-1" style={{position:'relative',top:'-2px'}} /><strong>How to Claim and Collect?</strong><br/>
+                                                    Our LoTerra BOT will claim and collect automatically, afterwards the BOT deposits winning prizes to your wallet. This process takes up to max 2 days from draw.
+                                                </span>
+                                    {/* <h4>Claim & Collect</h4>
+                                    <p>Our LoTerra BOT will claim automatically and deposit winning prizes in your wallet.</p> */}
+                                    {/* {
                                        1==1 ?
                                             <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} onClick={() => claim()} >Claim</button> :
                                             <button className="btn btn-special w-100 mb-3" style={{boxShadow:'none'}} disabled>Claim closed</button>
@@ -113,7 +118,10 @@ export default function UserModal(props){
                                             <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} onClick={() => collect()}>Collect</button> :
                                             <button className="btn btn-special-green w-100 mb-3" style={{boxShadow:'none'}} disabled>Collect closed</button>
                                     }
-                                    {result}
+                                    {result} */}
+                                </div>
+                                <div className="col-12 mt-3">
+                                    <SocialShare/>
                                 </div>
                             </>
                         )
