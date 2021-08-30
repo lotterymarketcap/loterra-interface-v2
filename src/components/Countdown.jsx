@@ -49,7 +49,7 @@ export default function Countdown(props){
                   </div>
               </div>
           </div>
-          <div className="col-10 mx-auto">
+          <div className="col-12 col-md-10 mx-auto">
               {
                   expiryTimestamp > new Date() ?
 
