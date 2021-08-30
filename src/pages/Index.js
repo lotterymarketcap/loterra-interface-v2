@@ -479,7 +479,7 @@ export default () => {
 
      return (
          <>   
-         <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>
+         <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>        
                 <div className="container-fluid container-md">
                   <div className="row">
                     <div className="col-lg-12 col-xl-8 mx-auto text-center">

@@ -220,16 +220,37 @@ font-style: normal;
   background: #070019;
 }
 
+:root {
+  --shadow-color: #f038f0;
+  --shadow-color-light: rgba(255, 255, 255, 0.35);
+}
+
+@keyframes neon {
+  from {
+    text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f038f0,
+      0 0 70px #f038f0, 0 0 80px #f038f0, 0 0 120px #f038f0, 0 0 200px #f038f0;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f038f0,
+      0 0 35px #f038f0, 0 0 40px #f038f0, 0 0 50px #f038f0, 0 0 75px #f038f0;
+  }
+}
+
+
 .jackpot {  
   p {
-    color: #f038f0;
+    color: #fff;
     text-transform: uppercase;
     font-size: 61px;
     line-height: 30px;
     margin-top: 45px;
+    margin-bottom: -12px;
+    position:relative;
+    z-index:9;
     font-weight: 300;
     text-shadow: 0px 0px 26px #160150;
     font-family: 'Monoton', cursive;
+    animation: neon 1.5s ease-in-out infinite alternate;
     @media(max-width:500px){
       font-size:36px;
       margin:0;
@@ -710,3 +731,4 @@ $total: 15;
       background:linear-gradient(328.75deg, #ff36ff40 -5.49%, #0F0038 104.44%);
     }
 }
+
