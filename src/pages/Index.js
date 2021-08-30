@@ -25,7 +25,7 @@ const HomeCard={
     padding: '30px',
 }
 
-const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
+const loterra_contract_address = "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 
 const BURNED_LOTA = 4301383550000;
@@ -180,12 +180,12 @@ export default () => {
     function execute(){
         const cart = state.combination.split(" ") // combo.split(" ")
 
+
         //Check if friend gift toggle wallet address filled
         if(giftFriend.active && giftFriend.wallet == ''){
-          showNotification('Gift friends enabled but no friends wallet address','error',4000);
-          return;
+            showNotification('Gift friends enabled but no friends wallet address','error',4000);
+            return;
         }
-
         //Check duplicates
         if(checkIfDuplicateExists(cart)){
           showNotification('Combinations contain duplicate','error',4000);
@@ -195,15 +195,28 @@ export default () => {
         const addToGas = 5800 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
         const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
+        let exec_msg = {
+            register: {
+                combination: cart
+            },
+        };
+        let coins_msg =  { uusd: 1000000 * cart.length };
+        if (alteBonus) {
+            exec_msg.register.altered_bonus = true
+            coins_msg = { uusd: 1000000 * cart.length - (1000000 * cart.length / 10) };
+        }
+
+
+        if(giftFriend.active && giftFriend.wallet != ''){
+            exec_msg.register.address = giftFriend.wallet
+        }
+
+
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
             loterra_contract_address,
-            {
-                register: {
-                    combination: cart,
-                },
-            },
-            { uusd: 1000000 * cart.length }
+            exec_msg,
+            coins_msg
         )
 
         connectedWallet.post({
@@ -215,6 +228,7 @@ export default () => {
             if (e.success) {
                 //setResult("register combination success")
                 showNotification("register combination success", 'success', 4000)
+                multiplier(amount)
             }
             else{
                 //setResult("register combination error")
@@ -411,6 +425,9 @@ export default () => {
   function giftCheckbox(e,checked){
     setGiftFriend({active: !giftFriend.active, wallet:''})
   }
+  function giftAddress(e){
+      setGiftFriend({active: true, wallet: e.target.value})
+  }
 
 
   async function bonusCheckbox(e,checked) {
@@ -547,7 +564,7 @@ export default () => {
                       </div>
                       <div className="card-body">       
                       <Countdown expiryTimestamp={expiryTimestamp}/>                 
-                        <small><span>HINT</span> Assure your prize! Average buying ticket is {parseInt(tickets / players)}</small>
+                        <small><span>HINT</span> Increase your odds! Average buying ticket is {parseInt(tickets / players)}</small>
                         <div className="input-group mt-3 mb-2">                         
                             <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
                           <input type="number" className="form-control amount-control" value={amount} min="1" max="200" step="1" onChange={(e) => inputChange(e)} />                         
@@ -559,7 +576,7 @@ export default () => {
                         <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                           )
                         }
-                        <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.6'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://alteredprotocol.com" target="_blank">Altered</a></p>
+                        <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.6'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://app.alteredprotocol.com" target="_blank">Altered</a></p>
                           <label className="bonus-label">
                             <input type="checkbox" ref={bonusToggle} checked={alteBonus} className="switch" name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} />
                           <label className="switch-label" onClick={() => clickElement(bonusToggle)}></label>
@@ -568,8 +585,8 @@ export default () => {
                         { alteBonus &&
                           (
                             <>                          
-                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount * 2 / 10).format('0.000000')} UST</p>       
-                            <p className="mb-2"><strong>Total: </strong> {numeral((amount * 2) - (amount * 2 / 10)).format('0.000000')} UST</p>                     
+                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount / 10).format('0.000000')} ALTE</p>
+                            <p className="mb-2"><strong>Total: </strong> {numeral((amount) - (amount / 10)).format('0.000000')} UST</p>
                             </>
                           )
                         }
@@ -582,7 +599,7 @@ export default () => {
                           (
                             <>
                             <p className="m-0">Friends wallet address:</p>
-                            <input type="text" className="form-control" placeholder="yourfriendswalletaddress" name="gift_wallet"/>
+                            <input type="text" className="form-control" placeholder="yourfriendswalletaddress" name="gift_wallet" onChange={(e) => giftAddress(e)}/>
                             </>
                           )
                         }
@@ -593,7 +610,7 @@ export default () => {
                           <PencilLine size={24} color={'#ff36ff'} style={{marginTop:'-1px', marginRight:'5px'}} />
                           Personalize tickets
                         </button>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {alteBonus ? amount *2 : amount} tickets</button>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
                       </div>
                     </div>
                     <SocialShare/>
