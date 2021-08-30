@@ -131,7 +131,7 @@ export default function ProposalItem(props){
                                             </div>
                                         </div>
 
-                                        {i+1 != 5 && (<div className="btn-group w-100">
+                                        <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
                                                     <>
@@ -147,7 +147,7 @@ export default function ProposalItem(props){
                                                     </>
                                                 )
                                                 }
-                                            </div>)}
+                                            </div>
                                         </div>
                                     </div>
                             </div>
