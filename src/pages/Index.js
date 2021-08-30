@@ -81,17 +81,17 @@ export default () => {
       setPrizeRankWinnerPercentage(contractConfigInfo.prize_rank_winner_percentage);
 
       const contractTicketsInfo = await api.contractQuery(
-          loterra_contract_address,
+          /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
         {
-          count_ticket: { lottery_id: contractConfigInfo.lottery_counter },
+          count_ticket: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2 },
         }
       );
       setTickets(parseInt(contractTicketsInfo));
 
       const contractPlayersInfo = await api.contractQuery(
-        loterra_contract_address,
+        /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
         {
-          count_player: { lottery_id: contractConfigInfo.lottery_counter },
+          count_player: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2},
         }
       );
       setPlayers(parseInt(contractPlayersInfo));
@@ -185,7 +185,7 @@ export default () => {
         const obj = new StdFee(1_000_000, { uusd: 456000 + addToGas })
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            loterra_contract_address,
+            /*loterra_contract_address */ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
             {
                 register: {
                     combination: cart,
