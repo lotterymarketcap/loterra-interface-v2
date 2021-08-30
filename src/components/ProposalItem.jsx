@@ -109,7 +109,8 @@ export default function ProposalItem(props){
                                         <div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
                                             <div className="progress">
-                                            <div
+
+                                                <div
                                                 className="progress-bar special"
                                                 role="progressbar"
                                                 style={{ width: percentageVotesYes(data.weight_yes_vote,data.weight_no_vote) + '%' }}
@@ -130,7 +131,8 @@ export default function ProposalItem(props){
                                                 NO
                                             </div>
                                         </div>
-                                            <div className="btn-group w-100">
+
+                                        <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
                                                     <>
