@@ -25,7 +25,7 @@ const HomeCard={
     padding: '30px',
 }
 
-const loterra_contract_address = "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w"
+const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 
 const BURNED_LOTA = 4301383550000;

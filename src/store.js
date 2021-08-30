@@ -4,7 +4,7 @@ import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-mon
 const StoreContext = createContext();
 
 const initialState = {
-  loterraContractAddress: "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+  loterraContractAddress: "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0",
   loterraContractAddressCw20: "terra1ez46kxtulsdv07538fh5ra5xj8l68mu8eg24vr",
   loterraPoolAddress: "terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta",
   loterraStakingAddress: "terra1342fp86c3z3q0lksq92lncjxpkfl9hujwh6xfn",
