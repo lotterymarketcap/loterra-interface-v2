@@ -31,7 +31,7 @@ export default function Countdown(props){
 
     return (
       <div className="countdown">
-      <div className="row">
+      <div className="row m-0">
           <div className="col-12 text-center mb-2">
               <div className="title">Next draw in</div>
           </div>
@@ -45,11 +45,11 @@ export default function Countdown(props){
                       aria-valuemin="0"
                       aria-valuemax="100"
                   >
-                      {numeral(percentageTillRebase).format('0')}%
+                      {/* {numeral(percentageTillRebase).format('0')}% */}
                   </div>
               </div>
           </div>
-          <div className="col-12">
+          <div className="col-10 mx-auto">
               {
                   expiryTimestamp > new Date() ?
 

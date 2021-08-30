@@ -109,6 +109,7 @@ export default function ProposalItem(props){
                                         <div className="vote-box align-self-center w-100">
                                             <h4 className="mb-3">Vote</h4>
                                             <div className="progress">
+
                                                 <div
                                                 className="progress-bar special"
                                                 role="progressbar"

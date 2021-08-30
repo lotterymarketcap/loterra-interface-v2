@@ -26,12 +26,27 @@ export default function WinnerRow(props){
             }
         })
         const ranksArray = [rank4,rank3,rank2,rank1]
-        const comboClasses = [
+        
+        const rankClasses = [
           {rank: 1, class:'super-special-text'},       
           {rank: 2, class:'special-text'},         
           {rank: 3, class:'medium-text'},       
           {rank: 4, class:''},        
-        ];        
+        ];
+        
+        const amountClasses = [
+          {amount: 1, class:'cyan'},       
+          {amount: 2, class:'blue'},         
+          {amount: 3, class:'cyan'},       
+          {amount: 4, class:'fire'},        
+          {amount: 5, class:'fire'},        
+          {amount: 6, class:'fire'},        
+          {amount: 7, class:'fire'},        
+          {amount: 8, class:'fire'},        
+          {amount: 9, class:'fire'},        
+          {amount: 10, class:'fire'},        
+          {amount: 11, class:'fire'},                  
+        ];
      
 
         const comboTextFour = [
@@ -90,13 +105,27 @@ export default function WinnerRow(props){
             }            
             return text;
         }
+
+        function getAmountClass(amount){
+          let name = '';
+ 
+          for (let index = 0; index < amountClasses.length; index++) {
+            const element = amountClasses[index];
+            if(element.amount == amount){
+              name = element.class
+            }
+            
+          }
+
+          return name;
+        }
   
         function comboTextResponse(rank,amount){
           let result = '';
-          for (let index = 0; index < comboClasses.length; index++) {
-            const element = comboClasses[index];
+          for (let index = 0; index < rankClasses.length; index++) {
+            const element = rankClasses[index];
               if(parseInt(rank) == element.rank){              
-                result = ('<span class="combo-text '+element.class+'">'+getComboText(rank,amount)+'</span>')
+                result = ('<span class="combo-text '+element.class+' '+getAmountClass(amount)+'">'+getComboText(rank,amount)+'</span>')
                 return result;                      
               }                       
              
@@ -108,8 +137,10 @@ export default function WinnerRow(props){
         for (let index = 0; index < ranksArray.length; index++) {
           const element = ranksArray[index];
             if(element.length > 0){
+              html += '<span class="combo-box">'
               html += '<span class="main">'+element[0]+'</span>' + '<span class="special">x'+element.length+'</span>'
               html += comboTextResponse(element[0],element.length)
+              html += '</span>'
             }
         }     
         
