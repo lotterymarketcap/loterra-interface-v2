@@ -372,10 +372,17 @@ const holderAccruedRewards = await api.contractQuery(
                 )}
                 {connected && (
                     <>
-                    <button className="btn btn-default nav-item me-2" onClick={() => setIsModal(!isModal)}><UserCircle size={26}
+                    <button className="btn btn-default nav-item me-2"
                     style={{
-                        marginTop: '-4px'
-                    }} /></button>                        
+                        padding:'0.275rem 0.55rem'
+                    }}
+                    onClick={() => setIsModal(!isModal)}>
+                    <UserCircle size={33}
+                    style={{
+                        marginTop: '-2px',
+                        color:'#72ffc1'
+                    }} />
+                    </button>                        
                     <button                       
                         className="btn btn-green nav-item dropdown-toggle"
                         data-bs-toggle="dropdown"
