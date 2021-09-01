@@ -25,7 +25,7 @@ const HomeCard={
     padding: '30px',
 }
 
-const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
+const loterra_contract_address = "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 
 const BURNED_LOTA = 4301383550000;
@@ -85,7 +85,7 @@ export default () => {
       setPrizeRankWinnerPercentage(contractConfigInfo.prize_rank_winner_percentage);
 
       const contractTicketsInfo = await api.contractQuery(
-          /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+          loterra_contract_address,
         {
           count_ticket: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2 },
         }
@@ -93,7 +93,7 @@ export default () => {
       setTickets(parseInt(contractTicketsInfo));
 
       const contractPlayersInfo = await api.contractQuery(
-        /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+        loterra_contract_address,
         {
           count_player: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2},
         }
@@ -214,7 +214,7 @@ export default () => {
 
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+            loterra_contract_address,
             exec_msg,
             coins_msg
         )

@@ -231,7 +231,7 @@ const holderAccruedRewards = await api.contractQuery(
 
 
                     const combinations = await api.contractQuery(
-                        /*state.loterraContractAddress */ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+                        state.loterraContractAddress,
                         {
                             combination: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2, address: connectedWallet.walletAddress},
                         }
