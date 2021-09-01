@@ -25,7 +25,7 @@ const HomeCard={
     padding: '30px',
 }
 
-const loterra_contract_address = "terra14mevcmeqt0n4myggt7c56l5fl0xw2hwa2mhlg0"
+const loterra_contract_address = "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w"
 const loterra_pool_address ="terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
 
 const BURNED_LOTA = 4301383550000;
@@ -85,7 +85,7 @@ export default () => {
       setPrizeRankWinnerPercentage(contractConfigInfo.prize_rank_winner_percentage);
 
       const contractTicketsInfo = await api.contractQuery(
-          /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+          loterra_contract_address,
         {
           count_ticket: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2 },
         }
@@ -93,7 +93,7 @@ export default () => {
       setTickets(parseInt(contractTicketsInfo));
 
       const contractPlayersInfo = await api.contractQuery(
-        /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+        loterra_contract_address,
         {
           count_player: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2},
         }
@@ -214,7 +214,7 @@ export default () => {
 
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            /*loterra_contract_address*/ "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
+            loterra_contract_address,
             exec_msg,
             coins_msg
         )
@@ -577,11 +577,11 @@ export default () => {
                           )
                         }
                         <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.3'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://app.alteredprotocol.com" target="_blank">Altered</a></p>
-                          <label className="bonus-label" style={{opacity:'0.5'}}>
-                            <input disabled type="checkbox" ref={bonusToggle} checked={alteBonus} className="switch" name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} />
+                          <label className="bonus-label" >
+                            <input type="checkbox" ref={bonusToggle} checked={alteBonus} className="switch" name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} />
                           <label className="switch-label"></label>
                           <Fire size={24} weight="fill" /> BURN 
-                          <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">COMING SOON</span></label>
+                          <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">Bonus</span></label>
                         { alteBonus &&
                           (
                             <>                          
