@@ -53,6 +53,7 @@ export default function ConnectWallet(){
         wallet = useWallet();
         connectedWallet = useConnectedWallet()
     }
+    
     const lcd = useMemo(() => {
 
         if (!connectedWallet) {
