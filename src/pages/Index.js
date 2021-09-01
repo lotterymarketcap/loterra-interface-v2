@@ -577,7 +577,7 @@ export default () => {
                           )
                         }
                         <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.3'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://app.alteredprotocol.com" target="_blank">Altered</a></p>
-                          <label className="bonus-label" style={{opacity:'0.5'}}>
+                          <label className="bonus-label" >
                             <input type="checkbox" ref={bonusToggle} checked={alteBonus} className="switch" name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} />
                           <label className="switch-label"></label>
                           <Fire size={24} weight="fill" /> BURN 
