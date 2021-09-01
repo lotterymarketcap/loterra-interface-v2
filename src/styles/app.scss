@@ -482,13 +482,13 @@ font-style: normal;
   z-index:-1;
 }
 
-$total: 15;
+$total: 8;
 @for $i from 1 through $total {
   $scale:random(2) - .4;
   
   .svg:nth-child(#{$i}){
     left:random(100) * 1% - 20;
-    animation: raise#{$i} 6 + random(15) +s linear infinite;
+    animation: raise#{$i} 6 + random(8) +s linear infinite;
     animation-delay:random(5) - 5 + s;
     transform: scale(.3 * $i - .6) rotate(random(360) + deg);
     filter: blur($i - 10 + px);
