@@ -32,6 +32,7 @@ const BURNED_LOTA = 4301383550000;
 
 
 export default () => {
+    const [isAllowance, setIsAllowance] = useState(0);
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
@@ -178,8 +179,12 @@ export default () => {
     }
 
     function execute(){
-        const cart = state.combination.split(" ") // combo.split(" ")
+        if(parseInt(isAllowance) < (amount * 1000000) / 10){
+            setAllowanceModal(true)
+            return showNotification('No allowance yet','error',4000)
+        }
 
+        const cart = state.combination.split(" ") // combo.split(" ")
 
         //Check if friend gift toggle wallet address filled
         if(giftFriend.active && giftFriend.wallet == ''){
@@ -194,7 +199,7 @@ export default () => {
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5800 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
+        const obj = new StdFee(750_000, { uusd: 342000 + addToGas })
         let exec_msg = {
             register: {
                 combination: cart
@@ -229,6 +234,7 @@ export default () => {
                 //setResult("register combination success")
                 showNotification("register combination success", 'success', 4000)
                 multiplier(amount)
+                setAlteBonus(false);
             }
             else{
                 //setResult("register combination error")
@@ -385,7 +391,8 @@ export default () => {
       },duration)
   }
 
-  function amountChange(type){    
+  function amountChange(type){
+
         let ticketAmount = amount;
         if(type == 'up'){
           ticketAmount++;
@@ -449,21 +456,18 @@ export default () => {
       }
     }
     );
-    console.log(allowance)
-    if(allowance.allowance < amount / 10){
-        setAllowanceModal(true)
-        return showNotification('No allowance yet','error',4000)
-    } else {
-      setAlteBonus(!alteBonus);
-    }    
+      setIsAllowance(allowance.allowance);
+        setAlteBonus(!alteBonus);
+
+    console.log(allowance);
+    console.log((amount * 1000000) / 10)
+
     } catch(error){
       console.log(error)
       setAlteBonus(false);
     }
-
-    
-    
   }
+
 
   const clickElement = (ref) => {
     ref.current.dispatchEvent(
