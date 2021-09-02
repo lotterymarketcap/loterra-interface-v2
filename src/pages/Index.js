@@ -179,7 +179,7 @@ export default () => {
     }
 
     function execute(){
-        if(alteBonus && parseInt(isAllowance) < (amount * 1000000) / 10){
+        if(alteBonus && parseInt(isAllowance) < (amount * state.config.price_per_ticket_to_register) / 10){
             setAllowanceModal(true)
             return showNotification('No allowance yet','error',4000)
         }
@@ -205,10 +205,10 @@ export default () => {
                 combination: cart
             },
         };
-        let coins_msg =  { uusd: 1000000 * cart.length };
+        let coins_msg =  { uusd: state.config.price_per_ticket_to_register * cart.length };
         if (alteBonus) {
             exec_msg.register.altered_bonus = true
-            coins_msg = { uusd: 1000000 * cart.length - (1000000 * cart.length / 10) };
+            coins_msg = { uusd: state.config.price_per_ticket_to_register * cart.length - (state.config.price_per_ticket_to_register * cart.length / 10) };
         }
 
 
@@ -460,7 +460,7 @@ export default () => {
         setAlteBonus(!alteBonus);
 
     console.log(allowance);
-    console.log((amount * 1000000) / 10)
+    console.log((amount * state.config.price_per_ticket_to_register) / 10)
 
     } catch(error){
       console.log(error)
