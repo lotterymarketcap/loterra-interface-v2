@@ -450,7 +450,7 @@ export default () => {
     }
     );
     console.log(allowance)
-    if(allowance.allowance == 0){
+    if(allowance.allowance < amount / 10){
         setAllowanceModal(true)
         return showNotification('No allowance yet','error',4000)
     } else {
