@@ -179,7 +179,7 @@ export default () => {
     }
 
     function execute(){
-        if(parseInt(isAllowance) < (amount * 1000000) / 10){
+        if(alteBonus && parseInt(isAllowance) < (amount * 1000000) / 10){
             setAllowanceModal(true)
             return showNotification('No allowance yet','error',4000)
         }
@@ -465,6 +465,7 @@ export default () => {
     } catch(error){
       console.log(error)
       setAlteBonus(false);
+
     }
   }
 
