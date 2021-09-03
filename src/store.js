@@ -8,6 +8,7 @@ const initialState = {
   loterraContractAddressCw20: "terra1ez46kxtulsdv07538fh5ra5xj8l68mu8eg24vr",
   loterraPoolAddress: "terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta",
   loterraStakingAddress: "terra1342fp86c3z3q0lksq92lncjxpkfl9hujwh6xfn",
+  alteredContractAddress:"terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv",
   allWinners: [],
   tokenInfo: {},
   allPlayers: [],

@@ -32,7 +32,6 @@ const BURNED_LOTA = 4301383550000;
 
 
 export default () => {
-    const [isAllowance, setIsAllowance] = useState(0);
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
@@ -57,13 +56,10 @@ export default () => {
   const [tokenHolderFee, setTokenHolderFee] = useState(0);
   const [allWinners, setAllWinners] = useState([]);
   const {state, dispatch} = useStore();
-
-  const fetchContractQuery = useCallback(async () => {
-    const terra = new LCDClient({
-      URL: "https://lcd.terra.dev/",
-      chainID: "columbus-4",
-    });
+    const terra = state.lcd_client
     const api = new WasmAPI(terra.apiRequester);
+  const fetchContractQuery = useCallback(async () => {
+
     try {
       const contractConfigInfo = await api.contractQuery(
         loterra_contract_address,
@@ -181,45 +177,22 @@ export default () => {
       return new Set(w).size !== w.length 
     }
 
-
-    async function checkAllowance(){
-       const terra = new LCDClient({
-      URL: "https://lcd.terra.dev/",
-      chainID: "columbus-4",
-    });
-    const api = new WasmAPI(terra.apiRequester);
-    if(!connectedWallet){
-      return showNotification('Please connect your wallet','error',4000)
-    }
-    try {
-      const allowance = await api.contractQuery(
-        'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
-      {
-        allowance : {
-        owner: connectedWallet.walletAddress,
-        spender: state.loterraContractAddress,
-      }
-    }
-    );
-      setIsAllowance(allowance.allowance);
-
-    console.log(allowance);
-    console.log((amount * 1000000) / 10)
-
-    } catch(error){
-      console.log(error)
-      // setAlteBonus(false);
-      
-    }
-    }
-
     async function execute(){
 
-        if(alteBonus){
-          await checkAllowance();
+        if(!connectedWallet){
+            return showNotification('Please connect your wallet','error',4000)
         }
+        const allowance = await api.contractQuery(
+            state.alteredContractAddress,
+            {
+                allowance : {
+                    owner: connectedWallet.walletAddress,
+                    spender: state.loterraContractAddress,
+                }
+            }
+        );
 
-        if(alteBonus && parseInt(isAllowance) < (amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate){
+        if(alteBonus && parseInt(allowance.allowance) < (amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate){
             setAllowanceModal(true)
             return showNotification('No allowance yet','error',4000)
         }
