@@ -178,7 +178,41 @@ export default () => {
       return new Set(w).size !== w.length 
     }
 
-    function execute(){
+    async function checkAllowance(){
+       const terra = new LCDClient({
+      URL: "https://lcd.terra.dev/",
+      chainID: "columbus-4",
+    });
+    const api = new WasmAPI(terra.apiRequester);
+    if(!connectedWallet){
+      return showNotification('Please connect your wallet','error',4000)
+    }
+    try {
+      const allowance = await api.contractQuery(
+        'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
+      {
+        allowance : {
+        owner: connectedWallet.walletAddress,
+        spender: state.loterraContractAddress,
+      }
+    }
+    );
+      setIsAllowance(allowance.allowance);
+
+    console.log(allowance);
+    console.log((amount * 1000000) / 10)
+
+    } catch(error){
+      console.log(error)
+      // setAlteBonus(false);
+      
+    }
+    }
+
+    async function execute(){
+
+        await checkAllowance();
+
         if(alteBonus && parseInt(isAllowance) < (amount * 1000000) / 10){
             setAllowanceModal(true)
             return showNotification('No allowance yet','error',4000)
@@ -436,37 +470,8 @@ export default () => {
       setGiftFriend({active: true, wallet: e.target.value})
   }
 
-
-  async function bonusCheckbox(e,checked) {
-    const terra = new LCDClient({
-      URL: "https://lcd.terra.dev/",
-      chainID: "columbus-4",
-    });
-    const api = new WasmAPI(terra.apiRequester);
-    if(!connectedWallet){
-      return showNotification('Please connect your wallet','error',4000)
-    }
-    try {
-      const allowance = await api.contractQuery(
-        'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
-      {
-        allowance : {
-        owner: connectedWallet.walletAddress,
-        spender: state.loterraContractAddress,
-      }
-    }
-    );
-      setIsAllowance(allowance.allowance);
-        setAlteBonus(!alteBonus);
-
-    console.log(allowance);
-    console.log((amount * 1000000) / 10)
-
-    } catch(error){
-      console.log(error)
-      setAlteBonus(false);
-
-    }
+  function bonusCheckbox(e,checked) {
+    setAlteBonus(!alteBonus);   
   }
 
 
