@@ -178,6 +178,7 @@ export default () => {
       return new Set(w).size !== w.length 
     }
 
+
     async function execute(){
         setBuyLoader(true)
         if(!connectedWallet){
@@ -456,6 +457,7 @@ export default () => {
   function giftAddress(e){
       setGiftFriend({active: true, wallet: e.target.value})
   }
+
 
 
   function bonusCheckbox(e,checked) {
