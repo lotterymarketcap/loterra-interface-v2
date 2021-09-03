@@ -15,6 +15,7 @@
     "@terra-money/terra.js": "^1.8.0",
     "@terra-money/wallet-provider": "^1.2.0",
     "axios": "^0.21.1",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "bootstrap": "^5.0.2",
     "chart.js": "^3.5.0",
     "numeral": "^2.0.6",

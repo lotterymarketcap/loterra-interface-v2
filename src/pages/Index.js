@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext, useRef} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown, MonitorPlay} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -32,7 +32,6 @@ const BURNED_LOTA = 4301383550000;
 
 
 export default () => {
-    const [isAllowance, setIsAllowance] = useState(0);
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
@@ -52,17 +51,15 @@ export default () => {
   ); /** default timestamp need to be > 1 */
   const bonusToggle = useRef(null);
   const friendsToggle = useRef(null);
+  const loterraStats = useRef(null);
 
   const [tokenHolderFee, setTokenHolderFee] = useState(0);
   const [allWinners, setAllWinners] = useState([]);
   const {state, dispatch} = useStore();
-
-  const fetchContractQuery = useCallback(async () => {
-    const terra = new LCDClient({
-      URL: "https://lcd.terra.dev/",
-      chainID: "columbus-4",
-    });
+    const terra = state.lcd_client
     const api = new WasmAPI(terra.apiRequester);
+  const fetchContractQuery = useCallback(async () => {
+
     try {
       const contractConfigInfo = await api.contractQuery(
         loterra_contract_address,
@@ -180,8 +177,23 @@ export default () => {
       return new Set(w).size !== w.length 
     }
 
-    function execute(){
-        if(alteBonus && parseInt(isAllowance) < (amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate){
+
+    async function execute(){
+
+        if(!connectedWallet){
+            return showNotification('Please connect your wallet','error',4000)
+        }
+        const allowance = await api.contractQuery(
+            state.alteredContractAddress,
+            {
+                allowance : {
+                    owner: connectedWallet.walletAddress,
+                    spender: state.loterraContractAddress,
+                }
+            }
+        );
+
+        if(alteBonus && parseInt(allowance.allowance) < (amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate){
             setAllowanceModal(true)
             return showNotification('No allowance yet','error',4000)
         }
@@ -439,37 +451,9 @@ export default () => {
   }
 
 
-  async function bonusCheckbox(e,checked) {
-    const terra = new LCDClient({
-      URL: "https://lcd.terra.dev/",
-      chainID: "columbus-4",
-    });
-    const api = new WasmAPI(terra.apiRequester);
-    if(!connectedWallet){
-      return showNotification('Please connect your wallet','error',4000)
-    }
-    try {
-      const allowance = await api.contractQuery(
-        'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
-      {
-        allowance : {
-        owner: connectedWallet.walletAddress,
-        spender: state.loterraContractAddress,
-      }
-    }
-    );
-      setIsAllowance(allowance.allowance);
-        setAlteBonus(!alteBonus);
 
-    console.log(allowance);
-    console.log(state.config)
-    console.log((amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate)
-
-    } catch(error){
-      console.log(error)
-      setAlteBonus(false);
-
-    }
+  function bonusCheckbox(e,checked) {
+    setAlteBonus(!alteBonus);   
   }
 
 
@@ -483,6 +467,10 @@ export default () => {
       }),
     );
   };
+
+  function scrollToStats(){
+    window.scrollTo({ behavior: 'smooth', top: loterraStats.current.offsetTop })
+  }
 
 
      return (
@@ -618,10 +606,15 @@ export default () => {
                    </div>
                  </div>
 
-                 <div className="container">
-                    <div className="how">
+                 <div className="how" style={{
+                   background:'radial-gradient(rgb(42 216 132 / 34%), transparent)',
+                   marginTop:'50px',
+                   padding:'95px 0'
+                 }}>
+                  <div className="container">                
                         <div className="row">
                           <div className="col-md-12">
+                          <MonitorPlay size={48} color={'#20ff93'} className="mx-auto d-block mb-2"/>
                             <h2>How it works</h2>
                           </div>
                           <div className="col-md-4 my-2">
@@ -645,6 +638,52 @@ export default () => {
                                 <p>Prizes automatically deposited into wallet</p>
                             </div>
                           </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="how" style={{
+                  background:'radial-gradient(#f23ff24f, transparent)',
+                  padding:'55px 0'
+                }}>
+                <div className="container">                    
+                        <div className="row">
+                        <div className="col-md-12">
+                        <ChartPie size={48} color={'#FF36FF'} className="mx-auto d-block mb-2"/>
+                            <h2>Current LoTerra Stats</h2>
+                          </div>
+                        <div className="col-md-4 mb-3">
+                                          <div className="lota-stats mb-4 mb-md-0">
+                                          { lotaPrice.assets &&
+                                            <>
+                                            <p>LOTA price</p>
+                                            <h5>{numeral((lotaPrice.assets[1].amount/lotaPrice.assets[0].amount)).format('0.000')}<span>UST</span></h5>
+                                            {/* <p>{contractJackpotInfo}</p> */}
+                                            </>
+                                          }
+                                          </div>
+                                        </div>
+                                        <div className="col-md-4 mb-3">
+                                            <div className="lota-stats">
+                                              <p>Circulating SUPPLY</p>
+                                              <h5>{numeral(circulatingSupply()).format("0,0.00")}<span>LOTA</span></h5>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4 mb-3">
+                                        <div className="lota-stats">
+                                            { lotaPrice.assets &&
+                                            <>
+                                              <p>Market Cap</p>
+                                              <h5>{numeral(marketCap()).format("0,0.00")}<span>UST</span></h5>
+                                            </>
+                                            }
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 my-3">
+                                        <div className="d-flex">                                              
+                                              <button className="btn btn-plain align-self-center mx-auto" onClick={()=>scrollToStats()}>Check more stats <ArrowDown size={24} /></button>
+                                            </div>
+                                        </div>
                         </div>
                     </div>
                 </div>
@@ -731,7 +770,7 @@ export default () => {
 
                  </div>
 
-                 <div className="container" style={{marginTop:'8rem'}}>
+                 <div ref={loterraStats} className="container" style={{marginTop:'8rem'}}>
                               <div className="card lota-card">
                               <div className="card-header text-center">
                             <div className="card-header-icon">
