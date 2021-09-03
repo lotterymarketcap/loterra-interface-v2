@@ -35,6 +35,7 @@ export default () => {
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
+  const [buyLoader, setBuyLoader] = useState(false)
   const [winners, setWinners] = useState(0);
   const [alteBonus, setAlteBonus] = useState(false)
   const [giftFriend, setGiftFriend] = useState({active: false, wallet:''})
@@ -178,8 +179,9 @@ export default () => {
     }
 
     async function execute(){
-
+        setBuyLoader(true)
         if(!connectedWallet){
+            setBuyLoader(false)
             return showNotification('Please connect your wallet','error',4000)
         }
         const allowance = await api.contractQuery(
@@ -194,6 +196,7 @@ export default () => {
 
         if(alteBonus && parseInt(allowance.allowance) < (amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate){
             setAllowanceModal(true)
+            setBuyLoader(false)
             return showNotification('No allowance yet','error',4000)
         }
 
@@ -202,11 +205,13 @@ export default () => {
         //Check if friend gift toggle wallet address filled
         if(giftFriend.active && giftFriend.wallet == ''){
             showNotification('Gift friends enabled but no friends wallet address','error',4000);
+            setBuyLoader(false)
             return;
         }
         //Check duplicates
         if(checkIfDuplicateExists(cart)){
           showNotification('Combinations contain duplicate','error',4000);
+          setBuyLoader(false)
           return;
         }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
@@ -248,14 +253,17 @@ export default () => {
                 showNotification("register combination success", 'success', 4000)
                 multiplier(amount)
                 setAlteBonus(false);
+                setBuyLoader(false)
             }
             else{
                 //setResult("register combination error")
                 showNotification("register combination error", 'error', 4000)
+                setBuyLoader(false)
             }
         }).catch(e =>{
             //setResult(e.message)
             showNotification(e.message, 'error', 4000)
+            setBuyLoader(false)
         })
 
     }
@@ -596,7 +604,20 @@ export default () => {
                           <PencilLine size={24} color={'#ff36ff'} style={{marginTop:'-1px', marginRight:'5px'}} />
                           Personalize tickets
                         </button>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>
+                        { !buyLoader ?
+                          <>
+                          Buy {amount} tickets
+                          </>
+                        : 
+                            <div class="spinner-border spinner-border-sm" role="status" style={{
+                              position:'relative',
+                              top:'-3px'
+                            }}>
+                            <span class="visually-hidden">Loading...</span>
+                            </div>
+                        }
+                        </button>
                       </div>
                     </div>
                     <SocialShare/>
