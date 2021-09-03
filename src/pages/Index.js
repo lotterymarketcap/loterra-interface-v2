@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext, useRef} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown, MonitorPlay} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -639,6 +639,7 @@ export default () => {
                   <div className="container">                
                         <div className="row">
                           <div className="col-md-12">
+                          <MonitorPlay size={48} color={'#20ff93'} className="mx-auto d-block mb-2"/>
                             <h2>How it works</h2>
                           </div>
                           <div className="col-md-4 my-2">
@@ -673,6 +674,7 @@ export default () => {
                 <div className="container">                    
                         <div className="row">
                         <div className="col-md-12">
+                        <ChartPie size={48} color={'#FF36FF'} className="mx-auto d-block mb-2"/>
                             <h2>Current LoTerra Stats</h2>
                           </div>
                         <div className="col-md-4 mb-3">
