@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext, useRef} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -52,6 +52,7 @@ export default () => {
   ); /** default timestamp need to be > 1 */
   const bonusToggle = useRef(null);
   const friendsToggle = useRef(null);
+  const loterraStats = useRef(null);
 
   const [tokenHolderFee, setTokenHolderFee] = useState(0);
   const [allWinners, setAllWinners] = useState([]);
@@ -492,6 +493,10 @@ export default () => {
     );
   };
 
+  function scrollToStats(){
+    window.scrollTo({ behavior: 'smooth', top: loterraStats.current.offsetTop })
+  }
+
 
      return (
          <>   
@@ -657,6 +662,48 @@ export default () => {
                     </div>
                 </div>
 
+                <div className="how">
+                <div className="container">                    
+                        <div className="row">
+                        <div className="col-md-12">
+                            <h2>Current LoTerra Stats</h2>
+                          </div>
+                        <div className="col-md-4 mb-3">
+                                          <div className="lota-stats mb-4 mb-md-0">
+                                          { lotaPrice.assets &&
+                                            <>
+                                            <p>LOTA price</p>
+                                            <h5>{numeral((lotaPrice.assets[1].amount/lotaPrice.assets[0].amount)).format('0.000')}<span>UST</span></h5>
+                                            {/* <p>{contractJackpotInfo}</p> */}
+                                            </>
+                                          }
+                                          </div>
+                                        </div>
+                                        <div className="col-md-4 mb-3">
+                                            <div className="lota-stats">
+                                              <p>Circulating SUPPLY</p>
+                                              <h5>{numeral(circulatingSupply()).format("0,0.00")}<span>LOTA</span></h5>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4 mb-3">
+                                        <div className="lota-stats">
+                                            { lotaPrice.assets &&
+                                            <>
+                                              <p>Market Cap</p>
+                                              <h5>{numeral(marketCap()).format("0,0.00")}<span>UST</span></h5>
+                                            </>
+                                            }
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 my-3">
+                                        <div className="d-flex">                                              
+                                              <button className="btn btn-plain align-self-center mx-auto" onClick={()=>scrollToStats()}>Check more stats <ArrowDown size={24} /></button>
+                                            </div>
+                                        </div>
+                        </div>
+                    </div>
+                </div>
+
 
                  <div className="container" style={{marginTop:'7rem'}}>
                         <div className="card lota-card">
@@ -739,7 +786,7 @@ export default () => {
 
                  </div>
 
-                 <div className="container" style={{marginTop:'8rem'}}>
+                 <div ref={loterraStats} className="container" style={{marginTop:'8rem'}}>
                               <div className="card lota-card">
                               <div className="card-header text-center">
                             <div className="card-header-icon">

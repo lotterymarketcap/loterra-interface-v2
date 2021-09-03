@@ -47,7 +47,7 @@ export default function ProposalItem(props){
     }
 
     return (
-        <div className="proposal-item" key={i}>
+        <div className={data.status == 'InProgress' ? 'proposal-item' : 'proposal-item op'} key={i}>
                             <div className="row">
                                     <div className="col-12">
                                         <h4>Proposal number {i+1}</h4>
@@ -132,7 +132,9 @@ export default function ProposalItem(props){
                                             </div>
                                         </div>
 
-                                        <div className="btn-group w-100">
+                                        {data.status == 'InProgress' &&
+                                        (
+                                            <div className="btn-group w-100">
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
                                                     <>
@@ -149,6 +151,8 @@ export default function ProposalItem(props){
                                                 )
                                                 }
                                             </div>
+                                        )
+                                        }
                                         </div>
                                     </div>
                             </div>
