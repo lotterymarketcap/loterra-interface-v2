@@ -70,7 +70,9 @@ export default () => {
         config: {},
       }
     );
-
+    console.log("contractConfigInfo")
+        console.log(contractConfigInfo)
+        dispatch({type: "setConfig", message: contractConfigInfo})
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
       const bank = new BankAPI(terra.apiRequester);
@@ -88,7 +90,7 @@ export default () => {
       const contractTicketsInfo = await api.contractQuery(
           loterra_contract_address,
         {
-          count_ticket: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2 },
+          count_ticket: { lottery_id: contractConfigInfo.lottery_counter},
         }
       );
       setTickets(parseInt(contractTicketsInfo));
@@ -96,7 +98,7 @@ export default () => {
       const contractPlayersInfo = await api.contractQuery(
         loterra_contract_address,
         {
-          count_player: { lottery_id: /*contractConfigInfo.lottery_counter*/ 2},
+          count_player: { lottery_id: contractConfigInfo.lottery_counter},
         }
       );
       setPlayers(parseInt(contractPlayersInfo));
@@ -178,6 +180,7 @@ export default () => {
       return new Set(w).size !== w.length 
     }
 
+
     async function checkAllowance(){
        const terra = new LCDClient({
       URL: "https://lcd.terra.dev/",
@@ -211,9 +214,11 @@ export default () => {
 
     async function execute(){
 
-        await checkAllowance();
+        if(alteBonus){
+          await checkAllowance();
+        }
 
-        if(alteBonus && parseInt(isAllowance) < (amount * 1000000) / 10){
+        if(alteBonus && parseInt(isAllowance) < (amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate){
             setAllowanceModal(true)
             return showNotification('No allowance yet','error',4000)
         }
@@ -239,10 +244,10 @@ export default () => {
                 combination: cart
             },
         };
-        let coins_msg =  { uusd: 1000000 * cart.length };
+        let coins_msg =  { uusd: state.config.price_per_ticket_to_register * cart.length };
         if (alteBonus) {
             exec_msg.register.altered_bonus = true
-            coins_msg = { uusd: 1000000 * cart.length - (1000000 * cart.length / 10) };
+            coins_msg = { uusd: state.config.price_per_ticket_to_register * cart.length - (state.config.price_per_ticket_to_register * cart.length / state.config.bonus_burn_rate) };
         }
 
 
@@ -470,6 +475,7 @@ export default () => {
       setGiftFriend({active: true, wallet: e.target.value})
   }
 
+
   function bonusCheckbox(e,checked) {
     setAlteBonus(!alteBonus);   
   }
@@ -587,8 +593,8 @@ export default () => {
                         { alteBonus &&
                           (
                             <>                          
-                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount / 10).format('0.000000')} ALTE</p>
-                            <p className="mb-2"><strong>Total: </strong> {numeral((amount) - (amount / 10)).format('0.000000')} UST</p>
+                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount / state.config.bonus_burn_rate).format('0.000000')} ALTE</p>
+                            <p className="mb-2"><strong>Total: </strong> {numeral((amount) - (amount / state.config.bonus_burn_rate)).format('0.000000')} UST</p>
                             </>
                           )
                         }
