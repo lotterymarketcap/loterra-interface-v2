@@ -601,7 +601,7 @@ export default () => {
                         }
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
-                        <AllowanceModal open={allowanceModal} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
+                        <AllowanceModal open={allowanceModal} prefill={amount / state.config.bonus_burn_rate} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-default w-100 mb-3 mt-3" style={{fontSize:'18px',fontWeight:'bold',padding:'11px 5px', borderBottom:'4px solid #10003b'}}>
                           <PencilLine size={24} color={'#ff36ff'} style={{marginTop:'-1px', marginRight:'5px'}} />
                           Personalize tickets
