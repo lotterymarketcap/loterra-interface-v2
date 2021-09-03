@@ -631,8 +631,12 @@ export default () => {
                    </div>
                  </div>
 
-                 <div className="container">
-                    <div className="how">
+                 <div className="how" style={{
+                   background:'radial-gradient(rgb(42 216 132 / 34%), transparent)',
+                   marginTop:'50px',
+                   padding:'95px 0'
+                 }}>
+                  <div className="container">                
                         <div className="row">
                           <div className="col-md-12">
                             <h2>How it works</h2>
@@ -662,7 +666,10 @@ export default () => {
                     </div>
                 </div>
 
-                <div className="how">
+                <div className="how" style={{
+                  background:'radial-gradient(#f23ff24f, transparent)',
+                  padding:'55px 0'
+                }}>
                 <div className="container">                    
                         <div className="row">
                         <div className="col-md-12">
