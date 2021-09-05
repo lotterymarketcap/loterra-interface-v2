@@ -13,6 +13,7 @@ import SocialShare from "../components/SocialShare";
 import Footer from "../components/Footer";
 import AllowanceModal from "../components/AllowanceModal";
 import WinnerRow from "../components/WinnerRow";
+import PriceLoader from "../components/PriceLoader";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -510,7 +511,7 @@ export default () => {
                                 <div className="row">
                                   <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
-                                    <h3><span>PLAYERS</span>{players}</h3>
+                                    <h3><span>PLAYERS</span>{players ? players : <PriceLoader/>}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -522,7 +523,7 @@ export default () => {
                                 <div className="row">
                                   <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
-                                    <h3><span>TICKETS</span>{tickets}</h3>
+                                    <h3><span>TICKETS</span>{tickets ? tickets : <PriceLoader/>}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -675,28 +676,34 @@ export default () => {
                           </div>
                         <div className="col-md-4 mb-3">
                                           <div className="lota-stats mb-4 mb-md-0">
-                                          { lotaPrice.assets &&
-                                            <>
-                                            <p>LOTA price</p>
+                                          <p>LOTA price</p>
+                                          { lotaPrice.assets ?
+                                            <>                                            
                                             <h5>{numeral((lotaPrice.assets[1].amount/lotaPrice.assets[0].amount)).format('0.000')}<span>UST</span></h5>
                                             {/* <p>{contractJackpotInfo}</p> */}
                                             </>
+                                            :
+                                            <PriceLoader/>
                                           }
                                           </div>
                                         </div>
                                         <div className="col-md-4 mb-3">
                                             <div className="lota-stats">
                                               <p>Circulating SUPPLY</p>
+                                              { circulatingSupply() ?
                                               <h5>{numeral(circulatingSupply()).format("0,0.00")}<span>LOTA</span></h5>
+                                              :
+                                              <PriceLoader/>
+                                              }
                                             </div>
                                         </div>
                                         <div className="col-md-4 mb-3">
                                         <div className="lota-stats">
-                                            { lotaPrice.assets &&
-                                            <>
-                                              <p>Market Cap</p>
+                                        <p>Market Cap</p>
+                                            { lotaPrice.assets ?                                        
                                               <h5>{numeral(marketCap()).format("0,0.00")}<span>UST</span></h5>
-                                            </>
+                                              :
+                                              <PriceLoader/>
                                             }
                                             </div>
                                         </div>
