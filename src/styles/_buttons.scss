@@ -49,4 +49,15 @@ box-sizing: border-box;
 border-radius: 7px;
 color:#fff;
     }
+    &.btn-default-lg {
+        background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
+border: 1px solid #40337A;
+box-sizing: border-box;
+border-radius: 7px;
+color:#fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 11px 5px;
+    border-bottom: 4px solid rgb(16, 0, 59);
+    }
 }

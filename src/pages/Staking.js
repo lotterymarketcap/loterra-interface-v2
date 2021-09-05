@@ -13,6 +13,7 @@ import Footer from "../components/Footer";
 import {parse} from "postcss";
 import ApyStats from "../components/ApyStats";
 import axios from "axios";
+import StakingForm from "../components/StakingForm";
 
 const BURNED_LOTA = 4301383550000;
 
@@ -23,7 +24,6 @@ export default () =>  {
     const [notification,setNotification] = useState({type:'success',message:'',show:false})
     const {state, dispatch} = useStore();
     const [modal, setModal] = useState(false);
-    const [heightBlock,setBlockHeight] = useState(0)
 
     function hideNotification(){
         setNotification({
@@ -52,84 +52,7 @@ export default () =>  {
         },duration)
     }
     
-    function stakeOrUnstake(type) {
-        var input = document.querySelector('.amount-input')
-        //console.log(type,input.value);
-        const amount = parseInt(input.value * 1000000)
-        if(amount <= 0){
-            showNotification('Input amount empty','error',4000)
-            return;
-        }
-        let msg
-        if (type === 'stake') {
-            msg = new MsgExecuteContract(
-            state.wallet.walletAddress,
-            state.loterraContractAddressCw20,
-            {
-              send: {
-                contract: state.loterraStakingAddress,
-                amount: amount.toString(),
-                msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
-              },
-            }
-          )
-        } else {
-            msg = new MsgExecuteContract(
-            state.wallet.walletAddress,
-            state.loterraStakingAddress,
-            {
-              unbond_stake: { amount: amount.toString() },
-            }
-          )
-        }
-
-        state.wallet.post({
-            msgs: [msg],
-            fee: obj
-            // gasPrices: obj.gasPrices(),
-            // gasAdjustment: 1.5,
-        }).then(e => {
-            if (e.success) {    
-                if(type == 'stake')          {
-                    showNotification('Stake succes','success',4000)
-                } else {
-                    showNotification('Unstake succes','success',4000)
-                }                
-            }
-            else{
-                console.log(e)
-            }
-        }).catch(e =>{
-            console.log(e.message)
-            showNotification(e.message,'error',4000)
-        })
-    }
-
-    function claimUnstake() {
-        const msg = new MsgExecuteContract(
-            state.wallet.walletAddress,
-            state.loterraStakingAddress,
-            {
-              withdraw_stake: {},
-            }
-          )
-          state.wallet.post({
-            msgs: [msg],
-            fee: obj
-            // gasPrices: obj.gasPrices(),
-            // gasAdjustment: 1.5,
-        }).then(e => {
-            if (e.success) {              
-                showNotification('Claim unstake succes','success',4000)
-            }
-            else{
-                console.log(e)
-            }
-        }).catch(e =>{
-            console.log(e.message)
-            showNotification(e.message,'error',4000)
-        })
-    }
+    
 
     function claimRewards() {
         const msg = new MsgExecuteContract(
@@ -157,10 +80,7 @@ export default () =>  {
         })
     }
 
-    function setInputAmount(amount){
-        const input = document.querySelector('.amount-input');
-        input.value = amount / 1000000;
-    }
+    
 
     function getNotStaked(){
          let staked = parseInt(state.staking.total_balance) / 1000000;
@@ -182,48 +102,6 @@ export default () =>  {
         return parseInt(state.daoFunds / 1000000)
     }
 
-    function claimInfo (){
-        if (state.holderClaims){
-            let total_amount_claimable = 0
-            state.holderClaims.map(e => {
-                if (e.release_at.at_height < state.blockHeight ) {
-                    total_amount_claimable += parseInt(e.amount)
-                }
-            })
-            return  (<>{total_amount_claimable/ 1000000}</>)
-        }
-        return  (<>0</>)
-
-    }
-    function pendingClaim (){
-        if (state.holderClaims){
-            let total_amount_pending = 0
-            state.holderClaims.map(e => {
-                if (e.release_at.at_height > state.blockHeight ) {
-                    total_amount_pending += parseInt(e.amount)
-                }
-            })
-            return  (<>{total_amount_pending/ 1000000}</>)
-        }
-        return  (<>0</>)
-
-    }
-
-
-     async function blockHeight(){
-        const latestBlocks = await axios.get('https://lcd.terra.dev/blocks/latest')
-        setBlockHeight(latestBlocks.data.block.header.height)
-        console.log('Block HEIGHT',latestBlocks)
-     }
-
-
-     useEffect(() => {
-        blockHeight();
-       
-      }, [blockHeight]);
-
-
-
     return(
         <>
         <div className="hero staking" style={{backgroundImage:'url(/bg.svg)'}}>
@@ -237,52 +115,8 @@ export default () =>  {
                                 }                                
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
                             </div>
-                            <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">
-                                <div className="card lota-card staking">
-                                    <div className="card-body">
-                                        <div className="row">
-                                            <div className="col-12 text-center">
-                                                <h3>Staking</h3>                                                 
-                                                <p className="slogan">Unstake or stake your LOTA in order to get rewards and voting weight</p>
-                                            </div>
-                                            <div className="col-md-12">                                            
-                                                <input type="number" className="form-control amount-input" name="amount"/>
-                                            </div>
-                                            <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end" onClick={() => setInputAmount(parseInt(state.LotaBalance.balance))}>MAX</p>
-                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('stake')}>Stake</button>
-                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
-                                        (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
-                                    } LOTA</strong></small>
-                                            </div>
-                                            <div className="col-md-4 my-3">
-                                                <p className="shortcut float-end" onClick={() => setInputAmount(state.allHolder.balance)}>MAX</p>
-                                                <button className="btn btn-plain w-100" onClick={() => stakeOrUnstake('unstake')}>Unstake</button>
-                                                
-                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
-                                        (<>{numeral(parseInt(state.allHolder.balance) / 1000000).format('0.00')}</>)
-                                    } LOTA</strong></small>
-                                            </div>
-                                            <div className="col-md-4 my-3">                                                
-                                                <button className="btn btn-plain w-100" onClick={() => claimUnstake()} style={{marginTop:'21px'}}>Claim unstake</button>
-                                                {/* If unstake claiming condition */}
-                                                <span className="info">
-                                                    <Info size={14} weight="fill" className="me-1" />
-                                                    Your pending claim amount available soon:
-                                                    <strong>{pendingClaim()} LOTA</strong>
-                                                </span>
-                                                <small className="float-end text-muted mt-2">Available: <strong>
-                                                    {
-                                                      state.wallet && state.wallet.walletAddress && claimInfo()
-                                                    }
-                                                  LOTA</strong></small>
-                                            </div>
-                                            <div classNaame="col-md-12 my-2 text-start">
-                                                <span className="badge rounded-pill" style={{backgroundColor:'#251757',display:'inline-block', color:'#a39dbf', padding:'8px'}}>Latest block height: {heightBlock}</span> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div className="col-md-12 col-lg-6 order-1 order-lg-2 p-lg-5">
+                                <StakingForm />
                             </div>
                         </div>
                     
