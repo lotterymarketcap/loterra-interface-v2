@@ -211,9 +211,9 @@ export default () => {
           return;
         }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
-        const addToGas = 5541 * cart.length
+        const addToGas = 5450 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        const obj = new StdFee(1_500_000, { uusd: 684000 + addToGas })
+        const obj = new StdFee(500_000, { uusd: 230000 + addToGas })
         let exec_msg = {
             register: {
                 combination: cart
