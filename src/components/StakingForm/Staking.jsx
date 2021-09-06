@@ -54,20 +54,22 @@ export default function Staking(){
 
     return (
         <div className="row">
-                                                <div className="col-md-12">                     
-                                                <p className="input-heading">The amount you want to stake</p>                       
-                                                <p className="input-slogan">Staking lote will give you 20% on winner prizes</p>
-                                                    <input type="number" className="form-control amount-input-staking" name="amount"/>
-                                                </div>
-                                            <div className="col-md-12 my-3">
-                                                <p className="shortcut float-end" onClick={() => setInputAmount(parseInt(state.LotaBalance.balance))}>MAX</p>
-                                                <button className="btn btn-default-lg w-100" onClick={() => stake()}>Stake</button>
-                                                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet && state.wallet.walletAddress &&
-                                        (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
-                                    } LOTA</strong></small>
-                                            </div>
-                                            
-                                            
-                                                </div>
+            <div className="col-md-12">
+                <p className="input-heading">The amount you want to stake</p>
+                <p className="input-slogan">Staking lote will give you 20% on winner prizes</p>
+                <input type="number" className="form-control amount-input-staking" name="amount" />
+            </div>
+            <div className="col-md-12 my-3">
+                <p className="shortcut float-end" onClick={()=> setInputAmount(parseInt(state.LotaBalance.balance))}>MAX
+                </p>
+                <button className="btn btn-default-lg w-100" onClick={()=> stake()}>Stake</button>
+                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet &&
+                        state.wallet.walletAddress &&
+                        (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
+                        } LOTA</strong></small>
+            </div>
+
+
+        </div>
     )
 }
