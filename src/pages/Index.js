@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext, useRef} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown, MonitorPlay} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown, MonitorPlay, Info} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -568,9 +568,12 @@ export default () => {
                             <button className="btn btn-default" onClick={() => amountChange('up')}><PlusCircle size={31} color={'#9183d4'} /></button>                         
                         </div>
                         {/* <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p> */}
-                        { !alteBonus &&
+                        { !alteBonus ?
                           (
                         <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                          ) :
+                          (
+                            <p className="mb-2">Total: <strong> {numeral((amount) - (amount / state.config.bonus_burn_rate)).format('0,0.00')} UST <span style={{color:'#4ee19b'}}>+ {numeral(amount / state.config.bonus_burn_rate).format('0,0.00')} ALTE</span></strong></p>
                           )
                         }
                         <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.3'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://app.alteredprotocol.com" target="_blank">Altered</a></p>
@@ -581,9 +584,11 @@ export default () => {
                           <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">Bonus</span></label>
                         { alteBonus &&
                           (
-                            <>                          
-                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount / state.config.bonus_burn_rate).format('0.000000')} ALTE</p>
-                            <p className="mb-2"><strong>Total: </strong> {numeral((amount) - (amount / state.config.bonus_burn_rate)).format('0.000000')} UST</p>
+                            <>      
+                            <span className="info mb-2">
+                            <Info size={14} style={{marginTop:'-2px'}} weight="fill" className="me-1" />
+                            No ALTE? you can buy ALTE on the <a href="https://app.alteredprotocol.com" target="_blank">Altered website</a>
+                            </span>                                               
                             </>
                           )
                         }
