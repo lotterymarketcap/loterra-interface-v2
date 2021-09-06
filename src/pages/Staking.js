@@ -115,7 +115,7 @@ export default () =>  {
                                 }                                
                                 <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
                             </div>
-                            <div className="col-md-12 col-lg-6 order-1 order-lg-2 p-lg-5">
+                            <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">
                                 <StakingForm />
                             </div>
                         </div>
