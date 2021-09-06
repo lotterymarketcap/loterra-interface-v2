@@ -97,7 +97,7 @@ width: 100%;
       height:785px;
     }
     &.staking {
-      height:765px;      
+      height:935px;      
       @media(max-width:990px){
         height:1305px;
       }
@@ -171,6 +171,41 @@ font-style: normal;
     background-color: #241554;
     border: 1px solid #44377e;
   }
+}
+
+.pie-stats  {
+  padding: 6px 10px;
+    background: #10003b8a;
+    color: #ffffff9e;
+    border: 1px solid #37296d;
+    font-size: 12px;
+    border-radius: 4px;
+    margin-top:50px;
+    margin-bottom:25px;
+    .circle-green {
+      width:10px;
+      height:10px;
+      border-radius:100px;
+      background:#36df8d;
+      display: inline-block;
+      margin-right:3px;
+    }
+    .circle-grey {
+      width:10px;
+      height:10px;
+      border-radius:100px;
+      background:#342756;
+      display: inline-block;
+      margin-right:3px;
+    }
+    .circle-pink {
+      width:10px;
+      height:10px;
+      border-radius:100px;
+      background:#c345c3;
+      display: inline-block;
+      margin-right:3px;
+    }
 }
 
 .total-stats {

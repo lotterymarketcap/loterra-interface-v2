@@ -110,10 +110,33 @@ export default () =>  {
                             <div className="col-md-12 order-2 order-lg-1 col-lg-4">
                                 { state.tokenInfo.total_supply &&
                                      (
+                                         <>
+                                         <div className="pie-stats">
+                                             <div className="row">
+                                                 <div className="col-6 text-white">
+                                                     <span className="circle-green"></span>Available
+                                                 </div>
+                                                 <div className="col-6">
+                                                    {state.tokenInfo.total_supply ? getStakedNr() : '0'}
+                                                 </div>
+                                                 <div className="col-6 text-white">
+                                                 <span className="circle-pink"></span>DAO
+                                                 </div>
+                                                 <div className="col-6">
+                                                    {state.tokenInfo.total_supply ?  getDaoFunds() : '0'}
+                                                 </div>
+                                                 <div className="col-6 text-white">
+                                                 <span className="circle-grey"></span>Staked
+                                                 </div>
+                                                 <div className="col-6">
+                                                    {state.tokenInfo.total_supply ? getNotStaked() : '0'}
+                                                 </div>
+                                             </div>
+                                         </div>
                                         <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                        </>    
                                     )
-                                }                                
-                                <small style={{opacity:'0.5', marginTop:'7px', position:'relative', display:'block', textAlign:'center'}}>Total LOTA staked and available to stake</small>
+                                }                                                                
                             </div>
                             <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">
                                 <StakingForm />
