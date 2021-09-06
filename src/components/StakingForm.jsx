@@ -37,15 +37,15 @@ export default function StakingForm(){
                                             <ul className="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
                                                 <li className="nav-item" role="presentation">
                                                     <button className="nav-link active" id="pills-staking-tab" data-bs-toggle="pill" data-bs-target="#pills-staking" type="button" role="tab" aria-controls="pills-staking" aria-selected="true">Staking</button>
-                                                </li>
-                                                <li className="nav-item" role="presentation">
-                                                    <button className="nav-link" id="pills-lpstaking-tab" data-bs-toggle="pill" data-bs-target="#pills-lpstaking" type="button" role="tab" aria-controls="pills-lpstaking" aria-selected="false">LP Staking</button>
-                                                </li>
+                                                </li>                                          
                                                 <li className="nav-item" role="presentation">
                                                     <button className="nav-link" id="pills-unstaking-tab" data-bs-toggle="pill" data-bs-target="#pills-unstaking" type="button" role="tab" aria-controls="pills-unstaking" aria-selected="false">Unstaking</button>
                                                 </li>
                                                 <li className="nav-item" role="presentation">
-                                                    <button className="nav-link" id="pills-claim-tab" data-bs-toggle="pill" data-bs-target="#pills-claim" type="button" role="tab" aria-controls="pills-claim" aria-selected="false">Claim</button>
+                                                    <button className="nav-link" id="pills-claim-tab" data-bs-toggle="pill" data-bs-target="#pills-claim" type="button" role="tab" aria-controls="pills-claim" aria-selected="false">Claim unstake</button>
+                                                </li>
+                                                <li className="nav-item" role="presentation">
+                                                    <button className="nav-link" id="pills-lpstaking-tab" data-bs-toggle="pill" data-bs-target="#pills-lpstaking" type="button" role="tab" aria-controls="pills-lpstaking" aria-selected="false">LP Staking</button>
                                                 </li>
                                             </ul>
                                             </div> 
