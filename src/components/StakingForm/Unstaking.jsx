@@ -54,7 +54,10 @@ export default function Unstaking(){
             <div className="col-md-12">
                 <p className="input-heading">The amount you want to unstake</p>
                 <p className="input-slogan">Staking lote will give you 20% on winner prizes</p>
-                <input type="number" className="form-control amount-input-unstake" name="amount" />
+                <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><img src="./LOTA.png" width="30px" className="img-fluid"/></span>
+                <input type="number" className="form-control amount-input-unstake" autoComplete="off" placeholder="0.00"  name="amount" />
+                </div>
             </div>
             <div className="col-md-12 my-3">
                 <p className="shortcut float-end" onClick={()=> setInputAmount(state.allHolder.balance)}>MAX</p>

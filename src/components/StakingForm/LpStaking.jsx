@@ -7,7 +7,7 @@ export default function LpStaking(){
     const {state, dispatch} = useStore();
     
     function setInputAmount(amount){
-        const input = document.querySelector('.amount-input-lpstaking');
+        const input = document.querySelector('.amount-input-lota');
         input.value = amount / 1000000;
     }
 
@@ -19,17 +19,22 @@ export default function LpStaking(){
         <div className="row">
             <div className="col-md-12">
                 <p className="input-heading">The amount you want to lp stake</p>
-                <p className="input-slogan">Staking lote will give you 20% on winner prizes</p>
-                <input type="number" className="form-control amount-input-lpstaking" name="amount" />
+                <p className="input-slogan">Staking lota will give you 20% on winner prizes</p>
+                <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><img src="./LOTA.png" width="30px" className="img-fluid"/></span>
+                <input type="number" className="form-control amount-input-lota" autoComplete="off" placeholder="0.00"   name="amount-lota" />
+                </div>
                 <p className="input-heading">The amount you want to lp stake</p>
-                <p className="input-slogan">Staking lote will give you 20% on winner prizes</p>
-                <input type="number" className="form-control amount-input-lpstaking" name="amount" />
+                <p className="input-slogan">Staking lota will give you 20% on winner prizes</p>
+                <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><img src="./UST.svg" width="30px" className="img-fluid"/></span>
+                <input type="number" className="form-control amount-input-ust" autoComplete="off" placeholder="0.00"  name="amount-ust" />
+                </div>
             </div>
-            <div className="col-md-12 my-3">
-                <p className="shortcut float-end" onClick={()=> setInputAmount(state.allHolder.balance)}>MAX</p>
-                <button className="btn btn-default-lg w-100" onClick={()=> lpStake()}>Unstake</button>
+            <div className="col-md-12 my-3">           
+                <button className="btn btn-default-lg w-100" onClick={()=> lpStake()}>Deposit</button>
 
-                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet &&
+                <small className="float-end text-muted mt-2">Available: <strong onClick={()=> setInputAmount(state.allHolder.balance)}>{ state.wallet &&
                         state.wallet.walletAddress &&
                         (<>{numeral(parseInt(state.allHolder.balance) / 1000000).format('0.00')}</>)
                         } LOTA</strong></small>
