@@ -168,9 +168,7 @@ export default function Staking(props){
                         } LOTA</strong></small>
             </div>
             <div className="col-md-12 my-3">
-            <div className="claim-unstake">
-            <p className="input-heading">Claim unstake</p>
-            <p className="input-slogan">Staking lote will give you 20% on winner prizes</p>
+            <div className="claim-unstake">            
             <button className="btn btn-default-lg w-100" onClick={()=> claimUnstake()} style={{marginTop:'21px'}}>Claim
                 unstake</button>
             {/* If unstake claiming condition */}
