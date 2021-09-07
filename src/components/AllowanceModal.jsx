@@ -6,8 +6,9 @@ import { useStore } from "../store";
 
 export default function AllowanceModal(props){
 
-    const { open,  toggleModal,showNotification } = props;
+    const { open, prefill, toggleModal,showNotification } = props;
     const {state, dispatch} = useStore();
+    const [prefillValue, setPrefillValue] = useState(0)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,6 +53,11 @@ export default function AllowanceModal(props){
         } )
       
       }
+     
+
+      function handleChange(e){
+        setPrefillValue(e.target.value)
+      }
     
 
     return (
@@ -60,18 +66,18 @@ export default function AllowanceModal(props){
         <button className="toggle" onClick={() => toggleModal()}><X size={36} /></button>
 
             <div className="allowancemodal_heading text-center">
-                <h2>Increase Allowance</h2>
+                <h2>Approval needed</h2>
             </div>
             <div className="allowancemodal_content">
-            <span className="info">
+            <span className="info mb-2">
                 <Info size={14} weight="fill" className="me-1" />
-                You need to increase allowance in order to use the ALTE bonus         
+                You need to approve the lottery contract to burn 🔥 ALTE from your wallet, You can set this amount to your own likings (it should be at least the amount of bonus ALTE).   
             </span>
-               <form className='allowancemodal_form' onSubmit={(e) => handleSubmit(e)}>
+               <form className='allowancemodal_form' onSubmit={(e) => handleSubmit(e)}> 
                <div className="col-12">
-                        <label>Allowance amount</label>
-                        <input name="allowance_amount" defaultValue={1000000} type="number" className="form-control" required/>
-                        <button type="submit" className="btn btn-special w-100 mt-4" style={{boxShadow:'none'}}>Increase allowance</button>
+                        <label>Amount</label>
+                        <input name="allowance_amount" value={prefillValue == 0 ? prefill : prefillValue} type="number" min={prefill} className="form-control" onChange={(e) => handleChange(e)} required/>
+                        <button type="submit" className="btn btn-special w-100 mt-4" style={{boxShadow:'none'}}>Approve ALTE 🔥</button>
                     </div>                  
                </form>
             </div>

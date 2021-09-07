@@ -9,6 +9,8 @@ const initialState = {
   loterraPoolAddress: "terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta",
   loterraStakingAddress: "terra1342fp86c3z3q0lksq92lncjxpkfl9hujwh6xfn",
   alteredContractAddress:"terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv",
+  loterraLPAddress: "terra1t4xype7nzjxrzttuwuyh9sglwaaeszr8l78u6e",
+  loterraStakingLPAddress: "terra1pdslh858spzqrtx2gwr69pzm9m2wrv55aeh742",
   allWinners: [],
   tokenInfo: {},
   allPlayers: [],
@@ -17,13 +19,17 @@ const initialState = {
   staking: {},
   wallet: {},
   LotaBalance: {},
+  LPBalance:{},
   config: {},
   currentLotteryId: 0,
   holderPercentageFee: 0,
   allCombinations: [],
   allHolder: {},
+  allHolderLP: {},
   holderClaims: [],
+  holderClaimsLP: [],
   holderAccruedRewards:0,
+  LPHolderAccruedRewards: 0,
   combination: "",
   modal: false,
   daoFunds: 0,
@@ -86,6 +92,11 @@ const reducer = (state, action) => {
         ...state,
         holderAccruedRewards: action.message
       }
+    case "setLPHolderAccruedRewards":
+      return {
+        ...state,
+        LPHolderAccruedRewards: action.message
+      }
     case "setAllPlayers":
       return {
         ...state,
@@ -111,10 +122,20 @@ const reducer = (state, action) => {
         ...state,
         allHolder: action.message
       }
+    case "setAllHolderLP":
+      return {
+        ...state,
+        allHolderLP: action.message
+      }
     case "setHolderClaims":
       return {
         ...state,
         holderClaims: action.message
+      }
+    case "setHolderClaimsLP":
+      return {
+        ...state,
+        holderClaimsLP: action.message
       }
     case "setAllNativeCoins":
       return {
@@ -130,6 +151,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         combination: action.message
+      }
+    case "setLPBalance":
+      return {
+        ...state,
+        LPBalance: action.message
       }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);

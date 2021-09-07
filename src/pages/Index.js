@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback, useContext, useRef} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown, MonitorPlay} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown, MonitorPlay, Info} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
 import Countdown from "../components/Countdown";
@@ -13,6 +13,7 @@ import SocialShare from "../components/SocialShare";
 import Footer from "../components/Footer";
 import AllowanceModal from "../components/AllowanceModal";
 import WinnerRow from "../components/WinnerRow";
+import PriceLoader from "../components/PriceLoader";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -35,6 +36,7 @@ export default () => {
     const [jackpot, setJackpot] = useState(0);
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
+  const [buyLoader, setBuyLoader] = useState(false)
   const [winners, setWinners] = useState(0);
   const [alteBonus, setAlteBonus] = useState(false)
   const [giftFriend, setGiftFriend] = useState({active: false, wallet:''})
@@ -179,8 +181,9 @@ export default () => {
 
 
     async function execute(){
-
+        setBuyLoader(true)
         if(!connectedWallet){
+            setBuyLoader(false)
             return showNotification('Please connect your wallet','error',4000)
         }
         const allowance = await api.contractQuery(
@@ -195,6 +198,7 @@ export default () => {
 
         if(alteBonus && parseInt(allowance.allowance) < (amount * state.config.price_per_ticket_to_register) / state.config.bonus_burn_rate){
             setAllowanceModal(true)
+            setBuyLoader(false)
             return showNotification('No allowance yet','error',4000)
         }
 
@@ -203,11 +207,13 @@ export default () => {
         //Check if friend gift toggle wallet address filled
         if(giftFriend.active && giftFriend.wallet == ''){
             showNotification('Gift friends enabled but no friends wallet address','error',4000);
+            setBuyLoader(false)
             return;
         }
         //Check duplicates
         if(checkIfDuplicateExists(cart)){
           showNotification('Combinations contain duplicate','error',4000);
+          setBuyLoader(false)
           return;
         }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
@@ -249,14 +255,17 @@ export default () => {
                 showNotification("register combination success", 'success', 4000)
                 multiplier(amount)
                 setAlteBonus(false);
+                setBuyLoader(false)
             }
             else{
                 //setResult("register combination error")
                 showNotification("register combination error", 'error', 4000)
+                setBuyLoader(false)
             }
         }).catch(e =>{
             //setResult(e.message)
             showNotification(e.message, 'error', 4000)
+            setBuyLoader(false)
         })
 
     }
@@ -502,7 +511,7 @@ export default () => {
                                 <div className="row">
                                   <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
-                                    <h3><span>PLAYERS</span>{players}</h3>
+                                    <h3><span>PLAYERS</span>{players ? players : <PriceLoader/>}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -514,7 +523,7 @@ export default () => {
                                 <div className="row">
                                   <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
-                                    <h3><span>TICKETS</span>{tickets}</h3>
+                                    <h3><span>TICKETS</span>{tickets ? tickets : <PriceLoader/>}</h3>
                                   </div>
                                 </div>
                               </div>
@@ -559,9 +568,12 @@ export default () => {
                             <button className="btn btn-default" onClick={() => amountChange('up')}><PlusCircle size={31} color={'#9183d4'} /></button>                         
                         </div>
                         {/* <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p> */}
-                        { !alteBonus &&
+                        { !alteBonus ?
                           (
                         <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                          ) :
+                          (
+                            <p className="mb-2">Total: <strong> {numeral((amount) - (amount / state.config.bonus_burn_rate)).format('0,0.00')} UST <span style={{color:'#4ee19b'}}>+ {numeral(amount / state.config.bonus_burn_rate).format('0,0.00')} ALTE</span></strong></p>
                           )
                         }
                         <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.3'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://app.alteredprotocol.com" target="_blank">Altered</a></p>
@@ -572,9 +584,11 @@ export default () => {
                           <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">Bonus</span></label>
                         { alteBonus &&
                           (
-                            <>                          
-                            <p className="m-0" style={{color:'#4ee19b'}}><strong>BONUS:</strong> {numeral(amount / state.config.bonus_burn_rate).format('0.000000')} ALTE</p>
-                            <p className="mb-2"><strong>Total: </strong> {numeral((amount) - (amount / state.config.bonus_burn_rate)).format('0.000000')} UST</p>
+                            <>      
+                            <span className="info mb-2">
+                            <Info size={14} style={{marginTop:'-2px'}} weight="fill" className="me-1" />
+                            No ALTE? you can buy ALTE on the <a href="https://app.alteredprotocol.com" target="_blank">Altered website</a>
+                            </span>                                               
                             </>
                           )
                         }
@@ -593,12 +607,25 @@ export default () => {
                         }
                         <div className="text-sm">{result}</div>
                         <TicketModal open={ticketModal} amount={amount} updateCombos={(new_code,index) => updateCombos(new_code,index)} buyTickets={() => execute() } toggleModal={() => setTicketModal(!ticketModal)} multiplier={(mul) => multiplier(mul)}/>
-                        <AllowanceModal open={allowanceModal} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
+                        <AllowanceModal open={allowanceModal} prefill={amount / state.config.bonus_burn_rate} toggleModal={() => setAllowanceModal(!allowanceModal)} showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
                         <button onClick={() => setTicketModal(!ticketModal)} className="btn btn-default w-100 mb-3 mt-3" style={{fontSize:'18px',fontWeight:'bold',padding:'11px 5px', borderBottom:'4px solid #10003b'}}>
                           <PencilLine size={24} color={'#ff36ff'} style={{marginTop:'-1px', marginRight:'5px'}} />
                           Personalize tickets
                         </button>
-                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>Buy {amount} tickets</button>
+                        <button onClick={()=> execute()} className="btn btn-special w-100" disabled={amount <= 0}>
+                        { !buyLoader ?
+                          <>
+                          Buy {amount} tickets
+                          </>
+                        : 
+                            <div class="spinner-border spinner-border-sm" role="status" style={{
+                              position:'relative',
+                              top:'-3px'
+                            }}>
+                            <span class="visually-hidden">Loading...</span>
+                            </div>
+                        }
+                        </button>
                       </div>
                     </div>
                     <SocialShare/>
@@ -654,28 +681,34 @@ export default () => {
                           </div>
                         <div className="col-md-4 mb-3">
                                           <div className="lota-stats mb-4 mb-md-0">
-                                          { lotaPrice.assets &&
-                                            <>
-                                            <p>LOTA price</p>
+                                          <p>LOTA price</p>
+                                          { lotaPrice.assets ?
+                                            <>                                            
                                             <h5>{numeral((lotaPrice.assets[1].amount/lotaPrice.assets[0].amount)).format('0.000')}<span>UST</span></h5>
                                             {/* <p>{contractJackpotInfo}</p> */}
                                             </>
+                                            :
+                                            <PriceLoader/>
                                           }
                                           </div>
                                         </div>
                                         <div className="col-md-4 mb-3">
                                             <div className="lota-stats">
                                               <p>Circulating SUPPLY</p>
+                                              { circulatingSupply() ?
                                               <h5>{numeral(circulatingSupply()).format("0,0.00")}<span>LOTA</span></h5>
+                                              :
+                                              <PriceLoader/>
+                                              }
                                             </div>
                                         </div>
                                         <div className="col-md-4 mb-3">
                                         <div className="lota-stats">
-                                            { lotaPrice.assets &&
-                                            <>
-                                              <p>Market Cap</p>
+                                        <p>Market Cap</p>
+                                            { lotaPrice.assets ?                                        
                                               <h5>{numeral(marketCap()).format("0,0.00")}<span>UST</span></h5>
-                                            </>
+                                              :
+                                              <PriceLoader/>
                                             }
                                             </div>
                                         </div>
