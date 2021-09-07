@@ -25,7 +25,9 @@ const initialState = {
   holderPercentageFee: 0,
   allCombinations: [],
   allHolder: {},
+  allHolderLP: {},
   holderClaims: [],
+  holderClaimsLP: [],
   holderAccruedRewards:0,
   LPHolderAccruedRewards: 0,
   combination: "",
@@ -120,10 +122,20 @@ const reducer = (state, action) => {
         ...state,
         allHolder: action.message
       }
+    case "setAllHolderLP":
+      return {
+        ...state,
+        allHolderLP: action.message
+      }
     case "setHolderClaims":
       return {
         ...state,
         holderClaims: action.message
+      }
+    case "setHolderClaimsLP":
+      return {
+        ...state,
+        holderClaimsLP: action.message
       }
     case "setAllNativeCoins":
       return {

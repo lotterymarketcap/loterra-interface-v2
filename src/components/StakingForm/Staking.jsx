@@ -56,8 +56,9 @@ export default function Staking(props){
             // gasPrices: obj.gasPrices(),
             // gasAdjustment: 1.5,
         }).then(e => {
+            let notification_msg = type == 'stake' ? 'Stake success' : 'Unstake success';
             if (e.success) {   
-                    showNotification('Stake succes','success',4000)                            
+                    showNotification(notification_msg,'success',4000)
             }
             else{
                 console.log(e)
@@ -110,7 +111,7 @@ export default function Staking(props){
             // gasAdjustment: 1.5,
         }).then(e => {
             if (e.success) {              
-                showNotification('Claim unstake succes','success',4000)
+                showNotification('Claim unstake success','success',4000)
             }
             else{
                 console.log(e)
@@ -125,7 +126,7 @@ export default function Staking(props){
         <div className="row">
             <div className="col-md-12">
                 <p className="input-heading">The amount you want to stake</p>
-                <p className="input-slogan">Staking lota will give you 20% on winner prizes</p>
+                <p className="input-slogan">Stake LOTA and get 20% on winner prizes</p>
                 <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="./LOTA.png" width="30px" className="img-fluid"/></span>
                 <input type="number" className="form-control amount-input-staking" autoComplete="off" placeholder="0.00"  name="amount" />
@@ -138,13 +139,13 @@ export default function Staking(props){
                             Pool APR
                         </div>
                         <div className="col-6 text-end">
-                            0%
+                            ?%
                         </div>
                         <div className="col-6">
                             Pool APY
                         </div>
                         <div className="col-6 text-end">
-                            0%
+                            ?%
                         </div>
                     </div>
                 </div>
