@@ -132,10 +132,10 @@ export default () =>  {
         <div className="hero staking" style={{backgroundImage:'url(/bg.svg)'}}>
             <div className="container h-100 d-md-flex">
                         <div className="row align-self-center">
-                            <div className="col-md-12 order-2 order-lg-1 col-lg-4">
+                            <div className="col-md-12 order-2 order-lg-1 col-lg-4 d-flex">
                                 { state.tokenInfo.total_supply &&
                                      (
-                                         <>
+                                         <div className="align-self-center w-100">
                                          <div className="pie-stats">
                                              <div className="row">
                                                  <div className="col-6 text-white">
@@ -159,7 +159,7 @@ export default () =>  {
                                              </div>
                                          </div>
                                         <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
-                                        </>    
+                                        </div>    
                                     )
                                 }                                                                
                             </div>
@@ -182,21 +182,27 @@ export default () =>  {
                                 </div>
                             <Line data={lineData} options={lineOptions} style={{background:'#10003b', borderRadius:'10px'}}/>
                             </div> */}
-                            <div className="col-md-12 text-center d-flex">
-                                    <div className="align-self-center w-100">
+                            <div className="col-md-12 text-center">
+                                  <div className="row">
+                                      <div className="col-md-6">
+                                      <div className="align-self-center w-100">
                                     <h2>Staking rewards</h2>
                                     { state.wallet && state.wallet.walletAddress &&
                                         (<p>{numeral(parseInt(state.holderAccruedRewards) / 1000000).format('0.00000')} UST</p>)
                                     }
                                     <button className=" btn btn-special mt-3" disabled={state.holderAccruedRewards <= 0 ? true : false} onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
                                     </div>
-                                <div className="align-self-center w-100">
+                                      </div>
+                                      <div className="col-md-6">
+                                      <div className="align-self-center w-100">
                                     <h2>Staking LP rewards</h2>
                                     { state.wallet && state.wallet.walletAddress &&
                                     (<p>{numeral(parseInt(state.LPHolderAccruedRewards) / 1000000).format('0.00000')} LOTA</p>)
                                     }
                                     <button className=" btn btn-special mt-3" disabled={state.LPHolderAccruedRewards <= 0 ? true : false} onClick={() => claimLPRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
                                 </div>
+                                      </div>                                 
+                                  </div>
                             </div>
                         </div>
                     </div>

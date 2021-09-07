@@ -149,25 +149,26 @@ export default function Staking(props){
                     </div>
                 </div>
             </div>
-            <div className="col-md-6 my-3">
-                <p className="shortcut float-end" onClick={()=> setInputAmount(parseInt(state.LotaBalance.balance))}>MAX
-                </p>
-                <button className="btn btn-default-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake</button>
-                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet &&
+            <div className="col-6 my-3">
+                {/* <p className="shortcut float-end" onClick={()=> setInputAmount(parseInt(state.LotaBalance.balance))}>MAX
+                </p> */}
+                <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake</button>
+                <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}} onClick={()=> setInputAmount(parseInt(state.LotaBalance.balance))}>{ state.wallet &&
                         state.wallet.walletAddress &&
                         (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
                         } LOTA</strong></small>
             </div>
-            <div className="col-md-6 my-3">
-                <p className="shortcut float-end" onClick={()=> setInputAmount(state.allHolder.balance)}>MAX</p>
-                <button className="btn btn-default-lg w-100" onClick={()=> stakeOrUnstake('unstake')}>Unstake</button>
+            <div className="col-6 my-3">
+                {/* <p className="shortcut float-end" onClick={()=> setInputAmount(state.allHolder.balance)}>MAX</p> */}
+                <button className="btn btn-plain-lg w-100" onClick={()=> stakeOrUnstake('unstake')}>Unstake</button>
 
-                <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet &&
+                <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}}  onClick={()=> setInputAmount(state.allHolder.balance)}>{ state.wallet &&
                         state.wallet.walletAddress &&
                         (<>{numeral(parseInt(state.allHolder.balance) / 1000000).format('0.00')}</>)
                         } LOTA</strong></small>
             </div>
             <div className="col-md-12 my-3">
+            <div className="claim-unstake">
             <p className="input-heading">Claim unstake</p>
             <p className="input-slogan">Staking lote will give you 20% on winner prizes</p>
             <button className="btn btn-default-lg w-100" onClick={()=> claimUnstake()} style={{marginTop:'21px'}}>Claim
@@ -183,6 +184,7 @@ export default function Staking(props){
                     state.wallet && state.wallet.walletAddress && claimInfo()
                     }
                     LOTA</strong></small>
+            </div>
         </div>
 
         </div>

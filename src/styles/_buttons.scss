@@ -60,4 +60,26 @@ color:#fff;
     padding: 11px 5px;
     border-bottom: 4px solid rgb(16, 0, 59);
     }
+    &.btn-plain-lg {
+        background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
+border: 1px solid #40337A;
+box-sizing: border-box;
+border-radius: 7px;
+color:#fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 11px 5px;
+    }
+    &.btn-normal-lg {
+        background: linear-gradient(
+            328.75deg
+            , #99fbcc -5.49%, #22d57f 104.44%);
+                border: 1px solid #25d580;
+                box-sizing: border-box;
+                border-radius: 7px;
+                color: #10003b;
+                font-size: 18px;
+                font-weight: bold;
+                padding: 11px 5px;
+    }
 }

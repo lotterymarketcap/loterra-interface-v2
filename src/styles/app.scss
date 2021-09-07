@@ -102,7 +102,7 @@ width: 100%;
         height:1305px;
       }
       @media(max-width:510px){
-        height: 1275px;
+        height: 1500px;
       }
     }
 }
@@ -153,9 +153,17 @@ font-style: normal;
   opacity:0.5;
 }
 
+.claim-unstake {
+  padding: 15px;
+  background: #41347b;
+  border-radius: 4px;
+  float: left;
+  width: 100%;
+}
+
 .input-heading {
   margin-bottom:0;
-  font-size:18px;
+  font-size:21px;
   font-weight:600;
   
 }

@@ -1,7 +1,7 @@
 .card {
     &.lota-card {
         background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
-        border-radius: 30px;
+        border-radius: 10px;
         .card-header {
             .card-header-icon {
                 width:145px;
@@ -49,7 +49,7 @@
             }
         }
         &.staking {
-            padding:35px 35px;
+            padding:15px;
             h3 {
                 font-weight: bold;
                 font-size: 46px;
@@ -94,8 +94,9 @@
                 }
             }
             @media(max-width:768px){
-                padding:15px 15px;
-                margin-bottom:20px;
+                padding: 10px 5px;
+                margin-bottom: 20px;
+                border-radius: 5px;
             }
         }
         &.staking-rewards {
@@ -131,6 +132,11 @@
                     font-size: 15px;
                     color: #20FF93;
                 }
+            }
+            @media(max-width:768px){
+                padding: 10px 5px;
+                margin-bottom: 20px;
+                border-radius: 5px;
             }
         }
     }
