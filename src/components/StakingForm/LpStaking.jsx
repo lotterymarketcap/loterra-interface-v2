@@ -30,10 +30,10 @@ export default function LpStaking(props){
         if(type == 'stake'){
             msg = new MsgExecuteContract(
                 state.wallet.walletAddress,
-                state.loterraContractAddressCw20,
+                state.loterraLPAddress,
                 {
                   send: {
-                    contract: state.loterraStakingAddress,
+                    contract: state.loterraStakingLPAddress,
                     amount: amount.toString(),
                     msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
                   },
@@ -42,7 +42,7 @@ export default function LpStaking(props){
         } else {
             msg = new MsgExecuteContract(
                 state.wallet.walletAddress,
-                state.loterraStakingAddress,
+                state.loterraStakingLPAddress,
                 {
                   unbond_stake: { amount: amount.toString() },
                 }
@@ -56,6 +56,7 @@ export default function LpStaking(props){
             // gasPrices: obj.gasPrices(),
             // gasAdjustment: 1.5,
         }).then(e => {
+            console.log(e)
             if (e.success) {   
                     showNotification('Stake succes','success',4000)                            
             }
@@ -63,7 +64,7 @@ export default function LpStaking(props){
                 console.log(e)
             }
         }).catch(e =>{
-            console.log(e.message)
+            console.log(e)
             showNotification(e.message,'error',4000)
         })
     }
@@ -98,7 +99,7 @@ export default function LpStaking(props){
     function claimUnstake() {
         const msg = new MsgExecuteContract(
             state.wallet.walletAddress,
-            state.loterraStakingAddress,
+            state.loterraStakingLPAddress,
             {
               withdraw_stake: {},
             }
@@ -150,12 +151,12 @@ export default function LpStaking(props){
                 </div>
             </div>
             <div className="col-md-6 my-3">
-                <p className="shortcut float-end" onClick={()=> setInputAmount(parseInt(state.LotaBalance.balance))}>MAX
+                <p className="shortcut float-end" onClick={()=> setInputAmount(parseInt(state.LPBalance.balance))}>MAX
                 </p>
                 <button className="btn btn-default-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake</button>
                 <small className="float-end text-muted mt-2">Available: <strong>{ state.wallet &&
                         state.wallet.walletAddress &&
-                        (<>{(numeral(parseInt(state.LotaBalance.balance) / 1000000).format('0.00'))}</>)
+                        (<>{(numeral(parseInt(state.LPBalance.balance) / 1000000).format('0.00'))}</>)
                         } LOTA</strong></small>
             </div>
             <div className="col-md-6 my-3">

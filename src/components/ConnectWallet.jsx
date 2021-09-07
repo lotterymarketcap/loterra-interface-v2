@@ -226,6 +226,14 @@ const holderAccruedRewards = await api.contractQuery(
                     console.log(claims)
                     dispatch({type: "setHolderClaims", message: claims.claims})
 
+                    const tokenLP = await api.contractQuery(
+                        state.loterraLPAddress,
+                        {
+                            balance: { address: connectedWallet.walletAddress},
+                        })
+                    dispatch({type: "setLPBalance", message: tokenLP})
+                    console.log(tokenLP)
+
 
 
 

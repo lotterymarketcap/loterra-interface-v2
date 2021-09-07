@@ -9,6 +9,8 @@ const initialState = {
   loterraPoolAddress: "terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta",
   loterraStakingAddress: "terra1342fp86c3z3q0lksq92lncjxpkfl9hujwh6xfn",
   alteredContractAddress:"terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv",
+  loterraLPAddress: "terra1t4xype7nzjxrzttuwuyh9sglwaaeszr8l78u6e",
+  loterraStakingLPAddress: "terra1pyuxghcv2azsa2rz3gwa2xfgwrqxm8s5cwz5un",
   allWinners: [],
   tokenInfo: {},
   allPlayers: [],
@@ -17,6 +19,7 @@ const initialState = {
   staking: {},
   wallet: {},
   LotaBalance: {},
+  LPBalance:{},
   config: {},
   currentLotteryId: 0,
   holderPercentageFee: 0,
@@ -130,6 +133,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         combination: action.message
+      }
+    case "setLPBalance":
+      return {
+        ...state,
+        LPBalance: action.message
       }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
