@@ -2,121 +2,155 @@
     &.lota-card {
         background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
         border-radius: 10px;
+
         .card-header {
             .card-header-icon {
-                width:145px;
-                height:145px;
-                margin:0 auto;
-                border-radius:145px;
+                width: 145px;
+                height: 145px;
+                margin: 0 auto;
+                border-radius: 145px;
                 background: linear-gradient(133.11deg, rgba(32, 255, 147, 0.2) 0%, rgba(0, 0, 0, 0) 200.37%), #0F0038;
                 border: 8px solid #20FF93;
                 box-shadow: 0px 0px 94px rgba(32, 255, 147, 0.4);
-                display:block;
-                line-height:125px;
-                text-align:center;
-                margin-bottom:10px;
+                display: block;
+                line-height: 125px;
+                text-align: center;
+                margin-bottom: 10px;
                 margin-top: -85px;
             }
+
             h3 {
                 font-weight: 900;
-                font-size: 46px;          
+                font-size: 46px;
                 color: #FFFFFF;
-                @media(max-width:768px){
-                    font-size:28px;
+
+                @media(max-width:768px) {
+                    font-size: 28px;
                 }
             }
         }
+
         &.proposals {
-            padding:35px 35px;
+            padding: 35px 35px;
+
             h3 {
                 font-weight: bold;
                 font-size: 46px;
-                @media(max-width:510px){
+
+                @media(max-width:510px) {
                     font-size: 32px;
-                    text-align:center;
+                    text-align: center;
                 }
-            }        
-            @media(max-width:768px){
-                padding:15px 15px;
             }
-            @media(max-width:510px){
+
+            @media(max-width:768px) {
+                padding: 15px 15px;
+            }
+
+            @media(max-width:510px) {
                 .btn-plain {
-                    width:100%;
+                    width: 100%;
                 }
+
                 .card-body {
-                    padding:0;
+                    padding: 0;
                 }
             }
         }
+
         &.staking {
-            padding:15px;
+            padding: 15px;
+
             h3 {
                 font-weight: bold;
                 font-size: 46px;
-                line-height: 54px;             
-                text-align: center;                
+                line-height: 54px;
+                text-align: center;
                 color: #FFFFFF;
             }
+
             .slogan {
                 font-weight: normal;
                 font-size: 18px;
-                line-height: 21px;               
-                text-align: center;                
+                line-height: 21px;
+                text-align: center;
                 color: rgba(255, 255, 255, 0.52);
             }
+
             .form-control {
                 font-size: 21px;
                 padding: 10px 15px;
-                font-weight:bold;
+                font-weight: bold;
             }
+
             .nav-pills {
                 .nav-item {
-                    background:#0F0038;
-                    .nav-link {                        
-                        color:#fff;
-                        opacity:0.6;
+                    background: #0F0038;
+
+                    .nav-link {
+                        color: #fff;
+                        opacity: 0.6;
+
+                        label {
+                            position: absolute;
+                            background: #f13ff1;
+                            font-size: 12px;
+                            padding: 0px 4px;
+                            margin-top: -15px;
+                            margin-left: -12px;
+                            border-radius: 4px;
+                            transform: rotate(6deg);
+                            font-weight: 700;
+                        }
+
                         &.active {
                             opacity: 1;
-                            background: linear-gradient(
-                        328.75deg
-                        , #41347b -5.49%, #41347b 19.13%, #160741 104.44%);
+                            background: linear-gradient(328.75deg, #41347b -5.49%, #41347b 19.13%, #160741 104.44%);
                             border: 1px solid #0f0038;
                         }
                     }
                 }
             }
+
             .btn-plain {
-                transition:all 150ms linear;
+                transition: all 150ms linear;
                 box-shadow: 0px 0px 0px #ff36ff;
+
                 &:hover {
-                    color:#FF36FF;
+                    color: #FF36FF;
                     box-shadow: 0px 0px 10px #ff36ff;
                 }
             }
-            @media(max-width:768px){
+
+            @media(max-width:768px) {
                 padding: 10px 5px;
                 margin-bottom: 20px;
                 border-radius: 5px;
             }
         }
+
         &.staking-rewards {
-            padding:35px 35px;
-            margin-top:-130px;
+            padding: 35px 35px;
+            margin-top: -130px;
+
             h2 {
                 font-weight: bold;
                 font-size: 46px;
                 line-height: 54px;
                 color: #FFFFFF;
-                @media(max-width:510px){
+
+                @media(max-width:510px) {
                     font-size: 32px;
                 }
             }
+
             p {
                 font-weight: normal;
                 font-size: 33px;
                 margin-top: 15px;
                 color: #f035f0;
             }
+
             .current-value {
                 font-weight: bold;
                 font-size: 32px;
@@ -127,13 +161,15 @@
                 background: #090023a8;
                 padding: 0px 10px;
                 border-radius: 10px;
+
                 span {
                     font-weight: normal;
                     font-size: 15px;
                     color: #20FF93;
                 }
             }
-            @media(max-width:768px){
+
+            @media(max-width:768px) {
                 padding: 10px 5px;
                 margin-bottom: 20px;
                 border-radius: 5px;

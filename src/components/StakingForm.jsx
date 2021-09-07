@@ -30,11 +30,15 @@ export default function StakingForm(props){
                                             <div className="col-12 text-center">
                                             <ul className="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
                                                 <li className="nav-item" role="presentation">
-                                                    <button className="nav-link active" id="pills-staking-tab" data-bs-toggle="pill" data-bs-target="#pills-staking" type="button" role="tab" aria-controls="pills-staking" aria-selected="true">Staking</button>
+                                                    <button className="nav-link active" id="pills-staking-tab" data-bs-toggle="pill" data-bs-target="#pills-staking" type="button" role="tab" aria-controls="pills-staking" aria-selected="true">
+                                                        Staking
+                                                    </button>
                                                 </li>                                         
                                                 
                                                 <li className="nav-item" role="presentation">
-                                                    <button className="nav-link" id="pills-lpstaking-tab" data-bs-toggle="pill" data-bs-target="#pills-lpstaking" type="button" role="tab" aria-controls="pills-lpstaking" aria-selected="false">LP Staking</button>
+                                                    <button className="nav-link" id="pills-lpstaking-tab" data-bs-toggle="pill" data-bs-target="#pills-lpstaking" type="button" role="tab" aria-controls="pills-lpstaking" aria-selected="false">
+                                                        LP Staking <label>NEW</label>
+                                                    </button>
                                                 </li>
                                             </ul>
                                             </div> 
