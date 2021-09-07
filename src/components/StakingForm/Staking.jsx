@@ -128,11 +128,11 @@ export default function Staking(props){
                 <p className="input-heading">The amount you want to stake</p>
                 <p className="input-slogan">Stake LOTA and get 20% on winner prizes</p>
                 <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><img src="./LOTA.png" width="30px" className="img-fluid"/></span>
+                <span class="input-group-text" id="basic-addon1"><img src="/LOTA.png" width="30px" className="img-fluid"/></span>
                 <input type="number" className="form-control amount-input-staking" autoComplete="off" placeholder="0.00"  name="amount" />
                 </div>
             </div>
-            <div className="col-md-12">
+            {/*<div className="col-md-12">
                 <div className="total-stats w-100">
                     <div className="row">
                         <div className="col-6">
@@ -149,7 +149,7 @@ export default function Staking(props){
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*/}
             <div className="col-6 my-3">
                 {/* <p className="shortcut float-end" onClick={()=> setInputAmount(parseInt(state.LotaBalance.balance))}>MAX
                 </p> */}

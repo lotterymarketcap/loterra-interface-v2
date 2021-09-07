@@ -129,11 +129,11 @@ export default function LpStaking(props){
                 <p className="input-heading">The amount you want to LP Stake (NO STAKING REWARDS YET PROPOSAL STILL IN PROGRESS... VOTE POLL id:10)</p>
                 {<p className="input-slogan">Provide liquidity on pair LOTA-UST and stake your LP token to share: 273.00 LOTA daily rewards | 100,000.00 LOTA year rewards</p>}
                 <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><img src="./LOTAUST.png" width="30px" className="img-fluid"/></span>
+                <span class="input-group-text" id="basic-addon1"><img src="/LOTAUST.png" width="30px" className="img-fluid"/></span>
                 <input type="number" className="form-control amount-input-lpstaking" autoComplete="off" placeholder="0.00"  name="amount" />
                 </div>
             </div>
-            <div className="col-md-12">
+            {/*<div className="col-md-12">
                 <div className="total-stats w-100">
                     <div className="row">
                         <div className="col-6">
@@ -150,7 +150,7 @@ export default function LpStaking(props){
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*/}
             <div className="col-6 my-3">
                
                 <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake (⚠️ REWARDS COMING SOON)</button>
