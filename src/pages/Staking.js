@@ -79,6 +79,31 @@ export default () =>  {
             showNotification(e.message,'error',4000)
         })
     }
+    function claimLPRewards() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingLPAddress,
+            {
+                claim_rewards: {},
+            }
+        )
+        state.wallet.post({
+            msgs: [msg],
+            fee: obj
+            // gasPrices: obj.gasPrices(),
+            // gasAdjustment: 1.5,
+        }).then(e => {
+            if (e.success) {
+                showNotification('Claim rewards succes','success',4000)
+            }
+            else{
+                console.log(e)
+            }
+        }).catch(e =>{
+            console.log(e.message)
+            showNotification(e.message,'error',4000)
+        })
+    }
 
     
 
@@ -165,6 +190,13 @@ export default () =>  {
                                     }
                                     <button className=" btn btn-special mt-3" disabled={state.holderAccruedRewards <= 0 ? true : false} onClick={() => claimRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
                                     </div>
+                                <div className="align-self-center w-100">
+                                    <h2>Staking LP rewards</h2>
+                                    { state.wallet && state.wallet.walletAddress &&
+                                    (<p>{numeral(parseInt(state.LPHolderAccruedRewards) / 1000000).format('0.00000')} LOTA</p>)
+                                    }
+                                    <button className=" btn btn-special mt-3" disabled={state.LPHolderAccruedRewards <= 0 ? true : false} onClick={() => claimLPRewards()} style={{boxShadow:'none'}}>Claim rewards</button>
+                                </div>
                             </div>
                         </div>
                     </div>
