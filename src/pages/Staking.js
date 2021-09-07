@@ -139,7 +139,7 @@ export default () =>  {
                                 }                                                                
                             </div>
                             <div className="col-md-12 col-lg-8 order-1 order-lg-2 p-lg-5">
-                                <StakingForm />
+                                <StakingForm showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
                             </div>
                         </div>
                     
