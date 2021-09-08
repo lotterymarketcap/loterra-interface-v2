@@ -573,7 +573,14 @@ export default () => {
                         <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
                           ) :
                           (
-                            <p className="mb-2">Total: <strong> {numeral((amount) - (amount / state.config.bonus_burn_rate)).format('0,0.00')} UST <span style={{color:'#4ee19b'}}>+ {numeral(amount / state.config.bonus_burn_rate).format('0,0.00')} ALTE</span></strong></p>
+                            <>
+                            <p className="mb-0" style={{textDecoration:'line-through'}}>Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p>
+                            <p className="mb-2" style={{color:'#4ee19b'}}>Total: <strong> {numeral((amount) - (amount / state.config.bonus_burn_rate)).format('0,0.00')} UST <span>+ {numeral(amount / state.config.bonus_burn_rate).format('0,0.00')} ALTE</span></strong></p>
+                            <span className="info mb-2">
+                            <Info size={14} style={{marginTop:'-2px'}} weight="fill" className="me-1" />
+                            No ALTE? you can buy ALTE on the <a href="https://app.alteredprotocol.com" target="_blank">Altered website</a>
+                            </span> 
+                            </>
                           )
                         }
                         <p style={{marginBottom:'7px', fontSize:'14px', opacity:'0.3'}}>Earn extra bonus while burning <a style={{color:'#fff'}} href="https://app.alteredprotocol.com" target="_blank">Altered</a></p>
@@ -582,16 +589,7 @@ export default () => {
                           <label className="switch-label" onClick={() => clickElement(bonusToggle)}></label>
                           <Fire size={24} weight="fill" /> BURN 
                           <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">Bonus</span></label>
-                        { alteBonus &&
-                          (
-                            <>      
-                            <span className="info mb-2">
-                            <Info size={14} style={{marginTop:'-2px'}} weight="fill" className="me-1" />
-                            No ALTE? you can buy ALTE on the <a href="https://app.alteredprotocol.com" target="_blank">Altered website</a>
-                            </span>                                               
-                            </>
-                          )
-                        }
+                        
                         <label className="gift-label">
                           <input type="checkbox" ref={friendsToggle} checked={giftFriend.active} className="switch" name="gift_friend" onChange={(e,checked) => giftCheckbox(e,checked)} />
                           <label className="switch-label" onClick={() => clickElement(friendsToggle)}></label>
