@@ -114,6 +114,7 @@ export default function ConnectWallet(){
                 get_poll: { poll_id: index },
                 }
         );
+        proposal.nr = index;
         allProposals.push(proposal);
         console.log('single', proposal)
         }

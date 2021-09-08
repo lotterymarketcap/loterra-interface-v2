@@ -232,7 +232,7 @@ export default () =>  {
                         </div>
                  
                     <div className="card-body">
-                        {state.allProposals && state.allProposals.map((element,key) =>{
+                        {state.allProposals && state.allProposals.slice(0).reverse().map((element,key) =>{
                             return(<ProposalItem fees={obj} data={element} i={key} key={key}/>)
                         })}
                     </div>
