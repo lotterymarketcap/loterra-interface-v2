@@ -50,7 +50,7 @@ export default function ProposalItem(props){
         <div className={data.status == 'InProgress' ? 'proposal-item' : 'proposal-item op'} key={i}>
                             <div className="row">
                                     <div className="col-12">
-                                        <h4>Proposal number {i+1}</h4>
+                                        <h4>Proposal number {data.nr}</h4>
                                         <p className="desc">{data.description}</p>
                                     </div>
                                     <div className="col-md-8">
