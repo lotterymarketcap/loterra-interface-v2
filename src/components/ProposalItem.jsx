@@ -138,8 +138,8 @@ export default function ProposalItem(props){
                                                 {state.wallet.walletAddress && data.status != "Passed" && data.status != "Rejected" ?
                                                 (
                                                     <>
-                                                        <button className="btn btn-plain" onClick={() => vote(true,i+1)}>Yes</button>
-                                                        <button className="btn btn-plain" onClick={() => vote(false,i+1)}>No</button>
+                                                        <button className="btn btn-plain" onClick={() => vote(true,data.nr)}>Yes</button>
+                                                        <button className="btn btn-plain" onClick={() => vote(false,data.nr)}>No</button>
                                                     </>
                                                 ): (<button className="btn btn-plain" disabled>{data.status}</button>)
                                                 }
