@@ -39,10 +39,22 @@ const initialState = {
   }),
   blockHeight: 0,
   totalSupplyLP:0,
+  stateLPStaking:{},
+  poolInfo: {}
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
+    case "setPoolInfo":
+      return {
+        ...state,
+        poolInfo: action.message
+      }
+    case "setStateLPStaking":
+      return {
+        ...state,
+        stateLPStaking: action.message
+      }
     case "setTotalSupplyLP":
       return {
         ...state,

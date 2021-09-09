@@ -122,6 +122,16 @@ export default function LpStaking(props){
             showNotification(e.message,'error',4000)
         })
     }
+    function total_staked(){
+        if (state.poolInfo.total_share && state.stateLPStaking.total_balance){
+            const ratio = state.poolInfo.total_share / state.poolInfo.assets[0].amount
+            const inLota = state.stateLPStaking.total_balance / ratio
+
+            console.log("state.poolInfo")
+            console.log(inLota / 1000000)
+            return inLota / 1000000
+        }
+    }
 
     return (
         <div className="row">
@@ -152,7 +162,10 @@ export default function LpStaking(props){
                 </div>
             </div>*/}
             <div className="col-6 my-3">
-               
+                total staked:
+                <p>{numeral(total_staked()).format("0,0.000000")}LOTA</p>
+                APR:
+                <p>{numeral(100000/total_staked() * 100).format("0") }%</p>
                 <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake (⚠️ REWARDS COMING SOON)</button>
                 <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}} onClick={()=> setInputAmount(parseInt(state.LPBalance.balance))}>{ state.wallet &&
                         state.wallet.walletAddress &&
