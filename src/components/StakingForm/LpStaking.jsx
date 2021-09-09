@@ -3,6 +3,7 @@ import { TelegramLogo, Info } from "phosphor-react";
 import { useStore } from "../../store";
 import {MsgExecuteContract,StdFee} from "@terra-money/terra.js"
 
+
 import numeral from "numeral";
 
 const addToGas = 5800
@@ -164,9 +165,9 @@ export default function LpStaking(props){
             <div className="col-6 my-3">
                 <small>
                 total staked LP in LOTA:
-                <p>{numeral(total_staked()).format("0,0.000000")}LOTA</p>
+                <p>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</p>
                 APY:
-                <p>{numeral(100000/total_staked() * 100).format("0") }%</p>
+                <p>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</p>
                 </small>
                 <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake (⚠️ REWARDS COMING SOON)</button>
                 <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}} onClick={()=> setInputAmount(parseInt(state.LPBalance.balance))}>{ state.wallet &&
