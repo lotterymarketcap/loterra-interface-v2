@@ -50,11 +50,29 @@ const initialState = {
     chainID: "columbus-4",
   }),
   blockHeight: 0,
-  newsList: newsList
+  newsList: newsList,
+  totalSupplyLP:0,
+  stateLPStaking:{},
+  poolInfo: {}
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
+    case "setPoolInfo":
+      return {
+        ...state,
+        poolInfo: action.message
+      }
+    case "setStateLPStaking":
+      return {
+        ...state,
+        stateLPStaking: action.message
+      }
+    case "setTotalSupplyLP":
+      return {
+        ...state,
+        totalSupplyLP: action.message
+      }
     case "setBlockHeight":
       return {
         ...state,

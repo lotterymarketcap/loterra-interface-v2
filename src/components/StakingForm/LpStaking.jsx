@@ -3,6 +3,7 @@ import { TelegramLogo, Info } from "phosphor-react";
 import { useStore } from "../../store";
 import {MsgExecuteContract,StdFee} from "@terra-money/terra.js"
 
+
 import numeral from "numeral";
 
 const addToGas = 5800
@@ -122,16 +123,37 @@ export default function LpStaking(props){
             showNotification(e.message,'error',4000)
         })
     }
+    function total_staked(){
+        if (state.poolInfo.total_share && state.stateLPStaking.total_balance){
+            const ratio = state.poolInfo.total_share / state.poolInfo.assets[0].amount
+            const inLota = state.stateLPStaking.total_balance / ratio
+
+            console.log("state.poolInfo")
+            console.log(inLota / 1000000)
+            return inLota / 1000000
+        }
+    }
 
     return (
         <div className="row">
             <div className="col-md-12">
-                <p className="input-heading">The amount you want to LP Stake (NO STAKING REWARDS YET PROPOSAL STILL IN PROGRESS... VOTE POLL id:10)</p>
+                <p className="input-heading">The amount you want to LP Stake</p>
+                <small>(NO STAKING REWARDS YET PROPOSAL STILL IN PROGRESS... VOTE POLL id:10)</small>
                 {<p className="input-slogan">Provide liquidity on pair LOTA-UST and stake your LP token to share: 273.00 LOTA daily rewards | 100,000.00 LOTA year rewards</p>}
+                <span className="info" style={{
+                        color: '#ff36ff',
+                        borderColor: '#ff36ff'
+                }}>
+                                    
+                        Total staked LP in LOTA: <strong>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</strong>
+                        <br/>                    
+                        APY: <strong>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</strong>                    
+                </span>
                 <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="/LOTAUST.png" width="30px" className="img-fluid"/></span>
                 <input type="number" className="form-control amount-input-lpstaking" autoComplete="off" placeholder="0.00"  name="amount" />
                 </div>
+                
             </div>
             {/*<div className="col-md-12">
                 <div className="total-stats w-100">
@@ -152,8 +174,8 @@ export default function LpStaking(props){
                 </div>
             </div>*/}
             <div className="col-6 my-3">
-               
-                <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake (⚠️ REWARDS COMING SOON)</button>
+                
+                <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake <small className="d-block" style={{fontSize:'14px'}}>(⚠️ REWARDS COMING SOON)</small></button>
                 <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}} onClick={()=> setInputAmount(parseInt(state.LPBalance.balance))}>{ state.wallet &&
                         state.wallet.walletAddress &&
                         (<>{(numeral(parseInt(state.LPBalance.balance) / 1000000).format('0.00'))}</>)
@@ -174,7 +196,7 @@ export default function LpStaking(props){
                         <p className="input-heading">Claim unstake</p>
                             <p className="input-slogan">Unbonding period of 700,000 block height ~1.5 | 2 Months, ⚠️ unbonding token get no rewards</p>
                         <button className="btn btn-default-lg w-100" onClick={()=> claimUnstake()}
-                            style={{marginTop:'21px'}}>Claim
+                            style={{marginTop:'5px'}}>Claim
                             unstake</button>
                         {/* If unstake claiming condition */}
                         <span className="info">
