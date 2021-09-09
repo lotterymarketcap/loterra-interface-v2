@@ -5,13 +5,14 @@ import { TwitterLogo,TelegramLogo, Files } from "phosphor-react";
 export default function Roadmap(){    
 
     return (
-        <div className="roadmap">
+        <div className="roadmap" style={{background:'linear-gradient(#160150, transparent,#160150),url(rays.svg)'}}>
                  <div className="container">
                       <div className="row">
                         <div className="col-12">
                         <h2>Roadmap</h2>
                         <p className="slogan">Here comes a some longer sentence about our roadmap</p>
-                      <div className="line">
+                        <div className="line-wrapper">
+                        <div className="line">
                             <div className="inner" style={{width:'48%'}}></div>
                             <div className="point" style={{marginLeft:'0%'}}>
                               <span className="point-circle active"></span>
@@ -37,7 +38,8 @@ export default function Roadmap(){
                               <span className="point-title">Q4 2021</span>
                               <p>NFT Lottery</p>
                             </div>
-                      </div>
+                        </div>
+                        </div>
                         </div>
                         <div className="col-12">
                           

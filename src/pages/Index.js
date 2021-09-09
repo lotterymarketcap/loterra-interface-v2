@@ -489,7 +489,7 @@ export default () => {
      return (
          <>   
          <div className="hero d-flex" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>        
-                <div className="container-fluid container-md align-self-center">
+                <div className="container-fluid container-md align-self-start">
                   <div className="row">
                     <div className="col-lg-10 mx-auto text-center">
                       <div className="jackpot">
@@ -540,37 +540,7 @@ export default () => {
                         </div>
                         </div>
                         <div className="col-12">
-                        <div className="col-12 mt-4">
-                          <div className="card stats-card" style={{background:'transparent', border:0, boxShadow:'none'}}>
-                              <div className="card-body">  
-                              <h4>Latest</h4>                                
-                                  <Splide                                 
-                                  options={ {
-                                    rewind : true,
-                                    perPage: 3,
-                                    perMove: 1,
-                                    type         : 'loop',
-                                  	autoplay     : true,
-                                    gap    : '1rem',
-                                    arrows:false,
-                                    breakpoints: {
-                                      640: {
-                                        perPage: 1,
-                                      },
-                                    }
-                                  } }
-                                  >
-                                    { state.newsList.map(obj => {
-                                    return(
-                                    <SplideSlide>
-                                      <NewsItem obj={obj}/>
-                                    </SplideSlide>
-                                    )
-                                    })}                                
-                                  </Splide>
-                              </div>
-                            </div>
-                          </div>
+                        
                         </div>
                     </div>                   
                   </div>              
@@ -596,7 +566,7 @@ export default () => {
         </div>
         <div className="container">
                    <div className="row">
-                        <div className="col-lg-5 mx-auto">
+                        <div className="col-md-5 col-lg-4 mx-auto">
                         <div className="card amount-block">
                       <div className="card-header">
                       <h3>Book Your Tickets</h3>                      
@@ -668,14 +638,46 @@ export default () => {
                         </button>
                       </div>
                     </div>
-                    <SocialShare/>
+                    {/* <SocialShare/> */}
                         </div>
+                        <div className="col-12 mt-4">
+                          <div className="card stats-card" style={{background:'transparent', border:0, boxShadow:'none'}}>
+                              <div className="card-body">  
+                              <h4>Latest news</h4>                                
+                                  <Splide                                 
+                                  options={ {
+                                    rewind : true,
+                                    perPage: 3,
+                                    perMove: 1,
+                                    type         : 'loop',
+                                  	autoplay     : true,
+                                    gap    : '1rem',
+                                    arrows:false,
+                                    breakpoints: {
+                                      640: {
+                                        perPage: 1,
+                                      },
+                                    }
+                                  } }
+                                  >
+                                    { state.newsList.map(obj => {
+                                    return(
+                                    <SplideSlide>
+                                      <NewsItem obj={obj}/>
+                                    </SplideSlide>
+                                    )
+                                    })}                                
+                                  </Splide>
+                              </div>
+                            </div>
+                          </div>
                    </div>
                  </div>
 
                  <div className="how" style={{                  
                    marginTop:'50px',
-                   padding:'95px 0'
+                   padding:'95px 0',
+                   background:'linear-gradient(#160150, transparent,#160150),url(rays.svg)'
                  }}>
                   <div className="container">                
                         <div className="row">
