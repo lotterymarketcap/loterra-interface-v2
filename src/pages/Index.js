@@ -17,6 +17,7 @@ import AllowanceModal from "../components/AllowanceModal";
 import WinnerRow from "../components/WinnerRow";
 import PriceLoader from "../components/PriceLoader";
 import NewsItem from "../components/NewsItem";
+import Roadmap from "../components/Roadmap";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -841,6 +842,8 @@ export default () => {
                         </div>
 
                  </div>
+
+                <Roadmap/>
 
                  <div ref={loterraStats} className="container" style={{marginTop:'8rem'}}>
                               <div className="card lota-card">

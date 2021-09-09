@@ -1,0 +1,97 @@
+.roadmap {
+    width: 100%;
+    float: left;
+    padding: 145px 0 324px 0;
+    background: radial-gradient(#0000009e, transparent);
+
+    h2 {
+        text-align: center;
+        font-size: 45px;
+        font-weight: 800;
+        margin-bottom: 0;
+    }
+
+    .slogan {
+        margin-bottom: 75px;
+        text-align: center;
+        font-size: 24px;
+        opacity: 0.5;
+    }
+
+    .line {
+        width: 100%;
+        height: 20px;
+        background: linear-gradient(92.8deg, rgba(255, 255, 255, 0.6) -1.42%, rgba(205, 21, 205, 0.318) 102.82%), #FF36FF;
+        border-radius: 100px;
+        position:relative;
+        .inner {
+            background: #73e7af;
+            border-radius: 100px;
+            height:20px;
+            position:absolute;         
+        }
+        .point {
+            position: absolute;
+            margin-top: -10px;
+            max-width: 22%;
+
+            .point-circle {
+                width: 40px;
+    height: 40px;
+    background: linear-gradient(
+92.8deg
+, rgba(255, 255, 255, 0.6) -1.42%, rgba(205, 21, 205, 0.318) 102.82%), #FF36FF;
+    border-radius: 100px;
+    display: block;
+    border: 4px solid #0b0129;
+    &.active {
+        background:linear-gradient(92.8deg, #ffffff99 -1.42%, #23d47f 102.82%), #94fac9;
+    }
+            }
+
+            .point-title {
+                color: #f457f4;
+                font-weight: 700;
+                font-size: 16px;
+                display: block;
+                margin-top: 10px;
+            }
+
+            &.not-active {
+                .point-title {
+                    opacity: 0.5;
+                }
+                p {
+                    opacity:0.5;
+                }
+            }
+        }
+
+        .marker {
+            position: absolute;
+            margin-top: -10px;
+
+            .point-circle {
+                width: 40px;
+                height: 40px;
+                background: linear-gradient(92.8deg, #ffffff99 -1.42%, #23d47f 102.82%), #94fac9;
+                border-radius: 100px;
+                display: block;
+                box-shadow: 1px 1px 15px #000;
+            }
+
+            .point-title {
+                color: #20ff93;
+                font-weight: 700;
+                font-size: 16px;
+                display: block;
+                margin-top: -65px;
+                margin-left: -20px;
+            }
+
+            &.not-active {
+                opacity: 0.5;
+            }
+        }
+    }
+}
