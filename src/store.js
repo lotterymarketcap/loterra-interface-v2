@@ -31,11 +31,17 @@ const initialState = {
     URL: "https://lcd.terra.dev/",
     chainID: "columbus-4",
   }),
-  blockHeight: 0
+  blockHeight: 0,
+  totalSupplyLP:0,
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
+    case "setTotalSupplyLP":
+      return {
+        ...state,
+        totalSupplyLP: action.message
+      }
     case "setBlockHeight":
       return {
         ...state,
