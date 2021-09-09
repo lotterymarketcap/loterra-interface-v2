@@ -1,6 +1,8 @@
 @import '../../node_modules/bootstrap/scss/functions';
 @import '../../node_modules/bootstrap/scss/variables';
 @import '../../node_modules/bootstrap/scss/mixins';
+@import '../../node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css';
+
 
 $primary: #FF36FF;
 $secondary: #10003B;
@@ -37,6 +39,8 @@ a {
 @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+
+
 @font-face {
   font-family: 'Cosmos';
   src: local('Cosmos'), url('../fonts/AVCosmos-Regular.woff') format('woff');
@@ -54,6 +58,7 @@ a {
 @import './allowancemodal'; 
 @import './proposals'; 
 @import './notifications'; 
+@import './newsitem'; 
 @import './how';
 @import './socialshare';
 @import './app.scss'; 

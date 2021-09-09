@@ -349,7 +349,7 @@ font-style: normal;
    
   }
   h2 {
-    background: #43367D;
+    background: #231554;
     padding: 11px 11px;
     box-sizing: border-box;
     border-radius: 15px 15px 20px 20px;
@@ -363,9 +363,9 @@ font-style: normal;
     letter-spacing: 0.05em;
     color: #FFFFFF;
     display: inline-block;
-    border-bottom: 6px solid #0f032f;
+    border-bottom: 5px solid #0f032f;
     margin-bottom: 10px;
-    box-shadow: inset 0px 3px 0px #ffffff2b;
+    box-shadow: inset 0px 3px 0px #b431c552;
     @media(max-width:710px){
       font-size: 38px;
     }
@@ -376,7 +376,7 @@ font-style: normal;
     border-bottom: 4px solid #0f032f;
   }
   @media(max-width:380px){
-    font-size: 29px;
+    font-size: 32px;
   }
   .roller {
     display: inline-block;
@@ -450,40 +450,62 @@ font-style: normal;
 .stats-card {
   background: linear-gradient(
     95.45deg
-    , #3B2E73 -92.2%, #10003B 105.35%);
-        border: 5px dashed #493C84;
-  border-radius: 10px;
-  box-shadow: 0px 28px 48px #0F0038;
-  color:#fff;
+    , #3b2e739e -92.2%, #10003bbf 105.35%);
+        border-radius: 10px;
+        box-shadow: 0px 28px 48px #0f0038;
+        color: #fff;
+        h4 {
+          text-align: left;
+    font-weight: 900;
+    font-size: 30px;
+    margin-bottom: -13px;
+        }
   h3 {
     font-weight: bold;
-    font-size: 34px;
-    line-height: 35px; 
+    font-size: 24px;
+    line-height: 21px;
     color: #FFFFFF;
-    margin:0;
+    margin: 0;
       span{
-        display:block;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 19px;
-        color: #FF36FF;
+        display: block;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 19px;
+    color: #FF36FF;
       }
+  }
+  .card-body {
+    padding:10px;
   }
   @media(max-width:510px){
     .card-body {
       padding: 7px 15px;
     }
     h3 {
-      font-size:27px;
+      font-size:22px;
     }
     svg {
-      width:155%;
+      
     }
   }
 }
 
+.splide__pagination__page.is-active {
+  transform: scale(1.4);
+  background: #f032f3;
+}
+
+.splide__pagination__page{
+  background: #ff33ff69;
+  &.is-active {
+    transform: scale(1.4);
+    background: #f032f3;
+}
+
+}
+
 .amount-block {
-  margin-top: -430px;
+  margin-top:-125px;
   background: linear-gradient(
 95.45deg
 , #3B2E73 -92.2%, #10003B 105.35%);

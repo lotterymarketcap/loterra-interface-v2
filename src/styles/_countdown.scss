@@ -28,9 +28,13 @@
 }
 
 .countdown {
-    background: linear-gradient(328.75deg, #10003b -5.49%, #251656 104.44%);
-    padding: 5px 10px;
-    margin: -15px -15px 15px -15px;
+    background: linear-gradient(
+180deg
+, #0f0229c4 -38.49%, #251656cf 104.44%);
+    padding: 14px 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    margin-top: -25px;
     .title {
         text-transform: uppercase;
     margin: 0;
@@ -41,7 +45,7 @@
         font-size: 33px;
         color: #FFFFFF;
         @media(max-width:500px){
-            font-size:34px;        
+            font-size:28px;        
           }
     }
     .time-low {
@@ -58,8 +62,8 @@
     color: #fff;
     line-height: 57px;
         @media(max-width:500px){
-            font-size:34px;    
-            line-height:68px;    
+            font-size: 28px;
+            line-height: 51px;   
           }
     }
 }

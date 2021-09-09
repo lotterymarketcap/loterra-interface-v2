@@ -3,6 +3,18 @@ import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-mon
 
 const StoreContext = createContext();
 
+const newsList = [
+  {date:'12-12-2021',title:'We just released LOTA LP-STAKING',icon:'flask'},
+  {date:'12-12-2021',title:'Important to vote for proposal 10 & 11',icon:'newspaper'},
+  {date:'12-12-2021',title:'BOOM! Someone won 95,000.00 UST!',icon:'trophy'},
+  {date:'12-12-2021',title:'Here comes a nice title',icon:'flask'},
+  {date:'12-12-2021',title:'Here comes a nice title',icon:'newspaper'},
+  {date:'12-12-2021',title:'Here comes a nice title',icon:'trophy'},
+  {date:'12-12-2021',title:'Here comes a nice title',icon:'flask'},
+  {date:'12-12-2021',title:'Here comes a nice title',icon:'newspaper'},
+  {date:'12-12-2021',title:'Here comes a nice title',icon:'trophy'},
+]
+
 const initialState = {
   loterraContractAddress: "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
   loterraContractAddressCw20: "terra1ez46kxtulsdv07538fh5ra5xj8l68mu8eg24vr",
@@ -37,7 +49,8 @@ const initialState = {
     URL: "https://lcd.terra.dev/",
     chainID: "columbus-4",
   }),
-  blockHeight: 0
+  blockHeight: 0,
+  newsList: newsList
 };
 
 const reducer = (state, action) => {

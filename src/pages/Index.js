@@ -1,8 +1,10 @@
 import React, {useEffect, useState, useCallback, useContext, useRef} from "react";
 import numeral from "numeral";
-import { Users, Ticket, Coin, Trophy, UserCircle, ChartPie, PlusCircle, MinusCircle,PencilLine, Fire, Gift, ArrowDown, MonitorPlay, Info} from "phosphor-react";
+import { Users, Ticket, Coin, Trophy, Flask, ChartPie, PlusCircle, MinusCircle, Newspaper, PencilLine, Fire, Gift, ArrowDown, MonitorPlay, Info} from "phosphor-react";
 // import Jackpot from "../components/Jackpot";
 import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-money/terra.js"
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+
 import Countdown from "../components/Countdown";
 import TicketModal from "../components/TicketModal";
 
@@ -14,6 +16,7 @@ import Footer from "../components/Footer";
 import AllowanceModal from "../components/AllowanceModal";
 import WinnerRow from "../components/WinnerRow";
 import PriceLoader from "../components/PriceLoader";
+import NewsItem from "../components/NewsItem";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -484,10 +487,10 @@ export default () => {
 
      return (
          <>   
-         <div className="hero" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>        
-                <div className="container-fluid container-md">
+         <div className="hero d-flex" style={{backgroundImage:'url(rays.svg)', backgroundPosition:'center'}}>        
+                <div className="container-fluid container-md align-self-center">
                   <div className="row">
-                    <div className="col-lg-12 col-xl-8 mx-auto text-center">
+                    <div className="col-lg-10 mx-auto text-center">
                       <div className="jackpot">
                         <p>Jackpot</p>
                         <h2>{numeral(jackpot).format("0,0.00").split("").map(obj => {
@@ -502,14 +505,16 @@ export default () => {
                         </div>
                         </h2>
                       </div>
-                    </div>
-                    <div className="col-xl-7 mx-auto">
+                        <div className="col-11 col-lg-6 col-xl-5 mx-auto">
+                            <Countdown expiryTimestamp={expiryTimestamp}/>  
+                          </div>
+                        <div className="col-lg-4 mx-auto">
                         <div className="row">
                           <div className="col-6">
                             <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
+                                  <div className="col-4 col-md text-center"><Users size={40} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>PLAYERS</span>{players ? players : <PriceLoader/>}</h3>
                                   </div>
@@ -521,7 +526,7 @@ export default () => {
                           <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
+                                  <div className="col-4 col-md text-center"><Ticket size={40} color="#73FFC1" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>TICKETS</span>{tickets ? tickets : <PriceLoader/>}</h3>
                                   </div>
@@ -529,8 +534,44 @@ export default () => {
                               </div>
                             </div>
                           </div>
+                         
+                          
                         </div>
-                    </div>
+                        </div>
+                        <div className="col-12">
+                        <div className="col-12 mt-4">
+                          <div className="card stats-card" style={{background:'transparent', border:0, boxShadow:'none'}}>
+                              <div className="card-body">  
+                              <h4>Latest</h4>                                
+                                  <Splide                                 
+                                  options={ {
+                                    rewind : true,
+                                    perPage: 3,
+                                    perMove: 1,
+                                    type         : 'loop',
+                                  	autoplay     : true,
+                                    gap    : '1rem',
+                                    arrows:false,
+                                    breakpoints: {
+                                      640: {
+                                        perPage: 1,
+                                      },
+                                    }
+                                  } }
+                                  >
+                                    { state.newsList.map(obj => {
+                                    return(
+                                    <SplideSlide>
+                                      <NewsItem obj={obj}/>
+                                    </SplideSlide>
+                                    )
+                                    })}                                
+                                  </Splide>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>                   
                   </div>              
                   <Ticket size={55} className="svg" />
                   <Coin size={55} className="svg" />
@@ -554,13 +595,13 @@ export default () => {
         </div>
         <div className="container">
                    <div className="row">
-                   <div className="col-lg-5 col-xl-4 mx-auto">
-                    <div className="card amount-block">
+                        <div className="col-lg-5 mx-auto">
+                        <div className="card amount-block">
                       <div className="card-header">
                       <h3>Book Your Tickets</h3>                      
                       </div>
                       <div className="card-body">       
-                      <Countdown expiryTimestamp={expiryTimestamp}/>                 
+                                     
                         <small><span>HINT</span> Increase your odds! Average buying ticket is {parseInt(tickets / players)}</small>
                         <div className="input-group mt-3 mb-2">                         
                             <button className="btn btn-default" onClick={() => amountChange('down')}><MinusCircle size={31} color={'#9183d4'} /></button>                        
@@ -588,13 +629,13 @@ export default () => {
                             <input type="checkbox" ref={bonusToggle} checked={alteBonus} className="switch" name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} />
                           <label className="switch-label" onClick={() => clickElement(bonusToggle)}></label>
                           <Fire size={24} weight="fill" /> BURN 
-                          <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">Bonus</span></label>
+                          <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span className="badge rounded-pill">Bonus</span></label>
                         
                         <label className="gift-label">
                           <input type="checkbox" ref={friendsToggle} checked={giftFriend.active} className="switch" name="gift_friend" onChange={(e,checked) => giftCheckbox(e,checked)} />
                           <label className="switch-label" onClick={() => clickElement(friendsToggle)}></label>
                           <Gift size={24} weight="fill" /> Gift tickets to friends
-                          <span class="badge rounded-pill">GIFTS</span></label>
+                          <span className="badge rounded-pill">GIFTS</span></label>
                         { giftFriend.active &&
                           (
                             <>
@@ -616,18 +657,18 @@ export default () => {
                           Buy {amount} tickets
                           </>
                         : 
-                            <div class="spinner-border spinner-border-sm" role="status" style={{
+                            <div className="spinner-border spinner-border-sm" role="status" style={{
                               position:'relative',
                               top:'-3px'
                             }}>
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                             </div>
                         }
                         </button>
                       </div>
                     </div>
                     <SocialShare/>
-                  </div>
+                        </div>
                    </div>
                  </div>
 
