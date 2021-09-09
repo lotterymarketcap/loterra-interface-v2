@@ -138,11 +138,6 @@ export default function ConnectWallet(){
         );
         dispatch({type: "setTokenInfo", message: token_info})
 
-      const total_lp = await api.contractQuery(state.loterraLPAddress, {
-          token_info:{}
-      })
-      dispatch({type: "setTotalSupplyLP", message: total_lp.total_supply})
-
       const state_lp_staking = await api.contractQuery(state.loterraStakingLPAddress, {
           state:{}
       })
