@@ -164,25 +164,25 @@ export default () =>  {
                                                      <span className="circle-green"></span>Available
                                                  </div>
                                                  <div className="col-6">
-                                                    {state.tokenInfo.total_supply ? getStakedNr() : '0'}
+                                                    {state.tokenInfo.total_supply ? numeral(getStakedNr()).format('0.0,00') : '0'}
                                                  </div>
                                                  <div className="col-6 text-white">
                                                  <span className="circle-pink"></span>DAO
                                                  </div>
                                                  <div className="col-6">
-                                                    {state.tokenInfo.total_supply ?  getDaoFunds() : '0'}
+                                                    {state.tokenInfo.total_supply ?  numeral(getDaoFunds()).format('0.0,00') : '0'}
                                                  </div>
                                                  <div className="col-6 text-white">
                                                      <span className="circle-blue"></span>LP funds
                                                  </div>
                                                  <div className="col-6">
-                                                     {state.tokenInfo.total_supply ?  getLPFunds() : '0'}
+                                                     {state.tokenInfo.total_supply ?  numeral(getLPFunds()).format('0.0,00') : '0'}
                                                  </div>
                                                  <div className="col-6 text-white">
                                                  <span className="circle-grey"></span>Staked
                                                  </div>
                                                  <div className="col-6">
-                                                    {state.tokenInfo.total_supply ? getNotStaked() : '0'}
+                                                    {state.tokenInfo.total_supply ? numeral(getNotStaked()).format('0.0,00'): '0'}
                                                  </div>
                                              </div>
                                          </div>
