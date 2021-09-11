@@ -66,28 +66,35 @@
 
         let gradientPink = ctx.createLinearGradient(500, 0, 100, 0);
         gradientPink.addColorStop(0, '#ED70ED');
-        gradientPink.addColorStop(1, '#B83AB8'); 
-    
+        gradientPink.addColorStop(1, '#B83AB8');
+
+        let gradientBlue = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientBlue.addColorStop(0, '#6372ff');
+        gradientBlue.addColorStop(1, '#505eca');
+
         return {
         
-          labels: ['Available', 'Staked', 'DAO'],
+          labels: ['Available', 'Staked', 'DAO', 'LP funds'],
         datasets: [
           {
             label: '# of Lota',
             data: [
               canvas.dataset.staked,
               canvas.dataset.total,
-              canvas.dataset.dao
+              canvas.dataset.dao,
+                canvas.dataset.lpfunds
             ],
             backgroundColor: [
               gradientGreen,
               gradientBlack,   
-              gradientPink,       
+              gradientPink,
+              gradientBlue,
             ],
             borderColor: [
               gradientGreen,
               gradientBlack,  
-              gradientPink,     
+              gradientPink,
+              gradientBlue,
             ],
             borderWidth: 1,
           },

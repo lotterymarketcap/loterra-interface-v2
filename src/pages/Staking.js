@@ -119,12 +119,19 @@ export default () =>  {
         //console.log(state.tokenInfo.total_supply)
         let staked = parseInt(state.staking.total_balance) / 1000000;
         let daoFunds = parseInt(state.daoFunds / 1000000);
-        let sum = total - staked - daoFunds;
+        let lotaFundsLP = parseInt(state.stakingLoterraFunds / 1000000);
+        let alteredFundsLP = parseInt(state.stakingAlteredFunds / 1000000)
+        let sum = total - staked - daoFunds - lotaFundsLP - alteredFundsLP;
         return sum;
     }
 
     function getDaoFunds(){
         return parseInt(state.daoFunds / 1000000)
+    }
+    function getLPFunds(){
+        let lotaFundsLP = parseInt(state.stakingLoterraFunds / 1000000);
+        let alteredFundsLP = parseInt(state.stakingAlteredFunds / 1000000)
+        return lotaFundsLP + alteredFundsLP
     }
 
     return(
@@ -166,6 +173,12 @@ export default () =>  {
                                                     {state.tokenInfo.total_supply ?  getDaoFunds() : '0'}
                                                  </div>
                                                  <div className="col-6 text-white">
+                                                     <span className="circle-blue"></span>LP funds
+                                                 </div>
+                                                 <div className="col-6">
+                                                     {state.tokenInfo.total_supply ?  getLPFunds() : '0'}
+                                                 </div>
+                                                 <div className="col-6 text-white">
                                                  <span className="circle-grey"></span>Staked
                                                  </div>
                                                  <div className="col-6">
@@ -173,7 +186,7 @@ export default () =>  {
                                                  </div>
                                              </div>
                                          </div>
-                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} data-lpfunds={state.tokenInfo.total_supply ? getLPFunds() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
                                         </div>    
                                     )
                                 }                                                                

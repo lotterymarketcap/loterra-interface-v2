@@ -11,6 +11,7 @@ const initialState = {
   alteredContractAddress:"terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv",
   loterraLPAddress: "terra1t4xype7nzjxrzttuwuyh9sglwaaeszr8l78u6e",
   loterraStakingLPAddress: "terra1pdslh858spzqrtx2gwr69pzm9m2wrv55aeh742",
+  alteredStakingLPAddress: "terra1augyqytpq9klph5egx99m5ufrcjx5f7xgrcqck",
   allWinners: [],
   tokenInfo: {},
   allPlayers: [],
@@ -39,11 +40,24 @@ const initialState = {
   }),
   blockHeight: 0,
   stateLPStaking:{},
-  poolInfo: {}
+  poolInfo: {},
+  stakingLoterraFunds: 0,
+  stakingAlteredFunds:0,
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
+
+    case "setStakingLoterraFunds":
+      return {
+        ...state,
+        stakingLoterraFunds: action.message
+      }
+    case "setStakingAlteredFunds":
+      return {
+        ...state,
+        stakingAlteredFunds: action.message
+      }
     case "setPoolInfo":
       return {
         ...state,
