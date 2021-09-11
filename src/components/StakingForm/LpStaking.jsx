@@ -162,13 +162,15 @@ export default function LpStaking(props){
                     </div>
                 </div>
             </div>*/}
-            <div className="col-6 my-3">
+            <div className="col-12 my-3">
                 <small>
-                total staked LP in LOTA:
-                <p>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</p>
-                APY:
-                <p>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</p>
+                    total staked LP in LOTA:
+                    <p>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</p>
+                    APY:
+                    <p>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</p>
                 </small>
+            </div>
+            <div className="col-6 my-3">
                 <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake Now</button>
                 <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}} onClick={()=> setInputAmount(parseInt(state.LPBalance.balance))}>{ state.wallet &&
                         state.wallet.walletAddress &&
