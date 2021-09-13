@@ -138,6 +138,15 @@ export default function LpStaking(props){
             <div className="col-md-12">
                 <p className="input-heading">The amount you want to LP Stake</p>
                 {<p className="input-slogan">Provide liquidity on pair LOTA-UST and stake your LP token to share: 273.00 LOTA daily rewards | 100,000.00 LOTA year rewards</p>}
+                <span className="info" style={{
+                        color: '#ff36ff',
+                        borderColor: '#ff36ff'
+                }}>
+                                    
+                        Total staked LP in LOTA: <strong>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</strong>
+                        <br/>                    
+                        APY: <strong>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</strong>                    
+                </span>
                 <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="/LOTAUST.png" width="30px" className="img-fluid"/></span>
                 <input type="number" className="form-control amount-input-lpstaking" autoComplete="off" placeholder="0.00"  name="amount" />
@@ -160,15 +169,7 @@ export default function LpStaking(props){
                         </div>
                     </div>
                 </div>
-            </div>*/}
-            <div className="col-12 my-3">
-                <small>
-                    total staked LP in LOTA:
-                    <p>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</p>
-                    APY:
-                    <p>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</p>
-                </small>
-            </div>
+            </div>*/}            
             <div className="col-6 my-3">
                 <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake Now</button>
                 <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}} onClick={()=> setInputAmount(parseInt(state.LPBalance.balance))}>{ state.wallet &&
@@ -191,7 +192,7 @@ export default function LpStaking(props){
                         <p className="input-heading">Claim unstake</p>
                             <p className="input-slogan">Unbonding period of 700,000 block height ~1.5 | 2 Months, ⚠️ unbonding token get no rewards</p>
                         <button className="btn btn-default-lg w-100" onClick={()=> claimUnstake()}
-                            style={{marginTop:'21px'}}>Claim
+                            style={{marginTop:'7px'}}>Claim
                             unstake</button>
                         {/* If unstake claiming condition */}
                         <span className="info">
