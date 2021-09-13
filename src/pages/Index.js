@@ -791,7 +791,7 @@ export default () => {
 
                  </div>
 
-                <Roadmap/>
+                {/* <Roadmap/> */}
 
                  <div ref={loterraStats} className="container" style={{marginTop:'8rem'}}>
                               <div className="card lota-card">
