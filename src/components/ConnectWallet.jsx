@@ -99,6 +99,24 @@ export default function ConnectWallet(){
           }
         )
           dispatch({type: "setDaoFunds", message: contractDaoBalance.balance})
+          const contractLPLoterraBalance = await api.contractQuery(
+              state.loterraContractAddressCw20,
+              {
+                  balance: {
+                      address: state.loterraStakingLPAddress
+                  }
+              }
+          )
+          dispatch({type: "setStakingLoterraFunds", message: contractLPLoterraBalance.balance})
+          const contractLPAlteredBalance = await api.contractQuery(
+              state.loterraContractAddressCw20,
+              {
+                  balance: {
+                      address: state.alteredStakingLPAddress
+                  }
+              }
+          )
+          dispatch({type: "setStakingAlteredFunds", message: contractLPAlteredBalance.balance})
           
 
 
@@ -137,11 +155,6 @@ export default function ConnectWallet(){
             }
         );
         dispatch({type: "setTokenInfo", message: token_info})
-
-      const total_lp = await api.contractQuery(state.loterraLPAddress, {
-          token_info:{}
-      })
-      dispatch({type: "setTotalSupplyLP", message: total_lp.total_supply})
 
       const state_lp_staking = await api.contractQuery(state.loterraStakingLPAddress, {
           state:{}

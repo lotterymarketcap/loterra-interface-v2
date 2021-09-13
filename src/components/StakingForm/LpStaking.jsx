@@ -95,7 +95,6 @@ export default function LpStaking(props){
             return  (<>{total_amount_pending/ 1000000}</>)
         }
         return  (<>0</>)
-
     }
 
     function claimUnstake() {
@@ -137,7 +136,7 @@ export default function LpStaking(props){
     return (
         <div className="row">
             <div className="col-md-12">
-                <p className="input-heading">The amount you want to LP Stake (NO STAKING REWARDS YET PROPOSAL STILL IN PROGRESS... VOTE POLL id:10)</p>
+                <p className="input-heading">The amount you want to LP Stake</p>
                 {<p className="input-slogan">Provide liquidity on pair LOTA-UST and stake your LP token to share: 273.00 LOTA daily rewards | 100,000.00 LOTA year rewards</p>}
                 <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><img src="/LOTAUST.png" width="30px" className="img-fluid"/></span>
@@ -162,14 +161,16 @@ export default function LpStaking(props){
                     </div>
                 </div>
             </div>*/}
-            <div className="col-6 my-3">
+            <div className="col-12 my-3">
                 <small>
-                total staked LP in LOTA:
-                <p>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</p>
-                APY:
-                <p>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</p>
+                    total staked LP in LOTA:
+                    <p>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</p>
+                    APY:
+                    <p>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</p>
                 </small>
-                <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake (⚠️ REWARDS COMING SOON)</button>
+            </div>
+            <div className="col-6 my-3">
+                <button className="btn btn-normal-lg w-100" onClick={()=> stakeOrUnstake('stake')}>Stake Now</button>
                 <small className="float-end text-muted mt-2">Available: <strong style={{textDecoration:'underline'}} onClick={()=> setInputAmount(parseInt(state.LPBalance.balance))}>{ state.wallet &&
                         state.wallet.walletAddress &&
                         (<>{(numeral(parseInt(state.LPBalance.balance) / 1000000).format('0.00'))}</>)
@@ -197,6 +198,15 @@ export default function LpStaking(props){
                             <Info size={14} weight="fill" className="me-1" />
                             Your pending claim amount available soon:
                             <strong> {pendingClaim()} LOTA</strong>
+                            <div style={{marginTop:'20px'}}>List of pending claims</div>
+                            <table> <thead><tr><td style={{paddingLeft:'20px'}}>Amount</td> <td style={{paddingLeft:'20px'}}>Release at blockheight</td></tr></thead> <tbody>
+                            {state.holderClaimsLP ?
+                                state.holderClaimsLP.map(e => {
+                                    if (e.release_at.at_height > state.blockHeight ) {
+                                        return(<tr><td style={{paddingLeft:'20px'}}>{numeral(parseInt(e.amount) / 1000000).format("0,0.000000")}LOTA</td> <td style={{paddingLeft:'20px'}}>{e.release_at.at_height}</td> </tr>)
+                                    }
+                                }): <tr><td>Empty</td></tr>
+                            }</tbody></table>
                         </span>
                         <small className="float-end text-muted mt-2">Available: <strong>
                                 {

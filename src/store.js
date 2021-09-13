@@ -11,6 +11,7 @@ const initialState = {
   alteredContractAddress:"terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv",
   loterraLPAddress: "terra1t4xype7nzjxrzttuwuyh9sglwaaeszr8l78u6e",
   loterraStakingLPAddress: "terra1pdslh858spzqrtx2gwr69pzm9m2wrv55aeh742",
+  alteredStakingLPAddress: "terra1augyqytpq9klph5egx99m5ufrcjx5f7xgrcqck",
   allWinners: [],
   tokenInfo: {},
   allPlayers: [],
@@ -38,13 +39,25 @@ const initialState = {
     chainID: "columbus-4",
   }),
   blockHeight: 0,
-  totalSupplyLP:0,
   stateLPStaking:{},
-  poolInfo: {}
+  poolInfo: {},
+  stakingLoterraFunds: 0,
+  stakingAlteredFunds:0,
 };
 
 const reducer = (state, action) => {
   switch(action.type) {
+
+    case "setStakingLoterraFunds":
+      return {
+        ...state,
+        stakingLoterraFunds: action.message
+      }
+    case "setStakingAlteredFunds":
+      return {
+        ...state,
+        stakingAlteredFunds: action.message
+      }
     case "setPoolInfo":
       return {
         ...state,
@@ -54,11 +67,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         stateLPStaking: action.message
-      }
-    case "setTotalSupplyLP":
-      return {
-        ...state,
-        totalSupplyLP: action.message
       }
     case "setBlockHeight":
       return {
