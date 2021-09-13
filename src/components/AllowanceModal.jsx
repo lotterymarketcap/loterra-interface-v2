@@ -42,8 +42,7 @@ export default function AllowanceModal(props){
               if (e.success) {
                   //setResult("register combination success")
                   toggleModal()
-                  showNotification("Increase allowance success", 'success', 4000)
-                  window.location.reload();
+                  showNotification("Increase allowance success", 'success', 4000)              
               }
               else{
                   //setResult("register combination error")

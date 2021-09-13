@@ -2,6 +2,9 @@ import React from "react"
 import ContentLoader from "react-content-loader"
 
 const PriceLoader = (props) => (
+
+  
+
   <ContentLoader 
     speed={2}
     width={'100%'}
