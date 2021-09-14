@@ -556,7 +556,7 @@ export default () => {
                    <div className="row">
                    <div className="col-lg-5 col-xl-4 mx-auto">
                     <div className="card amount-block">
-                      <div className="card-header">
+                      <div className="card-header">                   
                       <h3>Book Your Tickets</h3>                      
                       </div>
                       <div className="card-body">       
