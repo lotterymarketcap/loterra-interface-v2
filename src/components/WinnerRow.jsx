@@ -4,7 +4,7 @@ import { UserCircle } from "phosphor-react";
 
 export default function WinnerRow(props){    
 
-    const {key, obj} = props;
+    const {a, obj} = props;
 
     function getRanks(ranks) {
         const rank1 = [];
@@ -152,7 +152,7 @@ export default function WinnerRow(props){
     }
 
     return (
-        <tr key={key}>
+        <tr key={a}>
             <th scope="row" style={{minWidth:'265px'}}>{getRanks(obj.claims.ranks)}</th>
             <td style={{minWidth:'450px'}}><UserCircle size={18} color="#827A99" />{obj.address}</td>
             <td style={{background:'#0F0038', textAlign:'center'}} className={obj.claims.claimed ? 'collected' : 'uncollected'}>{obj.claims.claimed ? 'Collected' : 'Uncollected'}</td>

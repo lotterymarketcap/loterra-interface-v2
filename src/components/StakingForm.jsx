@@ -14,7 +14,7 @@ export default function StakingForm(props){
     async function blockHeight(){
         const latestBlocks = await axios.get('https://lcd.terra.dev/blocks/latest')
         setBlockHeight(latestBlocks.data.block.header.height)
-        console.log('Block HEIGHT',latestBlocks)
+        //console.log('Block HEIGHT',latestBlocks)
      }
 
 

@@ -24,10 +24,13 @@ const initialState = {
   config: {},
   currentLotteryId: 0,
   historicalTicketLotteryId: 0,
+  historicalJackpotLotteryId: 0,
+  historicalJackpot: 0,
   holderPercentageFee: 0,
   allCombinations: [],
   allHolder: {},
   allHolderLP: {},
+  winningCombination: 0,
   holderClaims: [],
   holderClaimsLP: [],
   holderAccruedRewards:0,
@@ -64,6 +67,11 @@ const reducer = (state, action) => {
         ...state,
         poolInfo: action.message
       }
+      case "setWinningCombination":
+      return {
+        ...state,
+        winningCombination: action.message
+      }
     case "setStateLPStaking":
       return {
         ...state,
@@ -89,6 +97,16 @@ const reducer = (state, action) => {
           ...state,
           historicalTicketLotteryId: action.message
         }
+        case "setHistoricalJackpotLotteryId":
+          return {
+            ...state,
+            historicalJackpotLotteryId: action.message
+          }
+          case "setHistoricalJackpot":
+          return {
+            ...state,
+            historicalJackpot: action.message
+          }
       case "setHolderPercentageFee":
         return {
           ...state,
