@@ -86,6 +86,8 @@ export default function ConnectWallet(){
             config: {},
           }
         );
+      
+
         dispatch({type: "setCurrentLotteryId", message: contractConfigInfo.lottery_counter})
         dispatch({type: "setHolderPercentageFee", message: contractConfigInfo.token_holder_percentage_fee_reward})
 
@@ -471,7 +473,7 @@ const holderAccruedRewards = await api.contractQuery(
         {/*<button onClick={() => display()}>Connect Wallet</button>
         {renderDialog()}*/}
         {connected && connectedWallet &&
-            <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)} connetedWallet={connectedWallet}/>
+            <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)} connectedWallet={connectedWallet}/>
         }
     </div>
 

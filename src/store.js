@@ -23,6 +23,7 @@ const initialState = {
   LPBalance:{},
   config: {},
   currentLotteryId: 0,
+  historicalTicketLotteryId: 0,
   holderPercentageFee: 0,
   allCombinations: [],
   allHolder: {},
@@ -82,6 +83,11 @@ const reducer = (state, action) => {
         return {
           ...state,
           currentLotteryId: action.message
+        }
+        case "setHistoricalTicketLotteryId":
+        return {
+          ...state,
+          historicalTicketLotteryId: action.message
         }
       case "setHolderPercentageFee":
         return {
