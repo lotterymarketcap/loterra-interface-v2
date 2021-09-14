@@ -115,6 +115,7 @@ export default () =>  {
             console.log(inLota / 1000000)
             return inLota / 1000000
         }
+        return 0
     }
 
     function getNotStaked(){
@@ -124,7 +125,6 @@ export default () =>  {
     }
 
     function getStakedNr (){
-        let totalStakedLP = getTotalStakedLP()
         let total = (parseInt(state.tokenInfo.total_supply) - BURNED_LOTA )/ 1000000;
         //console.log("parseInt(state.tokenInfo.balance) - BURNED_LOTA")
         //console.log(state.tokenInfo.total_supply)
@@ -132,6 +132,7 @@ export default () =>  {
         let daoFunds = parseInt(state.daoFunds / 1000000);
         let lotaFundsLP = parseInt(state.stakingLoterraFunds / 1000000);
         let alteredFundsLP = parseInt(state.stakingAlteredFunds / 1000000)
+        let totalStakedLP = getTotalStakedLP()
         let sum = total - staked - daoFunds - lotaFundsLP - alteredFundsLP - totalStakedLP;
         return sum;
     }
@@ -203,7 +204,7 @@ export default () =>  {
                                                  </div>
                                              </div>
                                          </div>
-                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} data-lpfunds={state.tokenInfo.total_supply ? getLPFunds() : '0'} data-lpstaked={state.tokenInfo.total_supply ? getTotalStakedLP() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                             {state.poolInfo.total_share && <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} data-lpfunds={state.tokenInfo.total_supply ? getLPFunds() : '0'} data-lpstaked={state.poolInfo.total_share ? getTotalStakedLP() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>}
                                         </div>    
                                     )
                                 }                                                                
