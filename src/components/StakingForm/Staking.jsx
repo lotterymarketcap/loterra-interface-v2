@@ -127,8 +127,8 @@ export default function Staking(props){
             <div className="col-md-12">
                 <p className="input-heading">The amount you want to stake</p>
                 <p className="input-slogan">Stake LOTA and get 20% on winner prizes</p>
-                <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><img src="/LOTA.png" width="30px" className="img-fluid"/></span>
+                <div className="input-group mb-3">
+                <span className="input-group-text" id="basic-addon1"><img src="/LOTA.png" width="30px" className="img-fluid"/></span>
                 <input type="number" className="form-control amount-input-staking" autoComplete="off" placeholder="0.00"  name="amount" />
                 </div>
             </div>

@@ -86,9 +86,10 @@ export default function ConnectWallet(){
             config: {},
           }
         );
-        dispatch({type: "setCurrentLotteryId", message: contractConfigInfo.lottery_counter})
-        dispatch({type: "setHolderPercentageFee", message: contractConfigInfo.token_holder_percentage_fee_reward})
+      
 
+        dispatch({type: "setCurrentLotteryId", message: contractConfigInfo.lottery_counter})
+        dispatch({type: "setHolderPercentageFee", message: contractConfigInfo.token_holder_percentage_fee_reward})  
 
         const contractDaoBalance = await api.contractQuery(
             state.loterraContractAddressCw20,
@@ -120,24 +121,27 @@ export default function ConnectWallet(){
           
 
 
-        console.log('config',contractConfigInfo)
+        //console.log('config',contractConfigInfo)
 
-        let pollCount = contractConfigInfo.poll_count;
-        console.log('count',pollCount)
-        let allProposals = [];
-        for (let index = 1; index < pollCount + 1; index++) {
-            const proposal = await api.contractQuery(
-                state.loterraContractAddress,
-                {
-                get_poll: { poll_id: index },
-                }
-        );
-        proposal.nr = index;
-        allProposals.push(proposal);
-        console.log('single', proposal)
+        if(window.location.href.indexOf("staking") > -1){
+            let pollCount = contractConfigInfo.poll_count;
+            //console.log('count',pollCount)
+            let allProposals = [];
+            for (let index = 1; index < pollCount + 1; index++) {
+                const proposal = await api.contractQuery(
+                    state.loterraContractAddress,
+                    {
+                    get_poll: { poll_id: index },
+                    }
+            );
+            proposal.nr = index;
+            allProposals.push(proposal);
+            //console.log('single', proposal)
+            }
+            dispatch({type: "setAllProposals", message: allProposals})
+            //console.log('proposals',allProposals)
         }
-        dispatch({type: "setAllProposals", message: allProposals})
-        console.log('proposals',allProposals)
+       
 
         const staking = await api.contractQuery(
             state.loterraStakingAddress,
@@ -146,7 +150,7 @@ export default function ConnectWallet(){
           }
         );
         dispatch({type: "setStaking", message: staking})
-        console.log('staking',staking)
+        //console.log('staking',staking)
 
         const token_info = await api.contractQuery(
             state.loterraContractAddressCw20, 
@@ -222,7 +226,7 @@ export default function ConnectWallet(){
                         }
                     );
                     dispatch({type: "setAllHolder", message: holder})    
-                    console.log(holder)     
+                    //console.log(holder)     
 
 const holderAccruedRewards = await api.contractQuery(
                         state.loterraStakingAddress,
@@ -231,7 +235,7 @@ const holderAccruedRewards = await api.contractQuery(
                         }
                     );
                     dispatch({type: "setHolderAccruedRewards", message: holderAccruedRewards.rewards})    
-                    console.log(holder)  
+                    //console.log(holder)  
 
               
                     const token = await api.contractQuery(
@@ -240,7 +244,7 @@ const holderAccruedRewards = await api.contractQuery(
                         balance: { address: connectedWallet.walletAddress},
                     })
                     dispatch({type: "setLotaBalance", message: token}) 
-                    console.log(token)
+                    //console.log(token)
 
                     const claims = await api.contractQuery(
                         state.loterraStakingAddress,
@@ -248,8 +252,8 @@ const holderAccruedRewards = await api.contractQuery(
                             claims: { address: connectedWallet.walletAddress },
                         }
                     );
-                    console.log("claims")
-                    console.log(claims)
+                    //console.log("claims")
+                    //console.log(claims)
                     dispatch({type: "setHolderClaims", message: claims.claims})
 
                     const tokenLP = await api.contractQuery(
@@ -258,7 +262,7 @@ const holderAccruedRewards = await api.contractQuery(
                             balance: { address: connectedWallet.walletAddress},
                         })
                     dispatch({type: "setLPBalance", message: tokenLP})
-                    console.log(tokenLP)
+                    //console.log(tokenLP)
                     const LPHolderAccruedRewards = await api.contractQuery(
                         state.loterraStakingLPAddress,
                         {
@@ -303,7 +307,7 @@ const holderAccruedRewards = await api.contractQuery(
 
                 //Store coins global state
                 dispatch({type: "setAllNativeCoins", message: coins}) 
-                console.log(state.allCoins)
+                //console.log(state.allCoins)
 
                 let uusd = coins.filter((c) => {
                     return c.denom === "uusd";
@@ -360,7 +364,7 @@ const holderAccruedRewards = await api.contractQuery(
             contactBalance()  
         }            
             baseData()             
-            console.log(connectedWallet)
+            //console.log(connectedWallet)
             window.addEventListener('scroll',handleScroll)
     }, [connectedWallet, lcd, state.config]);
 
@@ -471,7 +475,7 @@ const holderAccruedRewards = await api.contractQuery(
         {/*<button onClick={() => display()}>Connect Wallet</button>
         {renderDialog()}*/}
         {connected && connectedWallet &&
-            <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)} connetedWallet={connectedWallet}/>
+            <UserModal open={isModal} toggleModal={() => setIsModal(!isModal)} connectedWallet={connectedWallet}/>
         }
     </div>
 

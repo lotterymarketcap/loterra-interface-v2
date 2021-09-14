@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useMemo, useCallback} from "react";
-import { X, Ticket,UserCircle, Info, TwitterLogo, TelegramLogo, WhatsappLogo } from 'phosphor-react'
+import { X, Ticket,UserCircle, Info, TwitterLogo, TelegramLogo, WhatsappLogo, ArrowCircleLeft, ArrowCircleRight } from 'phosphor-react'
 import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra.js";
 import {useStore} from "../store";
 import SocialShare from './SocialShare'
+import PriceLoader from "./PriceLoader";
 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -12,24 +13,26 @@ if (typeof document !== 'undefined') {
 export default function UserModal(props){
     const [result, setResult] = useState("");
     const [claimed, setClaimed] = useState(false);
+    const [ticketLoad, setTicketLoad] = useState();
+    const {state, dispatch} = useStore();    
+
     let connectedWallet = ""
     if (typeof document !== 'undefined') {
         connectedWallet = useConnectedWallet()
     }
 
     const { open, toggleModal } = props;
-    const store = useStore();
 
-    const isPlayer = store.state.allPlayers.includes(connectedWallet.walletAddress);
-    const isWinner = store.state.allWinners.includes(connectedWallet.walletAddress);
+    const isPlayer = state.allPlayers.includes(connectedWallet.walletAddress);
+    const isWinner = state.allWinners.includes(connectedWallet.walletAddress);
     
-    const timeStampHalf = (store.state.config.block_time_play * 1000) - (store.state.config.every_block_time_play / 2);
+    const timeStampHalf = (state.config.block_time_play * 1000) - (state.config.every_block_time_play / 2);
     const addToGas = 5300
     const obj = new StdFee(300_000, { uusd: 273600 + addToGas })
     function claim(){
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
-            store.state.loterraContractAddress,
+            state.loterraContractAddress,
             {
                 claim: {},
             })
@@ -52,32 +55,67 @@ export default function UserModal(props){
             setResult(e.message)
         })
     }
-    function collect(){
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            store.state.loterraContractAddress,
-            {
-                collect: {},
-            })
 
-        connectedWallet.post({
-            msgs: [msg],
-            fee: obj
-            // gasPrices: obj.gasPrices(),
-            // gasAdjustment: 1.5,
-        }).then(e => {
-            if (e.success) {
-                setResult("Collect success")
+    async function lotteryCombinations(type){
+        setTicketLoad(true)
+        try {       
+        const api = new WasmAPI(state.lcd_client.apiRequester);
+        let id = parseInt(state.historicalTicketLotteryId == 0 ? state.currentLotteryId : state.historicalTicketLotteryId);
+        if(type == 'prev' && id !== 1){                        
+                id = id - 1            
+        } 
+        if(type == 'next' && state.historicalTicketLotteryId < state.currentLotteryId && state.historicalTicketLotteryId !== 0) {                  
+                id = id + 1            
+        }
+        if(type == 'current'){
+            id = state.currentLotteryId;
+        }
+        console.log(id)
+        dispatch({type: "setHistoricalTicketLotteryId", message: id})
+
+        const combinations = await api.contractQuery(
+            state.loterraContractAddress,
+            {
+                combination: { lottery_id: id, address: state.wallet.walletAddress},
             }
-            else{
-                console.log(e)
-            }
-            console.log(e)
-        }).catch(e =>{
-            console.log(e.message)
-            setResult(e.message)
-        })
+        );
+        console.log(combinations)
+        dispatch({type: "setAllCombinations", message: combinations})
+        setTicketLoad(false)
+        }catch (e) {
+            console.log(e,'no tickets found')
+            dispatch({type: "setAllCombinations", message: []})
+            setTicketLoad(false)
+        }
+
     }
+    
+    // function collect(){
+    //     const msg = new MsgExecuteContract(
+    //         connectedWallet.walletAddress,
+    //         state.loterraContractAddress,
+    //         {
+    //             collect: {},
+    //         })
+
+    //     connectedWallet.post({
+    //         msgs: [msg],
+    //         fee: obj
+    //         // gasPrices: obj.gasPrices(),
+    //         // gasAdjustment: 1.5,
+    //     }).then(e => {
+    //         if (e.success) {
+    //             setResult("Collect success")
+    //         }
+    //         else{
+    //             console.log(e)
+    //         }
+    //         console.log(e)
+    //     }).catch(e =>{
+    //         console.log(e.message)
+    //         setResult(e.message)
+    //     })
+    // }
     return(
         <>
         <div className={open ? 'usermodal show' : 'usermodal'}>
@@ -92,12 +130,32 @@ export default function UserModal(props){
                                 </div>
 
                                 <div className="col-12 text-center claim">
-                                    <h4 className="mb-2">Current Lottery Tickets</h4>
+                                    <h4 className="mb-2">
+                                        Your Lottery Tickets
+                                        {state.historicalTicketLotteryId !== 0 && state.historicalTicketLotteryId !== state.currentLotteryId &&
+                                            <small className="d-block" style={{fontSize:'14px', color:'#ff36ff'}}>Tickets from Lottery <strong>#{state.historicalTicketLotteryId}</strong></small>
+                                        }
+                                    </h4>
+                                    
+                                    <div className="btn-group w-100">
+                                        <button className="btn btn-default" disabled={state.historicalTicketLotteryId == 1 ? true : false} onClick={() => lotteryCombinations('prev')}>
+                                            <ArrowCircleLeft size={24} />
+                                        </button>
+                                        <button className="btn btn-default" disabled={state.historicalTicketLotteryId == 0 || state.historicalTicketLotteryId == state.currentLotteryId  ? true : false} onClick={() => lotteryCombinations('current')}>
+                                            Current
+                                        </button>
+                                        <button className="btn btn-default" disabled={state.historicalTicketLotteryId == 0 || state.historicalTicketLotteryId == state.currentLotteryId ? true : false} onClick={() => lotteryCombinations('next')}>
+                                            <ArrowCircleRight size={24} />
+                                        </button>
+                                    </div>
                                     <ul className="list-group text-left">
-                                        {store.state.allCombinations.combination ? store.state.allCombinations.combination.map((element, i) =>
+                                        {ticketLoad ? 
+                                            (<PriceLoader/>)
+                                        :
+                                        (state.allCombinations.combination ? state.allCombinations.combination.map((element, i) =>
                                             <li key={i} className="list-group-item"><Ticket size={18} color={'#20FF93'} />{element}</li>):
                                             <li className="list-group-item"><Ticket size={18} color={'#20FF93'} />No tickets found</li>
-                                        }
+                                        )}
                                     </ul>
                                 </div>
 

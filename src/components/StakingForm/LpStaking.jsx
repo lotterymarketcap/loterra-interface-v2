@@ -127,8 +127,8 @@ export default function LpStaking(props){
             const ratio = state.poolInfo.total_share / state.poolInfo.assets[0].amount
             const inLota = state.stateLPStaking.total_balance / ratio
 
-            console.log("state.poolInfo")
-            console.log(inLota / 1000000)
+            //console.log("state.poolInfo")
+            //console.log(inLota / 1000000)
             return inLota / 1000000
         }
     }
@@ -147,8 +147,8 @@ export default function LpStaking(props){
                         <br/>                    
                         APY: <strong>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</strong>                    
                 </span>
-                <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><img src="/LOTAUST.png" width="30px" className="img-fluid"/></span>
+                <div className="input-group mb-3">
+                <span className="input-group-text" id="basic-addon1"><img src="/LOTAUST.png" width="30px" className="img-fluid"/></span>
                 <input type="number" className="form-control amount-input-lpstaking" autoComplete="off" placeholder="0.00"  name="amount" />
                 </div>
             </div>
