@@ -479,9 +479,10 @@ export default () => {
                           <span>UST</span>
                         </div>
                         </h2>
+                        <h3>Draws every 3 days</h3>
                       </div>
                     </div>
-                    <div className="col-xl-7 mx-auto">
+                    <div className="col-12 col-md-6 mx-auto">
                         <div className="row">
                           <div className="col-6">
                             <div className="card stats-card">

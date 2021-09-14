@@ -336,6 +336,31 @@ font-style: normal;
 
 
 .jackpot {  
+  h3 {
+    font-family: 'Sigmar One';
+    font-size: 23px;
+    background: #1f0e4e;
+    border: 5px solid #441870;
+    box-shadow: #000000 1px 1px 18px inset, #28044c 0px 4px 0px, #5f1587 0px -2px 0px;
+        padding: 4px 20px;
+    border-radius: 30px;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    width: 360px;
+    color: #ecba26;
+    text-shadow: 0px 2px 0px #9b8118;
+    @media(max-width:510px){
+    
+    font-size: 14px;
+ 
+    border: 3px solid #451672;
+    margin-bottom: 25px;
+    width: 215px;
+    color: #ecba26;
+    text-shadow: 0px 2px 0px #9b8118;
+    }
+  }
   p {
     color: #fff;
     text-transform: uppercase;
@@ -372,19 +397,24 @@ font-style: normal;
     color: #FFFFFF;
     display: inline-block;
     border-bottom: 6px solid #0f032f;
-    margin-bottom: 35px;
+    margin-bottom: -33px;
     box-shadow: inset 0px 3px 0px #b672c766, 0px 64px 30px -34px #0c002d;
     @media(max-width:710px){
       font-size: 38px;
     }
   @media(max-width:500px){
-    padding: 5px;
-    font-size: 37px;
-    line-height: 46px;
+    padding: 5px 5px;
+    font-size: 47px;
+    line-height: 57px;
     border-bottom: 4px solid #0f032f;
   }
   @media(max-width:380px){
-    font-size: 29px;
+    font-size: 39px;
+    margin-bottom: -27px;
+  }
+  @media(max-width:330px){
+    font-size: 31px;
+    margin-bottom: -27px;
   }
   .roller {
     display: inline-block;
@@ -460,11 +490,11 @@ font-style: normal;
 .stats-card {
   background: linear-gradient(
     95.45deg
-    , #3B2E73 -92.2%, #10003B 105.35%);
-        border: 5px dashed #493C84;
-  border-radius: 10px;
-  box-shadow: 0px 28px 48px #0F0038;
-  color:#fff;
+    , #3b2e7370 -92.2%, #10003B 105.35%);
+        /* border: 5px dashed #493C84; */
+        border-radius: 10px;
+        box-shadow: 0px 28px 48px #0f0038;
+        color: #fff;
   h3 {
     font-weight: bold;
     font-size: 34px;
@@ -477,14 +507,24 @@ font-style: normal;
         font-size: 16px;
         line-height: 19px;
         color: #FF36FF;
+        
+      }
+      @media(max-width:510px){
+        font-size:27px;
+        span {
+          font-size: 13px;
+        }
+      }
+      @media(max-width:330px){
+        font-size:21px;
+        span {
+          font-size: 13px;
+        }
       }
   }
   @media(max-width:510px){
     .card-body {
       padding: 7px 15px;
-    }
-    h3 {
-      font-size:27px;
     }
     svg {
       width:155%;
