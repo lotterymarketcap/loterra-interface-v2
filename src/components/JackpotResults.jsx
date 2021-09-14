@@ -137,7 +137,7 @@ export default function JackpotResults(){
                 <tr>
                 <th scope="row" className="text-white">#2</th>
                   <td style={{color:'#FF36FF',minWidth:'100px'}}>5 Symbols</td>
-                  <td>{getPrizePerRank(2)}</td>
+                  <td>{getPrizePerRank(2)}<span>UST</span></td>
                   <td>{getPrizePerRankGross(2)}<span>UST</span></td>
                   <td>{getPrizePerRankTax(2)}<span>UST</span></td>
                 </tr>
