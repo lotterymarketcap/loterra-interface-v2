@@ -72,9 +72,13 @@
         gradientBlue.addColorStop(0, '#6372ff');
         gradientBlue.addColorStop(1, '#505eca');
 
+        let gradientYellow = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientYellow.addColorStop(0, '#ffcb63');
+        gradientYellow.addColorStop(1, '#cb8500');
+
         return {
         
-          labels: ['Available', 'Staked', 'DAO', 'LP funds'],
+          labels: ['Available', 'Staked', 'DAO', 'LP funds', 'Staked LP'],
         datasets: [
           {
             label: '# of Lota',
@@ -82,19 +86,22 @@
               canvas.dataset.staked,
               canvas.dataset.total,
               canvas.dataset.dao,
-                canvas.dataset.lpfunds
+                canvas.dataset.lpfunds,
+              canvas.dataset.lpstaked
             ],
             backgroundColor: [
               gradientGreen,
               gradientBlack,   
               gradientPink,
               gradientBlue,
+              gradientYellow,
             ],
             borderColor: [
               gradientGreen,
               gradientBlack,  
               gradientPink,
               gradientBlue,
+              gradientYellow,
             ],
             borderWidth: 1,
           },

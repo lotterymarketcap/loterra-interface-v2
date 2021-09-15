@@ -105,7 +105,18 @@ export default () =>  {
         })
     }
 
-    
+
+    function getTotalStakedLP(){
+        if (state.poolInfo.total_share && state.stateLPStaking.total_balance){
+            const ratio = state.poolInfo.total_share / state.poolInfo.assets[0].amount
+            const inLota = state.stateLPStaking.total_balance / ratio
+
+            console.log("state.poolInfo")
+            console.log(inLota / 1000000)
+            return inLota / 1000000
+        }
+        return 0
+    }
 
     function getNotStaked(){
          let staked = parseInt(state.staking.total_balance) / 1000000;
@@ -121,7 +132,8 @@ export default () =>  {
         let daoFunds = parseInt(state.daoFunds / 1000000);
         let lotaFundsLP = parseInt(state.stakingLoterraFunds / 1000000);
         let alteredFundsLP = parseInt(state.stakingAlteredFunds / 1000000)
-        let sum = total - staked - daoFunds - lotaFundsLP - alteredFundsLP;
+        let totalStakedLP = getTotalStakedLP()
+        let sum = total - staked - daoFunds - lotaFundsLP - alteredFundsLP - totalStakedLP;
         return sum;
     }
 
@@ -179,6 +191,12 @@ export default () =>  {
                                                      {state.tokenInfo.total_supply ?  numeral(getLPFunds()).format('0.0,00') : '0'}
                                                  </div>
                                                  <div className="col-6 text-white">
+                                                     <span className="circle-yellow"></span>LP staked
+                                                 </div>
+                                                 <div className="col-6">
+                                                     {state.tokenInfo.total_supply ?  numeral(getTotalStakedLP()).format('0.0,00') : '0'}
+                                                 </div>
+                                                 <div className="col-6 text-white">
                                                  <span className="circle-grey"></span>Staked
                                                  </div>
                                                  <div className="col-6">
@@ -186,7 +204,7 @@ export default () =>  {
                                                  </div>
                                              </div>
                                          </div>
-                                        <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} data-lpfunds={state.tokenInfo.total_supply ? getLPFunds() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
+                                             {state.poolInfo.total_share && <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} data-lpfunds={state.tokenInfo.total_supply ? getLPFunds() : '0'} data-lpstaked={state.poolInfo.total_share ? getTotalStakedLP() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>}
                                         </div>    
                                     )
                                 }                                                                
