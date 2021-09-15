@@ -11,7 +11,15 @@ export default function WinnerRow(props){
         const rank2 = [];
         const rank3 = [];
         const rank4 = [];
+        const rank5 = [];
+        const rank6 = [];
         ranks.map((obj,i)=> {
+            if(obj == 6){
+                rank6.push(obj)
+            }
+            if(obj == 5){
+                rank5.push(obj)
+            }
             if(obj == 4){
               rank4.push(obj)
             }
@@ -25,13 +33,15 @@ export default function WinnerRow(props){
               rank1.push(obj)
             }
         })
-        const ranksArray = [rank4,rank3,rank2,rank1]
+        const ranksArray = [rank6, rank5, rank4,rank3,rank2,rank1]
         
         const rankClasses = [
           {rank: 1, class:'super-special-text'},       
           {rank: 2, class:'special-text'},         
           {rank: 3, class:'medium-text'},       
-          {rank: 4, class:''},        
+          {rank: 4, class:''},
+            {rank: 5, class:''},
+            {rank: 6, class:''},
         ];
         
         const amountClasses = [
@@ -102,7 +112,13 @@ export default function WinnerRow(props){
             }
             if(rank == 4){
                 text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount -1 )] : comboTextFour[comboTextFour.length - 1];
-            }            
+            }
+            if(rank == 5){
+                text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount -1 )] : comboTextFour[comboTextFour.length - 1];
+            }
+            if(rank == 6){
+                text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount -1 )] : comboTextFour[comboTextFour.length - 1];
+            }
             return text;
         }
 
