@@ -14,6 +14,28 @@
         width:330px;
         right:-330px;
     }
+    .winner-box {
+        background: #1e104e;
+        padding:10px;
+        p {
+            color: #0f003a;
+            background: #ff36ff;
+            margin: -10px -10px 10px -10px;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 24px;
+    span {
+        display: block;
+        font-size: 13px;
+        position: relative;
+        top: -6px;
+        font-weight: 500;
+    }
+        }
+        .combos {
+
+        }
+    }
     .toggle {
         background:transparent;
         border:0;

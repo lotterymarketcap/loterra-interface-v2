@@ -14,6 +14,7 @@ import {parse} from "postcss";
 import ApyStats from "../components/ApyStats";
 import axios from "axios";
 import StakingForm from "../components/StakingForm";
+import PieLoader from "../components/PieLoader";
 
 const BURNED_LOTA = 4301383550000;
 
@@ -167,7 +168,7 @@ export default () =>  {
                     <div className="card-body">
                         <div className="row">
                         <div className="col-lg-4 d-flex">
-                                { state.tokenInfo.total_supply &&
+                                { state.tokenInfo.total_supply && state.poolInfo.total_share ?
                                      (
                                          <div className="align-self-center w-100">
                                          <div className="pie-stats">
@@ -203,9 +204,12 @@ export default () =>  {
                                                     {state.tokenInfo.total_supply ? numeral(getNotStaked()).format('0.0,00'): '0'}
                                                  </div>
                                              </div>
-                                         </div>
-                                             {state.poolInfo.total_share && <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} data-lpfunds={state.tokenInfo.total_supply ? getLPFunds() : '0'} data-lpstaked={state.poolInfo.total_share ? getTotalStakedLP() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>}
+                                         </div>    
+                                             <Pie data={pieData} data-staked={state.tokenInfo.total_supply ? getStakedNr() : '0'} data-total={state.tokenInfo.total_supply ? getNotStaked() : '0'} data-dao= {state.tokenInfo.total_supply ?  getDaoFunds() : '0'} data-lpfunds={state.tokenInfo.total_supply ? getLPFunds() : '0'} data-lpstaked={state.poolInfo.total_share ? getTotalStakedLP() : '0'} options={{animation:{duration:0}}} style={{maxHeight:'400px'}}/>
                                         </div>    
+                                    ) :
+                                    (
+                                        <PieLoader/>
                                     )
                                 }                                                                
                             </div>

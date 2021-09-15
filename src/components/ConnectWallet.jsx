@@ -8,7 +8,7 @@ import {
   ConnectType,
 } from "@terra-money/wallet-provider";
 
-import { Wallet, CaretRight, UserCircle, Power, List,X, Ticket, Bank } from 'phosphor-react'
+import { Wallet, CaretRight, UserCircle, Trophy, Power, List,X, Ticket, Bank } from 'phosphor-react'
 import numeral from "numeral"
 import UserModal from "./UserModal";
 import {useStore} from "../store";
@@ -90,6 +90,18 @@ export default function ConnectWallet(){
 
         dispatch({type: "setCurrentLotteryId", message: contractConfigInfo.lottery_counter})
         dispatch({type: "setHolderPercentageFee", message: contractConfigInfo.token_holder_percentage_fee_reward})  
+
+        // Query all winners for most recent draw
+        const {winners} = await api.contractQuery(state.loterraContractAddress, {
+            winner:{
+                lottery_id: contractConfigInfo.lottery_counter - 1
+            }
+        });        
+        dispatch({type: "setAllRecentWinners", message: winners})
+
+      
+
+        
 
         const contractDaoBalance = await api.contractQuery(
             state.loterraContractAddressCw20,
@@ -195,6 +207,27 @@ export default function ConnectWallet(){
         }
         setConnected(!connected)
         setIsDisplayDialog(false)
+    }
+
+    function checkIfWon(){
+         // Code for winner detector
+         let type = false;     
+         let recentWinners = state.allRecentWinners;
+
+         //Test purposes
+         //recentWinners = [{address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}}]
+         
+         if(recentWinners.length == 0){
+             type = false
+         }
+ 
+         recentWinners.map(obj => {
+             if(obj.address == connectedWallet.walletAddress){
+                 type = obj
+             }
+         })
+ 
+         dispatch({type: "setYouWon", message: type})
     }
 
     async function contactBalance(){
@@ -362,6 +395,7 @@ const holderAccruedRewards = await api.contractQuery(
     useEffect(() => {
         if(connectedWallet){
             contactBalance()  
+            checkIfWon()
         }            
             baseData()             
             //console.log(connectedWallet)
@@ -432,16 +466,28 @@ const holderAccruedRewards = await api.contractQuery(
                 )}
                 {connected && (
                     <>
-                    <button className="btn btn-default nav-item me-2"
+                    <button className={'btn btn-default nav-item me-2' + (state.youWon ? ' winner' : '')}
                     style={{
                         padding:'0.275rem 0.55rem'
                     }}
                     onClick={() => setIsModal(!isModal)}>
+                    { state.youWon ?
+                        <>
+                        <Trophy size={33}
+                    style={{
+                        marginTop: '-2px',
+                        color:'#ecba26',                        
+                    }} />
+                    <span className="badge">YOU WON</span>
+                        </>
+                    : 
                     <UserCircle size={33}
                     style={{
                         marginTop: '-2px',
-                        color:'#72ffc1'
+                        color:'#72ffc1',                        
                     }} />
+                    }
+                    
                     </button>                        
                     <button                       
                         className="btn btn-green nav-item dropdown-toggle"

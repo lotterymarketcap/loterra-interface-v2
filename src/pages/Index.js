@@ -137,13 +137,12 @@ export default () => {
       //Dev purposes disable for production
       //console.log('contract info',contractConfigInfo)
 
-        // Query all winners
-        const {winners} = await api.contractQuery(loterra_contract_address, {
-            winner:{
-                lottery_id: contractConfigInfo.lottery_counter - 1
-            }
-        });
-      dispatch({type: "setAllWinners", message: winners})
+      const {winners} = await api.contractQuery(loterra_contract_address, {
+        winner:{
+            lottery_id: contractConfigInfo.lottery_counter - 1
+        }
+    });
+    dispatch({type: "setAllWinners", message: winners})
         // Query all players
         const players = await api.contractQuery(loterra_contract_address, {
             players:{

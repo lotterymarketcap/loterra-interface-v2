@@ -1,10 +1,13 @@
 import React, {useState} from "react";
+import {useStore} from "../store";
 
 import { UserCircle } from "phosphor-react";
 
 export default function WinnerRow(props){    
 
     const {a, obj} = props;
+    const {state, dispatch} = useStore();    
+
 
     function getRanks(ranks) {
         const rank1 = [];
@@ -26,82 +29,20 @@ export default function WinnerRow(props){
             }
         })
         const ranksArray = [rank4,rank3,rank2,rank1]
-        
-        const rankClasses = [
-          {rank: 1, class:'super-special-text'},       
-          {rank: 2, class:'special-text'},         
-          {rank: 3, class:'medium-text'},       
-          {rank: 4, class:''},        
-        ];
-        
-        const amountClasses = [
-          {amount: 1, class:'cyan'},       
-          {amount: 2, class:'blue'},         
-          {amount: 3, class:'cyan'},       
-          {amount: 4, class:'fire'},        
-          {amount: 5, class:'fire'},        
-          {amount: 6, class:'fire'},        
-          {amount: 7, class:'fire'},        
-          {amount: 8, class:'fire'},        
-          {amount: 9, class:'fire'},        
-          {amount: 10, class:'fire'},        
-          {amount: 11, class:'fire'},                  
-        ];
-     
-
-        const comboTextFour = [
-            'Good work!',
-            'Boom!',
-            'Perfect!',
-            'So close!',
-            'Dynamite!',
-            'On Fire!',
-            'Impossible!',
-        ]
-
-        const comboTextThree = [
-            'What a combo?!',
-            'Wipeout!',
-            'Tasty!',
-            'Blasted!',
-            'Thunder!',            
-        ]
-
-        const comboTextTwo = [
-            'Heros!',
-            'Smashed!',
-            'Rocket!',
-            'Master!',
-            'Out of control!',
-            'Ticket Storm!',
-            'Blasted!',
-            'On Fire!',
-            'Crypto mania!',           
-        ]
-
-        const comboTextOne = [
-            'Big bang!',
-            'Destroyer!',
-            'Dynamite!',
-            'Summit!',
-            'Mavericks!',
-            'Galactic!',
-            'Wanted!',
-        ]
 
         function getComboText(rank,amount){
             let text = ''
             if(rank == 1){
-                text = comboTextOne[parseInt(amount)] != undefined ? comboTextOne[parseInt(amount - 1)] : comboTextOne[comboTextFour.length - 1];
+                text = state.comboTextOne[parseInt(amount)] != undefined ? state.comboTextOne[parseInt(amount - 1)] : state.comboTextOne[state.comboTextFour.length - 1];
             }
             if(rank == 2){
-                text = comboTextTwo[parseInt(amount)] != undefined ? comboTextTwo[parseInt(amount - 1 )] : comboTextTwo[comboTextFour.length - 1];
+                text = state.comboTextTwo[parseInt(amount)] != undefined ? state.comboTextTwo[parseInt(amount - 1 )] : state.comboTextTwo[state.comboTextFour.length - 1];
             }
             if(rank == 3){
-                text = comboTextThree[parseInt(amount)] != undefined ? comboTextThree[parseInt(amount -1 )] : comboTextThree[comboTextFour.length - 1];
+                text = state.comboTextThree[parseInt(amount)] != undefined ? state.comboTextThree[parseInt(amount -1 )] : state.comboTextThree[state.comboTextFour.length - 1];
             }
             if(rank == 4){
-                text = comboTextFour[parseInt(amount)] != undefined ? comboTextFour[parseInt(amount -1 )] : comboTextFour[comboTextFour.length - 1];
+                text = state.comboTextFour[parseInt(amount)] != undefined ? state.comboTextFour[parseInt(amount -1 )] : state.comboTextFour[state.comboTextFour.length - 1];
             }            
             return text;
         }
@@ -109,8 +50,8 @@ export default function WinnerRow(props){
         function getAmountClass(amount){
           let name = '';
  
-          for (let index = 0; index < amountClasses.length; index++) {
-            const element = amountClasses[index];
+          for (let index = 0; index < state.amountClasses.length; index++) {
+            const element = state.amountClasses[index];
             if(element.amount == amount){
               name = element.class
             }
@@ -122,8 +63,8 @@ export default function WinnerRow(props){
   
         function comboTextResponse(rank,amount){
           let result = '';
-          for (let index = 0; index < rankClasses.length; index++) {
-            const element = rankClasses[index];
+          for (let index = 0; index < state.rankClasses.length; index++) {
+            const element = state.rankClasses[index];
               if(parseInt(rank) == element.rank){              
                 result = ('<span class="combo-text '+element.class+' '+getAmountClass(amount)+'">'+getComboText(rank,amount)+'</span>')
                 return result;                      

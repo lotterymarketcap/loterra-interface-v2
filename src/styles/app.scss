@@ -658,103 +658,105 @@ $total: 8;
 
 //Winners table
 
-.winners-table {
-  .combos {
-    display:inline-block;  
-    font-family: 'Sigmar One', cursive;
-    .combo-box {
-      display:block;
-    }
-    .combo-text {
-      background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
+.combos {
+  display:inline-block;  
+  font-family: 'Sigmar One', cursive;
+  .combo-box {
+    display:block;
+  }
+  .combo-text {
+    background: linear-gradient(180deg, #FFFFFF 0%, #ffd001 27.08%, #f0d139 43.75%, #b3a437 46.88%, #b89e21 61.46%, #ffd336 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-size: 24px;
+          line-height: 0px;
+          margin-left: 5px;
+          font-size: 21px;
+          &.medium-text {
+            background: linear-gradient(180deg, #FFFFFF 0%, #01d9ff 27.08%, #39eaf0 43.75%, #37afb3 46.88%, #21b8b8 61.46%, #36ffff 100%);
+              -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-size: 30px;
+          font-family: 'Permanent Marker', cursive;
+          position: relative;
+          top: 3px;
+          }
+          &.special-text {
+            background: linear-gradient(180deg, #FFFFFF 0%, #01ff15 27.08%, #39f050 43.75%, #37b352 46.88%, #21b83a 61.46%, #36ff4e 100%);
+              -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-size: 27px;
+          text-shadow: 1px 1px 18px #34ff00; 
+          font-family: 'Press Start 2P', cursive;
+          text-transform: uppercase;
+          top: 8px;
+          position: relative;
+          }
+
+          &.super-special-text {
+            background: linear-gradient(
+              180deg
+              , #FFFFFF 0%, #8bc34a 27.08%, #4df039 43.75%, #128d10 46.88%, #38b821 61.46%, #36ff3c 100%);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  font-size: 26px;
+                  text-shadow: 1px 1px 18px #00ff13;
+                  font-family: 'Alfa Slab One', cursive;
+                  text-transform: uppercase;
+                  position: relative;
+                  top: 4px;
+          }
+
+
+          &.fire {
+            background: linear-gradient(
+              180deg
+              , #FFFFFF 0%, #ff0101 27.08%, #f03939 43.75%, #b33737 46.88%, #b82121 61.46%, #ff3636 100%);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  font-family: 'Permanent Marker', cursive;
+                  font-size: 26px;
+          }
+
+          &.blue {
+            background: linear-gradient(
+            180deg
+            , #FFFFFF 0%, #01ccff 27.08%, #39f0f0 43.75%, #37b3a9 46.88%, #21a6b8 61.46%, #36f2ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 24px;
-            line-height: 0px;
-            margin-left: 5px;
-            font-size: 21px;
-            &.medium-text {
-              background: linear-gradient(180deg, #FFFFFF 0%, #01d9ff 27.08%, #39eaf0 43.75%, #37afb3 46.88%, #21b8b8 61.46%, #36ffff 100%);
-                -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 30px;
-            font-family: 'Permanent Marker', cursive;
-            position: relative;
-            top: 3px;
-            }
-            &.special-text {
-              background: linear-gradient(180deg, #FFFFFF 0%, #01ff15 27.08%, #39f050 43.75%, #37b352 46.88%, #21b83a 61.46%, #36ff4e 100%);
-                -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 27px;
-            text-shadow: 1px 1px 18px #34ff00; 
             font-family: 'Press Start 2P', cursive;
-            text-transform: uppercase;
-            top: 8px;
-            position: relative;
-            }
-
-            &.super-special-text {
-              background: linear-gradient(
-                180deg
-                , #FFFFFF 0%, #8bc34a 27.08%, #4df039 43.75%, #128d10 46.88%, #38b821 61.46%, #36ff3c 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    font-size: 26px;
-                    text-shadow: 1px 1px 18px #00ff13;
-                    font-family: 'Alfa Slab One', cursive;
-                    text-transform: uppercase;
-                    position: relative;
-                    top: 4px;
-            }
-
-
-            &.fire {
-              background: linear-gradient(
-                180deg
-                , #FFFFFF 0%, #ff0101 27.08%, #f03939 43.75%, #b33737 46.88%, #b82121 61.46%, #ff3636 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    font-family: 'Permanent Marker', cursive;
-                    font-size: 26px;
-            }
-
-            &.blue {
-              background: linear-gradient(
-              180deg
-              , #FFFFFF 0%, #01ccff 27.08%, #39f0f0 43.75%, #37b3a9 46.88%, #21a6b8 61.46%, #36f2ff 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              font-family: 'Press Start 2P', cursive;
-            }
-    }
-    .main {
-      font-size: 24px;
-      margin: 0;
-      line-height: 0px;
-      text-shadow: 1px 1px 13px #ff36ff;
-      font-weight: 700;
-      position: relative;
-      top: 3px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #FF00FF 27.08%, #F039F0 43.75%, #8D108D 46.88%, #B821B8 61.46%, #FF36FF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; 
-      -moz-background-clip: text;
-      -moz-text-fill-color: transparent;
-    }
-    .special {
-      color: #4ee19b;
-      text-shadow: 1px 1px 1px #000;
-      font-weight: 900;
-      display: inline-block;
-      font-size: 12px;
-      position: relative;
-      top: -7px;
-      padding: 2px;
-      line-height: 1;
-      border-radius: 10px;
-    }
+          }
   }
+  .main {
+    font-size: 24px;
+    margin: 0;
+    line-height: 0px;
+    text-shadow: 1px 1px 13px #ff36ff;
+    font-weight: 700;
+    position: relative;
+    top: 3px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FF00FF 27.08%, #F039F0 43.75%, #8D108D 46.88%, #B821B8 61.46%, #FF36FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+  }
+  .special {
+    color: #4ee19b;
+    text-shadow: 1px 1px 1px #000;
+    font-weight: 900;
+    display: inline-block;
+    font-size: 12px;
+    position: relative;
+    top: -7px;
+    padding: 2px;
+    line-height: 1;
+    border-radius: 10px;
+  }
+}
+
+.winners-table {
+  
 }
 
 .bonus-label {

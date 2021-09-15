@@ -3,6 +3,68 @@ import {StdFee, MsgExecuteContract,LCDClient, WasmAPI, BankAPI} from "@terra-mon
 
 const StoreContext = createContext();
 
+const rankClasses = [
+  {rank: 1, class:'super-special-text'},       
+  {rank: 2, class:'special-text'},         
+  {rank: 3, class:'medium-text'},       
+  {rank: 4, class:''},        
+];
+
+const amountClasses = [
+  {amount: 1, class:'cyan'},       
+  {amount: 2, class:'blue'},         
+  {amount: 3, class:'cyan'},       
+  {amount: 4, class:'fire'},        
+  {amount: 5, class:'fire'},        
+  {amount: 6, class:'fire'},        
+  {amount: 7, class:'fire'},        
+  {amount: 8, class:'fire'},        
+  {amount: 9, class:'fire'},        
+  {amount: 10, class:'fire'},        
+  {amount: 11, class:'fire'},                  
+];
+
+
+const comboTextFour = [
+    'Good work!',
+    'Boom!',
+    'Perfect!',
+    'So close!',
+    'Dynamite!',
+    'On Fire!',
+    'Impossible!',
+]
+
+const comboTextThree = [
+    'What a combo?!',
+    'Wipeout!',
+    'Tasty!',
+    'Blasted!',
+    'Thunder!',            
+]
+
+const comboTextTwo = [
+    'Heros!',
+    'Smashed!',
+    'Rocket!',
+    'Master!',
+    'Out of control!',
+    'Ticket Storm!',
+    'Blasted!',
+    'On Fire!',
+    'Crypto mania!',           
+]
+
+const comboTextOne = [
+    'Big bang!',
+    'Destroyer!',
+    'Dynamite!',
+    'Summit!',
+    'Mavericks!',
+    'Galactic!',
+    'Wanted!',
+]
+
 const initialState = {
   loterraContractAddress: "terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w",
   loterraContractAddressCw20: "terra1ez46kxtulsdv07538fh5ra5xj8l68mu8eg24vr",
@@ -13,6 +75,7 @@ const initialState = {
   loterraStakingLPAddress: "terra1pdslh858spzqrtx2gwr69pzm9m2wrv55aeh742",
   alteredStakingLPAddress: "terra1augyqytpq9klph5egx99m5ufrcjx5f7xgrcqck",
   allWinners: [],
+  allRecentWinners: [],
   tokenInfo: {},
   allPlayers: [],
   allProposals: [],
@@ -32,6 +95,7 @@ const initialState = {
   allHolderLP: {},
   winningCombination: 0,
   holderClaims: [],
+  youWon: false,
   holderClaimsLP: [],
   holderAccruedRewards:0,
   LPHolderAccruedRewards: 0,
@@ -47,6 +111,13 @@ const initialState = {
   poolInfo: {},
   stakingLoterraFunds: 0,
   stakingAlteredFunds:0,
+
+  comboTextFour: comboTextFour,
+  comboTextThree: comboTextThree,
+  comboTextTwo: comboTextTwo,
+  comboTextOne: comboTextOne,
+  rankClasses: rankClasses,
+  amountClasses: amountClasses
 };
 
 const reducer = (state, action) => {
@@ -61,6 +132,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         stakingAlteredFunds: action.message
+      }
+      case "setYouWon":
+      return {
+        ...state,
+        youWon: action.message
       }
     case "setPoolInfo":
       return {
@@ -131,6 +207,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         allWinners: action.message
+      }
+      case "setAllRecentWinners":
+      return {
+        ...state,
+        allRecentWinners: action.message
       }
     case "setWallet":
       return {

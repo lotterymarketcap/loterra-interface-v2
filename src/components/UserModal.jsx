@@ -89,6 +89,101 @@ export default function UserModal(props){
         }
 
     }
+
+    function getRanks(ranks) {
+        const rank1 = [];
+        const rank2 = [];
+        const rank3 = [];
+        const rank4 = [];
+        ranks.map((obj,i)=> {
+            if(obj == 4){
+              rank4.push(obj)
+            }
+            if(obj == 3){
+              rank3.push(obj)
+            }
+            if(obj == 2){
+              rank2.push(obj)
+            }
+            if(obj == 1){
+              rank1.push(obj)
+            }
+        })
+
+        const ranksArray = [rank4,rank3,rank2,rank1]       
+
+        function getComboText(rank,amount){
+            let text = ''
+            if(rank == 1){
+                text = state.comboTextOne[parseInt(amount)] != undefined ? state.comboTextOne[parseInt(amount - 1)] : state.comboTextOne[state.comboTextFour.length - 1];
+            }
+            if(rank == 2){
+                text = state.comboTextTwo[parseInt(amount)] != undefined ? state.comboTextTwo[parseInt(amount - 1 )] : state.comboTextTwo[state.comboTextFour.length - 1];
+            }
+            if(rank == 3){
+                text = state.comboTextThree[parseInt(amount)] != undefined ? state.comboTextThree[parseInt(amount -1 )] : state.comboTextThree[state.comboTextFour.length - 1];
+            }
+            if(rank == 4){
+                text = state.comboTextFour[parseInt(amount)] != undefined ? state.comboTextFour[parseInt(amount -1 )] : state.comboTextFour[state.comboTextFour.length - 1];
+            }            
+            return text;
+        }
+
+        function getAmountClass(amount){
+          let name = '';
+ 
+          for (let index = 0; index < state.amountClasses.length; index++) {
+            const element = state.amountClasses[index];
+            if(element.amount == amount){
+              name = element.class
+            }
+            
+          }
+
+          return name;
+        }
+  
+        function comboTextResponse(rank,amount){
+          let result = '';
+          for (let index = 0; index < state.rankClasses.length; index++) {
+            const element = state.rankClasses[index];
+              if(parseInt(rank) == element.rank){              
+                result = ('<span class="combo-text '+element.class+' '+getAmountClass(amount)+'">'+getComboText(rank,amount)+'</span>')
+                return result;                      
+              }                       
+             
+          }          
+  
+        }
+  
+        let html = '';
+        for (let index = 0; index < ranksArray.length; index++) {
+          const element = ranksArray[index];
+            if(element.length > 0){
+              html += '<span class="combo-box">'
+              html += '<span class="main">'+element[0]+'</span>' + '<span class="special">x'+element.length+'</span>'
+              html += comboTextResponse(element[0],element.length)
+              html += '</span>'
+            }
+        }     
+        
+        return html;
+        
+    }
+
+    function showWinnerPrizes(){
+        let html = getRanks(state.youWon.claims.ranks);
+        return (
+            <div className="combos">
+                <span dangerouslySetInnerHTML={{__html : html}}></span>
+            </div>
+            );
+    }
+
+
+
+
+    
     
     // function collect(){
     //     const msg = new MsgExecuteContract(
@@ -128,7 +223,14 @@ export default function UserModal(props){
                                 <div className="col-12 mb-2 text-center start">
                                     <UserCircle size={100} />
                                 </div>
-
+                                {state.youWon && state.allRecentWinners.length > 0 &&
+                                (
+                                    <div className="text-center winner-box">
+                                        <p><strong>YOU WON!</strong> <span>Last draw prizes</span></p>
+                                        {showWinnerPrizes()}                             
+                                    </div>
+                                )
+                                }
                                 <div className="col-12 text-center claim">
                                     <h4 className="mb-2">
                                         Your Lottery Tickets
