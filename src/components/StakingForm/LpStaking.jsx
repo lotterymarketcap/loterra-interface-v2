@@ -136,16 +136,41 @@ export default function LpStaking(props){
     return (
         <div className="row">
             <div className="col-md-12">
-                <p className="input-heading">The amount you want to LP Stake</p>
+                <p className="input-heading">The amount you want to LP Stake  
+                <span class="badge" style={{
+                    background: '#9bfbcd',
+                    color: '#10003b',
+                    marginLeft: '7px',
+                    position: 'relative',
+                    top: '-2px'
+                }}>
+                    APY <strong>{total_staked() ? numeral(100000/total_staked() * 100).format("0") 
+                    :
+                    <div className="spinner-border spinner-border-sm" role="status" style={{
+                              position:'relative',
+                              top:'0px'
+                            }}>
+                            <span className="visually-hidden">Loading...</span>
+                    </div> 
+                    }%
+                    </strong>
+                </span>
+                </p>
                 {<p className="input-slogan">Provide liquidity on pair LOTA-UST and stake your LP token to share: 273.00 LOTA daily rewards | 100,000.00 LOTA year rewards</p>}
                 <span className="info" style={{
                         color: '#ff36ff',
-                        borderColor: '#ff36ff'
+                        borderColor: '#ff36ff'                        
                 }}>
                                     
-                        Total staked LP in LOTA: <strong>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA': '...'}</strong>
-                        <br/>                    
-                        APY: <strong>{total_staked() ? numeral(100000/total_staked() * 100).format("0") : '...' }%</strong>                    
+                        Total staked LP in LOTA: <strong>{total_staked() ? numeral(total_staked()).format("0,0.000000") + 'LOTA'
+                        : 
+                        <div className="spinner-border spinner-border-sm" role="status" style={{
+                            position:'relative',
+                            top:'0px'
+                          }}>
+                          <span className="visually-hidden">Loading...</span>
+                        </div> 
+                        }</strong>                                   
                 </span>
                 <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1"><img src="/LOTAUST.png" width="30px" className="img-fluid"/></span>
