@@ -136,7 +136,7 @@ export default () =>  {
 
     return(
         <>
-        <div className="hero staking" style={{backgroundImage:'url(/rays.svg)', overflowY:"visible"}}>
+        <div className="hero staking" style={{backgroundImage:'url(/rays.svg)'}}>
             <div className="container h-200 d-md-flex">
                         <div className="row align-self-center">
                             
