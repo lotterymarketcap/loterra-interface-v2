@@ -52,7 +52,7 @@ export default function ApyStats(){
           }
           setJackpotData(tmpJackpotData)
           setWinnerData(tmpWinnerData)
-          console.log(tmpWinnerData,tmpJackpotData)
+          //console.log(tmpWinnerData,tmpJackpotData)
           //Calc function          
           const tmpData = tmpJackpotData.map((obj,i) => {
                 const winners = []
@@ -67,7 +67,7 @@ export default function ApyStats(){
                 return {jackpot_id: obj.lottery_id, jackpot: obj.jackpot, winners:winners}
                 
           })
-          console.log(tmpData)
+          //console.log(tmpData)
 
           function getPrizePerRank(nr){
             let rank = nr-1;
@@ -80,7 +80,7 @@ export default function ApyStats(){
           tmpData.map((obj,i) => {
               const jackpotPrice = parseInt(obj.jackpot/1000);
 
-              console.log(jackpotPrice)
+              //console.log(jackpotPrice)
           })
     }
 

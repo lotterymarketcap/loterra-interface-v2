@@ -14,6 +14,7 @@ import Footer from "../components/Footer";
 import AllowanceModal from "../components/AllowanceModal";
 import WinnerRow from "../components/WinnerRow";
 import PriceLoader from "../components/PriceLoader";
+import JackpotResults from "../components/JackpotResults";
  
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -37,12 +38,9 @@ export default () => {
   const [tickets, setTickets] = useState(0);
   const [players, setPlayers] = useState(0);
   const [buyLoader, setBuyLoader] = useState(false)
-  const [winners, setWinners] = useState(0);
   const [alteBonus, setAlteBonus] = useState(false)
   const [giftFriend, setGiftFriend] = useState({active: false, wallet:''})
   const [notification,setNotification] = useState({type:'success',message:'',show:false})
-  const [LatestWinningCombination, setLatestWinningCombination] = useState(0);
-  const [prizeRankWinnerPercentage, setPrizeRankWinnerPercentage] = useState(0); 
   const [ticketModal, setTicketModal] = useState(0);
   const [allowanceModal, setAllowanceModal] = useState(0);
   const [price, setPrice] = useState(0);
@@ -54,9 +52,6 @@ export default () => {
   const bonusToggle = useRef(null);
   const friendsToggle = useRef(null);
   const loterraStats = useRef(null);
-
-  const [tokenHolderFee, setTokenHolderFee] = useState(0);
-  const [allWinners, setAllWinners] = useState([]);
   const {state, dispatch} = useStore();
     const terra = state.lcd_client
     const api = new WasmAPI(terra.apiRequester);
@@ -69,9 +64,9 @@ export default () => {
         config: {},
       }
     );
-    console.log("contractConfigInfo")
-        console.log(contractConfigInfo)
+  
         dispatch({type: "setConfig", message: contractConfigInfo})
+     
       setPrice(contractConfigInfo.price_per_ticket_to_register)
       setExpiryTimestamp(parseInt(contractConfigInfo.block_time_play * 1000));
       const bank = new BankAPI(terra.apiRequester);
@@ -82,10 +77,19 @@ export default () => {
 
 
       setContractBalance(ustBalance.amount / 1000000);
-      setTokenHolderFee(contractConfigInfo.token_holder_percentage_fee_reward);
       setJackpot(parseInt(contractJackpotInfo) / 1000000);
-      setPrizeRankWinnerPercentage(contractConfigInfo.prize_rank_winner_percentage);
 
+      const jackpotInfo = await api.contractQuery(
+        loterra_contract_address,
+        {
+            jackpot: {
+                lottery_id: contractConfigInfo.lottery_counter - 1
+            }
+        }
+    ); 
+    dispatch({type: "setHistoricalJackpot", message: parseInt(jackpotInfo) / 1000000})
+
+      
       const contractTicketsInfo = await api.contractQuery(
           loterra_contract_address,
         {
@@ -107,14 +111,7 @@ export default () => {
       //Get poll data
 
 
-      //Get Winners
-      const contractWinnersInfo = await api.contractQuery(
-          loterra_contract_address,
-        {
-          winner: { lottery_id: contractConfigInfo.lottery_counter - 1  },
-        }
-      );
-      setWinners(contractWinnersInfo)
+
 
       //Get latest winning combination
       const winningCombination = await api.contractQuery(
@@ -123,7 +120,7 @@ export default () => {
         winning_combination: { lottery_id: contractConfigInfo.lottery_counter - 1  },
       }
     );
-    setLatestWinningCombination(winningCombination)
+    dispatch({type: "setWinningCombination", message: winningCombination})
 
       //Get current lota price
       const currentLotaPrice = await api.contractQuery(
@@ -311,26 +308,7 @@ export default () => {
       let string = filtered.join(" ");
       dispatch({type: "setCombination", message: string})
       }
-    }
-
-    function getPrizePerRank(nr){
-        let rank = nr-1;
-        return numeral(
-          (prizeRankWinnerPercentage[rank] * parseInt(jackpot)) / 100
-        ).format('0,0.00')
-    }
-    function getPrizePerRankGross(nr){
-        let rank = nr-1;
-        return numeral(
-            (prizeRankWinnerPercentage[rank] * parseInt(jackpot) - (prizeRankWinnerPercentage[rank] * parseInt(jackpot) * tokenHolderFee / 100)) / 100
-        ).format('0,0.00')
-    }
-    function getPrizePerRankTax(nr){
-        let rank = nr-1;
-        return numeral(
-            (prizeRankWinnerPercentage[rank] * parseInt(jackpot) / 100) * (tokenHolderFee / 100)
-        ).format('0,0.00')
-    }
+    }    
 
     function generate(){
         const combination = [
@@ -501,9 +479,10 @@ export default () => {
                           <span>UST</span>
                         </div>
                         </h2>
+                        <h3>Draws every 3 days</h3>
                       </div>
                     </div>
-                    <div className="col-xl-7 mx-auto">
+                    <div className="col-12 col-md-8 mx-auto">
                         <div className="row">
                           <div className="col-6">
                             <div className="card stats-card">
@@ -588,13 +567,13 @@ export default () => {
                             <input type="checkbox" ref={bonusToggle} checked={alteBonus} className="switch" name="alte_bonus" onChange={(e,checked) => bonusCheckbox(e,checked)} />
                           <label className="switch-label" onClick={() => clickElement(bonusToggle)}></label>
                           <Fire size={24} weight="fill" /> BURN 
-                          <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span class="badge rounded-pill">Bonus</span></label>
+                          <span style={{color:'#d0e027', fontFamily: 'Cosmos', fontSize: '1.2em', padding:'4px 8px', background:'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717', borderRadius:'25px'}}>ALTE</span><span className="badge rounded-pill">Bonus</span></label>
                         
                         <label className="gift-label">
                           <input type="checkbox" ref={friendsToggle} checked={giftFriend.active} className="switch" name="gift_friend" onChange={(e,checked) => giftCheckbox(e,checked)} />
                           <label className="switch-label" onClick={() => clickElement(friendsToggle)}></label>
                           <Gift size={24} weight="fill" /> Gift tickets to friends
-                          <span class="badge rounded-pill">GIFTS</span></label>
+                          <span className="badge rounded-pill">GIFTS</span></label>
                         { giftFriend.active &&
                           (
                             <>
@@ -616,11 +595,11 @@ export default () => {
                           Buy {amount} tickets
                           </>
                         : 
-                            <div class="spinner-border spinner-border-sm" role="status" style={{
+                            <div className="spinner-border spinner-border-sm" role="status" style={{
                               position:'relative',
                               top:'-3px'
                             }}>
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                             </div>
                         }
                         </button>
@@ -719,101 +698,7 @@ export default () => {
                     </div>
                 </div>
 
-
-                 <div className="container" style={{marginTop:'7rem'}}>
-                        <div className="card lota-card">
-                          <div className="card-header text-center">
-                            <div className="card-header-icon">
-                              <Trophy size={90} color="#20FF93"/>
-                            </div>
-                            <h3>Latest Jackpot Results</h3>
-                          </div>
-                          <div className="card-body">
-                            <div className="w-100 text-center latest-combination">
-                            <h4 style={{color:'#ff36ff'}}>Winning combination</h4>
-                            <p>{LatestWinningCombination ? LatestWinningCombination.split('').map(obj => {return(<span>{obj}</span>)}) : '...' }</p>
-                            </div>
-                          <h4 className="mt-4">Rewards</h4>
-                          <div className="table-responsive">
-                            <table className="table text-white mb-3">
-                              <thead>
-                                <tr>
-                                  <th>Ranks</th>
-                                  <th>Symbols</th>
-                                  <th>Gross prizes</th>
-                                  <th>Net prizes</th>
-                                  <th>LOTA tax</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                <th scope="row" className="text-white">#1</th>
-                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>6 Symbols</td>
-                                  <td>{getPrizePerRank(1)}<span>UST</span></td>
-                                  <td>{getPrizePerRankGross(1)}<span>UST</span></td>
-                                  <td>{getPrizePerRankTax(1)}<span>UST</span></td>
-                                </tr>
-                                <tr>
-                                <th scope="row" className="text-white">#2</th>
-                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>5 Symbols</td>
-                                  <td>{getPrizePerRank(2)}<span>UST</span></td>
-                                  <td>{getPrizePerRankGross(2)}<span>UST</span></td>
-                                  <td>{getPrizePerRankTax(2)}<span>UST</span></td>
-                                </tr>
-                                <tr>
-                                <th scope="row" className="text-white">#3</th>
-                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>4 Symbols</td>
-                                  <td>{getPrizePerRank(3)}<span>UST</span></td>
-                                  <td>{getPrizePerRankGross(3)}<span>UST</span></td>
-                                  <td>{getPrizePerRankTax(3)}<span>UST</span></td>
-                                </tr>
-                                <tr>
-                                  <th scope="row" className="text-white">#4</th>
-                                  <td style={{color:'#FF36FF',minWidth:'100px'}}>3 Symbols</td>
-                                  <td>{getPrizePerRank(4)}<span>UST</span></td>
-                                  <td>{getPrizePerRankGross(4)}<span>UST</span></td>
-                                  <td>{getPrizePerRankTax(4)}<span>UST</span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="text-white">#5</th>
-                                    <td style={{color:'#FF36FF',minWidth:'100px'}}>2 Symbols</td>
-                                    <td>{getPrizePerRank(5)}<span>UST</span></td>
-                                    <td>{getPrizePerRankGross(5)}<span>UST</span></td>
-                                    <td>{getPrizePerRankTax(5)}<span>UST</span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="text-white">#6</th>
-                                    <td style={{color:'#FF36FF',minWidth:'100px'}}>1 Symbols</td>
-                                    <td>{getPrizePerRank(6)}<span>UST</span></td>
-                                    <td>{getPrizePerRankGross(6)}<span>UST</span></td>
-                                    <td>{getPrizePerRankTax(6)}<span>UST</span></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            </div>
-                            <h4 className="mt-4">Winners</h4>
-                            <div className="table-responsive">
-                            <table className="table text-white winners-table">
-                                <thead>
-                                  <tr>
-                                  <th scope="col">Rank</th>
-                                  <th scope="col">Address</th>
-                                  <th scope="col">Collected</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {winners.winners && winners.winners.map((obj,key) => {
-                                    return (
-                                      <WinnerRow key={key} obj={obj}/>                                      
-                                    )
-                                  })}
-                                </tbody>
-                            </table>
-                            </div>
-                          </div>
-                        </div>
-
-                 </div>
+                 <JackpotResults/>
 
                  <div ref={loterraStats} className="container" style={{marginTop:'8rem'}}>
                               <div className="card lota-card">
