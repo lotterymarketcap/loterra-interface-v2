@@ -697,7 +697,6 @@ export default () => {
                     </div>
                 </div>
 
-
                  <JackpotResults/>
 
                  <div ref={loterraStats} className="container" style={{marginTop:'8rem'}}>

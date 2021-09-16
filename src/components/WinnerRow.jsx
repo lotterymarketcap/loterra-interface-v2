@@ -36,7 +36,8 @@ export default function WinnerRow(props){
               rank1.push(obj)
             }
         })
-        const ranksArray = [rank6,rank5,rank4,rank3,rank2,rank1]
+
+        const ranksArray = [rank6,rank5,rank4,rank3,rank2,rank1]      
 
         function getComboText(rank,amount){
             let text = ''

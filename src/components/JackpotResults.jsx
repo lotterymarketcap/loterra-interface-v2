@@ -155,6 +155,20 @@ export default function JackpotResults(){
                   <td>{getPrizePerRankGross(4)}<span>UST</span></td>
                   <td>{getPrizePerRankTax(4)}<span>UST</span></td>
                 </tr>
+                <tr>
+                    <th scope="row" className="text-white">#5</th>
+                    <td style={{color:'#FF36FF',minWidth:'100px'}}>2 Symbols</td>
+                    <td>{getPrizePerRank(5)}<span>UST</span></td>
+                    <td>{getPrizePerRankGross(5)}<span>UST</span></td>
+                    <td>{getPrizePerRankTax(5)}<span>UST</span></td>
+                </tr>
+                <tr>
+                    <th scope="row" className="text-white">#6</th>
+                    <td style={{color:'#FF36FF',minWidth:'100px'}}>1 Symbols</td>
+                    <td>{getPrizePerRank(6)}<span>UST</span></td>
+                    <td>{getPrizePerRankGross(6)}<span>UST</span></td>
+                    <td>{getPrizePerRankTax(6)}<span>UST</span></td>
+                </tr>
               </tbody>
               }
             </table>
