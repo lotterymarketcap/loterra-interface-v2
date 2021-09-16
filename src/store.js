@@ -110,6 +110,7 @@ const initialState = {
   historicalTicketLotteryId: 0,
   historicalJackpotLotteryId: 0,
   historicalJackpot: 0,
+  lastDrawnJackpot: 0,
   holderPercentageFee: 0,
   allCombinations: [],
   allHolder: {},
@@ -160,6 +161,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         youWon: action.message
+      }
+      case "setLastDrawnJackpot":
+      return {
+        ...state,
+        lastDrawnJackpot: action.message
       }
     case "setPoolInfo":
       return {

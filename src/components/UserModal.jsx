@@ -4,6 +4,7 @@ import {LCDClient, MsgExecuteContract, StdFee, WasmAPI} from "@terra-money/terra
 import {useStore} from "../store";
 import SocialShare from './SocialShare'
 import PriceLoader from "./PriceLoader";
+import numeral from "numeral";
 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -195,7 +196,51 @@ export default function UserModal(props){
     }
 
 
+    function calculateTotalPrizesInDollars(){    
+        let totalPrizes = 0;
+        //Loop through winner claims to calculate total prices
 
+        function calcNumberRankFallen(nr){
+            let found = 0;
+            let recentWinners = state.allRecentWinners;
+             //Test purposes
+            // recentWinners = [
+            // {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4,4]}},
+            // {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex8=6",claims:{claimed:true,ranks:[4]}},
+            // {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex8=6",claims:{claimed:true,ranks:[4]}},
+            // {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex8=6",claims:{claimed:true,ranks:[4]}},            
+            // ]
+            recentWinners.map(obj => {
+                obj.claims.ranks.map(rank => {
+                    if(rank == nr){
+                        found++;
+                    }
+                })
+            })
+            return found;
+        }
+
+        function getPrizePerRankGross(nr){
+            let rank = nr-1;
+            let total = (state.config.prize_rank_winner_percentage[rank] * parseInt(state.lastDrawnJackpot) - (state.config.prize_rank_winner_percentage[rank] * parseInt(state.lastDrawnJackpot) * state.config.token_holder_percentage_fee_reward / 100)) / 100
+            let divideBy = calcNumberRankFallen(nr)
+            if(divideBy !== 0){
+                return parseInt(total / divideBy);
+            } else {
+                return total;
+            }
+            
+        }
+
+        state.youWon.claims.ranks.map(obj => {
+            totalPrizes += getPrizePerRankGross(obj)
+        })
+        
+        return (
+            <>${numeral(totalPrizes).format('0,0.00')}</>
+        )
+
+    }
 
     
     
@@ -240,8 +285,13 @@ export default function UserModal(props){
                                 {state.youWon && state.allRecentWinners.length > 0 &&
                                 (
                                     <div className="text-center winner-box">
-                                        <p><strong>YOU WON!</strong> <span>Last draw prizes</span></p>
-                                        {showWinnerPrizes()}                             
+                                        <p className="winner-box-heading"><strong>YOU WON! { state.lastDrawnJackpot !== 0 &&
+                                        calculateTotalPrizesInDollars()
+                                        }</strong> <span>Last draw prizes</span></p>
+                                        {                                   
+                                        showWinnerPrizes()
+                                        }    
+                                                                
                                     </div>
                                 )
                                 }

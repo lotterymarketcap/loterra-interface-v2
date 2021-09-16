@@ -215,7 +215,9 @@ export default function ConnectWallet(){
          let recentWinners = state.allRecentWinners;
 
          //Test purposes
-         //recentWinners = [{address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}}]
+        //  recentWinners = [
+        //      {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
+        //     ]
          
          if(recentWinners.length == 0){
              type = false
@@ -226,7 +228,7 @@ export default function ConnectWallet(){
                  type = obj
              }
          })
- 
+         
          dispatch({type: "setYouWon", message: type})
     }
 
@@ -250,6 +252,15 @@ export default function ConnectWallet(){
                       }
                     );
                 
+                    const lastDrawnJackpot = await api.contractQuery(
+                        state.loterraContractAddress,
+                        {
+                            jackpot: {
+                                lottery_id: contractConfigInfo.lottery_counter - 1
+                            }
+                        }
+                    );           
+                    dispatch({type: "setLastDrawnJackpot", message: parseInt(lastDrawnJackpot) / 1000000})
 
                     
                     const holder = await api.contractQuery(
