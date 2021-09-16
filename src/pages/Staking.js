@@ -150,10 +150,11 @@ export default () =>  {
     return(
         <>
         <div className="hero staking" style={{backgroundImage:'url(/rays.svg)'}}>
-            <div className="container h-200 d-md-flex">
-                        <div className="row align-self-center">
-                            
-                            <div className="col-md-12 col-lg-8 mx-auto order-1 order-lg-2 p-lg-5">           
+            <div className="container h-100 d-md-flex">
+                 
+                        <div className="row align-self-center">                            
+                            <div className="col-md-12 col-lg-8 mx-auto order-1 order-lg-2 p-lg-5">       
+                                <img src="/van.png" className="van img-fluid mx-auto d-block" style={{marginBottom:'40px'}} />    
                                 <h1>Staking</h1>                    
                                 <StakingForm showNotification={(message,type,dur) => showNotification(message,type,dur)}/>
                             </div>
