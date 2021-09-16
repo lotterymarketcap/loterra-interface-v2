@@ -85,8 +85,11 @@ export default function ConnectWallet(){
           {
             config: {},
           }
-        );
+        );     
       
+
+            dispatch({type: "setConfig", message: contractConfigInfo})
+        
 
         dispatch({type: "setCurrentLotteryId", message: contractConfigInfo.lottery_counter})
         dispatch({type: "setHolderPercentageFee", message: contractConfigInfo.token_holder_percentage_fee_reward})  
@@ -215,9 +218,9 @@ export default function ConnectWallet(){
          let recentWinners = state.allRecentWinners;
 
          //Test purposes
-        //  recentWinners = [
-        //      {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
-        //     ]
+         recentWinners = [
+             {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
+            ]
          
          if(recentWinners.length == 0){
              type = false
@@ -411,7 +414,7 @@ const holderAccruedRewards = await api.contractQuery(
             baseData()             
             //console.log(connectedWallet)
             window.addEventListener('scroll',handleScroll)
-    }, [connectedWallet, lcd, state.config]);
+    }, [connectedWallet, lcd]);
 
     
 

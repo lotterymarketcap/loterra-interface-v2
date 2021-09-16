@@ -282,7 +282,7 @@ export default function UserModal(props){
                                 <div className="col-12 mb-2 text-center start">
                                     <UserCircle size={100} />
                                 </div>
-                                {state.youWon && state.allRecentWinners.length > 0 &&
+                                {state.youWon && state.config.prize_rank_winner_percentage && state.allRecentWinners.length > 0 &&
                                 (
                                     <div className="text-center winner-box">
                                         <p className="winner-box-heading"><strong>YOU WON! { state.lastDrawnJackpot !== 0 &&
