@@ -7,7 +7,9 @@ const rankClasses = [
   {rank: 1, class:'super-special-text'},       
   {rank: 2, class:'special-text'},         
   {rank: 3, class:'medium-text'},       
-  {rank: 4, class:''},        
+  {rank: 4, class:''},
+  {rank: 5, class:''},
+  {rank: 6, class:''},        
 ];
 
 const amountClasses = [
@@ -24,6 +26,25 @@ const amountClasses = [
   {amount: 11, class:'fire'},                  
 ];
 
+const comboTextSix = [
+  'Good work!',
+  'Boom!',
+  'Perfect!',
+  'So close!',
+  'Dynamite!',
+  'On Fire!',
+  'Impossible!',
+]
+
+const comboTextFive = [
+  'Good work!',
+  'Boom!',
+  'Perfect!',
+  'So close!',
+  'Dynamite!',
+  'On Fire!',
+  'Impossible!',
+]
 
 const comboTextFour = [
     'Good work!',
@@ -112,6 +133,8 @@ const initialState = {
   stakingLoterraFunds: 0,
   stakingAlteredFunds:0,
 
+  comboTextSix: comboTextSix,
+  comboTextFive: comboTextFive,
   comboTextFour: comboTextFour,
   comboTextThree: comboTextThree,
   comboTextTwo: comboTextTwo,
