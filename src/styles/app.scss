@@ -413,18 +413,21 @@ font-style: normal;
     }
   @media(max-width:500px){
     padding: 5px 5px;
-    font-size: 47px;
+    font-size: 43px;
     line-height: 57px;
     border-bottom: 4px solid #0f032f;
     margin-bottom: -20px;
+    font-weight: 700;
   }
   @media(max-width:380px){
     font-size: 39px;
     margin-bottom: -20px;
+    font-weight: 700;
   }
   @media(max-width:330px){
     font-size: 31px;
     margin-bottom: -20px;
+    font-weight: 700;
   }
   .roller {
     display: inline-block;
