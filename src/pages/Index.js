@@ -458,6 +458,16 @@ export default () => {
     window.scrollTo({ behavior: 'smooth', top: loterraStats.current.offsetTop })
   }
 
+  function totalNrPrizes() {
+    let count = 0;
+    state.allRecentWinners.map(obj => {
+      obj.claims.ranks.map(rank => {
+        count++;
+      })
+    })
+    return count;
+  }
+
 
      return (
          <>   
@@ -487,7 +497,7 @@ export default () => {
                             <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col-4 col-md text-center"><Users size={55} color="#73FFC1" /></div>
+                                  <div className="col-4 col-md text-center"><Users size={55} color="#20FF93" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>PLAYERS</span>{players ? players : <PriceLoader/>}</h3>
                                   </div>
@@ -499,12 +509,24 @@ export default () => {
                           <div className="card stats-card">
                               <div className="card-body">
                                 <div className="row">
-                                  <div className="col-4 col-md text-center"><Ticket size={55} color="#73FFC1" /></div>
+                                  <div className="col-4 col-md text-center"><Ticket size={55} color="#20FF93" /></div>
                                   <div className="col-8 col-md-8 text-center text-md-start">
                                     <h3><span>TICKETS</span>{tickets ? tickets : <PriceLoader/>}</h3>
                                   </div>
                                 </div>
                               </div>
+                            </div>
+                          </div>
+                          <div className="col-12 col-md-8 mx-auto">
+                          <div className="card stats-card-special my-3">
+                              <div className="card-body text-center">
+                              <div className="card-header text-center">
+                                <div className="card-header-icon">
+                                  <Trophy size={36} color="#20FF93"/>
+                                </div>
+                              </div>
+                              <p className="m-0">Last draw: <strong>{totalNrPrizes()} prizes</strong> and <strong>{state.allRecentWinners.length} winners!</strong></p>
+                            </div>
                             </div>
                           </div>
                         </div>
