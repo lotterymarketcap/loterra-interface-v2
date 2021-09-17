@@ -272,7 +272,7 @@ export default function UserModal(props){
     // }
     return(
         <>
-        <div className={open ? 'usermodal show' : 'usermodal'}>
+        <div className={'usermodal' + (open ? ' show' : '')}>
             <button className="toggle" onClick={() => toggleModal()}><X size={48} /></button>
             <div className="usermodal_content">
                 <div className="row">
@@ -353,7 +353,7 @@ export default function UserModal(props){
                 </div>
             </div>
         </div>
-        <div className={open ? 'backdrop show' : 'backdrop'} onClick={() => toggleModal()}></div>
+        <div className={'backdrop' + (open ? ' show' : '')} onClick={() => toggleModal()}></div>
         </>
     )
 }

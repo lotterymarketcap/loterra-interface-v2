@@ -62,7 +62,7 @@ export default function AllowanceModal(props){
 
     return (
         <>
-        <div className={open ? 'allowancemodal show' : 'allowancemodal'}>
+        <div className={'allowancemodal' + (open ? ' show' : '')}>
         <button className="toggle" onClick={() => toggleModal()}><X size={36} /></button>
 
             <div className="allowancemodal_heading text-center">
@@ -82,7 +82,7 @@ export default function AllowanceModal(props){
                </form>
             </div>
         </div>
-        <div className={open ? 'backdrop show' : 'backdrop'} onClick={() => toggleModal()}></div>
+        <div className={'backdrop' + (open ? ' show' : '')} onClick={() => toggleModal()}></div>
         </>
     )
 }
