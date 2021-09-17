@@ -6,32 +6,32 @@
 // Get started at https://react-static.js.org
 
 export default {
-  disablePreload: true,
-  silent: true,
-  plugins: ["react-static-plugin-sass"],
-  getSiteData: async ({ dev }) => ({
-    title: 'LoTerra is a lottery contract, buy tickets as a player or join the governance! DAO allows making decisions together! Manage the casino 🎰 Set the prize 🏆 Up the ticket price or go cheap 🏷 Extract max profits 🤑 Keep the vault secure at all times!',
-    lastBuilt: Date.now(),
-  }),
-  //maxThreads: 1, // Remove this when you start doing any static generation
-  getRoutes: async ({ dev }) => [
-    // A simple route
-    {
-      path: '/',
-      template: 'src/pages/Index',
-    },
-    {
-      path: 'staking',
-      template: 'src/pages/Staking',
-    },
-    {
-      path: 'terrand-oracle',
-      template: 'src/pages/Terrand',
-    },
-    // A 404 component
-    {
-      path: '404',
-      template: 'src/pages/NotFound',
-    },
-  ],
+    disablePreload: true,
+    silent: true,
+    plugins: ['react-static-plugin-sass'],
+    getSiteData: async ({ dev }) => ({
+        title: 'LoTerra is a lottery contract, buy tickets as a player or join the governance! DAO allows making decisions together! Manage the casino 🎰 Set the prize 🏆 Up the ticket price or go cheap 🏷 Extract max profits 🤑 Keep the vault secure at all times!',
+        lastBuilt: Date.now(),
+    }),
+    //maxThreads: 1, // Remove this when you start doing any static generation
+    getRoutes: async ({ dev }) => [
+        // A simple route
+        {
+            path: '/',
+            template: 'src/pages/Index',
+        },
+        {
+            path: 'staking',
+            template: 'src/pages/Staking',
+        },
+        {
+            path: 'terrand-oracle',
+            template: 'src/pages/Terrand',
+        },
+        // A 404 component
+        {
+            path: '404',
+            template: 'src/pages/NotFound',
+        },
+    ],
 }

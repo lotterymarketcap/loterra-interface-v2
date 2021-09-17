@@ -1,6 +1,6 @@
 .card {
     &.lota-card {
-        background: linear-gradient(328.75deg, #493C85 -5.49%, #0F0038 104.44%);
+        background: linear-gradient(328.75deg, #493c85 -5.49%, #0f0038 104.44%);
         border-radius: 10px;
 
         .card-header {
@@ -9,8 +9,13 @@
                 height: 145px;
                 margin: 0 auto;
                 border-radius: 145px;
-                background: linear-gradient(133.11deg, rgba(32, 255, 147, 0.2) 0%, rgba(0, 0, 0, 0) 200.37%), #0F0038;
-                border: 8px solid #20FF93;
+                background: linear-gradient(
+                        133.11deg,
+                        rgba(32, 255, 147, 0.2) 0%,
+                        rgba(0, 0, 0, 0) 200.37%
+                    ),
+                    #0f0038;
+                border: 8px solid #20ff93;
                 box-shadow: 0px 0px 94px rgba(32, 255, 147, 0.4);
                 display: block;
                 line-height: 125px;
@@ -22,9 +27,9 @@
             h3 {
                 font-weight: 900;
                 font-size: 46px;
-                color: #FFFFFF;
+                color: #ffffff;
 
-                @media(max-width:768px) {
+                @media (max-width: 768px) {
                     font-size: 28px;
                 }
             }
@@ -37,17 +42,17 @@
                 font-weight: bold;
                 font-size: 46px;
 
-                @media(max-width:510px) {
+                @media (max-width: 510px) {
                     font-size: 32px;
                     text-align: center;
                 }
             }
 
-            @media(max-width:768px) {
+            @media (max-width: 768px) {
                 padding: 15px 15px;
             }
 
-            @media(max-width:510px) {
+            @media (max-width: 510px) {
                 .btn-plain {
                     width: 100%;
                 }
@@ -66,7 +71,7 @@
                 font-size: 46px;
                 line-height: 54px;
                 text-align: center;
-                color: #FFFFFF;
+                color: #ffffff;
             }
 
             .slogan {
@@ -85,7 +90,7 @@
 
             .nav-pills {
                 .nav-item {
-                    background: #0F0038;
+                    background: #0f0038;
 
                     .nav-link {
                         color: #fff;
@@ -105,7 +110,12 @@
 
                         &.active {
                             opacity: 1;
-                            background: linear-gradient(328.75deg, #41347b -5.49%, #41347b 19.13%, #160741 104.44%);
+                            background: linear-gradient(
+                                328.75deg,
+                                #41347b -5.49%,
+                                #41347b 19.13%,
+                                #160741 104.44%
+                            );
                             border: 1px solid #0f0038;
                         }
                     }
@@ -117,12 +127,12 @@
                 box-shadow: 0px 0px 0px #ff36ff;
 
                 &:hover {
-                    color: #FF36FF;
+                    color: #ff36ff;
                     box-shadow: 0px 0px 10px #ff36ff;
                 }
             }
 
-            @media(max-width:768px) {
+            @media (max-width: 768px) {
                 padding: 10px 5px;
                 margin-bottom: 20px;
                 border-radius: 5px;
@@ -137,9 +147,9 @@
                 font-weight: bold;
                 font-size: 46px;
                 line-height: 54px;
-                color: #FFFFFF;
+                color: #ffffff;
 
-                @media(max-width:510px) {
+                @media (max-width: 510px) {
                     font-size: 32px;
                 }
             }
@@ -156,7 +166,7 @@
                 font-size: 32px;
                 margin-left: 15px;
                 margin-top: 15px;
-                color: #FFFFFF;
+                color: #ffffff;
                 position: absolute;
                 background: #090023a8;
                 padding: 0px 10px;
@@ -165,11 +175,11 @@
                 span {
                     font-weight: normal;
                     font-size: 15px;
-                    color: #20FF93;
+                    color: #20ff93;
                 }
             }
 
-            @media(max-width:768px) {
+            @media (max-width: 768px) {
                 padding: 10px 5px;
                 margin-bottom: 20px;
                 border-radius: 5px;

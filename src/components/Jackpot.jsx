@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from 'react'
 //import {useWallet} from "@terra-money/wallet-provider";
 //import {LCDClient, WasmAPI} from "@terra-money/terra.js"
-export default function Jackpot (){
+export default function Jackpot() {
     /*const {
         network,
     } = useWallet();
@@ -21,5 +21,5 @@ export default function Jackpot (){
         console.log(contractInfo)
     }*/
 
-    return (<></>)
+    return <></>
 }

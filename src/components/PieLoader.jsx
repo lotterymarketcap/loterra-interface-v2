@@ -1,7 +1,7 @@
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 
-const PriceLoader = (props) => (
+const PieLoader = (props) => (
     <ContentLoader
         speed={2}
         width={'100%'}
@@ -16,4 +16,4 @@ const PriceLoader = (props) => (
     </ContentLoader>
 )
 
-export default PriceLoader
+export default PieLoader

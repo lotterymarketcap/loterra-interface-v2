@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react'
 
-export default function Terrand (){
-    return(
-        <div>Terrand</div>
-    )
+export default function Terrand() {
+    return <div>Terrand</div>
 }

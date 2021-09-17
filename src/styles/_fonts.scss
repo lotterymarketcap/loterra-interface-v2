@@ -1,0 +1,59 @@
+// @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@font-face {
+    font-family: 'Cosmos';
+    src: local('Cosmos'), url('../fonts/AVCosmos-Regular.woff') format('woff');
+    /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+    font-family: 'Pacifico';
+    src: local('Pacifico'), url('../fonts/Pacifico-Regular.woff') format('woff');
+    /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+    font-family: 'Monoton';
+    src: local('Monoton'), url('../fonts/Monoton-Regular.woff') format('woff');
+    /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+    font-family: 'Sigmar One';
+    src: local('Sigmar One'),
+        url('../fonts/SigmarOne-Regular.woff') format('woff');
+    /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+    font-family: 'Permanent Marker';
+    src: local('Permanent Marker'),
+        url('../fonts/PermanentMarker-Regular.woff') format('woff');
+    /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+    font-family: 'Alfa Slab One';
+    src: local('Alfa Slab One'),
+        url('../fonts/AlfaSlabOne-Regular.woff') format('woff');
+    /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+    font-family: 'Press Start 2P';
+    src: local('Press Start 2P'),
+        url('../fonts/PressStart2P-Regular.woff') format('woff');
+    /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}

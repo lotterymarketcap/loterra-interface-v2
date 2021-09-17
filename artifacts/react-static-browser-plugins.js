@@ -1,17 +1,18 @@
 // Imports
 
-
 // Plugins
-const plugins = [{
-        location: "__react_static_root__/node_modules/react-static-plugin-sass",
+const plugins = [
+    {
+        location: '__react_static_root__/node_modules/react-static-plugin-sass',
         plugins: [],
-        hooks: {}
-      },
-{
-        location: "__react_static_root__/",
+        hooks: {},
+    },
+    {
+        location: '__react_static_root__/',
         plugins: [],
-        hooks: {}
-      }]
+        hooks: {},
+    },
+]
 
 // Export em!
 export default plugins
