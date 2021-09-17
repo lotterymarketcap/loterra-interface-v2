@@ -225,7 +225,7 @@ export default function UserModal(props){
             let total = (state.config.prize_rank_winner_percentage[rank] * parseInt(state.lastDrawnJackpot) - (state.config.prize_rank_winner_percentage[rank] * parseInt(state.lastDrawnJackpot) * state.config.token_holder_percentage_fee_reward / 100)) / 100
             let divideBy = calcNumberRankFallen(nr)
             if(divideBy !== 0){
-                return parseInt(total / divideBy);
+                return parseFloat(total / divideBy);
             } else {
                 return total;
             }

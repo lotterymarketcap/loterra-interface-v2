@@ -91,13 +91,7 @@ export default function ConnectWallet(){
         dispatch({type: "setCurrentLotteryId", message: contractConfigInfo.lottery_counter})
         dispatch({type: "setHolderPercentageFee", message: contractConfigInfo.token_holder_percentage_fee_reward})  
 
-        // Query all winners for most recent draw
-        const {winners} = await api.contractQuery(state.loterraContractAddress, {
-            winner:{
-                lottery_id: contractConfigInfo.lottery_counter - 1
-            }
-        });        
-        dispatch({type: "setAllRecentWinners", message: winners})
+      
 
       
 
@@ -209,27 +203,42 @@ export default function ConnectWallet(){
         setIsDisplayDialog(false)
     }
 
-    function checkIfWon(){
+    async function checkIfWon(){
          // Code for winner detector
-         let type = false;     
-         let recentWinners = state.allRecentWinners;
-
-         //Test purposes
-        //  recentWinners = [
-        //      {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
-        //     ]
+         try {
+            let type = false;     
          
-         if(recentWinners.length == 0){
-             type = false
-         }
- 
-         recentWinners.map(obj => {
-             if(obj.address == connectedWallet.walletAddress){
-                 type = obj
+            // Query all winners for most recent draw
+         const api = new WasmAPI(lcd.apiRequester);
+         const {winners} = await api.contractQuery(state.loterraContractAddress, {
+             winner:{
+                 lottery_id: state.config.lottery_counter - 1
              }
-         })
-         
-         dispatch({type: "setYouWon", message: type})
+         });        
+         dispatch({type: "setAllRecentWinners", message: winners})
+
+         let recentWinners = state.allRecentWinners;
+ 
+          //Test purposes
+        //   recentWinners = [
+        //       {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
+        //      ]
+          
+          if(recentWinners.length == 0){
+              type = false
+          }
+  
+          recentWinners.map(obj => {
+              if(obj.address == connectedWallet.walletAddress){
+                  type = obj
+              }
+          })
+          
+          dispatch({type: "setYouWon", message: type})
+          console.log(state.youWon)
+         } catch(e) {
+            console.log(e)
+         }
     }
 
     async function contactBalance(){
@@ -261,6 +270,8 @@ export default function ConnectWallet(){
                         }
                     );           
                     dispatch({type: "setLastDrawnJackpot", message: parseInt(lastDrawnJackpot) / 1000000})
+
+                    
 
                     
                     const holder = await api.contractQuery(
@@ -408,10 +419,12 @@ const holderAccruedRewards = await api.contractQuery(
             contactBalance()  
             checkIfWon()
         }            
-            baseData()             
+        if(!state.config.lottery_counter)             {
+            baseData()
+        }
             //console.log(connectedWallet)
             window.addEventListener('scroll',handleScroll)
-    }, [connectedWallet, lcd]);
+    }, [connectedWallet, lcd, state.config]);
 
     
 
