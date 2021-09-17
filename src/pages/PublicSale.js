@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react'
 
-export default function PublicSale (){
-    return(
-        <div>Public sale</div>
-    )
+export default function PublicSale() {
+    return <div>Public sale</div>
 }

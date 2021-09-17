@@ -2,8 +2,8 @@
 @import '../../node_modules/bootstrap/scss/variables';
 @import '../../node_modules/bootstrap/scss/mixins';
 
-$primary: #FF36FF;
-$secondary: #10003B;
+$primary: #ff36ff;
+$secondary: #10003b;
 
 $theme-colors: (
     primary: $primary,
@@ -19,33 +19,30 @@ a {
 //Coingecko widget styling
 
 .cg-container {
-    background-color:#281b59 !important;
-    color:#fff;
+    background-color: #281b59 !important;
+    color: #fff;
     border-radius: 10px;
     overflow: hidden;
     .cg-widget-container {
-      background-color:#281b59 !important;
-      color:#fff;
+        background-color: #281b59 !important;
+        color: #fff;
     }
-  }
+}
 
-  //to local todo
-  @import './fonts';
-
-
-
+//to local todo
+@import './fonts';
 
 @import './countdown';
 @import './buttons';
-@import './cards';  
-@import './tables'; 
-@import './usermodal'; 
-@import './ticketmodal'; 
-@import './proposalmodal'; 
-@import './allowancemodal'; 
-@import './proposals'; 
-@import './notifications'; 
+@import './cards';
+@import './tables';
+@import './usermodal';
+@import './ticketmodal';
+@import './proposalmodal';
+@import './allowancemodal';
+@import './proposals';
+@import './notifications';
 @import './how';
 @import './socialshare';
-@import './app.scss'; 
+@import './app.scss';
 @import './main-nav';

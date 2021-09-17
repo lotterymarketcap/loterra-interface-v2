@@ -1,14 +1,14 @@
 .proposal-item {
-    padding:25px;
+    padding: 25px;
     background: #180943;
     border-radius: 4px;
     &.op {
-        opacity:0.6;
+        opacity: 0.6;
     }
     h4 {
         font-weight: bold;
-        font-size: 24px;       
-        color: #FFFFFF;
+        font-size: 24px;
+        color: #ffffff;
     }
     p {
         font-weight: normal;
@@ -22,23 +22,23 @@
                 &:first-child {
                     font-weight: 500;
                     font-size: 16px;
-                    line-height: 19px;                    
+                    line-height: 19px;
                     color: rgba(255, 255, 255, 0.58);
                 }
                 &:last-child {
                     font-weight: normal;
                     font-size: 16px;
-                    line-height: 19px;                    
-                    color: #FFFFFF;
+                    line-height: 19px;
+                    color: #ffffff;
                 }
             }
         }
     }
     .vote-box {
-        background: #21124F;
-border: 1px solid #10003B;
-box-sizing: border-box;
-border-radius: 10px;
-padding:25px;
+        background: #21124f;
+        border: 1px solid #10003b;
+        box-sizing: border-box;
+        border-radius: 10px;
+        padding: 25px;
     }
 }
