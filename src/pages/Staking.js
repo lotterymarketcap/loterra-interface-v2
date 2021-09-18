@@ -318,7 +318,7 @@ export default () => {
                                                                     state.holderAccruedRewards
                                                                 ) / 1000000
                                                             ).format(
-                                                                '0.000000'
+                                                                '0.00'
                                                             )}{' '}
                                                             UST
                                                         </p>
