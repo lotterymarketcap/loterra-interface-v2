@@ -185,6 +185,8 @@ export default function ConnectWallet() {
         const pool_info = await api.contractQuery(state.loterraPoolAddress, {
             pool: {},
         })
+        console.log("pool_info")
+        console.log(pool_info)
         dispatch({ type: 'setPoolInfo', message: pool_info })
     }
 

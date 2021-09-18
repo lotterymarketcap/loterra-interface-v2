@@ -318,7 +318,7 @@ export default () => {
                                                                     state.holderAccruedRewards
                                                                 ) / 1000000
                                                             ).format(
-                                                                '0.00000'
+                                                                '0.000000'
                                                             )}{' '}
                                                             UST
                                                         </p>
@@ -347,16 +347,17 @@ export default () => {
                                                 <h2>Staking LP rewards</h2>
                                                 {state.wallet &&
                                                     state.wallet
-                                                        .walletAddress && (
+                                                        .walletAddress && state.poolInfo.assets.length > 0 &&  (
                                                         <p>
                                                             {numeral(
                                                                 parseInt(
                                                                     state.LPHolderAccruedRewards
                                                                 ) / 1000000
                                                             ).format(
-                                                                '0.00000'
+                                                                '0,0.000000'
                                                             )}{' '}
-                                                            LOTA
+                                                            LOTA =  {
+                                                            numeral((state.LPHolderAccruedRewards * state.poolInfo.assets[1].amount / state.poolInfo.assets[0].amount) / 1000000).format("0,0.00")} UST
                                                         </p>
                                                     )}
                                                 <button
