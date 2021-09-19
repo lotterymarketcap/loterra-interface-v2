@@ -633,7 +633,6 @@ export default () => {
                                                     winners!
                                                 </strong>
                                             </p>
-                                            <p className="m-0"> Will you be our next winner ?</p>
                                         </div>
                                     </div>
                                 </div>
