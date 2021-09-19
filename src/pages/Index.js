@@ -630,7 +630,7 @@ export default () => {
                                                         state.allRecentWinners
                                                             .length
                                                     }{' '}
-                                                    winners!
+                                                    winners! Will you be our next winner ?
                                                 </strong>
                                             </p>
                                         </div>
