@@ -72,7 +72,12 @@ export default function ConnectWallet() {
             chainID: connectedWallet.network.chainID,
         })
     }, [connectedWallet])
-
+    //Get proposals and save to state
+    const terra = new LCDClient({
+        URL: 'https://lcd.terra.dev/',
+        chainID: 'columbus-4',
+    })
+    const api = new WasmAPI(terra.apiRequester)
     async function baseData() {
         const latestBlocks = await axios.get(
             'https://lcd.terra.dev/blocks/latest'
@@ -82,12 +87,7 @@ export default function ConnectWallet() {
             type: 'setBlockHeight',
             message: latestBlocks.data.block.header.height,
         })
-        //Get proposals and save to state
-        const terra = new LCDClient({
-            URL: 'https://lcd.terra.dev/',
-            chainID: 'columbus-4',
-        })
-        const api = new WasmAPI(terra.apiRequester)
+
 
         const contractConfigInfo = await api.contractQuery(
             state.loterraContractAddress,
@@ -219,7 +219,6 @@ export default function ConnectWallet() {
             let type = false
 
             // Query all winners for most recent draw
-            const api = new WasmAPI(lcd.apiRequester)
             const { winners } = await api.contractQuery(
                 state.loterraContractAddress,
                 {
@@ -230,18 +229,16 @@ export default function ConnectWallet() {
             )
             dispatch({ type: 'setAllRecentWinners', message: winners })
 
-            let recentWinners = state.allRecentWinners
-
             //Test purposes
             //   recentWinners = [
             //       {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
             //      ]
 
-            if (recentWinners.length == 0) {
+            if (winners.length == 0) {
                 type = false
             }
 
-            recentWinners.map((obj) => {
+            winners.map((obj) => {
                 if (obj.address == connectedWallet.walletAddress) {
                     type = obj
                 }
