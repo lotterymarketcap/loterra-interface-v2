@@ -83,11 +83,11 @@ export default function ConnectWallet() {
             message: latestBlocks.data.block.header.height,
         })
         //Get proposals and save to state
-        const terra = new LCDClient({
-            URL: 'https://lcd.terra.dev/',
-            chainID: 'columbus-4',
-        })
-        const api = new WasmAPI(terra.apiRequester)
+        // const terra = new LCDClient({
+        //     URL: 'https://lcd.terra.dev/',
+        //     chainID: 'columbus-4',
+        // })
+        const api = new WasmAPI(state.lcd_client.apiRequester)
 
         const contractConfigInfo = await api.contractQuery(
             state.loterraContractAddress,
@@ -215,7 +215,7 @@ export default function ConnectWallet() {
         // Code for winner detector
         try {
             let type = false
-
+            console.log('checking for winner')
             // Query all winners for most recent draw
             const api = new WasmAPI(lcd.apiRequester)
             const { winners } = await api.contractQuery(
@@ -367,6 +367,8 @@ export default function ConnectWallet() {
                     message: claimsLP.claims,
                 })
 
+                checkIfWon()
+
                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
                     {
@@ -377,6 +379,8 @@ export default function ConnectWallet() {
                     }
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
+
+              
             } catch (e) {
                 console.log(e)
             }
@@ -453,7 +457,7 @@ export default function ConnectWallet() {
     useEffect(() => {
         if (connectedWallet) {
             contactBalance()
-            checkIfWon()
+            
         }
         if (!state.config.lottery_counter) {
             baseData()

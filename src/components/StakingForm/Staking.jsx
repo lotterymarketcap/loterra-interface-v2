@@ -175,7 +175,7 @@ export default function Staking(props) {
                     Stake
                 </button>
                 <small className="float-end text-muted mt-2">
-                    Available:{' '}
+                    Available:
                     <strong
                         style={{ textDecoration: 'underline' }}
                         onClick={() =>
@@ -189,7 +189,7 @@ export default function Staking(props) {
                                         1000000
                                 ).format('0.00')}
                             </>
-                        )}{' '}
+                        )}
                         LOTA
                     </strong>
                 </small>
@@ -204,7 +204,7 @@ export default function Staking(props) {
                 </button>
 
                 <small className="float-end text-muted mt-2">
-                    Available:{' '}
+                    Available:
                     <strong
                         style={{ textDecoration: 'underline' }}
                         onClick={() => setInputAmount(state.allHolder.balance)}
@@ -215,7 +215,7 @@ export default function Staking(props) {
                                     parseInt(state.allHolder.balance) / 1000000
                                 ).format('0.00')}
                             </>
-                        )}{' '}
+                        )} 
                         LOTA
                     </strong>
                 </small>
@@ -237,18 +237,17 @@ export default function Staking(props) {
                         <div style={{ marginTop: '20px' }}>
                             List of pending claims
                         </div>
-                        <table>
-                            {' '}
+                        <table>                           
                             <thead>
                                 <tr>
                                     <td style={{ paddingLeft: '20px' }}>
                                         Amount
-                                    </td>{' '}
+                                    </td>
                                     <td style={{ paddingLeft: '20px' }}>
                                         Release at blockheight
                                     </td>
                                 </tr>
-                            </thead>{' '}
+                            </thead>
                             <tbody>
                                 {state.holderClaims ? (
                                     state.holderClaims.map((e) => {
@@ -268,14 +267,14 @@ export default function Staking(props) {
                                                                 1000000
                                                         ).format('0,0.000000')}
                                                         LOTA
-                                                    </td>{' '}
+                                                    </td>
                                                     <td
                                                         style={{
                                                             paddingLeft: '20px',
                                                         }}
                                                     >
                                                         {e.release_at.at_height}
-                                                    </td>{' '}
+                                                    </td>
                                                 </tr>
                                             )
                                         }
@@ -289,7 +288,7 @@ export default function Staking(props) {
                         </table>
                     </span>
                     <small className="float-end text-muted mt-2">
-                        Available:{' '}
+                        Available:
                         <strong>
                             {state.wallet &&
                                 state.wallet.walletAddress &&
