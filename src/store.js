@@ -141,7 +141,7 @@ const initialState = {
     }),
     blockHeight: 0,
     stateLPStaking: {},
-    poolInfo: {},
+    poolInfo: {assets: []},
     stakingLoterraFunds: 0,
     stakingAlteredFunds: 0,
 
