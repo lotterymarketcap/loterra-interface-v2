@@ -105,6 +105,16 @@ export default function ConnectWallet() {
             message: contractConfigInfo.token_holder_percentage_fee_reward,
         })
 
+        const { winners } = await api.contractQuery(
+            state.loterraContractAddress,
+            {
+                winner: {
+                    lottery_id: contractConfigInfo.lottery_counter - 1,
+                },
+            }
+        )
+        dispatch({ type: 'setAllRecentWinners', message: winners })
+
         const contractDaoBalance = await api.contractQuery(
             state.loterraContractAddressCw20,
             {
@@ -218,26 +228,18 @@ export default function ConnectWallet() {
             let type = false
             console.log('checking for winner')
             // Query all winners for most recent draw
-            const { winners } = await api.contractQuery(
-                state.loterraContractAddress,
-                {
-                    winner: {
-                        lottery_id: state.config.lottery_counter - 1,
-                    },
-                }
-            )
-            dispatch({ type: 'setAllRecentWinners', message: winners })
+            
 
             //Test purposes
             //   recentWinners = [
             //       {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
             //      ]
 
-            if (winners.length == 0) {
+            if (state.allRecentWinners.length == 0) {
                 type = false
             }
 
-            winners.map((obj) => {
+            state.allRecentWinners.map((obj) => {
                 if (obj.address == connectedWallet.walletAddress) {
                     type = obj
                 }
@@ -453,13 +455,13 @@ export default function ConnectWallet() {
     }
 
     useEffect(() => {
-        if (connectedWallet) {
-            contactBalance()
-            
-        }
         if (!state.config.lottery_counter) {
             baseData()
         }
+        if (connectedWallet) {
+            contactBalance()            
+        }
+        
         //console.log(connectedWallet)
         window.addEventListener('scroll', handleScroll)
     }, [connectedWallet, lcd, state.config])
