@@ -464,7 +464,7 @@ export default function ConnectWallet() {
         
         //console.log(connectedWallet)
         window.addEventListener('scroll', handleScroll)
-    }, [connectedWallet, lcd, state.config, state.allRecentWinners])
+    }, [connectedWallet, lcd, state.config, state.allRecentWinners, state.youWon])
 
     return (
         <div
