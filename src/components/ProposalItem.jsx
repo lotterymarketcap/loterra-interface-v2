@@ -1,6 +1,12 @@
 import React from 'react'
 import { useStore } from '../store'
 import { MsgExecuteContract } from '@terra-money/terra.js'
+import {
+    Info,
+    Circle,
+    CheckCircle,
+    XCircle,
+} from 'phosphor-react'
 
 export default function ProposalItem(props) {
     const { data, i, fees } = props
@@ -59,10 +65,30 @@ export default function ProposalItem(props) {
         >
             <div className="row">
                 <div className="col-12">
-                    <h4>Proposal number {data.nr}</h4>
+                    <h4>Proposal number {data.nr} 
+                        { data.status == 'InProgress' &&
+                            <span className="badge progress-badge active">
+                            <p><Circle size={18} weight="fill" /> Active</p>
+                            </span>
+                        }
+                        { data.status == 'Passed' &&
+                            <span className="badge progress-badge passed">
+                            <p><CheckCircle size={18} weight="fill" /> Passed</p>
+                            </span>
+                        }
+                        { data.status == 'RejectedByCreator' &&
+                            <span className="badge progress-badge rejected">
+                            <p><XCircle size={18} weight="fill" /> Rejected</p>
+                            </span>
+                        }
+                        </h4>
                     <p className="desc">{data.description}</p>
-                </div>
-                <div className="col-md-8">
+                    { data.status !== 'InProgress' &&
+                        <button className="btn btn-plain float-end" type="button" data-bs-toggle="collapse" data-bs-target={'#collapseProposal'+i} aria-expanded="false" aria-controls={'collapseProposal'+i}><Info size={24}/> Show info</button>                    }
+                </div>                
+                <div className={'col-12 collapse' + (data.status !== 'InProgress' ? '' : ' show')} id={'collapseProposal'+i}>
+                    <div className="row">
+                    <div className="col-md-8">
                     <div className="table-responsive">
                         <table className="table">
                             <tbody>
@@ -217,6 +243,8 @@ export default function ProposalItem(props) {
                                 )}
                             </div>
                         )}
+                    </div>
+                </div>
                     </div>
                 </div>
             </div>

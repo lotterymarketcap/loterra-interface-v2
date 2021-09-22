@@ -81,7 +81,7 @@ export default function StakingForm(props) {
                         </div>
                     </div>
 
-                    <div classNaame="col-md-12 my-2 text-start">
+                    <div className="col-md-12 my-2 text-start">
                         <span
                             className="badge rounded-pill"
                             style={{

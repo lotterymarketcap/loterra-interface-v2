@@ -19,11 +19,7 @@ export default function ApyStats() {
     async function getAverageData() {
         const tmpJackpotData = []
         const tmpWinnerData = []
-        const terra = new LCDClient({
-            URL: 'https://lcd.terra.dev/',
-            chainID: 'columbus-4',
-        })
-        const api = new WasmAPI(terra.apiRequester)
+        const api = new WasmAPI(state.lcd_client.apiRequester)
 
         for (
             let index = state.currentLotteryId - 8;

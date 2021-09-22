@@ -77,7 +77,7 @@ export default function TicketModal(props) {
 
     return (
         <>
-            <div className={open ? 'ticketmodal show' : 'ticketmodal'}>
+            <div className={'ticketmodal' + (open ? ' show' : '')}>
                 <button className="toggle" onClick={() => toggleModal()}>
                     <X size={36} />
                 </button>

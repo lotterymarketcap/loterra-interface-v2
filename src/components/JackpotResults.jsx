@@ -111,6 +111,43 @@ export default function JackpotResults() {
         }
     }
 
+    function getNumberOfRankWinners(nr){
+        let nrWinners = 0;
+        state.allWinners.map(obj => {
+            obj.claims.ranks.map(r => {
+                if(r == nr){
+                    nrWinners++;
+                }
+            })
+        })
+        return (
+            <>
+            <span 
+            style={{
+                background:'#ff36ff',
+                padding: '5px',
+                borderRadius: '3px',
+                marginRight: '5px'
+            }}            
+            >#{nr}</span>
+            <span style={{
+                color:'#4ee19b'
+            }}>
+            <Trophy 
+            style={{
+                color:'#4ee19b',
+                position:'relative',
+                top:'-2px',
+                marginRight:'4px'
+            }}
+            size={21}
+            />
+            {nrWinners}
+            </span>
+            </>
+            );
+    }
+
     return (
         <div className="container" style={{ marginTop: '7rem' }}>
             <div className="card lota-card">
@@ -209,8 +246,12 @@ export default function JackpotResults() {
                             {state.config.prize_rank_winner_percentage && (
                                 <tbody>
                                     <tr>
-                                        <th scope="row" className="text-white">
-                                            #1
+                                        <th scope="row" className="text-white"
+                                        style={{                                      
+                                            minWidth: '130px',
+                                        }}
+                                        >
+                                            {getNumberOfRankWinners(1)}
                                         </th>
                                         <td
                                             style={{
@@ -220,7 +261,11 @@ export default function JackpotResults() {
                                         >
                                             6 Symbols
                                         </td>
-                                        <td>
+                                        <td
+                                        style={{                                      
+                                            minWidth: '130px',
+                                        }}
+                                        >
                                             {getPrizePerRank(1)}
                                             <span>UST</span>
                                         </td>
@@ -235,7 +280,7 @@ export default function JackpotResults() {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="text-white">
-                                            #2
+                                            {getNumberOfRankWinners(2)}
                                         </th>
                                         <td
                                             style={{
@@ -260,7 +305,7 @@ export default function JackpotResults() {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="text-white">
-                                            #3
+                                            {getNumberOfRankWinners(3)}
                                         </th>
                                         <td
                                             style={{
@@ -285,7 +330,7 @@ export default function JackpotResults() {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="text-white">
-                                            #4
+                                            {getNumberOfRankWinners(4)}
                                         </th>
                                         <td
                                             style={{
@@ -310,7 +355,7 @@ export default function JackpotResults() {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="text-white">
-                                            #5
+                                            {getNumberOfRankWinners(5)}
                                         </th>
                                         <td
                                             style={{
@@ -335,7 +380,7 @@ export default function JackpotResults() {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="text-white">
-                                            #6
+                                            {getNumberOfRankWinners(6)}
                                         </th>
                                         <td
                                             style={{

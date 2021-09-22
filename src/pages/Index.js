@@ -620,16 +620,13 @@ export default () => {
                                                 </div>
                                             </div>
                                             <p className="m-0">
-                                                Latest draw:{' '}
+                                                Last draw:{' '}
                                                 <strong>
                                                     {totalNrPrizes()} prizes
                                                 </strong>{' '}
                                                 and{' '}
                                                 <strong>
-                                                    {
-                                                        state.allRecentWinners
-                                                            .length
-                                                    }{' '}
+                                                    {state.allRecentWinners.length}{' '}
                                                     winners!
                                                 </strong>
                                             </p>
