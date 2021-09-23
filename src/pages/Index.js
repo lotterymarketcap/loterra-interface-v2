@@ -620,7 +620,7 @@ export default () => {
                                                 </div>
                                             </div>
                                             <p className="m-0">
-                                                Last draw:{' '}
+                                                Latest draw:{' '}
                                                 <strong>
                                                     {totalNrPrizes()} prizes
                                                 </strong>{' '}
