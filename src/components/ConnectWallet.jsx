@@ -73,11 +73,11 @@ export default function ConnectWallet() {
         })
     }, [connectedWallet])
     //Get proposals and save to state
-    const terra = new LCDClient({
-        URL: 'https://lcd.terra.dev/',
-        chainID: 'columbus-4',
-    })
-    const api = new WasmAPI(terra.apiRequester)
+    // const terra = new LCDClient({
+    //     URL: 'https://lcd.terra.dev/',
+    //     chainID: 'columbus-4',
+    // })
+    const api = new WasmAPI(state.lcd_client.apiRequester)
     async function baseData() {
         const latestBlocks = await axios.get(
             'https://lcd.terra.dev/blocks/latest'
@@ -87,7 +87,6 @@ export default function ConnectWallet() {
             type: 'setBlockHeight',
             message: latestBlocks.data.block.header.height,
         })
-
 
         const contractConfigInfo = await api.contractQuery(
             state.loterraContractAddress,
@@ -105,6 +104,16 @@ export default function ConnectWallet() {
             type: 'setHolderPercentageFee',
             message: contractConfigInfo.token_holder_percentage_fee_reward,
         })
+
+        const { winners } = await api.contractQuery(
+            state.loterraContractAddress,
+            {
+                winner: {
+                    lottery_id: contractConfigInfo.lottery_counter - 1,
+                },
+            }
+        )
+        dispatch({ type: 'setAllRecentWinners', message: winners })
 
         const contractDaoBalance = await api.contractQuery(
             state.loterraContractAddressCw20,
@@ -217,28 +226,20 @@ export default function ConnectWallet() {
         // Code for winner detector
         try {
             let type = false
-
+            console.log('checking for winner')
             // Query all winners for most recent draw
-            const { winners } = await api.contractQuery(
-                state.loterraContractAddress,
-                {
-                    winner: {
-                        lottery_id: state.config.lottery_counter - 1,
-                    },
-                }
-            )
-            dispatch({ type: 'setAllRecentWinners', message: winners })
+            
 
             //Test purposes
             //   recentWinners = [
             //       {address:"terra1an23yxwkfda0m5dmkcxpyrqux83cw5esg9ex86",claims:{claimed:true,ranks:[4]}},
             //      ]
 
-            if (winners.length == 0) {
+            if (state.allRecentWinners.length == 0) {
                 type = false
             }
 
-            winners.map((obj) => {
+            state.allRecentWinners.map((obj) => {
                 if (obj.address == connectedWallet.walletAddress) {
                     type = obj
                 }
@@ -366,6 +367,8 @@ export default function ConnectWallet() {
                     message: claimsLP.claims,
                 })
 
+                checkIfWon()
+
                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
                     {
@@ -376,6 +379,8 @@ export default function ConnectWallet() {
                     }
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
+
+              
             } catch (e) {
                 console.log(e)
             }
@@ -450,16 +455,16 @@ export default function ConnectWallet() {
     }
 
     useEffect(() => {
-        if (connectedWallet) {
-            contactBalance()
-            checkIfWon()
-        }
         if (!state.config.lottery_counter) {
             baseData()
         }
+        if (connectedWallet) {
+            contactBalance()            
+        }
+        
         //console.log(connectedWallet)
         window.addEventListener('scroll', handleScroll)
-    }, [connectedWallet, lcd, state.config])
+    }, [connectedWallet, lcd, state.config, state.allRecentWinners, state.youWon])
 
     return (
         <div

@@ -141,7 +141,7 @@ export default function LpStaking(props) {
                 <p className="input-heading">
                     The amount you want to LP Stake
                     <span
-                        class="badge"
+                        className="badge"
                         style={{
                             background: '#9bfbcd',
                             color: '#10003b',
@@ -150,7 +150,7 @@ export default function LpStaking(props) {
                             top: '-2px',
                         }}
                     >
-                        APY{' '}
+                        APY 
                         <strong>
                             {total_staked() ? (
                                 numeral((100000 / total_staked()) * 100).format(
@@ -188,7 +188,7 @@ export default function LpStaking(props) {
                         borderColor: '#ff36ff',
                     }}
                 >
-                    Total staked LP in LOTA:{' '}
+                    Total staked LP in LOTA:
                     <strong>
                         {total_staked() ? (
                             numeral(total_staked()).format('0,0.000000') +
@@ -252,7 +252,7 @@ export default function LpStaking(props) {
                     Stake Now
                 </button>
                 <small className="float-end text-muted mt-2">
-                    Available:{' '}
+                    Available:
                     <strong
                         style={{ textDecoration: 'underline' }}
                         onClick={() =>
@@ -265,7 +265,7 @@ export default function LpStaking(props) {
                                     parseInt(state.LPBalance.balance) / 1000000
                                 ).format('0.00')}
                             </>
-                        )}{' '}
+                        )}
                         LOTA
                     </strong>
                 </small>
@@ -279,7 +279,7 @@ export default function LpStaking(props) {
                 </button>
 
                 <small className="float-end text-muted mt-2">
-                    Available:{' '}
+                    Available:
                     <strong
                         style={{ textDecoration: 'underline' }}
                         onClick={() =>
@@ -293,7 +293,7 @@ export default function LpStaking(props) {
                                         1000000
                                 ).format('0.00')}
                             </>
-                        )}{' '}
+                        )}
                         LOTA
                     </strong>
                 </small>
@@ -321,18 +321,17 @@ export default function LpStaking(props) {
                         <div style={{ marginTop: '20px' }}>
                             List of pending claims
                         </div>
-                        <table>
-                            {' '}
+                        <table>                            
                             <thead>
                                 <tr>
                                     <td style={{ paddingLeft: '20px' }}>
                                         Amount
-                                    </td>{' '}
+                                    </td>
                                     <td style={{ paddingLeft: '20px' }}>
                                         Release at blockheight
                                     </td>
                                 </tr>
-                            </thead>{' '}
+                            </thead>
                             <tbody>
                                 {state.holderClaimsLP ? (
                                     state.holderClaimsLP.map((e) => {
@@ -352,14 +351,14 @@ export default function LpStaking(props) {
                                                                 1000000
                                                         ).format('0,0.000000')}
                                                         LOTA
-                                                    </td>{' '}
+                                                    </td>
                                                     <td
                                                         style={{
                                                             paddingLeft: '20px',
                                                         }}
                                                     >
                                                         {e.release_at.at_height}
-                                                    </td>{' '}
+                                                    </td>
                                                 </tr>
                                             )
                                         }
@@ -373,7 +372,7 @@ export default function LpStaking(props) {
                         </table>
                     </span>
                     <small className="float-end text-muted mt-2">
-                        Available:{' '}
+                        Available:
                         <strong>
                             {state.wallet &&
                                 state.wallet.walletAddress &&

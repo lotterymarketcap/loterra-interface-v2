@@ -626,10 +626,7 @@ export default () => {
                                                 </strong>{' '}
                                                 and{' '}
                                                 <strong>
-                                                    {
-                                                        state.allRecentWinners
-                                                            .length
-                                                    }{' '}
+                                                    {state.allRecentWinners.length}{' '}
                                                     winners!
                                                 </strong>
                                             </p>

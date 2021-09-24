@@ -644,6 +644,38 @@ body {
     }
 }
 
+.badge {
+    &.progress-badge {   
+        padding:5px 15px;
+        color:#fff;
+        border: 1px solid #8b8ba67a;
+        border-radius: 100px;
+        margin-left: 14px;
+        p {
+            margin:0;
+            font-size:14px;     
+            svg {
+                position:relative;
+                top:-2px;
+            }       
+        }
+        &.active {   
+            p{
+                color:#fff;     
+                svg {
+                    color:#20ff93;
+                }
+            }
+        }
+        &.passed {
+            
+        }
+        &.rejected {
+
+        }
+    }
+}
+
 .amount-block {
     margin-top: -360px;
     background: linear-gradient(95.45deg, #3b2e73 -92.2%, #10003b 105.35%);

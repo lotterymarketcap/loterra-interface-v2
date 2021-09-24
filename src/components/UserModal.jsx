@@ -354,7 +354,7 @@ export default function UserModal(props) {
                                                         0 &&
                                                         calculateTotalPrizesInDollars()}
                                                 </strong>{' '}
-                                                <span>Last draw prizes</span>
+                                                <span>Latest draw prizes</span>
                                             </p>
                                             {showWinnerPrizes()}
                                         </div>
