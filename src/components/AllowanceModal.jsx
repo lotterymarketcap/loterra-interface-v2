@@ -16,11 +16,7 @@ export default function AllowanceModal(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const data = new FormData(e.target)
-        increaseUserAllowance(data.get('allowance_amount'))
-        //console.log(data);
-        //Getting specific data by field name
-        //data.get('fieldName')
+        increaseUserAllowance(prefillValue == 0 ? prefill : prefillValue)
     }
 
     function increaseUserAllowance(val) {
@@ -32,7 +28,7 @@ export default function AllowanceModal(props) {
             {
                 increase_allowance: {
                     spender: state.loterraContractAddress,
-                    amount: (parseInt(val) * 1000000).toString(),
+                    amount: (parseFloat(val) * 1000000).toString(),
                 },
             }
         )
@@ -62,8 +58,9 @@ export default function AllowanceModal(props) {
             })
     }
 
-    function handleChange(e) {
+    function handleChange(e) {        
         setPrefillValue(e.target.value)
+        console.log(prefillValue)
     }
 
     return (
