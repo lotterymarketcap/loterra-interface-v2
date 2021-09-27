@@ -116,8 +116,9 @@ body {
             font-weight: 300;
             text-shadow: 0px 0px 26px #160150;
             font-family: 'Monoton', cursive;
-            -webkit-animation: neon 1.5s ease-in-out infinite alternate;
-            animation: neon 1.5s ease-in-out infinite alternate;
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff,
+            0 0 40px #f038f0, 0 0 70px #f038f0, 0 0 80px #f038f0,
+            0 0 120px #f038f0, 0 0 200px #f038f0;
         }
         @media (max-width: 990px) {
             height: 1305px;
@@ -751,36 +752,6 @@ body {
         color: #fff;
         &:hover {
             background: #0f0038;
-        }
-    }
-}
-
-//Animation
-
-.svg {
-    color: #493c84;
-    position: absolute;
-    bottom: -100vh;
-    transform-style: preserve-3d;
-    z-index: -1;
-}
-
-$total: 8;
-@for $i from 1 through $total {
-    $scale: random(2) - 0.4;
-
-    .svg:nth-child(#{$i}) {
-        left: random(100) * 1% - 20;
-        animation: raise#{$i} 6 + random(8) + s linear infinite;
-        animation-delay: random(5) - 5 + s;
-        transform: scale(0.3 * $i - 0.6) rotate(random(360) + deg);
-        filter: blur($i - 10 + px);
-
-        @keyframes raise#{$i} {
-            to {
-                bottom: 150vh;
-                transform: scale(0.3 * $i - 0.6) rotate(random(360) + deg);
-            }
         }
     }
 }

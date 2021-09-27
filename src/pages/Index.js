@@ -635,15 +635,7 @@ export default () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <Ticket size={55} className="svg" />
-                    <Coin size={55} className="svg" />
-                    <Ticket size={55} className="svg" />
-                    <Coin size={55} className="svg" />
-                    <Ticket size={55} className="svg" />
-                    <Coin size={55} className="svg" />
-                    <Ticket size={55} className="svg" />
-                    <Coin size={55} className="svg" />
+                    </div>              
                 </div>
 
                 {/*
