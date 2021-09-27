@@ -867,7 +867,7 @@ export default () => {
                                 <AllowanceModal
                                     open={allowanceModal}
                                     prefill={
-                                        amount * state.config.price_per_ticket_to_register  / state.config.bonus_burn_rate
+                                        amount * state.config.price_per_ticket_to_register  / state.config.bonus_burn_rate / 1000000
                                     }
                                     toggleModal={() =>
                                         setAllowanceModal(!allowanceModal)
