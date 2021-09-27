@@ -1,4 +1,28 @@
 .card {
+    &.latest-draw {
+        margin-top: 50px;
+        background: radial-gradient(#14043e, #4b1a7882);
+        border: 1px solid #4c1b79;
+        box-shadow: none;
+        .card-header {
+            h3 {
+                color:#f035f0;
+            }
+        }
+        .card-body {
+            padding:5px;
+            .players {
+                font-size: 33px;
+                font-weight: 900;
+                margin-bottom:-8px;
+            }
+            .sub {
+                margin-bottom:10px;
+                text-transform: uppercase;
+                color:#20ff93;
+            }
+        }
+    }
     &.lota-card {
         background: linear-gradient(328.75deg, #493c85 -5.49%, #0f0038 104.44%);
         border-radius: 10px;

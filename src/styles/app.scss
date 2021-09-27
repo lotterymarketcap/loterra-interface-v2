@@ -95,7 +95,7 @@ body {
         height: 975px;
     }
     @media (max-width: 501px) {
-        height: 785px;
+        height: 870px;
     }
     &.staking {
         height: 1360px;
@@ -351,19 +351,6 @@ body {
     --shadow-color-light: rgba(255, 255, 255, 0.35);
 }
 
-@keyframes neon {
-    from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff,
-            0 0 40px #f038f0, 0 0 70px #f038f0, 0 0 80px #f038f0,
-            0 0 120px #f038f0, 0 0 200px #f038f0;
-    }
-    to {
-        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff,
-            0 0 20px #f038f0, 0 0 35px #f038f0, 0 0 40px #f038f0,
-            0 0 50px #f038f0, 0 0 75px #f038f0;
-    }
-}
-
 .jackpot {
     h3 {
         font-family: 'Sigmar One';
@@ -400,9 +387,11 @@ body {
         position: relative;
         z-index: 9;
         font-weight: 300;
-        text-shadow: 0px 0px 26px #160150;
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff,
+            0 0 40px #f038f0, 0 0 70px #f038f0, 0 0 80px #f038f0,
+            0 0 120px #f038f0, 0 0 200px #f038f0;
         font-family: 'Monoton', cursive;
-        animation: neon 1.5s ease-in-out infinite alternate;
+
         @media (max-width: 500px) {
             font-size: 36px;
             margin: 0;
@@ -542,18 +531,26 @@ body {
     background: linear-gradient(95.45deg, #3b2e7370 -92.2%, #10003b 105.35%);
     /* border: 5px dashed #493C84; */
     border-radius: 10px;
-    box-shadow: 0px 28px 48px #0f0038;
+    box-shadow: 0px 14px 25px #0f0038;
     color: #fff;
+    .card-body {
+        padding:5px;
+    }
+    .svg-rotate {
+            svg {               
+                        color: #743b96;
+            }
+    }
     h3 {
         font-weight: bold;
-        font-size: 34px;
-        line-height: 35px;
+        font-size: 24px;
+        line-height: 22px;
         color: #ffffff;
         margin: 0;
         span {
             display: block;
             font-weight: normal;
-            font-size: 16px;
+            font-size: 13px;
             line-height: 19px;
             color: #ff36ff;
         }
@@ -575,7 +572,7 @@ body {
             padding: 7px 15px;
         }
         svg {
-            width: 155%;
+            // width: 155%;
         }
     }
 }
@@ -587,7 +584,7 @@ body {
     box-shadow: 0px 28px 48px #0f0038;
     color: #fff;
     p {
-        color: #8ff7c5;
+        color: #fff;
     }
     .card-header {
         .card-header-icon {
@@ -602,7 +599,7 @@ body {
                 ),
                 #0f0038;
             border: 4px solid #20ff93;
-            box-shadow: 0px 0px 94px #20ff9366;
+            box-shadow: 0px 0px 94px #ff36ff;
             display: block;
             line-height: 55px;
             text-align: center;
@@ -678,7 +675,7 @@ body {
 }
 
 .amount-block {
-    margin-top: -360px;
+    margin-top: -100px;
     background: linear-gradient(95.45deg, #3b2e73 -92.2%, #10003b 105.35%);
     box-sizing: border-box;
     box-shadow: 0px -10px 22px #501b7b;

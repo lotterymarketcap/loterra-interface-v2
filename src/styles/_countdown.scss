@@ -34,11 +34,16 @@
         }
     }
 }
-
-.countdown {
-    background: linear-gradient(328.75deg, #10003b -5.49%, #251656 104.44%);
+.countdown-holder {
+    background: #13043e9c;
     padding: 5px 10px;
     margin: -15px -15px 15px -15px;
+    border-radius: 20px;
+    padding-top: 75px;
+    margin-top: -89px;
+}
+.countdown {
+    padding-top:25px;
     .title {
         text-transform: uppercase;
         margin: 0;

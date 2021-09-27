@@ -11,6 +11,7 @@ import {
     Ticket,
     Coin,
     Trophy,
+    UserFocus,
     UserCircle,
     ChartPie,
     PlusCircle,
@@ -18,6 +19,7 @@ import {
     PencilLine,
     Fire,
     Gift,
+    UsersThree,
     ArrowDown,
     MonitorPlay,
     Info,
@@ -64,6 +66,7 @@ export default () => {
     const [jackpot, setJackpot] = useState(0)
     const [tickets, setTickets] = useState(0)
     const [players, setPlayers] = useState(0)
+    const [recentPlayers, setRecentPlayers] = useState(0)
     const [buyLoader, setBuyLoader] = useState(false)
     const [alteBonus, setAlteBonus] = useState(false)
     const [giftFriend, setGiftFriend] = useState({ active: false, wallet: '' })
@@ -143,6 +146,16 @@ export default () => {
                 }
             )
             setPlayers(parseInt(contractPlayersInfo))
+
+            const recentPlayersData = await api.contractQuery(
+                loterra_contract_address,
+                {
+                    count_player: {
+                        lottery_id: contractConfigInfo.lottery_counter - 1,
+                    },
+                }
+            )
+            setRecentPlayers(parseInt(recentPlayersData))
             // Set default tickets to buy is an average bag
             multiplier(
                 parseInt(
@@ -555,24 +568,24 @@ export default () => {
                                         <span>UST</span>
                                     </div>
                                 </h2>
-                                <h3>Draws every 3 days</h3>
+                                <h3>Draws every 3 days</h3>                                
                             </div>
-                        </div>
-                        <div className="col-12 col-md-8 mx-auto">
                             <div className="row">
-                                <div className="col-6">
+                            <div className="col-md-8 mx-auto">
+                                <div className="countdown-holder">
+                                        <div className="row">
+                                        <div className="col-6">
                                     <div className="card stats-card">
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-4 col-md text-center">
-                                                    <Users
-                                                        size={55}
-                                                        color="#20FF93"
+                                                <div className="col-12 col-md-4 text-center svg-rotate">
+                                                    <UserFocus
+                                                        size={36}                                                        
                                                     />
                                                 </div>
-                                                <div className="col-8 col-md-8 text-center text-md-start">
+                                                <div className="col-12 col-md-8 text-center text-md-start">
                                                     <h3>
-                                                        <span>PLAYERS</span>
+                                                        <span>PLAYERS PLAYING</span>
                                                         {players ? (
                                                             players
                                                         ) : (
@@ -584,19 +597,19 @@ export default () => {
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div className="col-6">
                                     <div className="card stats-card">
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-4 col-md text-center">
+                                                <div className="col-12 col-md-4 text-center svg-rotate">
                                                     <Ticket
-                                                        size={55}
-                                                        color="#20FF93"
+                                                        size={36}                                                        
                                                     />
                                                 </div>
-                                                <div className="col-8 col-md-8 text-center text-md-start">
+                                                <div className="col-12 col-md-8 text-center text-md-start">
                                                     <h3>
-                                                        <span>TICKETS</span>
+                                                        <span>TICKETS SOLD</span>
                                                         {tickets ? (
                                                             tickets
                                                         ) : (
@@ -608,19 +621,39 @@ export default () => {
                                         </div>
                                     </div>
                                 </div>
+                                            <div className="col-10 mx-auto">
+                                                <Countdown expiryTimestamp={expiryTimestamp} />
+                                            </div>
+                                        </div>
+                                </div>                                
+                            </div>
+                         
+                            </div>
+                        </div>
+                       
+                        <div className="col-12 col-md-8 mx-auto">
+                            <div className="row">                                
                                 <div className="col-12 col-md-8 mx-auto">
-                                    <div className="card stats-card-special my-3">
-                                        <div className="card-body text-center">
+                                    <div className="card stats-card-special latest-draw">                                       
                                             <div className="card-header text-center">
                                                 <div className="card-header-icon">
                                                     <Trophy
                                                         size={36}
-                                                        color="#20FF93"
+                                                        color="#20ff93"
                                                     />
                                                 </div>
-                                            </div>
-                                            <p className="m-0">
-                                                Latest draw:{' '}
+                                                <h3 style={{fontSize:'21px'}}>Latest draw</h3>
+                                            </div>   
+                                            <div className="card-body text-center">                                         
+                                            <p className="players">
+                                                <strong>{recentPlayers} <UsersThree
+                                                        size={38}
+                                                        style={{
+                                                            marginTop:'-5px'
+                                                        }}                                                       
+                                                    /></strong>
+                                            </p>
+                                            <p className="sub">                                                
                                                 <strong>
                                                     {totalNrPrizes()} prizes
                                                 </strong>{' '}
@@ -649,8 +682,7 @@ export default () => {
                             <div className="card-header">
                                 <h3>Book Your Tickets</h3>
                             </div>
-                            <div className="card-body">
-                                <Countdown expiryTimestamp={expiryTimestamp} />
+                            <div className="card-body">                                
                                 <small>
                                     <span>HINT</span> Increase your odds!
                                     Average buying ticket is{' '}
