@@ -728,8 +728,8 @@ export default () => {
                                             <strong>
                                                 {' '}
                                                 {numeral(
-                                                    amount -
-                                                        amount /
+                                                    (amount * price) / 1000000 -
+                                                    (amount * price) / 1000000 /
                                                             state.config
                                                                 .bonus_burn_rate
                                                 ).format('0,0.00')}{' '}
@@ -737,7 +737,7 @@ export default () => {
                                                 <span>
                                                     +{' '}
                                                     {numeral(
-                                                        amount /
+                                                        (amount * price) / 1000000 /
                                                             state.config
                                                                 .bonus_burn_rate
                                                     ).format('0,0.00')}{' '}
