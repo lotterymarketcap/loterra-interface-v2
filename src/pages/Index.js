@@ -552,6 +552,15 @@ export default () => {
                     <div className="row">
                         <div className="col-lg-12 col-xl-8 mx-auto text-center">
                             <div className="jackpot">
+                                <img 
+                                src={'/Lottery.png'}
+                                style={{
+                                    marginBottom:'-58px',
+                                    maxWidth:'100%',
+                                    position:'relative',
+                                    zIndex:'10',
+                                }}
+                                />
                                 <p>Jackpot</p>
                                 <h2>
                                     {numeral(jackpot)
@@ -621,7 +630,7 @@ export default () => {
                                         </div>
                                     </div>
                                 </div>
-                                            <div className="col-10 mx-auto">
+                                            <div className="col-lg-8 mx-auto">
                                                 <Countdown expiryTimestamp={expiryTimestamp} />
                                             </div>
                                         </div>
