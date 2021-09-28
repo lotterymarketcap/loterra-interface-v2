@@ -630,7 +630,7 @@ export default () => {
                                         </div>
                                     </div>
                                 </div>
-                                            <div className="col-10 mx-auto">
+                                            <div className="col-lg-8 mx-auto">
                                                 <Countdown expiryTimestamp={expiryTimestamp} />
                                             </div>
                                         </div>
