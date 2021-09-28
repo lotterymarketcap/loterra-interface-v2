@@ -553,7 +553,7 @@ export default () => {
                         <div className="col-lg-12 col-xl-8 mx-auto text-center">
                             <div className="jackpot">
                                 <img 
-                                src={'/Lottery.svg'}
+                                src={'/Lottery.png'}
                                 style={{
                                     marginBottom:'-58px',
                                     maxWidth:'100%',
