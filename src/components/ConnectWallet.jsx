@@ -115,6 +115,8 @@ export default function ConnectWallet() {
         )
         dispatch({ type: 'setAllRecentWinners', message: winners })
 
+        
+
         const contractDaoBalance = await api.contractQuery(
             state.loterraContractAddressCw20,
             {
