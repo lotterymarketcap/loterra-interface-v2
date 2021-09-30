@@ -5,7 +5,7 @@
     box-sizing: border-box;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 36px;
-    height: 20px;
+    height: 10px;
     overflow: hidden;
     position: relative;
     margin-bottom: 10px;
@@ -34,11 +34,16 @@
         }
     }
 }
-
-.countdown {
-    background: linear-gradient(328.75deg, #10003b -5.49%, #251656 104.44%);
+.countdown-holder {
+    background: radial-gradient(#12013f, #16015052);
     padding: 5px 10px;
     margin: -15px -15px 15px -15px;
+    border-radius: 20px;
+    padding-top: 75px;
+    margin-top: -89px;
+}
+.countdown {
+    padding-top:10px;
     .title {
         text-transform: uppercase;
         margin: 0;
@@ -67,7 +72,7 @@
         line-height: 57px;
         @media (max-width: 500px) {
             font-size: 34px;
-            line-height: 68px;
+            line-height: 61px;
         }
     }
 }
