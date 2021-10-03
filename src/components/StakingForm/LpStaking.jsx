@@ -150,7 +150,7 @@ export default function LpStaking(props) {
                             top: '-2px',
                         }}
                     >
-                        APY 
+                        APR
                         <strong>
                             {total_staked() ? (
                                 numeral((100000 / total_staked()) * 100).format(
@@ -236,7 +236,7 @@ export default function LpStaking(props) {
                             ?%
                         </div>
                         <div className="col-6">
-                            Pool APY
+                            Pool APR
                         </div>
                         <div className="col-6 text-end">
                             ?%
