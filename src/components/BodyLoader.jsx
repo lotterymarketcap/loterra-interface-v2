@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-export default function BodyLoader() {
-    return (
+const BodyLoader = (props) => 
+     (
       <>
         <div className="d-flex justify-content-center">
             <div className="spinner-border" role="status">
@@ -10,4 +10,6 @@ export default function BodyLoader() {
         </div>
       </>
     )
-}
+
+export default BodyLoader
+

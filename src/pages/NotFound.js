@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function NotFound() {
+export default () => {
     return (
         <div
             className="vh-100 d-flex"

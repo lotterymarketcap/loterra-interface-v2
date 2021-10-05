@@ -7,7 +7,6 @@ import {
     useConnectedWallet,
     ConnectType,
 } from '@terra-money/wallet-provider'
-
 import {
     Wallet,
     CaretRight,
@@ -46,6 +45,7 @@ const Dialog = {
 
 } */
 
+  
 
 const DialogButton = {
     margin: '10px 20px 10px 20px',
@@ -59,6 +59,15 @@ export default function ConnectWallet() {
     const [connected, setConnected] = useState(false)
     const { state, dispatch } = useStore()
 
+       //Nav link active settings
+       let homeClass,stakingClass,daoClass;
+       if(typeof location !== 'undefined'){     
+           homeClass = location.pathname === "/" ? "active" : "";
+           stakingClass = location.pathname.match(/^\/staking/) ? "active" : "";
+           daoClass = location.pathname.match(/^\/dao/) ? "active" : "";
+       }
+
+       
     let wallet = ''
     if (typeof document !== 'undefined') {
         wallet = useWallet()
@@ -472,10 +481,7 @@ export default function ConnectWallet() {
     }, [connectedWallet, lcd, state.config, state.allRecentWinners, state.youWon])
 
    
-     //Nav link active settings
- const homeClass = location.pathname === "/" ? "active" : "";
- const stakingClass = location.pathname.match(/^\/staking/) ? "active" : "";
- const daoClass = location.pathname.match(/^\/dao/) ? "active" : "";
+
 
     return (
         
