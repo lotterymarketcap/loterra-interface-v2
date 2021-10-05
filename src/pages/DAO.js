@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 import BodyLoader from '../components/BodyLoader'
 import { Bank, Info } from 'phosphor-react'
 
-export default () =>  {
+export default () => {
     const { state, dispatch } = useStore()
     const addToGas = 5800
     const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
@@ -39,7 +39,7 @@ export default () =>  {
                             <h6 
                             style={{
                                 color:'#ff36ff',
-                                marginBottom:'20px',
+                                marginBottom:'20px', 
                                 fontWeight:'normal'
                             }}
                             >
