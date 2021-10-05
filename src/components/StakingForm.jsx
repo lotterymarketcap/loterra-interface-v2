@@ -3,6 +3,8 @@ import { useStore } from '../store'
 import axios from 'axios'
 import LpStaking from './StakingForm/LpStaking'
 import Staking from './StakingForm/Staking'
+import { Coin } from 'phosphor-react'
+
 
 export default function StakingForm(props) {
     const { showNotification } = props
@@ -23,6 +25,12 @@ export default function StakingForm(props) {
 
     return (
         <div className="card lota-card staking">
+            <div className="card-header">
+            <div className="card-header-icon">
+                <Coin size={90} color="#20FF93" />                                
+            </div>
+            <h3>Staking</h3>
+            </div>
             <div className="card-body">
                 <div className="row">
                     <div className="col-12 text-center">
