@@ -534,7 +534,7 @@ export default function ConnectWallet() {
                                 }}
                             />{' '}
                             Staking
-                            <span className="item-label">Become a casino owner</span>
+                            <span className="item-label">Become a casino owner or earn LOTA staking LP</span>
                         </a>
                     </li>
                     <li className="nav-item">
