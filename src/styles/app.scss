@@ -146,13 +146,13 @@ body {
             color: #fff;
             padding: 0.375rem 0.75rem;
             transition: all 150ms linear;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
+            font-style: normal;      
+            font-weight: 700;
+            font-size: 18px;
             svg {
                 color: #a69fbb;
             }
-            &:hover {
+            &.active,&:hover {
                 color: #fff;
                 background: linear-gradient(
                     328.75deg,
@@ -160,7 +160,7 @@ body {
                     #8a249d 19.13%,
                     #0f0038 104.44%
                 );
-                border: 1px solid #ff36ff;
+                border: 1px solid #88239b;
                 svg {
                     color: #fff;
                 }

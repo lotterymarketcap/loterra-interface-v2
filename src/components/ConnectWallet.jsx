@@ -45,6 +45,8 @@ const Dialog = {
     flexDirection:"column",
 
 } */
+
+
 const DialogButton = {
     margin: '10px 20px 10px 20px',
 }
@@ -469,7 +471,14 @@ export default function ConnectWallet() {
         window.addEventListener('scroll', handleScroll)
     }, [connectedWallet, lcd, state.config, state.allRecentWinners, state.youWon])
 
+   
+     //Nav link active settings
+ const homeClass = location.pathname === "/" ? "active" : "";
+ const stakingClass = location.pathname.match(/^\/staking/) ? "active" : "";
+ const daoClass = location.pathname.match(/^\/dao/) ? "active" : "";
+
     return (
+        
         <div
             className={
                 scrolled
@@ -495,7 +504,7 @@ export default function ConnectWallet() {
                         <X size={36} />
                     </button>
                     <li className="nav-item">
-                        <a href="/" className="nav-link">
+                        <a href="/" className={"nav-link " + (homeClass)}>
                             <Ticket
                                 size={24}
                                 style={{
@@ -505,6 +514,35 @@ export default function ConnectWallet() {
                                 }}
                             />{' '}
                             Lottery
+                            <span className="item-label">Jackpot Lottery</span>
+                        </a>
+                    </li>                    
+                    <li className="nav-item">
+                        <a href="/staking" className="nav-link" className={"nav-link " + (stakingClass)}>
+                            <Coin
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Staking
+                            <span className="item-label">Become a casino owner</span>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="/dao" className="nav-link" className={"nav-link " + (daoClass)}>
+                            <Bank
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            DAO
+                            <span className="item-label">Together we decide</span>
                         </a>
                     </li>
                     <li className="nav-item">
@@ -518,6 +556,7 @@ export default function ConnectWallet() {
                                 }}
                             />{' '}
                             Dogether
+                            <span className="item-label">No loss lottery</span>
                             <span 
                             className="badge bg-primary"
                             style={{
@@ -530,32 +569,6 @@ export default function ConnectWallet() {
                                 textTransform:'uppercase'
                             }}
                             >Coming soon</span>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="/staking" className="nav-link">
-                            <Coin
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Staking
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="/dao" className="nav-link">
-                            <Bank
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            DAO
                         </a>
                     </li>
                 </nav>
