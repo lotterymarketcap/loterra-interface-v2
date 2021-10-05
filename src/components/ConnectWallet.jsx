@@ -546,7 +546,7 @@ export default function ConnectWallet() {
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="#" className="nav-link" style={{position:'relative', opacity:'0.7'}}>
+                        <a href="#" className="nav-link" style={{position:'relative', opacity:'0.5'}}>
                             <Ticket
                                 size={24}
                                 style={{
