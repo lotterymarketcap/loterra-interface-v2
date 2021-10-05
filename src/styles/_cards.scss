@@ -61,7 +61,12 @@
 
         &.proposals {
             padding: 35px 35px;
-
+            background:transparent;
+            border:0;
+            .card-header {
+                border:0;
+                background:#120146e6;
+            }
             h3 {
                 font-weight: bold;
                 font-size: 46px;

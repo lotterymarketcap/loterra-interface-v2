@@ -17,6 +17,7 @@ import {
     List,
     X,
     Ticket,
+    Coin,
     Bank,
 } from 'phosphor-react'
 import numeral from 'numeral'
@@ -44,6 +45,8 @@ const Dialog = {
     flexDirection:"column",
 
 } */
+
+
 const DialogButton = {
     margin: '10px 20px 10px 20px',
 }
@@ -153,7 +156,7 @@ export default function ConnectWallet() {
 
         //console.log('config',contractConfigInfo)
 
-        if (window.location.href.indexOf('staking') > -1) {
+        if (window.location.href.indexOf('dao') > -1) {
             let pollCount = contractConfigInfo.poll_count
             //console.log('count',pollCount)
             let allProposals = []
@@ -468,7 +471,14 @@ export default function ConnectWallet() {
         window.addEventListener('scroll', handleScroll)
     }, [connectedWallet, lcd, state.config, state.allRecentWinners, state.youWon])
 
+   
+     //Nav link active settings
+ const homeClass = location.pathname === "/" ? "active" : "";
+ const stakingClass = location.pathname.match(/^\/staking/) ? "active" : "";
+ const daoClass = location.pathname.match(/^\/dao/) ? "active" : "";
+
     return (
+        
         <div
             className={
                 scrolled
@@ -494,7 +504,7 @@ export default function ConnectWallet() {
                         <X size={36} />
                     </button>
                     <li className="nav-item">
-                        <a href="/" className="nav-link">
+                        <a href="/" className={"nav-link " + (homeClass)}>
                             <Ticket
                                 size={24}
                                 style={{
@@ -504,10 +514,25 @@ export default function ConnectWallet() {
                                 }}
                             />{' '}
                             Lottery
+                            <span className="item-label">Jackpot Lottery</span>
+                        </a>
+                    </li>                    
+                    <li className="nav-item">
+                        <a href="/staking" className="nav-link" className={"nav-link " + (stakingClass)}>
+                            <Coin
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Staking
+                            <span className="item-label">Become a casino owner</span>
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="/staking" className="nav-link">
+                        <a href="/dao" className="nav-link" className={"nav-link " + (daoClass)}>
                             <Bank
                                 size={24}
                                 style={{
@@ -516,7 +541,34 @@ export default function ConnectWallet() {
                                     top: '-1px',
                                 }}
                             />{' '}
-                            Staking & DAO
+                            DAO
+                            <span className="item-label">Together we decide</span>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="#" className="nav-link" style={{position:'relative', opacity:'0.5'}}>
+                            <Ticket
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Dogether
+                            <span className="item-label">No loss lottery</span>
+                            <span 
+                            className="badge bg-primary"
+                            style={{
+                                position:'absolute',
+                                right:0,
+                                top:'-9px',
+                                fontSize:'10px',
+                                lineHeight:'10px',
+                                padding:'3px',
+                                textTransform:'uppercase'
+                            }}
+                            >Coming soon</span>
                         </a>
                     </li>
                 </nav>

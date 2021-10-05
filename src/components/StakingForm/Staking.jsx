@@ -127,9 +127,14 @@ export default function Staking(props) {
         <div className="row">
             <div className="col-md-12">
                 <p className="input-heading">The amount you want to stake</p>
-                <p className="input-slogan">
-                    Stake LOTA and get 20% on winner prizes
-                </p>
+                <span className="info"
+                style={{
+                    color: '#ff36ff',
+                    borderColor: '#ff36ff',
+                }}
+                >
+                    <Info size={14} weight="fill" className="me-1" /><strong>Hello new casino owner!</strong> Stake LOTA, join our DAO and get 20% on winner prizes.
+                </span>
                 <div className="input-group mb-3">
                     <span className="input-group-text" id="basic-addon1">
                         <img
