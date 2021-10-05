@@ -17,6 +17,7 @@ import {
     List,
     X,
     Ticket,
+    Coin,
     Bank,
 } from 'phosphor-react'
 import numeral from 'numeral'
@@ -153,7 +154,7 @@ export default function ConnectWallet() {
 
         //console.log('config',contractConfigInfo)
 
-        if (window.location.href.indexOf('staking') > -1) {
+        if (window.location.href.indexOf('dao') > -1) {
             let pollCount = contractConfigInfo.poll_count
             //console.log('count',pollCount)
             let allProposals = []
@@ -507,7 +508,45 @@ export default function ConnectWallet() {
                         </a>
                     </li>
                     <li className="nav-item">
+                        <a href="#" className="nav-link" style={{position:'relative', opacity:'0.7'}}>
+                            <Ticket
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Dogether
+                            <span 
+                            className="badge bg-primary"
+                            style={{
+                                position:'absolute',
+                                right:0,
+                                top:'-9px',
+                                fontSize:'10px',
+                                lineHeight:'10px',
+                                padding:'3px',
+                                textTransform:'uppercase'
+                            }}
+                            >Coming soon</span>
+                        </a>
+                    </li>
+                    <li className="nav-item">
                         <a href="/staking" className="nav-link">
+                            <Coin
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Staking
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="/dao" className="nav-link">
                             <Bank
                                 size={24}
                                 style={{
@@ -516,7 +555,7 @@ export default function ConnectWallet() {
                                     top: '-1px',
                                 }}
                             />{' '}
-                            Staking & DAO
+                            DAO
                         </a>
                     </li>
                 </nav>

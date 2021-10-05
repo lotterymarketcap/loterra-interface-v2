@@ -25,6 +25,7 @@
         "react": "^16.14.0",
         "react-chartjs-2": "^3.0.4",
         "react-content-loader": "^6.0.3",
+        "react-custom-scrollbars": "^4.2.1",
         "react-dom": "^16.14.0",
         "react-hot-loader": "^4.13.0",
         "react-hot-toast": "^2.1.0",
