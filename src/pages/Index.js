@@ -68,6 +68,7 @@ export default () => {
     const [tickets, setTickets] = useState(0)
     const [players, setPlayers] = useState(0)
     const [recentPlayers, setRecentPlayers] = useState(0)
+    const [payWith, setPayWith] = useState('ust');
     const [buyLoader, setBuyLoader] = useState(false)
     const [alteBonus, setAlteBonus] = useState(false)
     const [giftFriend, setGiftFriend] = useState({ active: false, wallet: '' })
@@ -285,9 +286,19 @@ export default () => {
                 combination: cart,
             },
         }
-        let coins_msg = {
-            uusd: state.config.price_per_ticket_to_register * cart.length,
+        //Check for paymethod (ust or alte)
+        let coins_msg;
+        if(payWith == 'ust'){
+            coins_msg = {
+                uusd: state.config.price_per_ticket_to_register * cart.length,
+            }
+        } else {
+            coins_msg = {
+                uusd: state.config.price_per_ticket_to_register * cart.length,
+            }
         }
+
+        //Check for alte bonus enabled
         if (alteBonus) {
             exec_msg.register.altered_bonus = true
             coins_msg = {
@@ -301,13 +312,51 @@ export default () => {
         if (giftFriend.active && giftFriend.wallet != '') {
             exec_msg.register.address = giftFriend.wallet
         }
+        let msg;
+        if(payWith == 'ust'){
+             msg = new MsgExecuteContract(
+                connectedWallet.walletAddress,
+                loterra_contract_address,
+                exec_msg,
+                coins_msg
+            )
+        } else {
+            //Altered of message
+            let alteMsg;
+            if(giftFriend.active && giftFriend.wallet != ''){
+                //Giftfriend enabled
+                alteMsg = {
+                    register_alte: {
+                        combination: cart,
+                        gift_address: giftFriend.wallet
+                    },
+                }
+            } else {
+                alteMsg = {
+                    register_alte: {
+                        combination: cart,
+                    },
+                }
+            }
 
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            loterra_contract_address,
-            exec_msg,
-            coins_msg
-        )
+            if(window !== 'undefined'){
+                alteMsg = window.btoa(alteMsg)
+            }
+
+            msg = new MsgExecuteContract(
+                connectedWallet.walletAddress,
+                loterra_contract_address,
+                {
+                    send: {
+                        contract: state.alteredContractAddress,
+                        amount: state.config.price_per_ticket_to_register * cart.length,
+                        msg: alteMsg,
+                    },
+                }
+            )
+        }
+
+        
 
         connectedWallet
             .post({
@@ -692,7 +741,11 @@ export default () => {
                             <div className="card-header">
                                 <h3>Book Your Tickets</h3>
                             </div>
-                            <div className="card-body">                                
+                            <div className="card-body">       
+                            <div className="btn-group w-100 mb-2">
+                                <button className={'btn btn-default' + (payWith == 'ust' ? ' active' : ' inactive')} onClick={() => setPayWith('ust')}>UST</button>
+                                <button className={'btn btn-default' + (payWith == 'alte' ? ' active' : ' inactive')} onClick={() => setPayWith('alte')}>ALTE</button>
+                            </div>                         
                                 <small>
                                     <span>HINT</span> Increase your odds!
                                     Average buying ticket is{' '}
@@ -735,7 +788,7 @@ export default () => {
                                             {numeral(
                                                 (amount * price) / 1000000
                                             ).format('0,0.00')}{' '}
-                                            UST
+                                            {payWith == 'ust' ? 'UST' : 'ALTE'}
                                         </strong>
                                     </p>
                                 ) : (
@@ -812,41 +865,45 @@ export default () => {
                                         Altered
                                     </a>
                                 </p>
-                                <label className="bonus-label">
-                                    <input
-                                        type="checkbox"
-                                        ref={bonusToggle}
-                                        checked={alteBonus}
-                                        className="switch"
-                                        name="alte_bonus"
-                                        onChange={(e, checked) =>
-                                            bonusCheckbox(e, checked)
-                                        }
-                                    />
-                                    <label
-                                        className="switch-label"
-                                        onClick={() =>
-                                            clickElement(bonusToggle)
-                                        }
-                                    ></label>
-                                    <Fire size={24} weight="fill" /> BURN
-                                    <span
-                                        style={{
-                                            color: '#d0e027',
-                                            fontFamily: 'Cosmos',
-                                            fontSize: '1.2em',
-                                            padding: '4px 8px',
-                                            background:
-                                                'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717',
-                                            borderRadius: '25px',
-                                        }}
-                                    >
-                                        ALTE
-                                    </span>
-                                    <span className="badge rounded-pill">
-                                        Bonus
-                                    </span>
-                                </label>
+                                { payWith == 'ust' &&
+
+<label className="bonus-label">
+<input
+    type="checkbox"
+    ref={bonusToggle}
+    checked={alteBonus}
+    className="switch"
+    name="alte_bonus"
+    onChange={(e, checked) =>
+        bonusCheckbox(e, checked)
+    }
+/>
+<label
+    className="switch-label"
+    onClick={() =>
+        clickElement(bonusToggle)
+    }
+></label>
+<Fire size={24} weight="fill" /> BURN
+<span
+    style={{
+        color: '#d0e027',
+        fontFamily: 'Cosmos',
+        fontSize: '1.2em',
+        padding: '4px 8px',
+        background:
+            'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717',
+        borderRadius: '25px',
+    }}
+>
+    ALTE
+</span>
+<span className="badge rounded-pill">
+    Bonus
+</span>
+</label>
+
+                                }
 
                                 <label className="gift-label">
                                     <input
