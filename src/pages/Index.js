@@ -69,6 +69,7 @@ export default () => {
     const [players, setPlayers] = useState(0)
     const [recentPlayers, setRecentPlayers] = useState(0)
     const [payWith, setPayWith] = useState('ust');
+    const [buyNow, setBuyNow] = useState(false);
     const [buyLoader, setBuyLoader] = useState(false)
     const [alteBonus, setAlteBonus] = useState(false)
     const [giftFriend, setGiftFriend] = useState({ active: false, wallet: '' })
@@ -608,7 +609,7 @@ export default () => {
                                     marginBottom:'-58px',
                                     maxWidth:'100%',
                                     position:'relative',
-                                    zIndex:'10',
+                                    zIndex:'1',
                                 }}
                                 />
                                 <p>Jackpot</p>
@@ -689,7 +690,16 @@ export default () => {
                          
                             </div>
                         </div>
-                       
+                        <div className="col-12 text-center mb-4">
+                            <button className={'btn btn-special'} onClick={() => setBuyNow(!buyNow)}>Buy Tickets</button>
+                            <small style={{
+                                display:'block',
+                                marginTop:'10px',
+                                fontSize:'12px',
+                                opacity:'0.6',
+                            }}                            
+                            >You can buy tickets with <strong>UST</strong> and <strong>ALTE</strong></small>
+                        </div>
                         <div className="col-12 col-md-8 mx-auto">
                             <div className="row">                                
                                 <div className="col-12 col-md-8 mx-auto">
@@ -727,6 +737,7 @@ export default () => {
                                 </div>
                             </div>
                         </div>
+                      
                     </div>              
                 </div>
 
@@ -736,12 +747,17 @@ export default () => {
             </div>
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-5 col-xl-4 mx-auto">
-                        <div className="card amount-block">
+                    <div className="col-12">
+                        <div className={"card amount-block" + (buyNow ? ' active' : '')}>
                             <div className="card-header">
                                 <h3>Book Your Tickets</h3>
                             </div>
                             <div className="card-body">       
+                            <p
+                            style={{
+                                marginBottom:0
+                            }}
+                            >Pay with:</p>
                             <div className="btn-group w-100 mb-2">
                                 <button className={'btn btn-default' + (payWith == 'ust' ? ' active' : ' inactive')} onClick={() => setPayWith('ust')}>UST</button>
                                 <button className={'btn btn-default' + (payWith == 'alte' ? ' active' : ' inactive')} onClick={() => setPayWith('alte')}>ALTE</button>
@@ -781,7 +797,7 @@ export default () => {
                                     </button>
                                 </div>
                                 {/* <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p> */}
-                                {!alteBonus ? (
+                                {!alteBonus || payWith == 'alte' ? (
                                     <p className="mb-2">
                                         Total:{' '}
                                         <strong>
@@ -943,30 +959,7 @@ export default () => {
                                     </>
                                 )}
                                 <div className="text-sm">{result}</div>
-                                <TicketModal
-                                    open={ticketModal}
-                                    amount={amount}
-                                    updateCombos={(new_code, index) =>
-                                        updateCombos(new_code, index)
-                                    }
-                                    buyTickets={() => execute()}
-                                    toggleModal={() =>
-                                        setTicketModal(!ticketModal)
-                                    }
-                                    multiplier={(mul) => multiplier(mul)}
-                                />
-                                <AllowanceModal
-                                    open={allowanceModal}
-                                    prefill={
-                                        amount * state.config.price_per_ticket_to_register  / state.config.bonus_burn_rate / 1000000
-                                    }
-                                    toggleModal={() =>
-                                        setAllowanceModal(!allowanceModal)
-                                    }
-                                    showNotification={(message, type, dur) =>
-                                        showNotification(message, type, dur)
-                                    }
-                                />
+                                
                                 <button
                                     onClick={() => setTicketModal(!ticketModal)}
                                     className="btn btn-default w-100 mb-3 mt-3"
@@ -1011,7 +1004,8 @@ export default () => {
                                 </button>
                             </div>
                         </div>
-                        <SocialShare />
+                        <div className={'backdrop' + (buyNow ? ' show' : '')} onClick={() => setBuyNow(!buyNow)}></div>
+                        {/* <SocialShare /> */}
                     </div>
                 </div>
             </div>
@@ -1020,8 +1014,7 @@ export default () => {
                 className="how"
                 style={{
                     background:
-                        'radial-gradient(rgb(42 216 132 / 34%), transparent)',
-                    marginTop: '50px',
+                        'radial-gradient(rgb(42 216 132 / 34%), transparent)',              
                     padding: '95px 0',
                 }}
             >
@@ -1167,6 +1160,31 @@ export default () => {
             <Notification
                 notification={notification}
                 close={() => hideNotification()}
+            />
+
+            <TicketModal
+                open={ticketModal}
+                amount={amount}
+                updateCombos={(new_code, index) =>
+                    updateCombos(new_code, index)
+                }
+                buyTickets={() => execute()}
+                toggleModal={() =>
+                    setTicketModal(!ticketModal)
+                }
+                multiplier={(mul) => multiplier(mul)}
+            />
+            <AllowanceModal
+                open={allowanceModal}
+                prefill={
+                    amount * state.config.price_per_ticket_to_register  / state.config.bonus_burn_rate / 1000000
+                }
+                toggleModal={() =>
+                    setAllowanceModal(!allowanceModal)
+                }
+                showNotification={(message, type, dur) =>
+                    showNotification(message, type, dur)
+                }
             />
         </>
     )

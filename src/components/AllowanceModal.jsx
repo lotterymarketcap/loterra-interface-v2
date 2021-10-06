@@ -111,6 +111,7 @@ export default function AllowanceModal(props) {
             </div>
             <div
                 className={'backdrop' + (open ? ' show' : '')}
+                style={{zIndex:3}}
                 onClick={() => toggleModal()}
             ></div>
         </>
