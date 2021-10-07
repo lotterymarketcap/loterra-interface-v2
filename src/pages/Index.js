@@ -9,6 +9,7 @@ import numeral from 'numeral'
 import {
     Users,
     Ticket,
+    X,
     Coin,
     Trophy,
     UserFocus,
@@ -751,6 +752,9 @@ export default () => {
                         <div className={"card amount-block" + (buyNow ? ' active' : '')}>
                             <div className="card-header">
                                 <h3>Book Your Tickets</h3>
+                                <button className="toggle" onClick={() => setBuyNow(!buyNow)}>
+                    <X size={36} />
+               </button>
                             </div>
                             <div className="card-body">       
                             <p
@@ -759,8 +763,8 @@ export default () => {
                             }}
                             >Pay with:</p>
                             <div className="btn-group w-100 mb-2">
-                                <button className={'btn btn-default' + (payWith == 'ust' ? ' active' : ' inactive')} onClick={() => setPayWith('ust')}>UST</button>
-                                <button className={'btn btn-default' + (payWith == 'alte' ? ' active' : ' inactive')} onClick={() => setPayWith('alte')}>ALTE</button>
+                                <button className={'btn btn-default' + (payWith == 'ust' ? ' active' : ' inactive')} onClick={() => setPayWith('ust')}><img src={'/UST.svg'} className="me-2" width="20px" />UST</button>
+                                <button className={'btn btn-default' + (payWith == 'alte' ? ' active' : ' inactive')} onClick={() => setPayWith('alte')}><img src={'/ALTE.png'} className="me-2" width="20px" />ALTE</button>
                             </div>                         
                                 <small>
                                     <span>HINT</span> Increase your odds!

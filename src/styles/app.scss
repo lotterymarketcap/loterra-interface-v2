@@ -57,7 +57,7 @@ body {
     position: fixed;
     width: 100%;
     max-width: 100%;
-    z-index: 999;
+    z-index: 10;
     transition: background 150ms linear;
     .navbar-brand {
         span {
@@ -96,6 +96,7 @@ body {
     }
     @media (max-width: 501px) {
         height: 870px;
+        padding: 77px 0;
     }
     &.staking {
         height: 1360px;
@@ -121,9 +122,11 @@ body {
             0 0 120px #f038f0, 0 0 200px #f038f0;
         }
         @media (max-width: 990px) {
+            padding: 105px 0;
             height: 1305px;
         }
         @media (max-width: 510px) {
+            padding: 105px 0;
             height: 1350px;
             h1 {
                 font-size: 43px;
@@ -691,6 +694,24 @@ body {
     top: 50%;
     left:50%;
     transform: translate(-50%, -50%);
+    .toggle {
+        background: transparent;
+        border: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 5px;
+        z-index: 3;
+        svg {
+            opacity: 0.5;
+            color: #fff;
+        }
+        &:hover {
+            svg {
+                opacity: 1;
+            }
+        }
+    }
     @media(max-width:660px){
         width:100%;
     }
