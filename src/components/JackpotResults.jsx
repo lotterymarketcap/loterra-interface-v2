@@ -12,7 +12,6 @@ import {
 import { Trophy, ArrowCircleLeft, ArrowCircleRight } from 'phosphor-react'
 import PriceLoader from './PriceLoader'
 import WinnerRow from './WinnerRow'
-
 const loterra_contract_address = 'terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w'
 
 export default function JackpotResults() {
@@ -233,6 +232,7 @@ export default function JackpotResults() {
                     </div>
                     <h4 className="mt-4">Rewards</h4>
                     <div className="table-responsive">
+                    
                         <table className="table text-white mb-3">
                             <thead>
                                 <tr>
@@ -408,7 +408,7 @@ export default function JackpotResults() {
                         </table>
                     </div>
                     <h4 className="mt-4">Winners</h4>
-                    <div className="table-responsive">
+                    <div className="table-responsive" style={{height:'500px'}}>
                         <table className="table text-white winners-table">
                             <thead>
                                 <tr>

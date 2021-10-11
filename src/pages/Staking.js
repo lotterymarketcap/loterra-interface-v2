@@ -173,12 +173,12 @@ export default () => {
                 <div className="container h-100 d-md-flex">
                     <div className="row align-self-center">
                         <div className="col-md-12 col-lg-8 mx-auto order-1 order-lg-2 p-lg-5">
-                            <img
+                            {/* <img
                                 src="/van.png"
                                 className="van img-fluid mx-auto d-block"
                                 style={{ marginBottom: '40px' }}
                             />
-                            <h1>Staking</h1>
+                            <h1>Staking</h1> */}
                             <StakingForm
                                 showNotification={(message, type, dur) =>
                                     showNotification(message, type, dur)
@@ -393,38 +393,7 @@ export default () => {
                 </div>
             </div>
         </section> */}
-            <section className="proposals my-5">
-                <div className="container">
-                    <div className="card lota-card proposals">
-                        <div className="row">
-                            <div className="col-md-6">
-                                <h3>Proposals</h3>
-                            </div>
-                            <div className="col-md-6 text-end">
-                                {/*<button className="btn btn-plain p-3" onClick={() => setModal(!modal)}>Create proposal <Plus size={24} /></button>*/}
-                            </div>
-                        </div>
-
-                        <div className="card-body">
-                            {state.allProposals &&
-                                state.allProposals
-                                    .slice(0)
-                                    .reverse()
-                                    .sort((a,b) => (a.status == 'InProgress') ? -1 : 1)
-                                    .map((element, key) => {
-                                        return (
-                                            <ProposalItem
-                                                fees={obj}
-                                                data={element}
-                                                i={key}
-                                                key={key}
-                                            />
-                                        )
-                                    })}
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
             <Footer />
             <ProposalModal open={modal} toggleModal={() => setModal(!modal)} />
             <Notification

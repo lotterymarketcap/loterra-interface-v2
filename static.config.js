@@ -25,8 +25,8 @@ export default {
             template: 'src/pages/Staking',
         },
         {
-            path: 'terrand-oracle',
-            template: 'src/pages/Terrand',
+            path: 'dao',
+            template: 'src/pages/DAO',
         },
         // A 404 component
         {
