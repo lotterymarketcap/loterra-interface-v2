@@ -31,6 +31,7 @@ import {
     LCDClient,
     WasmAPI,
     BankAPI,
+    Denom
 } from '@terra-money/terra.js'
 import Countdown from '../components/Countdown'
 import TicketModal from '../components/TicketModal'
@@ -311,9 +312,11 @@ export default () => {
         connectedWallet
             .post({
                 msgs: [msg],
-                fee: obj,
+                // fee: obj,
                 // gasPrices: obj.gasPrices(),
-                // gasAdjustment: 1.5,
+                gasPrices: obj.gasPrices(),
+                gasAdjustment: 1.5,
+
             })
             .then((e) => {
                 if (e.success) {
