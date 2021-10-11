@@ -277,9 +277,9 @@ export default () => {
             return
         }
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
-        const addToGas = 5450 * cart.length
+        const addToGas = 4450 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        const obj = new StdFee(2_000_000, { uusd: 913000 + addToGas })
+        const obj = new StdFee(200_000, { uusd: 65282 + addToGas})
         let exec_msg = {
             register: {
                 combination: cart,
@@ -315,7 +315,7 @@ export default () => {
                 // fee: obj,
                 // gasPrices: obj.gasPrices(),
                 gasPrices: obj.gasPrices(),
-                gasAdjustment: 1.5,
+                gasAdjustment: 1.7,
 
             })
             .then((e) => {
