@@ -19,6 +19,7 @@ import {
     MinusCircle,
     PencilLine,
     Fire,
+    Files,
     Gift,
     UsersThree,
     ArrowDown,
@@ -1058,6 +1059,10 @@ export default () => {
                                     Prizes automatically deposited into wallet
                                 </p>
                             </div>
+                        </div>
+                        <div className="col-12 text-center">
+                            <h5 className="mt-4 mb-1">Learn more?</h5>
+                            <a className="btn btn-plain" href="https://docs.loterra.io/products/lottery" style={{color:'rgb(166, 159, 187)', fontSize:'16px'}} target="_blank"><Files size={21} style={{position:'relative',top:'-2px'}} /> Loterra lottery documentation</a>
                         </div>
                     </div>
                 </div>
