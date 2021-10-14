@@ -597,11 +597,15 @@ export default () => {
 
     return (
         <>
+        {/* <img src={'/confetti.webp'} style={{
+            position:'absolute',
+            maxWidth:'100%'
+            }}/> */}
             <div
                 className="hero"
                 style={{
                     backgroundImage: 'url(rays.svg)',
-                    backgroundPosition: 'center',
+                    backgroundPosition: 'center center',
                 }}
             >
                 <div className="container-fluid container-md">
