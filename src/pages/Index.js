@@ -688,13 +688,7 @@ export default () => {
                                             <div className="col-lg-8 mx-auto">
                                                 <Countdown expiryTimestamp={expiryTimestamp} />
                                             </div>
-                                        </div>
-                                </div>                                
-                            </div>
-                         
-                            </div>
-                        </div>
-                        <div className="col-12 text-center mb-4">
+                                            <div className="col-12 text-center mt-4 mb-4">
                             <button className={'btn btn-special'} onClick={() => setBuyNow(!buyNow)}>Buy Tickets</button>
                             <small style={{
                                 display:'block',
@@ -704,6 +698,13 @@ export default () => {
                             }}                            
                             >You can buy tickets with <strong>UST</strong> and <strong>ALTE</strong></small>
                         </div>
+                                        </div>
+                                </div>                                
+                            </div>
+                         
+                            </div>
+                        </div>
+                        
                         <div className="col-12 col-md-8 mx-auto">
                             <div className="row">                                
                                 <div className="col-12 col-md-8 mx-auto">
