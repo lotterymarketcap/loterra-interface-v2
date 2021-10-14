@@ -280,7 +280,7 @@ export default () => {
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5000 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        const obj = new StdFee(200_000, { uusd: 65282 + addToGas})
+        const obj = new StdFee(200_000, { uusd: 340000 + addToGas})
         let exec_msg = {
             register: {
                 combination: cart,
