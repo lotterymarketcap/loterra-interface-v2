@@ -9,6 +9,7 @@ import numeral from 'numeral'
 import {
     Users,
     Ticket,
+    X,
     Coin,
     Trophy,
     UserFocus,
@@ -18,6 +19,7 @@ import {
     MinusCircle,
     PencilLine,
     Fire,
+    Files,
     Gift,
     UsersThree,
     ArrowDown,
@@ -66,9 +68,12 @@ const BURNED_LOTA = 4301383550000
 
 export default () => {
     const [jackpot, setJackpot] = useState(0)
+    const [jackpotAltered, setAlteredJackpot] = useState(0)
     const [tickets, setTickets] = useState(0)
     const [players, setPlayers] = useState(0)
     const [recentPlayers, setRecentPlayers] = useState(0)
+    const [payWith, setPayWith] = useState('ust');
+    const [buyNow, setBuyNow] = useState(false);
     const [buyLoader, setBuyLoader] = useState(false)
     const [alteBonus, setAlteBonus] = useState(false)
     const [giftFriend, setGiftFriend] = useState({ active: false, wallet: '' })
@@ -115,6 +120,18 @@ export default () => {
 
             setContractBalance(ustBalance.amount / 1000000)
             setJackpot(parseInt(contractJackpotInfo) / 1000000)
+
+            const jackpotAltered = await api.contractQuery(
+                state.alteredContractAddress,
+                {
+                    balance: {
+                        address: state.loterraContractAddress,
+                    },
+                }
+            )
+
+            const alteredJackpot = (jackpotAltered.balance * jackpotAlocation) / 100;
+            setAlteredJackpot(parseInt(alteredJackpot) / 1000000);
 
             const jackpotInfo = await api.contractQuery(
                 loterra_contract_address,
@@ -211,6 +228,8 @@ export default () => {
                 },
             })
             dispatch({ type: 'setAllPlayers', message: players })
+
+
         } catch (e) {
             console.log(e)
         }
@@ -286,9 +305,19 @@ export default () => {
                 combination: cart,
             },
         }
-        let coins_msg = {
-            uusd: state.config.price_per_ticket_to_register * cart.length,
+        //Check for paymethod (ust or alte)
+        let coins_msg;
+        if(payWith == 'ust'){
+            coins_msg = {
+                uusd: state.config.price_per_ticket_to_register * cart.length,
+            }
+        } else {
+            coins_msg = {
+                uusd: state.config.price_per_ticket_to_register * cart.length,
+            }
         }
+
+        //Check for alte bonus enabled
         if (alteBonus) {
             exec_msg.register.altered_bonus = true
             coins_msg = {
@@ -302,13 +331,48 @@ export default () => {
         if (giftFriend.active && giftFriend.wallet != '') {
             exec_msg.register.address = giftFriend.wallet
         }
+        let msg;
+        if(payWith == 'ust'){
+             msg = new MsgExecuteContract(
+                connectedWallet.walletAddress,
+                loterra_contract_address,
+                exec_msg,
+                coins_msg
+            )
+        } else {
+            //Altered of message
+            let alteMsg;
+            if(giftFriend.active && giftFriend.wallet != ''){
+                //Giftfriend enabled
+                alteMsg = {
+                    register_alte: {
+                        combination: cart,
+                        gift_address: giftFriend.wallet
+                    },
+                }
+            } else {
+                alteMsg = {
+                    register_alte: {
+                        combination: cart,
+                    }
+                }
+            }
 
-        const msg = new MsgExecuteContract(
-            connectedWallet.walletAddress,
-            loterra_contract_address,
-            exec_msg,
-            coins_msg
-        )
+
+            msg = new MsgExecuteContract(
+                connectedWallet.walletAddress,
+                state.alteredContractAddress,
+                {
+                    send: {
+                        contract: loterra_contract_address,
+                        amount: String(state.config.price_per_ticket_to_register * cart.length),
+                        msg: Buffer.from(JSON.stringify(alteMsg)).toString('base64'),
+                    },
+                }
+            )
+        }
+
+        
 
         connectedWallet
             .post({
@@ -545,11 +609,15 @@ export default () => {
 
     return (
         <>
+        {/* <img src={'/confetti.webp'} style={{
+            position:'absolute',
+            maxWidth:'100%'
+            }}/> */}
             <div
                 className="hero"
                 style={{
                     backgroundImage: 'url(rays.svg)',
-                    backgroundPosition: 'center',
+                    backgroundPosition: 'center center',
                 }}
             >
                 <div className="container-fluid container-md">
@@ -562,10 +630,10 @@ export default () => {
                                     marginBottom:'-58px',
                                     maxWidth:'100%',
                                     position:'relative',
-                                    zIndex:'10',
+                                    zIndex:'1',
                                 }}
                                 />
-                                <p>Jackpot</p>
+                                <p>Mixed Jackpot</p>
                                 <h2>
                                     {numeral(jackpot)
                                         .format('0,0.00')
@@ -579,6 +647,21 @@ export default () => {
                                         })}
                                     <div className="roller">
                                         <span>UST</span>
+                                    </div>
+                                </h2>
+                                <h2>
+                                    {numeral(jackpotAltered)
+                                        .format('0,0.00')
+                                        .split('')
+                                        .map((obj) => {
+                                            return (
+                                                <div className="roller">
+                                                    {obj}
+                                                </div>
+                                            )
+                                        })}
+                                    <div className="roller">
+                                        <span>ALTE</span>
                                     </div>
                                 </h2>
                                 <h3>Draws every 3 days</h3>                                
@@ -637,13 +720,23 @@ export default () => {
                                             <div className="col-lg-8 mx-auto">
                                                 <Countdown expiryTimestamp={expiryTimestamp} />
                                             </div>
+                                            <div className="col-12 text-center mt-4 mb-4">
+                            <button className={'btn btn-special'} onClick={() => setBuyNow(!buyNow)}>Buy Tickets</button>
+                            <small style={{
+                                display:'block',
+                                marginTop:'10px',
+                                fontSize:'12px',
+                                opacity:'0.6',
+                            }}                            
+                            >You can buy tickets with <strong>UST</strong> and <strong>ALTE</strong></small>
+                        </div>
                                         </div>
                                 </div>                                
                             </div>
                          
                             </div>
                         </div>
-                       
+                        
                         <div className="col-12 col-md-8 mx-auto">
                             <div className="row">                                
                                 <div className="col-12 col-md-8 mx-auto">
@@ -681,6 +774,7 @@ export default () => {
                                 </div>
                             </div>
                         </div>
+                      
                     </div>              
                 </div>
 
@@ -690,12 +784,24 @@ export default () => {
             </div>
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-5 col-xl-4 mx-auto">
-                        <div className="card amount-block">
+                    <div className="col-12">
+                        <div className={"card amount-block" + (buyNow ? ' active' : '')}>
                             <div className="card-header">
                                 <h3>Book Your Tickets</h3>
+                                <button className="toggle" onClick={() => setBuyNow(!buyNow)}>
+                    <X size={36} />
+               </button>
                             </div>
-                            <div className="card-body">                                
+                            <div className="card-body">       
+                            <p
+                            style={{
+                                marginBottom:0
+                            }}
+                            >Pay with:</p>
+                            <div className="btn-group w-100 mb-2">
+                                <button className={'btn btn-default' + (payWith == 'ust' ? ' active' : ' inactive')} onClick={() => setPayWith('ust')}><img src={'/UST.svg'} className="me-2" width="20px" />UST</button>
+                                <button className={'btn btn-default' + (payWith == 'alte' ? ' active' : ' inactive')} onClick={() => setPayWith('alte')}><img src={'/ALTE.png'} className="me-2" width="20px" />ALTE</button>
+                            </div>                         
                                 <small>
                                     <span>HINT</span> Increase your odds!
                                     Average buying ticket is{' '}
@@ -731,14 +837,14 @@ export default () => {
                                     </button>
                                 </div>
                                 {/* <p className="mb-2">Total: <strong>{numeral((amount * price) / 1000000).format("0,0.00")} UST</strong></p> */}
-                                {!alteBonus ? (
+                                {!alteBonus || payWith == 'alte' ? (
                                     <p className="mb-2">
                                         Total:{' '}
                                         <strong>
                                             {numeral(
                                                 (amount * price) / 1000000
                                             ).format('0,0.00')}{' '}
-                                            UST
+                                            {payWith == 'ust' ? 'UST' : 'ALTE'}
                                         </strong>
                                     </p>
                                 ) : (
@@ -815,41 +921,45 @@ export default () => {
                                         Altered
                                     </a>
                                 </p>
-                                <label className="bonus-label">
-                                    <input
-                                        type="checkbox"
-                                        ref={bonusToggle}
-                                        checked={alteBonus}
-                                        className="switch"
-                                        name="alte_bonus"
-                                        onChange={(e, checked) =>
-                                            bonusCheckbox(e, checked)
-                                        }
-                                    />
-                                    <label
-                                        className="switch-label"
-                                        onClick={() =>
-                                            clickElement(bonusToggle)
-                                        }
-                                    ></label>
-                                    <Fire size={24} weight="fill" /> BURN
-                                    <span
-                                        style={{
-                                            color: '#d0e027',
-                                            fontFamily: 'Cosmos',
-                                            fontSize: '1.2em',
-                                            padding: '4px 8px',
-                                            background:
-                                                'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717',
-                                            borderRadius: '25px',
-                                        }}
-                                    >
-                                        ALTE
-                                    </span>
-                                    <span className="badge rounded-pill">
-                                        Bonus
-                                    </span>
-                                </label>
+                                { payWith == 'ust' &&
+
+<label className="bonus-label">
+<input
+    type="checkbox"
+    ref={bonusToggle}
+    checked={alteBonus}
+    className="switch"
+    name="alte_bonus"
+    onChange={(e, checked) =>
+        bonusCheckbox(e, checked)
+    }
+/>
+<label
+    className="switch-label"
+    onClick={() =>
+        clickElement(bonusToggle)
+    }
+></label>
+<Fire size={24} weight="fill" /> BURN
+<span
+    style={{
+        color: '#d0e027',
+        fontFamily: 'Cosmos',
+        fontSize: '1.2em',
+        padding: '4px 8px',
+        background:
+            'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717',
+        borderRadius: '25px',
+    }}
+>
+    ALTE
+</span>
+<span className="badge rounded-pill">
+    Bonus
+</span>
+</label>
+
+                                }
 
                                 <label className="gift-label">
                                     <input
@@ -889,30 +999,7 @@ export default () => {
                                     </>
                                 )}
                                 <div className="text-sm">{result}</div>
-                                <TicketModal
-                                    open={ticketModal}
-                                    amount={amount}
-                                    updateCombos={(new_code, index) =>
-                                        updateCombos(new_code, index)
-                                    }
-                                    buyTickets={() => execute()}
-                                    toggleModal={() =>
-                                        setTicketModal(!ticketModal)
-                                    }
-                                    multiplier={(mul) => multiplier(mul)}
-                                />
-                                <AllowanceModal
-                                    open={allowanceModal}
-                                    prefill={
-                                        amount * state.config.price_per_ticket_to_register  / state.config.bonus_burn_rate / 1000000
-                                    }
-                                    toggleModal={() =>
-                                        setAllowanceModal(!allowanceModal)
-                                    }
-                                    showNotification={(message, type, dur) =>
-                                        showNotification(message, type, dur)
-                                    }
-                                />
+                                
                                 <button
                                     onClick={() => setTicketModal(!ticketModal)}
                                     className="btn btn-default w-100 mb-3 mt-3"
@@ -957,7 +1044,8 @@ export default () => {
                                 </button>
                             </div>
                         </div>
-                        <SocialShare />
+                        <div className={'backdrop' + (buyNow ? ' show' : '')} onClick={() => setBuyNow(!buyNow)}></div>
+                        {/* <SocialShare /> */}
                     </div>
                 </div>
             </div>
@@ -966,8 +1054,7 @@ export default () => {
                 className="how"
                 style={{
                     background:
-                        'radial-gradient(rgb(42 216 132 / 34%), transparent)',
-                    marginTop: '50px',
+                        'radial-gradient(rgb(42 216 132 / 34%), transparent)',              
                     padding: '95px 0',
                 }}
             >
@@ -1003,6 +1090,10 @@ export default () => {
                                     Prizes automatically deposited into wallet
                                 </p>
                             </div>
+                        </div>
+                        <div className="col-12 text-center">
+                            <h5 className="mt-4 mb-1">Learn more?</h5>
+                            <a className="btn btn-plain" href="https://docs.loterra.io/products/lottery" style={{color:'rgb(166, 159, 187)', fontSize:'16px'}} target="_blank"><Files size={21} style={{position:'relative',top:'-2px'}} /> LoTerra lottery documentation</a>
                         </div>
                     </div>
                 </div>
@@ -1113,6 +1204,31 @@ export default () => {
             <Notification
                 notification={notification}
                 close={() => hideNotification()}
+            />
+
+            <TicketModal
+                open={ticketModal}
+                amount={amount}
+                updateCombos={(new_code, index) =>
+                    updateCombos(new_code, index)
+                }
+                buyTickets={() => execute()}
+                toggleModal={() =>
+                    setTicketModal(!ticketModal)
+                }
+                multiplier={(mul) => multiplier(mul)}
+            />
+            <AllowanceModal
+                open={allowanceModal}
+                prefill={
+                    amount * state.config.price_per_ticket_to_register  / state.config.bonus_burn_rate / 1000000
+                }
+                toggleModal={() =>
+                    setAllowanceModal(!allowanceModal)
+                }
+                showNotification={(message, type, dur) =>
+                    showNotification(message, type, dur)
+                }
             />
         </>
     )

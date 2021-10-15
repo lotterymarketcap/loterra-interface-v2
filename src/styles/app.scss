@@ -32,6 +32,10 @@ body {
     }
 }
 
+h4,.h4 {
+    font-weight: 700;
+}
+
 .form-control {
     background: #10003b;
     border: 1px solid #44377e;
@@ -57,7 +61,7 @@ body {
     position: fixed;
     width: 100%;
     max-width: 100%;
-    z-index: 999;
+    z-index: 10;
     transition: background 150ms linear;
     .navbar-brand {
         span {
@@ -88,14 +92,15 @@ body {
     padding: 105px 0;
     height: 935px;
     max-width: 100%;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
     position: relative;
     @media (max-width: 768px) {
         height: 975px;
     }
     @media (max-width: 501px) {
         height: 870px;
+        padding: 77px 0;
     }
     &.staking {
         height: 1360px;
@@ -121,9 +126,11 @@ body {
             0 0 120px #f038f0, 0 0 200px #f038f0;
         }
         @media (max-width: 990px) {
+            padding: 105px 0;
             height: 1305px;
         }
         @media (max-width: 510px) {
+            padding: 105px 0;
             height: 1350px;
             h1 {
                 font-size: 43px;
@@ -675,13 +682,43 @@ body {
 }
 
 .amount-block {
-    margin-top: -30px;
     background: linear-gradient(95.45deg, #3b2e73 -92.2%, #10003b 105.35%);
     box-sizing: border-box;
     box-shadow: 0px -10px 22px #501b7b;
     border-radius: 10px;
-    margin-bottom: 50px;
     border: 1px solid #7f1e9c7a;
+    visibility: hidden;
+    opacity:0;
+    margin-left: auto;
+    margin-right: auto;
+    position:absolute;
+    transition:all 200ms linear;
+    z-index:15;
+    width:400px;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    .toggle {
+        background: transparent;
+        border: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 5px;
+        z-index: 3;
+        svg {
+            opacity: 0.5;
+            color: #fff;
+        }
+        &:hover {
+            svg {
+                opacity: 1;
+            }
+        }
+    }
+    @media(max-width:660px){
+        width:100%;
+    }
     .card-header {
         padding: 1rem 1rem;
         margin-bottom: 0;
@@ -711,6 +748,11 @@ body {
             border-radius: 10px;
             margin-right: 3px;
         }
+    }
+    &.active {
+        visibility: visible;
+        opacity: 1;
+ 
     }
 }
 

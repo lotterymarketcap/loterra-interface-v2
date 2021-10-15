@@ -163,6 +163,19 @@ export default function ConnectWallet() {
             message: contractLPAlteredBalance.balance,
         })
 
+        const jackpotAltered = await api.contractQuery(
+            state.alteredContractAddress,
+            {
+                balance: {
+                    address: state.loterraContractAddress,
+                },
+            }
+        )
+        dispatch({
+            type: 'setAlteredJackpot',
+            message: jackpotAltered.balance,
+        })
+
         //console.log('config',contractConfigInfo)
 
         if (window.location.href.indexOf('dao') > -1) {
@@ -284,7 +297,7 @@ export default function ConnectWallet() {
                         config: {},
                     }
                 )
-
+                setConnected(true)
                 const lastDrawnJackpot = await api.contractQuery(
                     state.loterraContractAddress,
                     {
@@ -409,7 +422,7 @@ export default function ConnectWallet() {
             let ust = parseInt(uusd) / 1000000
             setBank(numeral(ust).format('0,0.00'))
             // connectTo("extension")
-            setConnected(true)
+        
         } else {
             setBank(null)
             dispatch({ type: 'setWallet', message: {} })
@@ -449,7 +462,14 @@ export default function ConnectWallet() {
                     color="#0F0038"
                     style={{ display: 'inline-block', marginTop: '-3px' }}
                 />{' '}
-                {bank} <span className="text-sm">UST</span>
+                {bank ? 
+                bank 
+                :
+                <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div> 
+                } 
+<span className="text-sm">UST</span>
             </>
         )
     }
@@ -671,7 +691,7 @@ export default function ConnectWallet() {
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                {connected ? returnBank() : ''}
+                                {returnBank() ? returnBank() : 'loading'}
                             </button>
                             <ul
                                 className="dropdown-menu dropdown-menu-end"
