@@ -163,6 +163,19 @@ export default function ConnectWallet() {
             message: contractLPAlteredBalance.balance,
         })
 
+        const jackpotAltered = await api.contractQuery(
+            state.alteredContractAddress,
+            {
+                balance: {
+                    address: state.loterraContractAddress,
+                },
+            }
+        )
+        dispatch({
+            type: 'setAlteredJackpot',
+            message: jackpotAltered.balance,
+        })
+
         //console.log('config',contractConfigInfo)
 
         if (window.location.href.indexOf('dao') > -1) {

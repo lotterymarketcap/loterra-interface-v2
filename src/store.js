@@ -153,10 +153,16 @@ const initialState = {
     comboTextOne: comboTextOne,
     rankClasses: rankClasses,
     amountClasses: amountClasses,
+    jackpotAltered: 0,
 }
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case 'setAlteredJackpot':
+            return {
+                ...state,
+                jackpotAltered: action.message,
+            }
         case 'setStakingLoterraFunds':
             return {
                 ...state,

@@ -68,6 +68,7 @@ const BURNED_LOTA = 4301383550000
 
 export default () => {
     const [jackpot, setJackpot] = useState(0)
+    const [jackpotAltered, setAlteredJackpot] = useState(0)
     const [tickets, setTickets] = useState(0)
     const [players, setPlayers] = useState(0)
     const [recentPlayers, setRecentPlayers] = useState(0)
@@ -119,6 +120,18 @@ export default () => {
 
             setContractBalance(ustBalance.amount / 1000000)
             setJackpot(parseInt(contractJackpotInfo) / 1000000)
+
+            const jackpotAltered = await api.contractQuery(
+                state.alteredContractAddress,
+                {
+                    balance: {
+                        address: state.loterraContractAddress,
+                    },
+                }
+            )
+
+            const alteredJackpot = (jackpotAltered.balance * jackpotAlocation) / 100;
+            setAlteredJackpot(parseInt(alteredJackpot) / 1000000);
 
             const jackpotInfo = await api.contractQuery(
                 loterra_contract_address,
@@ -215,6 +228,8 @@ export default () => {
                 },
             })
             dispatch({ type: 'setAllPlayers', message: players })
+
+
         } catch (e) {
             console.log(e)
         }
@@ -618,7 +633,7 @@ export default () => {
                                     zIndex:'1',
                                 }}
                                 />
-                                <p>Jackpot</p>
+                                <p>Mixed Jackpot</p>
                                 <h2>
                                     {numeral(jackpot)
                                         .format('0,0.00')
@@ -632,6 +647,21 @@ export default () => {
                                         })}
                                     <div className="roller">
                                         <span>UST</span>
+                                    </div>
+                                </h2>
+                                <h2>
+                                    {numeral(jackpotAltered)
+                                        .format('0,0.00')
+                                        .split('')
+                                        .map((obj) => {
+                                            return (
+                                                <div className="roller">
+                                                    {obj}
+                                                </div>
+                                            )
+                                        })}
+                                    <div className="roller">
+                                        <span>ALTE</span>
                                     </div>
                                 </h2>
                                 <h3>Draws every 3 days</h3>                                
