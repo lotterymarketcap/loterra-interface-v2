@@ -339,22 +339,19 @@ export default () => {
                 alteMsg = {
                     register_alte: {
                         combination: cart,
-                    },
+                    }
                 }
             }
 
-            if(window !== 'undefined'){
-                alteMsg = window.btoa(alteMsg)
-            }
 
             msg = new MsgExecuteContract(
                 connectedWallet.walletAddress,
-                loterra_contract_address,
+                state.alteredContractAddress,
                 {
                     send: {
-                        contract: state.alteredContractAddress,
-                        amount: state.config.price_per_ticket_to_register * cart.length,
-                        msg: alteMsg,
+                        contract: loterra_contract_address,
+                        amount: String(state.config.price_per_ticket_to_register * cart.length),
+                        msg: Buffer.from(JSON.stringify(alteMsg)).toString('base64'),
                     },
                 }
             )
