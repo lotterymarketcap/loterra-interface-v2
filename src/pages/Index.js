@@ -7,14 +7,12 @@ import React, {
 } from 'react'
 import numeral from 'numeral'
 import {
-    Users,
     Ticket,
     X,
-    Coin,
     Trophy,
     UserFocus,
-    UserCircle,
     ChartPie,
+    ChartLine,
     PlusCircle,
     MinusCircle,
     PencilLine,
@@ -22,7 +20,6 @@ import {
     Files,
     Gift,
     UsersThree,
-    ArrowDown,
     MonitorPlay,
     Info,
 } from 'phosphor-react'
@@ -394,6 +391,7 @@ export default () => {
                     multiplier(amount)
                     setAlteBonus(false)
                     setBuyLoader(false)
+                   
                 } else {
                     //setResult("register combination error")
                     showNotification(
@@ -616,7 +614,7 @@ export default () => {
             <div
                 className="hero"
                 style={{
-                    backgroundImage: 'url(rays.svg)',
+                    backgroundImage: 'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(rays.svg)',
                     backgroundPosition: 'center center',
                 }}
             >
@@ -634,6 +632,7 @@ export default () => {
                                 }}
                                 />
                                 <p>Mixed Jackpot</p>
+                                <h3>Draws every 3 days</h3>  
                                 <h2>
                                     {numeral(jackpot)
                                         .format('0,0.00')
@@ -649,7 +648,10 @@ export default () => {
                                         <span>UST</span>
                                     </div>
                                 </h2>
-                                <h2>
+                                <div className="combine-jackpot">
+                                    <PlusCircle size={28} weight="fill" />
+                                </div>
+                                <h2 className="alte-jackpot">
                                     {numeral(jackpotAltered)
                                         .format('0,0.00')
                                         .split('')
@@ -664,7 +666,7 @@ export default () => {
                                         <span>ALTE</span>
                                     </div>
                                 </h2>
-                                <h3>Draws every 3 days</h3>                                
+                                                            
                             </div>
                             <div className="row">
                             <div className="col-md-8 mx-auto">
@@ -674,13 +676,13 @@ export default () => {
                                     <div className="card stats-card">
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-12 col-md-4 text-center svg-rotate">
+                                                <div className="col-4 text-center svg-rotate">
                                                     <UserFocus
                                                         size={36}                                                        
                                                     />
                                                 </div>
-                                                <div className="col-12 col-md-8 text-center text-md-start">
-                                                    <h3>
+                                                <div className="col-8 text-center d-flex text-md-start">
+                                                    <h3 className="align-self-center">
                                                         <span>PLAYERS PLAYING</span>
                                                         {players ? (
                                                             players
@@ -698,13 +700,13 @@ export default () => {
                                     <div className="card stats-card">
                                         <div className="card-body">
                                             <div className="row">
-                                                <div className="col-12 col-md-4 text-center svg-rotate">
+                                                <div className="col-4 text-center svg-rotate">
                                                     <Ticket
                                                         size={36}                                                        
                                                     />
                                                 </div>
-                                                <div className="col-12 col-md-8 text-center text-md-start">
-                                                    <h3>
+                                                <div className="col-8 text-center d-flex text-md-start">
+                                                    <h3 className="align-self-center">
                                                         <span>TICKETS SOLD</span>
                                                         {tickets ? (
                                                             tickets
@@ -741,13 +743,7 @@ export default () => {
                             <div className="row">                                
                                 <div className="col-12 col-md-8 mx-auto">
                                     <div className="card stats-card-special latest-draw">                                       
-                                            <div className="card-header text-center">
-                                                <div className="card-header-icon">
-                                                    <Trophy
-                                                        size={36}
-                                                        color="#20ff93"
-                                                    />
-                                                </div>
+                                            <div className="card-header text-center">                                                
                                                 <h3 style={{fontSize:'21px'}}>Latest draw</h3>
                                             </div>   
                                             <div className="card-body text-center">                                         
@@ -1052,10 +1048,8 @@ export default () => {
 
             <div
                 className="how"
-                style={{
-                    background:
-                        'radial-gradient(rgb(42 216 132 / 34%), transparent)',              
-                    padding: '95px 0',
+                style={{                     
+                    padding: '125px 0',
                 }}
             >
                 <div className="container">
@@ -1183,11 +1177,14 @@ export default () => {
                                     )}
                                 </div>
                             </div>
+                            <div className="col-md-12 text-center">
+                                <a href="https://coinhall.org/charts/terra/terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta" target="_blank" className="btn btn-plain" style={{color:'rgb(166, 159, 187)', fontSize:'16px'}}><ChartLine size={21} style={{position:'relative',top:'-2px', marginRight:'3px'}} />View chart</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="container" style={{ marginTop: '2rem' }}>
+            {/* <div className="container" style={{ marginTop: '2rem' }}>
                 <div className="card lota-card">
                     <div className="card-body">
                         <coingecko-coin-price-chart-widget
@@ -1198,7 +1195,7 @@ export default () => {
                         ></coingecko-coin-price-chart-widget>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <Footer />
 
             <Notification
