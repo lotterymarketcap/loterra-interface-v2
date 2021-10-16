@@ -35,24 +35,25 @@
     }
 }
 .countdown-holder {
-    background: radial-gradient(#12013f, #16015052);
+    background: radial-gradient(#150050, #16005026, #350f6700);
     padding: 5px 10px;
     margin: -15px -15px 15px -15px;
     border-radius: 20px;
     padding-top: 75px;
-    margin-top: -89px;
+    margin-top: -45px;
 }
 .countdown {
     padding-top:10px;
     .title {
         text-transform: uppercase;
         margin: 0;
-        color: #ff36ff;
+        color: #ffffff94;
     }
     .time {
         font-weight: 900;
         font-size: 33px;
         color: #ffffff;
+        text-shadow: 2px 2px 0px #00000061;
         @media (max-width: 500px) {
             font-size: 34px;
         }
