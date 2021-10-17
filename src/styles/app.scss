@@ -211,6 +211,11 @@ h4,.h4 {
     font-size: 12px;
     opacity: 0.5;
     margin-bottom: 10px;
+    a {
+        &:hover {
+            color:$primary;
+        }
+    }
 }
 
 .input-group {
