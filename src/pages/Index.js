@@ -30,7 +30,7 @@ import {
     LCDClient,
     WasmAPI,
     BankAPI,
-    Denom
+    Denom,
 } from '@terra-money/terra.js'
 import Countdown from '../components/Countdown'
 import TicketModal from '../components/TicketModal'
@@ -69,8 +69,8 @@ export default () => {
     const [tickets, setTickets] = useState(0)
     const [players, setPlayers] = useState(0)
     const [recentPlayers, setRecentPlayers] = useState(0)
-    const [payWith, setPayWith] = useState('ust');
-    const [buyNow, setBuyNow] = useState(false);
+    const [payWith, setPayWith] = useState('ust')
+    const [buyNow, setBuyNow] = useState(false)
     const [buyLoader, setBuyLoader] = useState(false)
     const [alteBonus, setAlteBonus] = useState(false)
     const [giftFriend, setGiftFriend] = useState({ active: false, wallet: '' })
@@ -127,9 +127,10 @@ export default () => {
                 }
             )
 
-            const alteredJackpot = (jackpotAltered.balance * jackpotAlocation) / 100;
-            
-            setAlteredJackpot(parseInt(alteredJackpot) / 1000000);
+            const alteredJackpot =
+                (jackpotAltered.balance * jackpotAlocation) / 100
+
+            setAlteredJackpot(parseInt(alteredJackpot) / 1000000)
             dispatch({
                 type: 'setAlteredJackpot',
                 message: alteredJackpot,
@@ -146,6 +147,19 @@ export default () => {
             dispatch({
                 type: 'setHistoricalJackpot',
                 message: parseInt(jackpotInfo) / 1000000,
+            })
+
+            const jackpotAlteInfo = await api.contractQuery(
+                loterra_contract_address,
+                {
+                    jackpot_alte: {
+                        lottery_id: contractConfigInfo.lottery_counter - 1,
+                    },
+                }
+            )
+            dispatch({
+                type: 'setHistoricalJackpotAlte',
+                message: parseInt(jackpotAlteInfo) / 1000000,
             })
 
             const contractTicketsInfo = await api.contractQuery(
@@ -230,8 +244,6 @@ export default () => {
                 },
             })
             dispatch({ type: 'setAllPlayers', message: players })
-
-
         } catch (e) {
             console.log(e)
         }
@@ -301,15 +313,15 @@ export default () => {
         // const obj = new StdFee(1_000_000, { uusd: 200000 })
         const addToGas = 5000 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        const obj = new StdFee(200_000, { uusd: 340000 + addToGas})
+        const obj = new StdFee(200_000, { uusd: 340000 + addToGas })
         let exec_msg = {
             register: {
                 combination: cart,
             },
         }
         //Check for paymethod (ust or alte)
-        let coins_msg;
-        if(payWith == 'ust'){
+        let coins_msg
+        if (payWith == 'ust') {
             coins_msg = {
                 uusd: state.config.price_per_ticket_to_register * cart.length,
             }
@@ -333,9 +345,9 @@ export default () => {
         if (giftFriend.active && giftFriend.wallet != '') {
             exec_msg.register.address = giftFriend.wallet
         }
-        let msg;
-        if(payWith == 'ust'){
-             msg = new MsgExecuteContract(
+        let msg
+        if (payWith == 'ust') {
+            msg = new MsgExecuteContract(
                 connectedWallet.walletAddress,
                 loterra_contract_address,
                 exec_msg,
@@ -343,23 +355,22 @@ export default () => {
             )
         } else {
             //Altered of message
-            let alteMsg;
-            if(giftFriend.active && giftFriend.wallet != ''){
+            let alteMsg
+            if (giftFriend.active && giftFriend.wallet != '') {
                 //Giftfriend enabled
                 alteMsg = {
                     register_alte: {
                         combination: cart,
-                        gift_address: giftFriend.wallet
+                        gift_address: giftFriend.wallet,
                     },
                 }
             } else {
                 alteMsg = {
                     register_alte: {
                         combination: cart,
-                    }
+                    },
                 }
             }
-
 
             msg = new MsgExecuteContract(
                 connectedWallet.walletAddress,
@@ -367,14 +378,17 @@ export default () => {
                 {
                     send: {
                         contract: loterra_contract_address,
-                        amount: String(state.config.price_per_ticket_to_register * cart.length),
-                        msg: Buffer.from(JSON.stringify(alteMsg)).toString('base64'),
+                        amount: String(
+                            state.config.price_per_ticket_to_register *
+                                cart.length
+                        ),
+                        msg: Buffer.from(JSON.stringify(alteMsg)).toString(
+                            'base64'
+                        ),
                     },
                 }
             )
         }
-
-        
 
         connectedWallet
             .post({
@@ -383,7 +397,6 @@ export default () => {
                 // gasPrices: obj.gasPrices(),
                 gasPrices: obj.gasPrices(),
                 gasAdjustment: 1.7,
-
             })
             .then((e) => {
                 if (e.success) {
@@ -396,7 +409,6 @@ export default () => {
                     multiplier(amount)
                     setAlteBonus(false)
                     setBuyLoader(false)
-                   
                 } else {
                     //setResult("register combination error")
                     showNotification(
@@ -612,14 +624,15 @@ export default () => {
 
     return (
         <>
-        {/* <img src={'/confetti.webp'} style={{
+            {/* <img src={'/confetti.webp'} style={{
             position:'absolute',
             maxWidth:'100%'
             }}/> */}
             <div
                 className="hero"
                 style={{
-                    backgroundImage: 'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(rays.svg)',
+                    backgroundImage:
+                        'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(rays.svg)',
                     backgroundPosition: 'center center',
                 }}
             >
@@ -627,17 +640,17 @@ export default () => {
                     <div className="row">
                         <div className="col-lg-12 col-xl-8 mx-auto text-center">
                             <div className="jackpot">
-                                <img 
-                                src={'/Lottery.png'}
-                                style={{
-                                    marginBottom:'-58px',
-                                    maxWidth:'100%',
-                                    position:'relative',
-                                    zIndex:'1',
-                                }}
+                                <img
+                                    src={'/Lottery.png'}
+                                    style={{
+                                        marginBottom: '-58px',
+                                        maxWidth: '100%',
+                                        position: 'relative',
+                                        zIndex: '1',
+                                    }}
                                 />
                                 <p>Mixed Jackpot</p>
-                                <h3>Draws every 3 days</h3>  
+                                <h3>Draws every 3 days</h3>
                                 <h2>
                                     {numeral(jackpot)
                                         .format('0,0.00')
@@ -671,102 +684,132 @@ export default () => {
                                         <span>ALTE</span>
                                     </div>
                                 </h2>
-                                                            
                             </div>
                             <div className="row">
-                            <div className="col-md-8 mx-auto">
-                                <div className="countdown-holder">
+                                <div className="col-md-8 mx-auto">
+                                    <div className="countdown-holder">
                                         <div className="row">
-                                        <div className="col-6">
-                                    <div className="card stats-card">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-4 text-center svg-rotate">
-                                                    <UserFocus
-                                                        size={36}                                                        
-                                                    />
-                                                </div>
-                                                <div className="col-8 text-center d-flex text-md-start">
-                                                    <h3 className="align-self-center">
-                                                        <span>PLAYERS PLAYING</span>
-                                                        {players ? (
-                                                            players
-                                                        ) : (
-                                                            <PriceLoader />
-                                                        )}
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="col-6">
-                                    <div className="card stats-card">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-4 text-center svg-rotate">
-                                                    <Ticket
-                                                        size={36}                                                        
-                                                    />
-                                                </div>
-                                                <div className="col-8 text-center d-flex text-md-start">
-                                                    <h3 className="align-self-center">
-                                                        <span>TICKETS SOLD</span>
-                                                        {tickets ? (
-                                                            tickets
-                                                        ) : (
-                                                            <PriceLoader />
-                                                        )}
-                                                    </h3>
+                                            <div className="col-6">
+                                                <div className="card stats-card">
+                                                    <div className="card-body">
+                                                        <div className="row">
+                                                            <div className="col-4 text-center svg-rotate">
+                                                                <UserFocus
+                                                                    size={36}
+                                                                />
+                                                            </div>
+                                                            <div className="col-8 text-center d-flex text-md-start">
+                                                                <h3 className="align-self-center">
+                                                                    <span>
+                                                                        PLAYERS
+                                                                        PLAYING
+                                                                    </span>
+                                                                    {players ? (
+                                                                        players
+                                                                    ) : (
+                                                                        <PriceLoader />
+                                                                    )}
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                            <div className="col-6">
+                                                <div className="card stats-card">
+                                                    <div className="card-body">
+                                                        <div className="row">
+                                                            <div className="col-4 text-center svg-rotate">
+                                                                <Ticket
+                                                                    size={36}
+                                                                />
+                                                            </div>
+                                                            <div className="col-8 text-center d-flex text-md-start">
+                                                                <h3 className="align-self-center">
+                                                                    <span>
+                                                                        TICKETS
+                                                                        SOLD
+                                                                    </span>
+                                                                    {tickets ? (
+                                                                        tickets
+                                                                    ) : (
+                                                                        <PriceLoader />
+                                                                    )}
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div className="col-lg-8 mx-auto">
-                                                <Countdown expiryTimestamp={expiryTimestamp} />
+                                                <Countdown
+                                                    expiryTimestamp={
+                                                        expiryTimestamp
+                                                    }
+                                                />
                                             </div>
                                             <div className="col-12 text-center mt-4 mb-4">
-                            <button className={'btn btn-special'} onClick={() => setBuyNow(!buyNow)}>Buy Tickets</button>
-                            <small style={{
-                                display:'block',
-                                marginTop:'10px',
-                                fontSize:'12px',
-                                opacity:'0.6',
-                            }}                            
-                            >You can buy tickets with <strong>UST</strong> and <strong>ALTE</strong></small>
-                        </div>
+                                                <button
+                                                    className={
+                                                        'btn btn-special'
+                                                    }
+                                                    onClick={() =>
+                                                        setBuyNow(!buyNow)
+                                                    }
+                                                >
+                                                    Buy Tickets
+                                                </button>
+                                                <small
+                                                    style={{
+                                                        display: 'block',
+                                                        marginTop: '10px',
+                                                        fontSize: '12px',
+                                                        opacity: '0.6',
+                                                    }}
+                                                >
+                                                    You can buy tickets with{' '}
+                                                    <strong>UST</strong> and{' '}
+                                                    <strong>ALTE</strong>
+                                                </small>
+                                            </div>
                                         </div>
-                                </div>                                
-                            </div>
-                         
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
+
                         <div className="col-12 col-md-8 mx-auto">
-                            <div className="row">                                
+                            <div className="row">
                                 <div className="col-12 col-md-8 mx-auto">
-                                    <div className="card stats-card-special latest-draw">                                       
-                                            <div className="card-header text-center">                                                
-                                                <h3 style={{fontSize:'21px'}}>Latest draw</h3>
-                                            </div>   
-                                            <div className="card-body text-center">                                         
+                                    <div className="card stats-card-special latest-draw">
+                                        <div className="card-header text-center">
+                                            <h3 style={{ fontSize: '21px' }}>
+                                                Latest draw
+                                            </h3>
+                                        </div>
+                                        <div className="card-body text-center">
                                             <p className="players">
-                                                <strong>{recentPlayers} <UsersThree
+                                                <strong>
+                                                    {recentPlayers}{' '}
+                                                    <UsersThree
                                                         size={38}
                                                         style={{
-                                                            marginTop:'-5px'
-                                                        }}                                                       
-                                                    /></strong>
+                                                            marginTop: '-5px',
+                                                        }}
+                                                    />
+                                                </strong>
                                             </p>
-                                            <p className="sub">                                                
+                                            <p className="sub">
                                                 <strong>
                                                     {totalNrPrizes()} prizes
                                                 </strong>{' '}
                                                 and{' '}
                                                 <strong>
-                                                    {state.allRecentWinners.length}{' '}
+                                                    {
+                                                        state.allRecentWinners
+                                                            .length
+                                                    }{' '}
                                                     winners!
                                                 </strong>
                                             </p>
@@ -775,8 +818,7 @@ export default () => {
                                 </div>
                             </div>
                         </div>
-                      
-                    </div>              
+                    </div>
                 </div>
 
                 {/*
@@ -786,23 +828,62 @@ export default () => {
             <div className="container">
                 <div className="row">
                     <div className="col-12">
-                        <div className={"card amount-block" + (buyNow ? ' active' : '')}>
+                        <div
+                            className={
+                                'card amount-block' + (buyNow ? ' active' : '')
+                            }
+                        >
                             <div className="card-header">
                                 <h3>Book Your Tickets</h3>
-                                <button className="toggle" onClick={() => setBuyNow(!buyNow)}>
-                    <X size={36} />
-               </button>
+                                <button
+                                    className="toggle"
+                                    onClick={() => setBuyNow(!buyNow)}
+                                >
+                                    <X size={36} />
+                                </button>
                             </div>
-                            <div className="card-body">       
-                            <p
-                            style={{
-                                marginBottom:0
-                            }}
-                            >Pay with:</p>
-                            <div className="btn-group w-100 mb-2">
-                                <button className={'btn btn-default' + (payWith == 'ust' ? ' active' : ' inactive')} onClick={() => setPayWith('ust')}><img src={'/UST.svg'} className="me-2" width="20px" />UST</button>
-                                <button className={'btn btn-default' + (payWith == 'alte' ? ' active' : ' inactive')} onClick={() => setPayWith('alte')}><img src={'/ALTE.png'} className="me-2" width="20px" />ALTE</button>
-                            </div>                         
+                            <div className="card-body">
+                                <p
+                                    style={{
+                                        marginBottom: 0,
+                                    }}
+                                >
+                                    Pay with:
+                                </p>
+                                <div className="btn-group w-100 mb-2">
+                                    <button
+                                        className={
+                                            'btn btn-default' +
+                                            (payWith == 'ust'
+                                                ? ' active'
+                                                : ' inactive')
+                                        }
+                                        onClick={() => setPayWith('ust')}
+                                    >
+                                        <img
+                                            src={'/UST.svg'}
+                                            className="me-2"
+                                            width="20px"
+                                        />
+                                        UST
+                                    </button>
+                                    <button
+                                        className={
+                                            'btn btn-default' +
+                                            (payWith == 'alte'
+                                                ? ' active'
+                                                : ' inactive')
+                                        }
+                                        onClick={() => setPayWith('alte')}
+                                    >
+                                        <img
+                                            src={'/ALTE.png'}
+                                            className="me-2"
+                                            width="20px"
+                                        />
+                                        ALTE
+                                    </button>
+                                </div>
                                 <small>
                                     <span>HINT</span> Increase your odds!
                                     Average buying ticket is{' '}
@@ -873,7 +954,8 @@ export default () => {
                                                 {' '}
                                                 {numeral(
                                                     (amount * price) / 1000000 -
-                                                    (amount * price) / 1000000 /
+                                                        (amount * price) /
+                                                            1000000 /
                                                             state.config
                                                                 .bonus_burn_rate
                                                 ).format('0,0.00')}{' '}
@@ -881,7 +963,8 @@ export default () => {
                                                 <span>
                                                     +{' '}
                                                     {numeral(
-                                                        (amount * price) / 1000000 /
+                                                        (amount * price) /
+                                                            1000000 /
                                                             state.config
                                                                 .bonus_burn_rate
                                                     ).format('0,0.00')}{' '}
@@ -906,80 +989,80 @@ export default () => {
                                         </span>
                                     </>
                                 )}
-                                
-                                { payWith == 'ust' &&
-                                    <>
-                                    <p
-                                    style={{
-                                    marginBottom: '7px',
-                                    fontSize: '14px',
-                                    opacity: '0.3',
-                                    }}
-                                    >
-                                    Earn extra bonus while burning{' '}
-                                    <a
-                                    style={{ color: '#fff' }}
-                                    href="https://app.alteredprotocol.com"
-                                    target="_blank"
-                                    >
-                                    Altered
-                                    </a>
-                                    </p>
-                                    <label className="bonus-label">
-                                    <input
-                                    type="checkbox"
-                                    ref={bonusToggle}
-                                    checked={alteBonus}
-                                    className="switch"
-                                    name="alte_bonus"
-                                    onChange={(e, checked) =>
-                                    bonusCheckbox(e, checked)
-                                    }
-                                    />
-                                    <label
-                                    className="switch-label"
-                                    onClick={() =>
-                                    clickElement(bonusToggle)
-                                    }
-                                    ></label>
-                                    <Fire size={24} weight="fill" /> BURN
-                                    <span
-                                    style={{
-                                    color: '#d0e027',
-                                    fontFamily: 'Cosmos',
-                                    fontSize: '1.2em',
-                                    padding: '4px 8px',
-                                    background:
-                                    'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717',
-                                    borderRadius: '25px',
-                                    }}
-                                    >
-                                    ALTE
-                                    </span>
-                                    <span className="badge rounded-pill">
-                                    Bonus
-                                    </span>
-                                    </label>
-                                    </>
 
-                                }
-                                { payWith !== 'ust' &&
-                                <span className="info mb-2">
-                                            <Info
-                                                size={14}
-                                                style={{ marginTop: '-2px' }}
-                                                weight="fill"
-                                                className="me-1"
-                                            />
-                                            No ALTE? you can buy ALTE on the{' '}
+                                {payWith == 'ust' && (
+                                    <>
+                                        <p
+                                            style={{
+                                                marginBottom: '7px',
+                                                fontSize: '14px',
+                                                opacity: '0.3',
+                                            }}
+                                        >
+                                            Earn extra bonus while burning{' '}
                                             <a
+                                                style={{ color: '#fff' }}
                                                 href="https://app.alteredprotocol.com"
                                                 target="_blank"
                                             >
-                                                Altered website
+                                                Altered
                                             </a>
-                                        </span>
-                                }
+                                        </p>
+                                        <label className="bonus-label">
+                                            <input
+                                                type="checkbox"
+                                                ref={bonusToggle}
+                                                checked={alteBonus}
+                                                className="switch"
+                                                name="alte_bonus"
+                                                onChange={(e, checked) =>
+                                                    bonusCheckbox(e, checked)
+                                                }
+                                            />
+                                            <label
+                                                className="switch-label"
+                                                onClick={() =>
+                                                    clickElement(bonusToggle)
+                                                }
+                                            ></label>
+                                            <Fire size={24} weight="fill" />{' '}
+                                            BURN
+                                            <span
+                                                style={{
+                                                    color: '#d0e027',
+                                                    fontFamily: 'Cosmos',
+                                                    fontSize: '1.2em',
+                                                    padding: '4px 8px',
+                                                    background:
+                                                        'linear-gradient(228.88deg,rgba(0,0,0,.2) 18.2%,hsla(0,0%,69%,.107292) 77.71%,rgba(0,0,0,.0885417) 99.78%,transparent 146.58%),#171717',
+                                                    borderRadius: '25px',
+                                                }}
+                                            >
+                                                ALTE
+                                            </span>
+                                            <span className="badge rounded-pill">
+                                                Bonus
+                                            </span>
+                                        </label>
+                                    </>
+                                )}
+                                {payWith !== 'ust' && (
+                                    <span className="info mb-2">
+                                        <Info
+                                            size={14}
+                                            style={{ marginTop: '-2px' }}
+                                            weight="fill"
+                                            className="me-1"
+                                        />
+                                        No ALTE? you can buy ALTE on the{' '}
+                                        <a
+                                            href="https://app.alteredprotocol.com"
+                                            target="_blank"
+                                        >
+                                            Altered website
+                                        </a>
+                                    </span>
+                                )}
 
                                 <label className="gift-label">
                                     <input
@@ -1019,7 +1102,7 @@ export default () => {
                                     </>
                                 )}
                                 <div className="text-sm">{result}</div>
-                                
+
                                 <button
                                     onClick={() => setTicketModal(!ticketModal)}
                                     className="btn btn-default w-100 mb-3 mt-3"
@@ -1064,7 +1147,10 @@ export default () => {
                                 </button>
                             </div>
                         </div>
-                        <div className={'backdrop' + (buyNow ? ' show' : '')} onClick={() => setBuyNow(!buyNow)}></div>
+                        <div
+                            className={'backdrop' + (buyNow ? ' show' : '')}
+                            onClick={() => setBuyNow(!buyNow)}
+                        ></div>
                         {/* <SocialShare /> */}
                     </div>
                 </div>
@@ -1072,7 +1158,7 @@ export default () => {
 
             <div
                 className="how"
-                style={{                     
+                style={{
                     padding: '125px 0',
                 }}
             >
@@ -1111,7 +1197,24 @@ export default () => {
                         </div>
                         <div className="col-12 text-center">
                             <h5 className="mt-4 mb-1">Learn more?</h5>
-                            <a className="btn btn-plain" href="https://docs.loterra.io/products/lottery" style={{color:'rgb(166, 159, 187)', fontSize:'16px'}} target="_blank"><Files size={21} style={{position:'relative',top:'-2px'}} /> LoTerra lottery documentation</a>
+                            <a
+                                className="btn btn-plain"
+                                href="https://docs.loterra.io/products/lottery"
+                                style={{
+                                    color: 'rgb(166, 159, 187)',
+                                    fontSize: '16px',
+                                }}
+                                target="_blank"
+                            >
+                                <Files
+                                    size={21}
+                                    style={{
+                                        position: 'relative',
+                                        top: '-2px',
+                                    }}
+                                />{' '}
+                                LoTerra lottery documentation
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -1202,7 +1305,25 @@ export default () => {
                                 </div>
                             </div>
                             <div className="col-md-12 text-center">
-                                <a href="https://coinhall.org/charts/terra/terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta" target="_blank" className="btn btn-plain" style={{color:'rgb(166, 159, 187)', fontSize:'16px'}}><ChartLine size={21} style={{position:'relative',top:'-2px', marginRight:'3px'}} />View chart</a>
+                                <a
+                                    href="https://coinhall.org/charts/terra/terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta"
+                                    target="_blank"
+                                    className="btn btn-plain"
+                                    style={{
+                                        color: 'rgb(166, 159, 187)',
+                                        fontSize: '16px',
+                                    }}
+                                >
+                                    <ChartLine
+                                        size={21}
+                                        style={{
+                                            position: 'relative',
+                                            top: '-2px',
+                                            marginRight: '3px',
+                                        }}
+                                    />
+                                    View chart
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1234,19 +1355,17 @@ export default () => {
                     updateCombos(new_code, index)
                 }
                 buyTickets={() => execute()}
-                toggleModal={() =>
-                    setTicketModal(!ticketModal)
-                }
+                toggleModal={() => setTicketModal(!ticketModal)}
                 multiplier={(mul) => multiplier(mul)}
             />
             <AllowanceModal
                 open={allowanceModal}
                 prefill={
-                    amount * state.config.price_per_ticket_to_register  / state.config.bonus_burn_rate / 1000000
+                    (amount * state.config.price_per_ticket_to_register) /
+                    state.config.bonus_burn_rate /
+                    1000000
                 }
-                toggleModal={() =>
-                    setAllowanceModal(!allowanceModal)
-                }
+                toggleModal={() => setAllowanceModal(!allowanceModal)}
                 showNotification={(message, type, dur) =>
                     showNotification(message, type, dur)
                 }

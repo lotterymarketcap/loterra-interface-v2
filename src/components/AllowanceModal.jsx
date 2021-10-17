@@ -58,7 +58,7 @@ export default function AllowanceModal(props) {
             })
     }
 
-    function handleChange(e) {        
+    function handleChange(e) {
         setPrefillValue(e.target.value)
         console.log(prefillValue)
     }
@@ -111,7 +111,7 @@ export default function AllowanceModal(props) {
             </div>
             <div
                 className={'backdrop' + (open ? ' show' : '')}
-                style={{zIndex:88}}
+                style={{ zIndex: 88 }}
                 onClick={() => toggleModal()}
             ></div>
         </>

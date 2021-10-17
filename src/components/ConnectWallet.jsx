@@ -46,8 +46,6 @@ const Dialog = {
 
 } */
 
-  
-
 const DialogButton = {
     margin: '10px 20px 10px 20px',
 }
@@ -61,15 +59,14 @@ export default function ConnectWallet() {
     const [connected, setConnected] = useState(false)
     const { state, dispatch } = useStore()
 
-       //Nav link active settings
-       let homeClass,stakingClass,daoClass;
-       if(typeof location !== 'undefined'){     
-           homeClass = location.pathname === "/" ? "active" : "";
-           stakingClass = location.pathname.match(/^\/staking/) ? "active" : "";
-           daoClass = location.pathname.match(/^\/dao/) ? "active" : "";
-       }
+    //Nav link active settings
+    let homeClass, stakingClass, daoClass
+    if (typeof location !== 'undefined') {
+        homeClass = location.pathname === '/' ? 'active' : ''
+        stakingClass = location.pathname.match(/^\/staking/) ? 'active' : ''
+        daoClass = location.pathname.match(/^\/dao/) ? 'active' : ''
+    }
 
-       
     let wallet = ''
     if (typeof document !== 'undefined') {
         wallet = useWallet()
@@ -128,8 +125,6 @@ export default function ConnectWallet() {
             }
         )
         dispatch({ type: 'setAllRecentWinners', message: winners })
-
-        
 
         const contractDaoBalance = await api.contractQuery(
             state.loterraContractAddressCw20,
@@ -223,7 +218,7 @@ export default function ConnectWallet() {
         const pool_info = await api.contractQuery(state.loterraPoolAddress, {
             pool: {},
         })
-        console.log("pool_info")
+        console.log('pool_info')
         console.log(pool_info)
         dispatch({ type: 'setPoolInfo', message: pool_info })
     }
@@ -257,7 +252,6 @@ export default function ConnectWallet() {
             let type = false
             console.log('checking for winner')
             // Query all winners for most recent draw
-            
 
             //Test purposes
             //   recentWinners = [
@@ -287,7 +281,7 @@ export default function ConnectWallet() {
             dispatch({ type: 'setWallet', message: connectedWallet })
 
             let coins
-            let alteTokens;
+            let alteTokens
 
             let token
             try {
@@ -399,11 +393,14 @@ export default function ConnectWallet() {
 
                 checkIfWon()
 
-                alteTokens = await api.contractQuery(state.alteredContractAddress, {
-                    balance: {
-                        address: connectedWallet.walletAddress,
-                    },
-                })
+                alteTokens = await api.contractQuery(
+                    state.alteredContractAddress,
+                    {
+                        balance: {
+                            address: connectedWallet.walletAddress,
+                        },
+                    }
+                )
 
                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
@@ -415,10 +412,6 @@ export default function ConnectWallet() {
                     }
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
-
-               
-
-              
             } catch (e) {
                 console.log(e)
             }
@@ -435,7 +428,6 @@ export default function ConnectWallet() {
             setBank(numeral(ust).format('0,0.00'))
             setAlteBank(numeral(alte).format('0,0.00'))
             // connectTo("extension")
-        
         } else {
             setBank(null)
             setAlteBank(null)
@@ -476,14 +468,24 @@ export default function ConnectWallet() {
                     color="#0F0038"
                     style={{ display: 'inline-block', marginTop: '-3px' }}
                 />{' '}
-                {bank && alteBank ? 
-                <><Check size={16}  color="#0F0038" weight="bold"  style={{ display: 'inline-block', marginTop: '-8px', marginLeft:'-5px' }} /></> 
-                :
-                <div class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-                </div> 
-                } 
-
+                {bank && alteBank ? (
+                    <>
+                        <Check
+                            size={16}
+                            color="#0F0038"
+                            weight="bold"
+                            style={{
+                                display: 'inline-block',
+                                marginTop: '-8px',
+                                marginLeft: '-5px',
+                            }}
+                        />
+                    </>
+                ) : (
+                    <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                )}
             </>
         )
     }
@@ -507,18 +509,20 @@ export default function ConnectWallet() {
             baseData()
         }
         if (connectedWallet) {
-            contactBalance()            
+            contactBalance()
         }
-        
+
         //console.log(connectedWallet)
         window.addEventListener('scroll', handleScroll)
-    }, [connectedWallet, lcd, state.config, state.allRecentWinners, state.youWon])
-
-   
-
+    }, [
+        connectedWallet,
+        lcd,
+        state.config,
+        state.allRecentWinners,
+        state.youWon,
+    ])
 
     return (
-        
         <div
             className={
                 scrolled
@@ -544,7 +548,7 @@ export default function ConnectWallet() {
                         <X size={36} />
                     </button>
                     <li className="nav-item">
-                        <a href="/" className={"nav-link " + (homeClass)}>
+                        <a href="/" className={'nav-link ' + homeClass}>
                             <Ticket
                                 size={24}
                                 style={{
@@ -556,9 +560,13 @@ export default function ConnectWallet() {
                             Lottery
                             <span className="item-label">Jackpot Lottery</span>
                         </a>
-                    </li>                    
+                    </li>
                     <li className="nav-item">
-                        <a href="/staking" className="nav-link" className={"nav-link " + (stakingClass)}>
+                        <a
+                            href="/staking"
+                            className="nav-link"
+                            className={'nav-link ' + stakingClass}
+                        >
                             <Coin
                                 size={24}
                                 style={{
@@ -568,11 +576,18 @@ export default function ConnectWallet() {
                                 }}
                             />{' '}
                             Staking
-                            <span className="item-label">Become a casino owner or earn LOTA when staking LP</span>
+                            <span className="item-label">
+                                Become a casino owner or earn LOTA when staking
+                                LP
+                            </span>
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="/dao" className="nav-link" className={"nav-link " + (daoClass)}>
+                        <a
+                            href="/dao"
+                            className="nav-link"
+                            className={'nav-link ' + daoClass}
+                        >
                             <Bank
                                 size={24}
                                 style={{
@@ -582,11 +597,17 @@ export default function ConnectWallet() {
                                 }}
                             />{' '}
                             DAO
-                            <span className="item-label">Together we decide</span>
+                            <span className="item-label">
+                                Together we decide
+                            </span>
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="#" className="nav-link" style={{position:'relative', opacity:'0.5'}}>
+                        <a
+                            href="#"
+                            className="nav-link"
+                            style={{ position: 'relative', opacity: '0.5' }}
+                        >
                             <Ticket
                                 size={24}
                                 style={{
@@ -597,18 +618,20 @@ export default function ConnectWallet() {
                             />{' '}
                             Dogether
                             <span className="item-label">No loss lottery</span>
-                            <span 
-                            className="badge bg-primary"
-                            style={{
-                                position:'absolute',
-                                right:0,
-                                top:'-9px',
-                                fontSize:'10px',
-                                lineHeight:'10px',
-                                padding:'3px',
-                                textTransform:'uppercase'
-                            }}
-                            >Coming soon</span>
+                            <span
+                                className="badge bg-primary"
+                                style={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    top: '-9px',
+                                    fontSize: '10px',
+                                    lineHeight: '10px',
+                                    padding: '3px',
+                                    textTransform: 'uppercase',
+                                }}
+                            >
+                                Coming soon
+                            </span>
                         </a>
                     </li>
                 </nav>
@@ -712,13 +735,29 @@ export default function ConnectWallet() {
                                 aria-labelledby="dropdownMenuButton2"
                                 style={{ top: '70px' }}
                             >
-                                {bank && alteBank &&
-                                <div className="wallet-info d-inline-block text-start px-3" style={{fontSize:'13px'}}>
-                                <span className="d-block"><strong>YOUR WALLET:</strong></span>
-                                <span className="d-block" style={{marginBottom:'-5px'}}>{bank} <span className="text-sm">UST</span></span> 
-                                <span className="d-block">{alteBank} <span className="text-sm">ALTE</span></span>
-                                </div>
-                                }
+                                {bank && alteBank && (
+                                    <div
+                                        className="wallet-info d-inline-block text-start px-3"
+                                        style={{ fontSize: '13px' }}
+                                    >
+                                        <span className="d-block">
+                                            <strong>YOUR WALLET:</strong>
+                                        </span>
+                                        <span
+                                            className="d-block"
+                                            style={{ marginBottom: '-5px' }}
+                                        >
+                                            {bank}{' '}
+                                            <span className="text-sm">UST</span>
+                                        </span>
+                                        <span className="d-block">
+                                            {alteBank}{' '}
+                                            <span className="text-sm">
+                                                ALTE
+                                            </span>
+                                        </span>
+                                    </div>
+                                )}
                                 <button
                                     onClick={() => connectTo('disconnect')}
                                     className="dropdown-item"
@@ -727,7 +766,9 @@ export default function ConnectWallet() {
                                         size={16}
                                         style={{ marginTop: '-2px' }}
                                     />{' '}
-                                    <span style={{fontSize:'13px'}}>Disconnect</span>
+                                    <span style={{ fontSize: '13px' }}>
+                                        Disconnect
+                                    </span>
                                 </button>
                             </ul>
                             <button

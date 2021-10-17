@@ -127,13 +127,16 @@ export default function Staking(props) {
         <div className="row">
             <div className="col-md-12">
                 <p className="input-heading">The amount you want to stake</p>
-                <span className="info"
-                style={{
-                    color: '#ff36ff',
-                    borderColor: '#ff36ff',
-                }}
+                <span
+                    className="info"
+                    style={{
+                        color: '#ff36ff',
+                        borderColor: '#ff36ff',
+                    }}
                 >
-                    <Info size={14} weight="fill" className="me-1" /><strong>Hello new casino owner!</strong> Stake LOTA, join our DAO and get 20% on winner prizes.
+                    <Info size={14} weight="fill" className="me-1" />
+                    <strong>Hello new casino owner!</strong> Stake LOTA, join
+                    our DAO and get 20% on winner prizes.
                 </span>
                 <div className="input-group mb-3">
                     <span className="input-group-text" id="basic-addon1">
@@ -220,7 +223,7 @@ export default function Staking(props) {
                                     parseInt(state.allHolder.balance) / 1000000
                                 ).format('0.00')}
                             </>
-                        )} 
+                        )}
                         LOTA
                     </strong>
                 </small>
@@ -242,7 +245,7 @@ export default function Staking(props) {
                         <div style={{ marginTop: '20px' }}>
                             List of pending claims
                         </div>
-                        <table>                           
+                        <table>
                             <thead>
                                 <tr>
                                     <td style={{ paddingLeft: '20px' }}>

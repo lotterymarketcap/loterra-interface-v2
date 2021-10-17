@@ -141,7 +141,7 @@ const initialState = {
     }),
     blockHeight: 0,
     stateLPStaking: {},
-    poolInfo: {assets: []},
+    poolInfo: { assets: [] },
     stakingLoterraFunds: 0,
     stakingAlteredFunds: 0,
 
@@ -154,10 +154,16 @@ const initialState = {
     rankClasses: rankClasses,
     amountClasses: amountClasses,
     jackpotAltered: 0,
+    historicalJackpotAlte: 0,
 }
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case 'setHistoricalJackpotAlte':
+            return {
+                ...state,
+                historicalJackpotAlte: action.message,
+            }
         case 'setAlteredJackpot':
             return {
                 ...state,

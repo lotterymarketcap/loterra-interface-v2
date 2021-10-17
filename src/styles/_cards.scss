@@ -1,25 +1,25 @@
 .card {
     &.latest-draw {
-        margin-top:0;
+        margin-top: 0;
         background: radial-gradient(#14043e, #4b1a7882);
         border: 1px solid #4c1b79;
         box-shadow: none;
         .card-header {
             h3 {
-                color:#f035f0;
+                color: #f035f0;
             }
         }
         .card-body {
-            padding:5px;
+            padding: 5px;
             .players {
                 font-size: 33px;
                 font-weight: 900;
-                margin-bottom:-8px;
+                margin-bottom: -8px;
             }
             .sub {
-                margin-bottom:10px;
+                margin-bottom: 10px;
                 text-transform: uppercase;
-                color:#20ff93;
+                color: #20ff93;
             }
         }
     }
@@ -61,11 +61,11 @@
 
         &.proposals {
             padding: 35px 35px;
-            background:transparent;
-            border:0;
+            background: transparent;
+            border: 0;
             .card-header {
-                border:0;
-                background:#120146e6;
+                border: 0;
+                background: #120146e6;
             }
             h3 {
                 font-weight: bold;

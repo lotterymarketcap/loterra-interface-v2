@@ -26,16 +26,15 @@ export default function JackpotResults() {
         ).format('0,0.00')
     }
     function getAltePrizePerRank(nr) {
-        let rank = nr - 1      
-        if( state.historicalJackpotLotteryId > 0 && state.historicalJackpotLotteryId <= 13 ) {
-            return 0;
-        }
+        let rank = nr - 1
+
         return numeral(
             (state.config.prize_rank_winner_percentage[rank] *
-                parseInt(state.jackpotAltered)) / 1000000
+                parseInt(state.historicalJackpotAlte)) /
+                100
         ).format('0,0.00')
     }
-    function getPrizePerRankGross(nr) {
+    function getPrizePerRankNet(nr) {
         let rank = nr - 1
         return numeral(
             (state.config.prize_rank_winner_percentage[rank] *
@@ -47,6 +46,19 @@ export default function JackpotResults() {
                 100
         ).format('0,0.00')
     }
+
+    function getPrizePerRankAlteNet(nr) {
+        let rank = nr - 1
+        return numeral(
+            (state.config.prize_rank_winner_percentage[rank] *
+                parseInt(state.historicalJackpotAlte) -
+                (state.config.prize_rank_winner_percentage[rank] *
+                    parseInt(state.historicalJackpotAlte) *
+                    state.config.token_holder_percentage_fee_reward) /
+                100) /
+            100
+        ).format('0,0.00')
+    }
     function getPrizePerRankTax(nr) {
         let rank = nr - 1
         return numeral(
@@ -54,6 +66,15 @@ export default function JackpotResults() {
                 parseInt(state.historicalJackpot)) /
                 100) *
                 (state.config.token_holder_percentage_fee_reward / 100)
+        ).format('0,0.00')
+    }
+    function getPrizePerRankAlteTax(nr) {
+        let rank = nr - 1
+        return numeral(
+            ((state.config.prize_rank_winner_percentage[rank] *
+                    parseInt(state.historicalJackpotAlte)) /
+                100) *
+            (state.config.token_holder_percentage_fee_reward / 100)
         ).format('0,0.00')
     }
 
@@ -120,41 +141,45 @@ export default function JackpotResults() {
         }
     }
 
-    function getNumberOfRankWinners(nr){
-        let nrWinners = 0;
-        state.allWinners.map(obj => {
-            obj.claims.ranks.map(r => {
-                if(r == nr){
-                    nrWinners++;
+    function getNumberOfRankWinners(nr) {
+        let nrWinners = 0
+        state.allWinners.map((obj) => {
+            obj.claims.ranks.map((r) => {
+                if (r == nr) {
+                    nrWinners++
                 }
             })
         })
         return (
             <>
-            <span 
-            style={{
-                background:'#ff36ff',
-                padding: '5px',
-                borderRadius: '3px',
-                marginRight: '5px'
-            }}            
-            >#{nr}</span>
-            <span style={{
-                color:'#4ee19b'
-            }}>
-            <Trophy 
-            style={{
-                color:'#4ee19b',
-                position:'relative',
-                top:'-2px',
-                marginRight:'4px'
-            }}
-            size={21}
-            />
-            {nrWinners}
-            </span>
+                <span
+                    style={{
+                        background: '#ff36ff',
+                        padding: '5px',
+                        borderRadius: '3px',
+                        marginRight: '5px',
+                    }}
+                >
+                    #{nr}
+                </span>
+                <span
+                    style={{
+                        color: '#4ee19b',
+                    }}
+                >
+                    <Trophy
+                        style={{
+                            color: '#4ee19b',
+                            position: 'relative',
+                            top: '-2px',
+                            marginRight: '4px',
+                        }}
+                        size={21}
+                    />
+                    {nrWinners}
+                </span>
             </>
-            );
+        )
     }
 
     return (
@@ -242,7 +267,6 @@ export default function JackpotResults() {
                     </div>
                     <h4 className="mt-4">Rewards</h4>
                     <div className="table-responsive">
-                    
                         <table className="table text-white mb-3">
                             <thead>
                                 <tr>
@@ -256,10 +280,12 @@ export default function JackpotResults() {
                             {state.config.prize_rank_winner_percentage && (
                                 <tbody>
                                     <tr>
-                                        <th scope="row" className="text-white"
-                                        style={{                                      
-                                            minWidth: '130px',
-                                        }}
+                                        <th
+                                            scope="row"
+                                            className="text-white"
+                                            style={{
+                                                minWidth: '130px',
+                                            }}
                                         >
                                             {getNumberOfRankWinners(1)}
                                         </th>
@@ -272,28 +298,53 @@ export default function JackpotResults() {
                                             6 Symbols
                                         </td>
                                         <td
-                                        style={{                                      
-                                            minWidth: '130px',
-                                        }}
+                                            style={{
+                                                minWidth: '130px',
+                                            }}
                                         >
                                             {getPrizePerRank(1)}
-                                            <span>UST</span>                                            
-                                        </td>
-                                        <td>
-                                            {getPrizePerRankGross(1)}
-                                            <span>UST</span>                                                                                      
-                                                <span style={{fontSize:'12px',display:'block', color:'#dcef14', opacity:1}}>
+                                            <span>UST</span>
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
                                                 + {getAltePrizePerRank(1)}
                                                 <span>ALTE</span>
-                                            </span>                                            
-                                           
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {getPrizePerRankNet(1)}
+                                            <span>UST</span>
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(1) /*getPrizePerRankAlteNet(1)*/}
+                                                <span>ALTE</span>
+                                            </span>
                                         </td>
                                         <td>
                                             {getPrizePerRankTax(1)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'10px',display:'block', color:'#dcef14', opacity:1}}>                                                
-                                            ALTE TAX COMING SOON
-                                            </span>  
+                                            <span
+                                                style={{
+                                                    fontSize: '10px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                {getPrizePerRankAlteTax(1)}
+                                                ALTE (TAX COMING SOON)
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -310,22 +361,48 @@ export default function JackpotResults() {
                                         </td>
                                         <td>
                                             {getPrizePerRank(2)}
-                                            <span>UST</span>                                          
+                                            <span>UST</span>
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(2)}
+                                                <span>ALTE</span>
+                                            </span>
                                         </td>
                                         <td>
-                                            {getPrizePerRankGross(2)}
+                                            {getPrizePerRankNet(2)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'12px',display:'block', color:'#dcef14', opacity:1}}>
-                                                + {getAltePrizePerRank(2)}
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(2) /*getPrizePerRankAlteNet(2)*/}
                                                 <span>ALTE</span>
                                             </span>
                                         </td>
                                         <td>
                                             {getPrizePerRankTax(2)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'10px',display:'block', color:'#dcef14', opacity:1}}>                                                
-                                            ALTE TAX COMING SOON
-                                            </span>  
+                                            <span
+                                                style={{
+                                                    fontSize: '10px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                {getPrizePerRankAlteTax(2)}
+                                                ALTE (TAX COMING SOON)
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -342,22 +419,48 @@ export default function JackpotResults() {
                                         </td>
                                         <td>
                                             {getPrizePerRank(3)}
-                                            <span>UST</span>                                      
+                                            <span>UST</span>
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(3)}
+                                                <span>ALTE</span>
+                                            </span>
                                         </td>
                                         <td>
-                                            {getPrizePerRankGross(3)}
+                                            {getPrizePerRankNet(3)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'12px',display:'block', color:'#dcef14', opacity:1}}>
-                                                + {getAltePrizePerRank(3)}
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(3) /*getPrizePerRankAlteNet(3)*/}
                                                 <span>ALTE</span>
                                             </span>
                                         </td>
                                         <td>
                                             {getPrizePerRankTax(3)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'10px',display:'block', color:'#dcef14', opacity:1}}>                                                
-                                            ALTE TAX COMING SOON
-                                            </span>  
+                                            <span
+                                                style={{
+                                                    fontSize: '10px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                {getPrizePerRankAlteTax(3)}
+                                                ALTE (TAX COMING SOON)
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -374,22 +477,48 @@ export default function JackpotResults() {
                                         </td>
                                         <td>
                                             {getPrizePerRank(4)}
-                                            <span>UST</span>                                            
+                                            <span>UST</span>
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(4)}
+                                                <span>ALTE</span>
+                                            </span>
                                         </td>
                                         <td>
-                                            {getPrizePerRankGross(4)}
+                                            {getPrizePerRankNet(4)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'12px',display:'block', color:'#dcef14', opacity:1}}>
-                                                + {getAltePrizePerRank(4)}
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(4) /*getPrizePerRankAlteNet(4)*/}
                                                 <span>ALTE</span>
                                             </span>
                                         </td>
                                         <td>
                                             {getPrizePerRankTax(4)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'10px',display:'block', color:'#dcef14', opacity:1}}>                                                
-                                            ALTE TAX COMING SOON
-                                            </span>  
+                                            <span
+                                                style={{
+                                                    fontSize: '10px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                {getPrizePerRankAlteTax(4)}
+                                                ALTE (TAX COMING SOON)
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -406,22 +535,48 @@ export default function JackpotResults() {
                                         </td>
                                         <td>
                                             {getPrizePerRank(5)}
-                                            <span>UST</span>                                           
+                                            <span>UST</span>
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(5)}
+                                                <span>ALTE</span>
+                                            </span>
                                         </td>
                                         <td>
-                                            {getPrizePerRankGross(5)}
+                                            {getPrizePerRankNet(5)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'12px',display:'block', color:'#dcef14', opacity:1}}>
-                                                + {getAltePrizePerRank(5)}
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(5) /*getPrizePerRankAlteNet(5)*/}
                                                 <span>ALTE</span>
                                             </span>
                                         </td>
                                         <td>
                                             {getPrizePerRankTax(5)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'10px',display:'block', color:'#dcef14', opacity:1}}>                                                
-                                            ALTE TAX COMING SOON
-                                            </span>  
+                                            <span
+                                                style={{
+                                                    fontSize: '10px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                {getPrizePerRankAlteTax(5)}
+                                                ALTE (TAX COMING SOON)
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -438,22 +593,48 @@ export default function JackpotResults() {
                                         </td>
                                         <td>
                                             {getPrizePerRank(6)}
-                                            <span>UST</span>                                            
+                                            <span>UST</span>
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(6)}
+                                                <span>ALTE</span>
+                                            </span>
                                         </td>
                                         <td>
-                                            {getPrizePerRankGross(6)}
+                                            {getPrizePerRankNet(6)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'12px',display:'block', color:'#dcef14', opacity:1}}>
-                                                + {getAltePrizePerRank(6)}
+                                            <span
+                                                style={{
+                                                    fontSize: '12px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                + {getAltePrizePerRank(6) /*getPrizePerRankAlteNet(6)*/}
                                                 <span>ALTE</span>
                                             </span>
                                         </td>
                                         <td>
                                             {getPrizePerRankTax(6)}
                                             <span>UST</span>
-                                            <span style={{fontSize:'10px',display:'block', color:'#dcef14', opacity:1}}>                                                
-                                            ALTE TAX COMING SOON
-                                            </span>  
+                                            <span
+                                                style={{
+                                                    fontSize: '10px',
+                                                    display: 'block',
+                                                    color: '#dcef14',
+                                                    opacity: 1,
+                                                }}
+                                            >
+                                                {getPrizePerRankAlteTax(6)}
+                                                ALTE (TAX COMING SOON)
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -461,7 +642,10 @@ export default function JackpotResults() {
                         </table>
                     </div>
                     <h4 className="mt-4">Winners</h4>
-                    <div className="table-responsive" style={{height:'500px'}}>
+                    <div
+                        className="table-responsive"
+                        style={{ height: '500px' }}
+                    >
                         <table className="table text-white winners-table">
                             <thead>
                                 <tr>
