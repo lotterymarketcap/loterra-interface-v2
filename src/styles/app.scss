@@ -561,6 +561,11 @@ h4,.h4 {
     border-radius: 10px;
     margin: 5px 0;
     color: #ffffff73;
+    a {
+        &:hover {
+            color:$primary;
+        }
+    }
 }
 
 .loading_animation {
