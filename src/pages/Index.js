@@ -128,7 +128,12 @@ export default () => {
             )
 
             const alteredJackpot = (jackpotAltered.balance * jackpotAlocation) / 100;
+            
             setAlteredJackpot(parseInt(alteredJackpot) / 1000000);
+            dispatch({
+                type: 'setAlteredJackpot',
+                message: alteredJackpot,
+            })
 
             const jackpotInfo = await api.contractQuery(
                 loterra_contract_address,
