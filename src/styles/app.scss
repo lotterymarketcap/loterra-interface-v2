@@ -530,7 +530,7 @@ h4,.h4 {
         position: relative;
         margin-bottom: -11px;
         top: -10px;
-        z-index: 3;
+        z-index: 5;
         width: 28px;
         height: 28px;
         left: 0;
@@ -797,6 +797,7 @@ h4,.h4 {
     &.active {
         visibility: visible;
         opacity: 1;
+        position: fixed;
  
     }
 }
