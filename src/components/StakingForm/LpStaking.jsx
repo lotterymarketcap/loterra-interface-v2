@@ -176,7 +176,7 @@ export default function LpStaking(props) {
                 </p>
                 {
                     <p className="input-slogan">
-                        Provide liquidity on pair LOTA-UST and stake your LP
+                        Provide liquidity on pair <strong>LOTA-UST</strong> on <a href="https://app.terraswap.io/#Provide" target="_blank">Terraswap</a> and stake your LP
                         token to share: 273.00 LOTA daily rewards | 100,000.00
                         LOTA year rewards
                     </p>

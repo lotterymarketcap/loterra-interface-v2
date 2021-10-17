@@ -211,6 +211,11 @@ h4,.h4 {
     font-size: 12px;
     opacity: 0.5;
     margin-bottom: 10px;
+    a {
+        &:hover {
+            color:$primary;
+        }
+    }
 }
 
 .input-group {
@@ -324,6 +329,14 @@ h4,.h4 {
             }
         }
     }
+}
+
+.wallet-info {
+    font-size: 13px;
+    width: 100%;
+    background: #0003;
+    padding: 6px 0;
+    margin-top: -10px;
 }
 
 .amount-control {
@@ -561,6 +574,11 @@ h4,.h4 {
     border-radius: 10px;
     margin: 5px 0;
     color: #ffffff73;
+    a {
+        &:hover {
+            color:$primary;
+        }
+    }
 }
 
 .loading_animation {

@@ -14,6 +14,7 @@ import {
     Trophy,
     Power,
     List,
+    Check,
     X,
     Ticket,
     Coin,
@@ -56,6 +57,7 @@ export default function ConnectWallet() {
     const [isModal, setIsModal] = useState(false)
     const [sideNav, setSideNav] = useState(false)
     const [bank, setBank] = useState()
+    const [alteBank, setAlteBank] = useState()
     const [connected, setConnected] = useState(false)
     const { state, dispatch } = useStore()
 
@@ -285,6 +287,7 @@ export default function ConnectWallet() {
             dispatch({ type: 'setWallet', message: connectedWallet })
 
             let coins
+            let alteTokens;
 
             let token
             try {
@@ -396,6 +399,12 @@ export default function ConnectWallet() {
 
                 checkIfWon()
 
+                alteTokens = await api.contractQuery(state.alteredContractAddress, {
+                    balance: {
+                        address: connectedWallet.walletAddress,
+                    },
+                })
+
                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
                     {
@@ -407,6 +416,8 @@ export default function ConnectWallet() {
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
 
+               
+
               
             } catch (e) {
                 console.log(e)
@@ -414,17 +425,20 @@ export default function ConnectWallet() {
 
             //Store coins global state
             dispatch({ type: 'setAllNativeCoins', message: coins })
-            //console.log(state.allCoins)
-
+            // console.log(coins)
+            let alte = parseInt(alteTokens.balance) / 1000000
+            console.log(alte)
             let uusd = coins.filter((c) => {
                 return c.denom === 'uusd'
             })
             let ust = parseInt(uusd) / 1000000
             setBank(numeral(ust).format('0,0.00'))
+            setAlteBank(numeral(alte).format('0,0.00'))
             // connectTo("extension")
         
         } else {
             setBank(null)
+            setAlteBank(null)
             dispatch({ type: 'setWallet', message: {} })
         }
     }
@@ -458,18 +472,18 @@ export default function ConnectWallet() {
         return (
             <>
                 <Wallet
-                    size={21}
+                    size={24}
                     color="#0F0038"
                     style={{ display: 'inline-block', marginTop: '-3px' }}
                 />{' '}
-                {bank ? 
-                bank 
+                {bank && alteBank ? 
+                <><Check size={16}  color="#0F0038" weight="bold"  style={{ display: 'inline-block', marginTop: '-8px', marginLeft:'-5px' }} /></> 
                 :
                 <div class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
                 </div> 
                 } 
-<span className="text-sm">UST</span>
+
             </>
         )
     }
@@ -698,15 +712,22 @@ export default function ConnectWallet() {
                                 aria-labelledby="dropdownMenuButton2"
                                 style={{ top: '70px' }}
                             >
+                                {bank && alteBank &&
+                                <div className="wallet-info d-inline-block text-start px-3" style={{fontSize:'13px'}}>
+                                <span className="d-block"><strong>YOUR WALLET:</strong></span>
+                                <span className="d-block" style={{marginBottom:'-5px'}}>{bank} <span className="text-sm">UST</span></span> 
+                                <span className="d-block">{alteBank} <span className="text-sm">ALTE</span></span>
+                                </div>
+                                }
                                 <button
                                     onClick={() => connectTo('disconnect')}
                                     className="dropdown-item"
                                 >
                                     <Power
                                         size={16}
-                                        style={{ marginTop: '-4px' }}
+                                        style={{ marginTop: '-2px' }}
                                     />{' '}
-                                    Disconnect
+                                    <span style={{fontSize:'13px'}}>Disconnect</span>
                                 </button>
                             </ul>
                             <button
