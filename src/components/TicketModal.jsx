@@ -264,7 +264,7 @@ export default function TicketModal(props) {
             </div>
             <div
                 className={open ? 'backdrop show' : 'backdrop'}
-                style={{zIndex:3}}
+                style={{ zIndex: 3 }}
                 onClick={() => toggleModal()}
             ></div>
         </>

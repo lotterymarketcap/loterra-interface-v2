@@ -347,7 +347,9 @@ export default () => {
                                                 <h2>Staking LP rewards</h2>
                                                 {state.wallet &&
                                                     state.wallet
-                                                        .walletAddress && state.poolInfo.assets.length > 0 &&  (
+                                                        .walletAddress &&
+                                                    state.poolInfo.assets
+                                                        .length > 0 && (
                                                         <p>
                                                             {numeral(
                                                                 parseInt(
@@ -356,8 +358,22 @@ export default () => {
                                                             ).format(
                                                                 '0,0.000000'
                                                             )}{' '}
-                                                            LOTA =  {
-                                                            numeral((state.LPHolderAccruedRewards * state.poolInfo.assets[1].amount / state.poolInfo.assets[0].amount) / 1000000).format("0,0.00")} UST
+                                                            LOTA ={' '}
+                                                            {numeral(
+                                                                (state.LPHolderAccruedRewards *
+                                                                    state
+                                                                        .poolInfo
+                                                                        .assets[1]
+                                                                        .amount) /
+                                                                    state
+                                                                        .poolInfo
+                                                                        .assets[0]
+                                                                        .amount /
+                                                                    1000000
+                                                            ).format(
+                                                                '0,0.00'
+                                                            )}{' '}
+                                                            UST
                                                         </p>
                                                     )}
                                                 <button
@@ -393,7 +409,7 @@ export default () => {
                 </div>
             </div>
         </section> */}
-            
+
             <Footer />
             <ProposalModal open={modal} toggleModal={() => setModal(!modal)} />
             <Notification

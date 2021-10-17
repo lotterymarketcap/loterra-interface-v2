@@ -362,9 +362,15 @@ export default function UserModal(props) {
                                 <div className="col-12 text-center claim">
                                     <h4 className="mb-2">
                                         Your Lottery Tickets
-                                        {state.allCombinations.combination &&
-                                            <p className="m-0">Number of tickets: {state.allCombinations.combination.length}</p>
-                                        }
+                                        {state.allCombinations.combination && (
+                                            <p className="m-0">
+                                                Number of tickets:{' '}
+                                                {
+                                                    state.allCombinations
+                                                        .combination.length
+                                                }
+                                            </p>
+                                        )}
                                         {state.historicalTicketLotteryId !==
                                             0 &&
                                             state.historicalTicketLotteryId !==

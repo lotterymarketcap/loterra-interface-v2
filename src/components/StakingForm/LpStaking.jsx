@@ -176,9 +176,15 @@ export default function LpStaking(props) {
                 </p>
                 {
                     <p className="input-slogan">
-                        Provide liquidity on pair <strong>LOTA-UST</strong> on <a href="https://app.terraswap.io/#Provide" target="_blank">Terraswap</a> and stake your LP
-                        token to share: 273.00 LOTA daily rewards | 100,000.00
-                        LOTA year rewards
+                        Provide liquidity on pair <strong>LOTA-UST</strong> on{' '}
+                        <a
+                            href="https://app.terraswap.io/#Provide"
+                            target="_blank"
+                        >
+                            Terraswap
+                        </a>{' '}
+                        and stake your LP token to share: 273.00 LOTA daily
+                        rewards | 100,000.00 LOTA year rewards
                     </p>
                 }
                 <span
@@ -303,8 +309,8 @@ export default function LpStaking(props) {
                 <div className="claim-unstake">
                     <p className="input-heading">Claim unstake</p>
                     <p className="input-slogan">
-                        Unbonding period of 50,000 block height ~4 | 5
-                        Days, ⚠️ unbonding token get no rewards
+                        Unbonding period of 50,000 block height ~4 | 5 Days, ⚠️
+                        unbonding token get no rewards
                     </p>
                     <button
                         className="btn btn-default-lg w-100"
@@ -321,7 +327,7 @@ export default function LpStaking(props) {
                         <div style={{ marginTop: '20px' }}>
                             List of pending claims
                         </div>
-                        <table>                            
+                        <table>
                             <thead>
                                 <tr>
                                     <td style={{ paddingLeft: '20px' }}>
