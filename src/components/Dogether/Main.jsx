@@ -22,6 +22,7 @@ export default function Main(props) {
 
     function doGether(e) {
         console.log('Dogether with: ',amount,percentage)
+        if (amount <= 0) return
         let msg = new MsgExecuteContract(
             state.wallet.walletAddress,
             state.dogetherAddress,
@@ -36,18 +37,15 @@ export default function Main(props) {
                 gasAdjustment: 1.7,
             })
             .then((e) => {
-                console.log(e)
-                // let notification_msg =
-                //     type == 'stake' ? 'Stake success' : 'Unstake success'
-                // if (e.success) {
-                //     showNotification(notification_msg, 'success', 4000)
-                // } else {
-                //     console.log(e)
-                // }
+                if (e.success) {
+                    showNotification('Pool success', 'success', 4000)
+                } else {
+                    console.log(e)
+                }
             })
             .catch((e) => {
                 console.log(e)
-                // showNotification(e.message, 'error', 4000)
+                showNotification(e.message, 'error', 4000)
             })
     }
     function doGetherUnstake(){
@@ -68,13 +66,11 @@ export default function Main(props) {
             })
             .then((e) => {
                 console.log(e)
-                // let notification_msg =
-                //     type == 'stake' ? 'Stake success' : 'Unstake success'
-                // if (e.success) {
-                //     showNotification(notification_msg, 'success', 4000)
-                // } else {
-                //     console.log(e)
-                // }
+                if (e.success) {
+                    showNotification('UnPool success', 'success', 4000)
+                } else {
+                    console.log(e)
+                }
             })
             .catch((e) => {
                 console.log(e)
@@ -82,12 +78,56 @@ export default function Main(props) {
             })
     }
 
-    function claimInfo(){
-
+    function claimInfo() {
+        if (state.holderClaimsDogether) {
+            let total_amount_claimable = 0
+            state.holderClaimsDogether.map((e) => {
+                if (e.release_at.at_height < state.blockHeight) {
+                    total_amount_claimable += parseInt(e.amount)
+                }
+            })
+            return <>{total_amount_claimable / 1000000}</>
+        }
+        return <>0</>
+    }
+    function pendingClaim() {
+        if (state.holderClaimsDogether) {
+            let total_amount_pending = 0
+            state.holderClaimsDogether.map((e) => {
+                if (e.release_at.at_height > state.blockHeight) {
+                    total_amount_pending += parseInt(e.amount)
+                }
+            })
+            return <>{total_amount_pending / 1000000}</>
+        }
+        return <>0</>
     }
 
-    function pendingClaim(){
-
+    function claimUnstake() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.dogetherAddress,
+            {
+                claim_un_pool: {},
+            }
+        )
+        state.wallet
+            .post({
+                msgs: [msg],
+                gasPrices: obj.gasPrices(),
+                gasAdjustment: 1.7,
+            })
+            .then((e) => {
+                if (e.success) {
+                    showNotification('Claim unPool success', 'success', 4000)
+                } else {
+                    console.log(e)
+                }
+            })
+            .catch((e) => {
+                console.log(e.message)
+                showNotification(e.message, 'error', 4000)
+            })
     }
 
    
@@ -235,8 +275,8 @@ export default function Main(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {state.holderClaims ? (
-                                    state.holderClaims.map((e) => {
+                                {state.holderClaimsDogether ? (
+                                    state.holderClaimsDogether.map((e) => {
                                         if (
                                             e.release_at.at_height >
                                             state.blockHeight
@@ -248,10 +288,8 @@ export default function Main(props) {
                                                             paddingLeft: '20px',
                                                         }}
                                                     >
-                                                        {numeral(
-                                                            parseInt(e.amount) /
-                                                                1000000
-                                                        ).format('0,0.000000')}
+                                                        {parseInt(e.amount) /
+                                                        1000000}
                                                         UST
                                                     </td>
                                                     <td

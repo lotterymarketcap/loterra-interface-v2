@@ -312,9 +312,19 @@ export default function ConnectWallet() {
                 const balance_stake_on_dogether = await api.contractQuery(state.dogetherStakingAddress, {
                     holder: {address: connectedWallet.walletAddress},
                 })
-                console.log("balance_stake_on_dogether")
-                console.log(balance_stake_on_dogether)
                 dispatch({ type: 'setBalanceStakeOnDogether', message: balance_stake_on_dogether.balance })
+
+                // Get balance pending to claim on Dogether
+                const claims_unstake_dogether = await api.contractQuery(
+                    state.dogetherStakingAddress,
+                    {
+                        claims: { address: connectedWallet.walletAddress },
+                    }
+                )
+                dispatch({
+                    type: 'setHolderClaimsDogether',
+                    message: claims_unstake_dogether.claims,
+                })
 
                 const holder = await api.contractQuery(
                     state.loterraStakingAddress,

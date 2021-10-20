@@ -157,11 +157,17 @@ const initialState = {
     amountClasses: amountClasses,
     jackpotAltered: 0,
     historicalJackpotAlte: 0,
-    balanceStakeOnDogether: 0
+    balanceStakeOnDogether: 0,
+    holderClaimsDogether: []
 }
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case 'setHolderClaimsDogether':
+            return {
+                ...state,
+                holderClaimsDogether: action.message,
+            }
         case 'setBalanceStakeOnDogether':
             return {
                 ...state,
