@@ -1,7 +1,9 @@
 import React,{useState} from 'react'
 import Footer from '../components/Footer'
 import Main from '../components/Dogether/Main'
+import {StdFee} from "@terra-money/terra.js";
 import Notification from '../components/Notification'
+
 
 export default () => {   
     const [notification, setNotification] = useState({
