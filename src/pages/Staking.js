@@ -168,7 +168,8 @@ export default () => {
         <>
             <div
                 className="hero staking"
-                style={{ backgroundImage: 'url(/rays.svg)' }}
+                style={{ backgroundImage:
+                    'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)', }}
             >
                 <div className="container h-100 d-md-flex">
                     <div className="row align-self-center">

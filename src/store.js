@@ -134,6 +134,7 @@ const initialState = {
     LPHolderAccruedRewards: 0,
     combination: '',
     modal: false,
+    ustBalance: 0,
     daoFunds: 0,
     lcd_client: new LCDClient({
         URL: 'https://lcd.terra.dev/',
@@ -328,6 +329,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 LotaBalance: action.message,
+            }
+        case 'setUstBalance':
+            return {
+                ...state,
+                ustBalance: action.message,
             }
         case 'setCombination':
             return {

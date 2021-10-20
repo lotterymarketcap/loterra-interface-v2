@@ -426,6 +426,7 @@ export default function ConnectWallet() {
             })
             let ust = parseInt(uusd) / 1000000
             setBank(numeral(ust).format('0,0.00'))
+            dispatch({ type: 'setUstBalance', message: ust })
             setAlteBank(numeral(alte).format('0,0.00'))
             // connectTo("extension")
         } else {
@@ -482,8 +483,8 @@ export default function ConnectWallet() {
                         />
                     </>
                 ) : (
-                    <div class="spinner-border spinner-border-sm" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div className="spinner-border spinner-border-sm" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 )}
             </>
@@ -604,9 +605,9 @@ export default function ConnectWallet() {
                     </li>
                     <li className="nav-item">
                         <a
-                            href="#"
+                            href="/dogether"
                             className="nav-link"
-                            style={{ position: 'relative', opacity: '0.5' }}
+                            style={{ position: 'relative' }}
                         >
                             <Ticket
                                 size={24}

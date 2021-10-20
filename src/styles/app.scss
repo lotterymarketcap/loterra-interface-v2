@@ -333,6 +333,45 @@ h4,
     }
 }
 
+.dogether-settings-info {
+    small {
+        font-size:10px;
+        color:$primary;
+    }
+}
+
+.dogether-usps {
+    color:#82f3be;
+}
+
+.slider-round {
+    margin-bottom:60px;
+    .noUi-connects {
+        border-radius:100px;
+    }
+    .noUi-connect {
+        background:linear-gradient(92.8deg, rgba(255, 255, 255, 0.6) -1.42%, rgba(10, 176, 96, 0.6) 102.82%), #20ff93;
+    }
+    .noUi-marker,.noUi-marker-large {
+        background: #ffffff7d;
+    }
+    .noUi-pips {
+        position: absolute;
+        color: #ffffff7d;
+    }
+    .noUi-handle {
+        border-radius:100px;
+        width:28px;
+        height:28px;
+    }
+    &.noUi-target {
+        background: #10003b;
+        border: 1px solid #44377e;
+        box-shadow: none;
+        border-radius: 100px;
+    }
+}
+
 .wallet-info {
     font-size: 13px;
     width: 100%;
