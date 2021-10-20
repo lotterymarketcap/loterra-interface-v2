@@ -1,8 +1,41 @@
 import React,{useState} from 'react'
 import Footer from '../components/Footer'
 import Main from '../components/Dogether/Main'
+import Notification from '../components/Notification'
 
 export default () => {   
+    const [notification, setNotification] = useState({
+        type: 'success',
+        message: '',
+        show: false,
+    })
+ 
+    function hideNotification() {
+        setNotification({
+            message: notification.message,
+            type: notification.type,
+            show: false,
+        })
+    }
+
+    function showNotification(message, type, duration) {
+        //console.log('fired notification')
+        setNotification({
+            message: message,
+            type: type,
+            show: true,
+        })
+        //console.log(notification)
+        //Disable after $var seconds
+        setTimeout(() => {
+            setNotification({
+                message: message,
+                type: type,
+                show: false,
+            })
+            // console.log('disabled',notification)
+        }, duration)
+    }
 
     return (
         <>
@@ -42,13 +75,19 @@ export default () => {
            
                               
                                 <div className="card-body">                               
-                                    <Main/>                              
+                                    <Main showNotification={(message, type, dur) =>
+                                    showNotification(message, type, dur)
+                                }/>                              
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>         
             </div>
+            <Notification
+                notification={notification}
+                close={() => hideNotification()}
+            />
             <Footer />
         </>
     )

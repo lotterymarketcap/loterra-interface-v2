@@ -2,23 +2,34 @@ import React, { useState } from 'react'
 import { useStore } from '../../store';
 
 import { Bank, Check, Info, Ticket } from 'phosphor-react'
-import Nouislider from "nouislider-react";
-import "nouislider/distribute/nouislider.css";
+// import Nouislider from "nouislider-react";
+// import "nouislider/distribute/nouislider.css";
 
-export default function Main() {
+
+export default function Main(props) {
     const { state, dispatch } = useStore()
+    const { showNotification } = props
 
     const [amount, setAmount] = useState(0)
     const [percentage, setPercentage] = useState(100)
 
-    const onSlideChange = (render, handle, value, un, percent) => { 
-        setPercentage(percent[0].toFixed(2))
-    }
+    // const onSlideChange = (render, handle, value, un, percent) => { 
+    //     setPercentage(percent[0].toFixed(2))
+    // }
 
-    const doGether = (e) => {
+    function doGether(e) {
         console.log('Dogether with: ',amount,percentage)
     }
 
+    function claimInfo(){
+
+    }
+
+    function pendingClaim(){
+
+    }
+
+   
     return (
             <>
                 
@@ -130,13 +141,96 @@ export default function Main() {
                         MAX: ?? UST                       
                     </strong>
 </div>
-
+<div className="col-md-12 my-3">
+                <div className="claim-unstake"
+                style={{
+                    background: '#160842'
+                }}
+                >
+                    <button
+                        className="btn btn-default w-100"
+                        onClick={() => claimUnstake()}
+                        style={{ marginTop: '21px' }}
+                    >
+                        Claim unstake
+                    </button>
+                    {/* If unstake claiming condition */}
+                    <span className="info">
+                        <Info size={14} weight="fill" className="me-1" />
+                        Your pending claim amount available soon:
+                        <strong>{pendingClaim()} UST</strong>
+                        <div style={{ marginTop: '20px' }}>
+                            List of pending claims
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td style={{ paddingLeft: '20px' }}>
+                                        Amount
+                                    </td>
+                                    <td style={{ paddingLeft: '20px' }}>
+                                        Release at blockheight
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {state.holderClaims ? (
+                                    state.holderClaims.map((e) => {
+                                        if (
+                                            e.release_at.at_height >
+                                            state.blockHeight
+                                        ) {
+                                            return (
+                                                <tr>
+                                                    <td
+                                                        style={{
+                                                            paddingLeft: '20px',
+                                                        }}
+                                                    >
+                                                        {numeral(
+                                                            parseInt(e.amount) /
+                                                                1000000
+                                                        ).format('0,0.000000')}
+                                                        UST
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            paddingLeft: '20px',
+                                                        }}
+                                                    >
+                                                        {e.release_at.at_height}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }
+                                    })
+                                ) : (
+                                    <tr>
+                                        <td>Empty</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </span>
+                    <small className="float-end text-muted mt-2">
+                        Available:
+                        <strong>
+                            {state.wallet &&
+                                state.wallet.walletAddress &&
+                                claimInfo()}
+                            UST
+                        </strong>
+                    </small>
+                </div>
+            </div>
             </div>
             {/* <p>{amount}</p>
             <p>{percentage}</p> */}
             
-        </div>
-        
+        </div>      
+   
+          
+       
             </>
     )
 }
