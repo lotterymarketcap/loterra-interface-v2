@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import Footer from '../components/Footer'
 import Main from '../components/Dogether/Main'
+import {StdFee} from "@terra-money/terra.js";
 
 export default () => {   
 

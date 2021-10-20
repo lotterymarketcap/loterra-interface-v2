@@ -4,6 +4,8 @@ import { useStore } from '../../store';
 import { Bank, Check, Info, Ticket } from 'phosphor-react'
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
+import {MsgExecuteContract, StdFee} from "@terra-money/terra.js";
+const obj = new StdFee(700_000, { uusd: 319200 })
 
 export default function Main() {
     const { state, dispatch } = useStore()
@@ -17,6 +19,64 @@ export default function Main() {
 
     const doGether = (e) => {
         console.log('Dogether with: ',amount,percentage)
+        let msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.dogetherAddress,
+            {
+                pool: {},
+            },  {"uusd": parseFloat(amount) * 1000000}
+        )
+        state.wallet
+            .post({
+                msgs: [msg],
+                gasPrices: obj.gasPrices(),
+                gasAdjustment: 1.7,
+            })
+            .then((e) => {
+                console.log(e)
+                // let notification_msg =
+                //     type == 'stake' ? 'Stake success' : 'Unstake success'
+                // if (e.success) {
+                //     showNotification(notification_msg, 'success', 4000)
+                // } else {
+                //     console.log(e)
+                // }
+            })
+            .catch((e) => {
+                console.log(e)
+                // showNotification(e.message, 'error', 4000)
+            })
+    }
+    function doGetherUnstake(){
+        console.log('Dogether with: ',amount,percentage)
+        if (amount <= 0) return
+        let msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.dogetherAddress,
+            {
+                un_pool: {amount: String(parseFloat(amount) * 1000000)}
+            },
+        )
+        state.wallet
+            .post({
+                msgs: [msg],
+                gasPrices: obj.gasPrices(),
+                gasAdjustment: 1.7,
+            })
+            .then((e) => {
+                console.log(e)
+                // let notification_msg =
+                //     type == 'stake' ? 'Stake success' : 'Unstake success'
+                // if (e.success) {
+                //     showNotification(notification_msg, 'success', 4000)
+                // } else {
+                //     console.log(e)
+                // }
+            })
+            .catch((e) => {
+                console.log(e)
+                // showNotification(e.message, 'error', 4000)
+            })
     }
 
     return (
@@ -120,14 +180,14 @@ export default function Main() {
                     </strong>
 </div>
 <div className="col-6">
-    <button className="btn btn-plain-lg w-100 mt-4" onClick={(e) => doGether()}>Unstake UST</button>
+    <button className="btn btn-plain-lg w-100 mt-4" onClick={(e) => doGetherUnstake()}>Unstake UST</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
                         onClick={() =>
-                             setAmount(state.ustBalance)                            
+                             setAmount(parseInt(state.balanceStakeOnDogether) / 1000000)
                         }
                     >
-                        MAX: ?? UST                       
+                        MAX: {parseInt(state.balanceStakeOnDogether) / 1000000} UST
                     </strong>
 </div>
 

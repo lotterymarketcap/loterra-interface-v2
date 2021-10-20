@@ -308,6 +308,14 @@ export default function ConnectWallet() {
                     message: parseInt(lastDrawnJackpot) / 1000000,
                 })
 
+                // Get balance to staked on Dogether
+                const balance_stake_on_dogether = await api.contractQuery(state.dogetherStakingAddress, {
+                    holder: {address: connectedWallet.walletAddress},
+                })
+                console.log("balance_stake_on_dogether")
+                console.log(balance_stake_on_dogether)
+                dispatch({ type: 'setBalanceStakeOnDogether', message: balance_stake_on_dogether.balance })
+
                 const holder = await api.contractQuery(
                     state.loterraStakingAddress,
                     {
@@ -402,6 +410,9 @@ export default function ConnectWallet() {
                     }
                 )
 
+                // Better to keep it at the end
+                // This one can generate an error on try catch if no combination played
+                // Because if error others query will not be triggered right after the error
                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
                     {
@@ -412,9 +423,11 @@ export default function ConnectWallet() {
                     }
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
+
             } catch (e) {
                 console.log(e)
             }
+
 
             //Store coins global state
             dispatch({ type: 'setAllNativeCoins', message: coins })
