@@ -351,11 +351,13 @@ h4,
     .stats-card {
         background: linear-gradient(
         45deg
-        , #2fd88754, #3edd9117);
+        , #30d9876e, #160842);
         border-radius: 10px;
         color: #fff;
         padding: 5px;
         text-align: center;
+        border: 0;
+        text-shadow: 1px 1px 0px #00000063;
         small {
             margin-bottom:5px;
         }
