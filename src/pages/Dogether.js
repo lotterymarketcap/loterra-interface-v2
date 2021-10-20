@@ -60,7 +60,7 @@ export default () => {
                        <div className="container-fluid">
                            <div className="row">
                                <div className="col-12">
-                               <img src="/dogether-5.png" className="img-fluid dogether-logo"/>
+                               <img src="/dogether-6.png" className="img-fluid dogether-logo"/>
                                </div>
                            </div>
                        </div>
