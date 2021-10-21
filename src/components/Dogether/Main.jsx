@@ -13,7 +13,7 @@ export default function Main(props) {
     const { state, dispatch } = useStore()
     const { showNotification } = props
 
-    const [amount, setAmount] = useState(0)
+    const [amount, setAmount] = useState(285)
     const [percentage, setPercentage] = useState(100)
 
     // const onSlideChange = (render, handle, value, un, percent) => { 
@@ -170,7 +170,7 @@ export default function Main(props) {
                     }}
                 >
                     <Info size={14} weight="fill" className="me-1" />
-                    Tickets will be <strong>automatically bought</strong> for the LoTerra Lottery 
+                    Dogether will automatically buy tickets for the LoTerra Lottery when your yield is sufficient.
                 </span>
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="basic-addon1">
