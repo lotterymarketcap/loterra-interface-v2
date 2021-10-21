@@ -160,6 +160,18 @@ export default function ConnectWallet() {
             message: contractLPAlteredBalance.balance,
         })
 
+        // Get total pool in Dogether
+        const total_pool_dogether = await api.contractQuery(
+            state.dogetherStakingAddress,
+            {
+                state: { },
+            }
+        )
+        dispatch({
+            type: 'setTotalBalancePoolDogether',
+            message: total_pool_dogether.total_balance,
+        })
+
         const jackpotAltered = await api.contractQuery(
             state.alteredContractAddress,
             {

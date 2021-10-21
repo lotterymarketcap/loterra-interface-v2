@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useStore } from '../../store';
-
+import numeral from 'numeral';
 import { Bank, Check, Info, Ticket } from 'phosphor-react'
 
 // import Nouislider from "nouislider-react";
@@ -20,7 +20,7 @@ export default function Main(props) {
     //     setPercentage(percent[0].toFixed(2))
     // }
 
-    const altePercentage = 18;
+    const anchorPercentage = 18;
 
     function doGether(e) {
         console.log('Dogether with: ',amount,percentage)
@@ -132,9 +132,33 @@ export default function Main(props) {
             })
     }
 
+    function totalBalance(){
+        return state.totalBalancePoolDogether / 1000000;
+    }
+
+    function userBalance(){       
+        return parseInt(state.balanceStakeOnDogether) / 1000000;
+    }
+
    
     return (
             <>
+               
+                <h2 className="text-center">
+                    <span className="d-block" style={{fontSize:'14px', textTransform:'uppercase', color:'#f13cf1'}}>Current pool balance</span>
+                    { totalBalance() ?
+                <>
+                 {numeral(totalBalance()).format('0.00')+' UST'}                            
+                </>
+
+                : 
+                <div className="text-center">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+                </div>
+                }</h2>
+            
                     <span className="info mb-3" style={{color:'#ffffffeb'}}>⚠️ We are in contact with security audit, until a full audit report we recommend to use Dogether at your own discretion and risk.</span>
 
                 <p className="input-heading">The amount you want to stake</p>
@@ -179,7 +203,7 @@ export default function Main(props) {
                     <div className="card stats-card">
                         <div className="card-body">
                         <small className="d-block">NR TICKETS A WEEK</small>
-                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * altePercentage / 356 * 7).toFixed(2)}</h4>
+                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * anchorPercentage / 356 * 7).toFixed(2)}</h4>
                         </div>
                     </div>
                 </div>
@@ -187,7 +211,7 @@ export default function Main(props) {
                     <div className="card stats-card">
                         <div className="card-body">
                         <small className="d-block">NR TICKETS A YEAR</small>
-                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * altePercentage / 1).toFixed(2)}</h4>
+                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * anchorPercentage / 1).toFixed(2)}</h4>
                         </div>
                     </div>
                 </div>
@@ -247,6 +271,18 @@ export default function Main(props) {
                     </strong>
                     <small className="w-100 text-end d-block" style={{color: '#9186c3'}}>Unstaking period 100000 blocks / 7 days</small>
 </div>
+
+        { userBalance() > 0 &&
+          <div className="col-md-12 my-3">
+            <div className="current-dogether-stats" style={{color:'#fff',padding:'7px',borderRadius:'4px',background:'linear-gradient(45deg, #30d9876e, #160842)'}}>
+            <p className="mb-1"><strong style={{color:'#82f3be'}}>Your Dogether Stats</strong> <small style={{marginLeft:'5px', color:'#a49ab6'}}>Average</small></p>            
+            <p className="mb-1" style={{fontSize:'14px'}}><strong>Deposited</strong> {numeral(userBalance()).format('0.00')} UST</p>
+            <p className="mb-1" style={{fontSize:'14px'}}><strong>Tickets a week</strong> {(userBalance() / 100 * percentage / 100 * anchorPercentage / 356 * 7).toFixed(2)}</p>
+            <p className="mb-1" style={{fontSize:'14px'}}><strong>Tickets a year</strong> {(userBalance() / 100 * percentage / 100 * anchorPercentage / 1).toFixed(2)}</p>
+            </div>
+        </div>           
+        } 
+
 {pendingClaim() > 0 &&
 <div className="col-md-12 my-3">
                 <div className="claim-unstake"
