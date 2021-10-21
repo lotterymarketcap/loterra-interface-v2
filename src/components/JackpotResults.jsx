@@ -136,6 +136,19 @@ export default function JackpotResults() {
                 type: 'setHistoricalJackpot',
                 message: parseInt(jackpotInfo) / 1000000,
             })
+
+            const jackpotAlteInfo = await api.contractQuery(
+                loterra_contract_address,
+                {
+                    jackpot_alte: {
+                        lottery_id: id,
+                    },
+                }
+            )
+            dispatch({
+                type: 'setHistoricalJackpotAlte',
+                message: parseInt(jackpotAlteInfo) / 1000000,
+            })
         } catch (e) {
             console.log(e, 'no found')
         }
