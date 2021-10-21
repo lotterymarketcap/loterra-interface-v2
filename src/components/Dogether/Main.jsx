@@ -76,7 +76,7 @@ export default function Main(props) {
             })
             .catch((e) => {
                 console.log(e)
-                // showNotification(e.message, 'error', 4000)
+                showNotification(e.message, 'error', 4000)
             })
     }
 
