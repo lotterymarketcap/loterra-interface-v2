@@ -170,7 +170,7 @@ export default function Main(props) {
                     }}
                 >
                     <Info size={14} weight="fill" className="me-1" />
-                    Dogether will automatically buy tickets for the LoTerra Lottery when your yield is sufficient.
+                    Pool your $UST with the earning yield on Anchor and enjoy Dogether buying lottery tickets on LoTerra with thousands of $UST prizes to win every weeks!
                 </span>
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="basic-addon1">
