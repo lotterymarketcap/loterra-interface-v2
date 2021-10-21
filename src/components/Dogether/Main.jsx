@@ -20,6 +20,8 @@ export default function Main(props) {
     //     setPercentage(percent[0].toFixed(2))
     // }
 
+    const altePercentage = 18;
+
     function doGether(e) {
         console.log('Dogether with: ',amount,percentage)
         if (amount <= 0) return
@@ -86,9 +88,9 @@ export default function Main(props) {
                     total_amount_claimable += parseInt(e.amount)
                 }
             })
-            return <>{total_amount_claimable / 1000000}</>
+            return total_amount_claimable / 1000000
         }
-        return <>0</>
+        return 0
     }
     function pendingClaim() {
         if (state.holderClaimsDogether) {
@@ -98,9 +100,9 @@ export default function Main(props) {
                     total_amount_pending += parseInt(e.amount)
                 }
             })
-            return <>{total_amount_pending / 1000000}</>
+            return total_amount_pending / 1000000
         }
-        return <>0</>
+        return 0
     }
 
     function claimUnstake() {
@@ -133,8 +135,9 @@ export default function Main(props) {
    
     return (
             <>
-                
-                <p class="input-heading">The amount you want to stake</p>
+                    <span className="info mb-3" style={{color:'#ffffffeb'}}>⚠️ We are in contact with security audit, until a full audit report we recommend to use Dogether at your own discretion and risk.</span>
+
+                <p className="input-heading">The amount you want to stake</p>
                 <span
                     className="info"
                     style={{
@@ -143,7 +146,7 @@ export default function Main(props) {
                     }}
                 >
                     <Info size={14} weight="fill" className="me-1" />
-                    Tickets will be <strong>automatically bought</strong> for the LoTerra Lottery when there is yield available, if you have a <strong>winning ticket</strong> prizes will be deposited automatically to your wallet.
+                    Tickets will be <strong>automatically bought</strong> for the LoTerra Lottery 
                 </span>
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="basic-addon1">
@@ -176,7 +179,7 @@ export default function Main(props) {
                     <div className="card stats-card">
                         <div className="card-body">
                         <small className="d-block">NR TICKETS A WEEK</small>
-                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * 20 / 356 * 7).toFixed(2)}</h4>
+                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * altePercentage / 356 * 7).toFixed(2)}</h4>
                         </div>
                     </div>
                 </div>
@@ -184,7 +187,7 @@ export default function Main(props) {
                     <div className="card stats-card">
                         <div className="card-body">
                         <small className="d-block">NR TICKETS A YEAR</small>
-                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * 20 / 1).toFixed(2)}</h4>
+                        <h4><Ticket size={30} color={'#82f3be'} style={{position:'relative',top:'-3px',marginRight:'4px'}}/>{(amount / 100 * percentage / 100 * altePercentage / 1).toFixed(2)}</h4>
                         </div>
                     </div>
                 </div>
@@ -221,7 +224,7 @@ export default function Main(props) {
                 </div> */}
 
 <div className="col-6">
-    <button className="btn btn-normal-lg w-100 mt-4" onClick={(e) => doGether()}>Stake UST</button>
+    <button className="btn btn-normal-lg w-100 mt-2" onClick={(e) => doGether()}>Stake</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
                         onClick={() =>
@@ -232,7 +235,8 @@ export default function Main(props) {
                     </strong>
 </div>
 <div className="col-6">
-    <button className="btn btn-plain-lg w-100 mt-4" onClick={(e) => doGetherUnstake()}>Unstake UST</button>
+   
+    <button className="btn btn-plain-lg w-100 mt-2" onClick={(e) => doGetherUnstake()}>Unstake</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
                         onClick={() =>
@@ -241,20 +245,16 @@ export default function Main(props) {
                     >
                         MAX: {parseInt(state.balanceStakeOnDogether) / 1000000} UST
                     </strong>
+                    <small className="w-100 text-end d-block" style={{color: '#9186c3'}}>Unstaking period 100000 blocks / 7 days</small>
 </div>
+{pendingClaim() > 0 &&
 <div className="col-md-12 my-3">
                 <div className="claim-unstake"
                 style={{
                     background: '#160842'
                 }}
                 >
-                    <button
-                        className="btn btn-default w-100"
-                        onClick={() => claimUnstake()}
-                        style={{ marginTop: '21px' }}
-                    >
-                        Claim unstake
-                    </button>
+            
                     {/* If unstake claiming condition */}
                     <span className="info">
                         <Info size={14} weight="fill" className="me-1" />
@@ -319,13 +319,22 @@ export default function Main(props) {
                                 claimInfo()}
                             UST
                         </strong>
-                    </small>
+                    </small>                    
+                    <button
+                        className="btn btn-default w-100"
+                        disabled={claimInfo() == 0 ? true : false}
+                        onClick={() => claimUnstake()}
+                        style={{ marginTop: '10px' }}
+                    >
+                        Claim unstake
+                    </button>
                 </div>
             </div>
+}
             </div>
             {/* <p>{amount}</p>
             <p>{percentage}</p> */}
-            
+            <small><strong>Current blockheight:</strong> {state.blockHeight}</small>
         </div>      
    
           

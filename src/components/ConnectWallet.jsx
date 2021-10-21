@@ -587,6 +587,40 @@ export default function ConnectWallet() {
                     </li>
                     <li className="nav-item">
                         <a
+                            href="/dogether"
+                            className="nav-link"
+                            style={{ position: 'relative' }}
+                        >
+                            <Ticket
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Dogether
+                            <span className="item-label">No loss lottery</span>
+                            <span
+                                className="badge"
+                                style={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    top: '-9px',
+                                    fontSize: '10px',
+                                    lineHeight: '10px',
+                                    padding: '3px',
+                                    textTransform: 'uppercase',
+                                    color:'#10003b',
+                                    background:'#8bf6c2'
+                                }}
+                            >
+                                BETA
+                            </span>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a
                             href="/staking"
                             className="nav-link"
                             className={'nav-link ' + stakingClass}
@@ -625,39 +659,7 @@ export default function ConnectWallet() {
                                 Together we decide
                             </span>
                         </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="/dogether"
-                            className="nav-link"
-                            style={{ position: 'relative' }}
-                        >
-                            <Ticket
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Dogether
-                            <span className="item-label">No loss lottery</span>
-                            <span
-                                className="badge bg-primary"
-                                style={{
-                                    position: 'absolute',
-                                    right: 0,
-                                    top: '-9px',
-                                    fontSize: '10px',
-                                    lineHeight: '10px',
-                                    padding: '3px',
-                                    textTransform: 'uppercase',
-                                }}
-                            >
-                                Coming soon
-                            </span>
-                        </a>
-                    </li>
+                    </li>                    
                 </nav>
 
                 <div className="navbar-nav ms-auto">
