@@ -106,6 +106,8 @@ const initialState = {
     loterraLPAddress: 'terra1t4xype7nzjxrzttuwuyh9sglwaaeszr8l78u6e',
     loterraStakingLPAddress: 'terra1pdslh858spzqrtx2gwr69pzm9m2wrv55aeh742',
     alteredStakingLPAddress: 'terra1augyqytpq9klph5egx99m5ufrcjx5f7xgrcqck',
+    dogetherAddress: 'terra19h4xk8xxxew0ne6fuw0mvuf7ltmjmxjxssj5ts',
+    dogetherStakingAddress: 'terra1z2vgthmdy5qlz4cnj9d9d3ajtqeq7uzc0acxrp',
     allWinners: [],
     allRecentWinners: [],
     tokenInfo: {},
@@ -134,6 +136,7 @@ const initialState = {
     LPHolderAccruedRewards: 0,
     combination: '',
     modal: false,
+    ustBalance: 0,
     daoFunds: 0,
     lcd_client: new LCDClient({
         URL: 'https://lcd.terra.dev/',
@@ -144,7 +147,6 @@ const initialState = {
     poolInfo: { assets: [] },
     stakingLoterraFunds: 0,
     stakingAlteredFunds: 0,
-
     comboTextSix: comboTextSix,
     comboTextFive: comboTextFive,
     comboTextFour: comboTextFour,
@@ -155,10 +157,22 @@ const initialState = {
     amountClasses: amountClasses,
     jackpotAltered: 0,
     historicalJackpotAlte: 0,
+    balanceStakeOnDogether: 0,
+    holderClaimsDogether: []
 }
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case 'setHolderClaimsDogether':
+            return {
+                ...state,
+                holderClaimsDogether: action.message,
+            }
+        case 'setBalanceStakeOnDogether':
+            return {
+                ...state,
+                balanceStakeOnDogether: action.message,
+            }
         case 'setHistoricalJackpotAlte':
             return {
                 ...state,
@@ -328,6 +342,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 LotaBalance: action.message,
+            }
+        case 'setUstBalance':
+            return {
+                ...state,
+                ustBalance: action.message,
             }
         case 'setCombination':
             return {

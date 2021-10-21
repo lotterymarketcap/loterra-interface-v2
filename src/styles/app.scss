@@ -333,6 +333,85 @@ h4,
     }
 }
 
+.dogether-logo {
+    margin:0 auto;
+    display:block;
+    position:relative;
+    @media(max-width:768px){
+        margin-top: 60px;
+    }
+}
+
+.dogether-card {
+    margin-top: -374px !important;
+    background:linear-gradient(328.75deg, #10003b54 -5.49%, #0f0038f2 104.44%) !important;
+    @media(max-width:1100px){
+        margin-top: -33vw !important;
+    }
+    .stats-card {
+        background: linear-gradient(
+        45deg
+        , #30d9876e, #160842);
+        border-radius: 10px;
+        color: #fff;
+        padding: 5px;
+        text-align: center;
+        border: 0;
+        text-shadow: 1px 1px 0px #00000063;
+        small {
+            margin-bottom:5px;
+        }
+        h4 {
+            margin-bottom:0;
+        }
+    }
+}
+
+.dogether-settings-info {
+    .title {
+        font-family: 'Sigmar One';
+    font-size: 22px;
+    color: #f5c753;
+    text-shadow: 1px 1px 20px #f13bf1, 1px 2px 0px #8c6910;
+    }
+    small {
+        font-size:10px;
+        color:#82f3be;
+    }
+}
+
+.dogether-usps {
+    color:#82f3be;
+}
+
+.slider-round {
+    margin-bottom:60px;
+    .noUi-connects {
+        border-radius:100px;
+    }
+    .noUi-connect {
+        background:linear-gradient(92.8deg, rgba(255, 255, 255, 0.6) -1.42%, rgba(10, 176, 96, 0.6) 102.82%), #20ff93;
+    }
+    .noUi-marker,.noUi-marker-large {
+        background: #ffffff7d;
+    }
+    .noUi-pips {
+        position: absolute;
+        color: #ffffff7d;
+    }
+    .noUi-handle {
+        border-radius:100px;
+        width:28px;
+        height:28px;
+    }
+    &.noUi-target {
+        background: #10003b;
+        border: 1px solid #44377e;
+        box-shadow: none;
+        border-radius: 100px;
+    }
+}
+
 .wallet-info {
     font-size: 13px;
     width: 100%;

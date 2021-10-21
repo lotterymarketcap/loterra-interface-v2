@@ -308,6 +308,24 @@ export default function ConnectWallet() {
                     message: parseInt(lastDrawnJackpot) / 1000000,
                 })
 
+                // Get balance to staked on Dogether
+                const balance_stake_on_dogether = await api.contractQuery(state.dogetherStakingAddress, {
+                    holder: {address: connectedWallet.walletAddress},
+                })
+                dispatch({ type: 'setBalanceStakeOnDogether', message: balance_stake_on_dogether.balance })
+
+                // Get balance pending to claim on Dogether
+                const claims_unstake_dogether = await api.contractQuery(
+                    state.dogetherStakingAddress,
+                    {
+                        claims: { address: connectedWallet.walletAddress },
+                    }
+                )
+                dispatch({
+                    type: 'setHolderClaimsDogether',
+                    message: claims_unstake_dogether.claims,
+                })
+
                 const holder = await api.contractQuery(
                     state.loterraStakingAddress,
                     {
@@ -402,6 +420,9 @@ export default function ConnectWallet() {
                     }
                 )
 
+                // Better to keep it at the end
+                // This one can generate an error on try catch if no combination played
+                // Because if error others query will not be triggered right after the error
                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
                     {
@@ -412,9 +433,11 @@ export default function ConnectWallet() {
                     }
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
+
             } catch (e) {
                 console.log(e)
             }
+
 
             //Store coins global state
             dispatch({ type: 'setAllNativeCoins', message: coins })
@@ -426,6 +449,7 @@ export default function ConnectWallet() {
             })
             let ust = parseInt(uusd) / 1000000
             setBank(numeral(ust).format('0,0.00'))
+            dispatch({ type: 'setUstBalance', message: ust })
             setAlteBank(numeral(alte).format('0,0.00'))
             // connectTo("extension")
         } else {
@@ -482,8 +506,8 @@ export default function ConnectWallet() {
                         />
                     </>
                 ) : (
-                    <div class="spinner-border spinner-border-sm" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div className="spinner-border spinner-border-sm" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 )}
             </>
@@ -563,6 +587,40 @@ export default function ConnectWallet() {
                     </li>
                     <li className="nav-item">
                         <a
+                            href="/dogether"
+                            className="nav-link"
+                            style={{ position: 'relative' }}
+                        >
+                            <Ticket
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Dogether
+                            <span className="item-label">No loss lottery</span>
+                            <span
+                                className="badge"
+                                style={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    top: '-9px',
+                                    fontSize: '10px',
+                                    lineHeight: '10px',
+                                    padding: '3px',
+                                    textTransform: 'uppercase',
+                                    color:'#10003b',
+                                    background:'#8bf6c2'
+                                }}
+                            >
+                                BETA
+                            </span>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a
                             href="/staking"
                             className="nav-link"
                             className={'nav-link ' + stakingClass}
@@ -601,39 +659,7 @@ export default function ConnectWallet() {
                                 Together we decide
                             </span>
                         </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="#"
-                            className="nav-link"
-                            style={{ position: 'relative', opacity: '0.5' }}
-                        >
-                            <Ticket
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Dogether
-                            <span className="item-label">No loss lottery</span>
-                            <span
-                                className="badge bg-primary"
-                                style={{
-                                    position: 'absolute',
-                                    right: 0,
-                                    top: '-9px',
-                                    fontSize: '10px',
-                                    lineHeight: '10px',
-                                    padding: '3px',
-                                    textTransform: 'uppercase',
-                                }}
-                            >
-                                Coming soon
-                            </span>
-                        </a>
-                    </li>
+                    </li>                    
                 </nav>
 
                 <div className="navbar-nav ms-auto">

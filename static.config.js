@@ -28,6 +28,10 @@ export default {
             path: 'dao',
             template: 'src/pages/DAO',
         },
+        {
+            path: 'dogether',
+            template: 'src/pages/Dogether',
+        },
         // A 404 component
         {
             path: '404',
