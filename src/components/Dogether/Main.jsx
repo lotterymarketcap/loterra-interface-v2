@@ -143,8 +143,11 @@ export default function Main(props) {
    
     return (
             <>
-               
-                <h2 className="text-center">
+               <p className="text-center" style={{color:'#82f3be', fontWeight:700}}><Info size={24} style={{marginTop:'-4px'}}/> Pool your $UST with the earning yield on Anchor and enjoy Dogether buying lottery tickets on LoTerra with thousands of $UST prizes to win every weeks!</p>
+                <h2 className="text-center" style={{
+                    background:'radial-gradient(#ffde872e, transparent)',
+                    padding:'15px 0',
+                }}>
                     <span className="d-block" style={{fontSize:'14px', textTransform:'uppercase', color:'#f13cf1'}}>Current pool balance</span>
                     { totalBalance() ?
                 <>
@@ -161,17 +164,7 @@ export default function Main(props) {
             
                     <span className="info mb-3" style={{color:'#ffffffeb'}}>⚠️ We are in contact with security audit, until a full audit report we recommend to use Dogether at your own discretion and risk.</span>
 
-                <p className="input-heading">The amount you want to stake</p>
-                <span
-                    className="info"
-                    style={{
-                        color: '#ff36ff',
-                        borderColor: '#ff36ff',
-                    }}
-                >
-                    <Info size={14} weight="fill" className="me-1" />
-                    Pool your $UST with the earning yield on Anchor and enjoy Dogether buying lottery tickets on LoTerra with thousands of $UST prizes to win every weeks!
-                </span>
+                <p className="input-heading">The amount you want to pool</p>                
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="basic-addon1">
                                         <img src="/UST.svg" width="30px" className="img-fluid"/>
