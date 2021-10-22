@@ -175,7 +175,7 @@ export default function Main(props) {
                 }</h2>
             
 
-                <p className="input-heading">The amount you want to pool</p>                
+                <p className="input-heading mt-3">The amount you want to pool</p>                
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="basic-addon1">
                                         <img src="/UST.svg" width="30px" className="img-fluid"/>
@@ -203,7 +203,7 @@ export default function Main(props) {
                         <p className="title">Your Dogether Predictions</p>
                     </div>            
             
-                <div className="col-6 mb-3">
+                <div className="col-md-6 mb-3">
                     <div className="card stats-card">
                         <div className="card-body">
                         <small className="d-block">NR TICKETS A WEEK</small>
@@ -211,7 +211,7 @@ export default function Main(props) {
                         </div>
                     </div>
                 </div>
-                <div className="col-6 mb-3">
+                <div className="col-md-6 mb-3">
                     <div className="card stats-card">
                         <div className="card-body">
                         <small className="d-block">NR TICKETS A YEAR</small>
@@ -250,9 +250,11 @@ export default function Main(props) {
                 </div>
                 </div>
                 </div> */}
-
-<div className="col-6">
-    <label><input value={agreement} type="checkbox" onChange={(e) => setAgreement(!agreement)}/> You need to agree <a style={{textDecoration:'underline'}} data-bs-toggle="modal" data-bs-target="#agreementModal">before</a> blabla</label>
+<div className="col-md-12">
+<label className="info" style={{color: '#a7a2bd',fontSize: '14px'}}><input value={agreement} type="checkbox" onChange={(e) => setAgreement(!agreement)}/>⚠️ I agree using Dogether at my own discretion and risk.</label>
+</div>
+<div className="col-md-6 mb-3">
+    
     <button className="btn btn-normal-lg w-100 mt-2" onClick={(e) => doGether()} disabled={!agreement}>Pool</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
@@ -263,8 +265,8 @@ export default function Main(props) {
                         MAX: {state.ustBalance ? state.ustBalance.toFixed(2) : 0} UST                       
                     </strong>
 </div>
-<div className="col-6">
-<small className="w-100 text-end d-block" style={{color: '#9186c3'}}>UnPool period 100000 blocks / ~7 days</small>
+<div className="col-md-6 mb-3">
+
     <button className="btn btn-plain-lg w-100 mt-2" onClick={(e) => doGetherUnstake()}>UnPool</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
@@ -274,7 +276,7 @@ export default function Main(props) {
                     >
                         MAX: {parseInt(state.balanceStakeOnDogether) / 1000000} UST
                     </strong>
-                    
+                    <small className="w-100 text-end d-block" style={{color: '#9186c3'}}>UnPool period 100000 blocks / ~7 days</small>                  
 </div>
 
         { userBalance() > 0 &&
@@ -378,7 +380,7 @@ export default function Main(props) {
             <small><strong>Current blockheight:</strong> {state.blockHeight}</small>
         </div>      
   
-<div className="modal fade" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
+{/* <div className="modal fade" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content card lota-card">
       <div className="modal-header" style={{borderBottom:0}}>
@@ -390,7 +392,7 @@ export default function Main(props) {
       </div>
     </div>
   </div>
-</div>
+</div> */}
           
        
             </>
