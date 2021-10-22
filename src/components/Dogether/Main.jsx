@@ -248,7 +248,7 @@ export default function Main(props) {
                 </div> */}
 
 <div className="col-6">
-    <button className="btn btn-normal-lg w-100 mt-2" onClick={(e) => doGether()}>Stake</button>
+    <button className="btn btn-normal-lg w-100 mt-2" onClick={(e) => doGether()}>Pool</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
                         onClick={() =>
@@ -260,7 +260,7 @@ export default function Main(props) {
 </div>
 <div className="col-6">
    
-    <button className="btn btn-plain-lg w-100 mt-2" onClick={(e) => doGetherUnstake()}>Unstake</button>
+    <button className="btn btn-plain-lg w-100 mt-2" onClick={(e) => doGetherUnstake()}>UnPool</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
                         onClick={() =>
@@ -269,7 +269,7 @@ export default function Main(props) {
                     >
                         MAX: {parseInt(state.balanceStakeOnDogether) / 1000000} UST
                     </strong>
-                    <small className="w-100 text-end d-block" style={{color: '#9186c3'}}>Unstaking period 100000 blocks / 7 days</small>
+                    <small className="w-100 text-end d-block" style={{color: '#9186c3'}}>UnPool period 100000 blocks / ~7 days</small>
 </div>
 
         { userBalance() > 0 &&
@@ -291,7 +291,7 @@ export default function Main(props) {
                 }}
                 >
             
-                    {/* If unstake claiming condition */}
+                    {/* If unPool claiming condition */}
                     <span className="info">
                         <Info size={14} weight="fill" className="me-1" />
                         Your pending claim amount available soon:
@@ -362,7 +362,7 @@ export default function Main(props) {
                         onClick={() => claimUnstake()}
                         style={{ marginTop: '10px' }}
                     >
-                        Claim unstake
+                        Claim unPool
                     </button>
                 </div>
             </div>
