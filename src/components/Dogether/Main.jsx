@@ -12,7 +12,7 @@ const obj = new StdFee(700_000, { uusd: 319200 })
 export default function Main(props) {
     const { state, dispatch } = useStore()
     const { showNotification } = props
-
+    const [agreement, setAgreement] = useState(false);
     const [amount, setAmount] = useState(285)
     const [percentage, setPercentage] = useState(100)
 
@@ -24,6 +24,10 @@ export default function Main(props) {
 
     function doGether(e) {
         console.log('Dogether with: ',amount,percentage)
+        if(!agreement){
+            showNotification('You need to accept the agreement', 'error', 4000)
+            return;
+        }
         if (amount <= 0) return
         let msg = new MsgExecuteContract(
             state.wallet.walletAddress,
@@ -143,6 +147,8 @@ export default function Main(props) {
    
     return (
             <>
+                                <span className="info mb-3" style={{color:'#ffffffeb'}}>⚠️ We are in contact with security audit, until a full audit report we recommend to use Dogether at your own discretion and risk.</span>
+
                <p className="text-center" style={{color:'#82f3be', fontWeight:700}}><Info size={24} style={{marginTop:'-4px'}}/> Pool your $UST with the earning yield on Anchor and enjoy Dogether buying lottery tickets on LoTerra with thousands of $UST prizes to win every week!</p>
                 <h2 className="text-center" style={{
                     background:'radial-gradient(#ffde872e, transparent)',
@@ -151,7 +157,13 @@ export default function Main(props) {
                     <span className="d-block" style={{fontSize:'14px', textTransform:'uppercase', color:'#f13cf1'}}>Current pool balance</span>
                     { totalBalance() ?
                 <>
-                 {numeral(totalBalance()).format('0.00')+' UST'}                            
+                 <span className="d-block" style={{marginBottom:'7px'}}>{numeral(totalBalance()).format('0.00')+' UST'}</span>  
+                 <span className="d-inline-block" style={{fontSize:'21px', marginRight:'6px'}}>
+                     <span className="d-block" style={{fontSize:'12px', textTransform:'uppercase', color:'#f13cf1'}}>Tickets a week</span>
+                     {(totalBalance() / 100 * percentage / 100 * anchorPercentage / 356 * 7).toFixed(2)}</span>             
+                 <span className="d-inline-block" style={{fontSize:'21px', marginLeft:'6px'}}>
+                    <span className="d-block" style={{fontSize:'12px', textTransform:'uppercase', color:'#f13cf1'}}>Tickets a year</span>
+                     {(totalBalance() / 100 * percentage / 100 * anchorPercentage / 1).toFixed(2)}</span>            
                 </>
 
                 : 
@@ -162,7 +174,6 @@ export default function Main(props) {
                 </div>
                 }</h2>
             
-                    <span className="info mb-3" style={{color:'#ffffffeb'}}>⚠️ We are in contact with security audit, until a full audit report we recommend to use Dogether at your own discretion and risk.</span>
 
                 <p className="input-heading">The amount you want to pool</p>                
                                 <div className="input-group mb-3">
@@ -241,7 +252,8 @@ export default function Main(props) {
                 </div> */}
 
 <div className="col-6">
-    <button className="btn btn-normal-lg w-100 mt-2" onClick={(e) => doGether()}>Pool</button>
+    <label><input value={agreement} type="checkbox" onChange={(e) => setAgreement(!agreement)}/> You need to agree <a style={{textDecoration:'underline'}} data-bs-toggle="modal" data-bs-target="#agreementModal">before</a> blabla</label>
+    <button className="btn btn-normal-lg w-100 mt-2" onClick={(e) => doGether()} disabled={!agreement}>Pool</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
                         onClick={() =>
@@ -252,7 +264,7 @@ export default function Main(props) {
                     </strong>
 </div>
 <div className="col-6">
-   
+<small className="w-100 text-end d-block" style={{color: '#9186c3'}}>UnPool period 100000 blocks / ~7 days</small>
     <button className="btn btn-plain-lg w-100 mt-2" onClick={(e) => doGetherUnstake()}>UnPool</button>
     <strong className="w-100 text-end d-block mt-2"
                         style={{ textDecoration: 'underline', fontSize:'13px', opacity: 0.6 }}
@@ -262,7 +274,7 @@ export default function Main(props) {
                     >
                         MAX: {parseInt(state.balanceStakeOnDogether) / 1000000} UST
                     </strong>
-                    <small className="w-100 text-end d-block" style={{color: '#9186c3'}}>UnPool period 100000 blocks / ~7 days</small>
+                    
 </div>
 
         { userBalance() > 0 &&
@@ -365,7 +377,20 @@ export default function Main(props) {
             <p>{percentage}</p> */}
             <small><strong>Current blockheight:</strong> {state.blockHeight}</small>
         </div>      
-   
+  
+<div className="modal fade" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content card lota-card">
+      <div className="modal-header" style={{borderBottom:0}}>
+        <h5 className="modal-title" id="exampleModalLabel">Agreement</h5>
+        <button type="button" style={{color:'#fff'}} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+        ...
+      </div>
+    </div>
+  </div>
+</div>
           
        
             </>
