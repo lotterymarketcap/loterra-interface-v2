@@ -143,7 +143,7 @@ export default function Main(props) {
    
     return (
             <>
-               <p className="text-center" style={{color:'#82f3be', fontWeight:700}}><Info size={24} style={{marginTop:'-4px'}}/> Pool your $UST with the earning yield on Anchor and enjoy Dogether buying lottery tickets on LoTerra with thousands of $UST prizes to win every weeks!</p>
+               <p className="text-center" style={{color:'#82f3be', fontWeight:700}}><Info size={24} style={{marginTop:'-4px'}}/> Pool your $UST with the earning yield on Anchor and enjoy Dogether buying lottery tickets on LoTerra with thousands of $UST prizes to win every week!</p>
                 <h2 className="text-center" style={{
                     background:'radial-gradient(#ffde872e, transparent)',
                     padding:'15px 0',
