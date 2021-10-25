@@ -9,7 +9,7 @@ import {
     BankAPI,
 } from '@terra-money/terra.js'
 
-import { Trophy, ArrowCircleLeft, ArrowCircleRight } from 'phosphor-react'
+import { Trophy, ArrowCircleLeft, ArrowCircleRight, NumberCircleTwo, NumberCircleOne, NumberCircleThree, NumberCircleFour, NumberCircleFive, NumberCircleSix, CheckCircle } from 'phosphor-react'
 import PriceLoader from './PriceLoader'
 import WinnerRow from './WinnerRow'
 const loterra_contract_address = 'terra1q2k29wwcz055q4ftx4eucsq6tg9wtulprjg75w'
@@ -65,6 +65,8 @@ export default function JackpotResults() {
                 100
         ).format('0,0.00')
     }
+
+    
 
     function getPrizePerRankAlteNet(nr) {
         let rank = nr - 1
@@ -349,10 +351,18 @@ export default function JackpotResults() {
                                         <td
                                             style={{
                                                 color: '#FF36FF',
-                                                minWidth: '100px',
+                                                minWidth: '130px',
                                             }}
                                         >
                                             6 Symbols
+                                            <div className="position-info">                                              
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                            </div>
                                         </td>
                                         <td
                                             style={{
@@ -428,6 +438,14 @@ export default function JackpotResults() {
                                             }}
                                         >
                                             5 Symbols
+                                            <div className="position-info">                                              
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <NumberCircleSix style={{opacity:0.7}} size={18} />
+                                            </div>
                                         </td>
                                         <td>
                                             {getPrizePerRank(2)}
@@ -499,6 +517,14 @@ export default function JackpotResults() {
                                             }}
                                         >
                                             4 Symbols
+                                            <div className="position-info">                                              
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <NumberCircleFive style={{opacity:0.7}} size={18} />
+                                                <NumberCircleSix style={{opacity:0.7}} size={18} />
+                                            </div>
                                         </td>
                                         <td>
                                             {getPrizePerRank(3)}
@@ -570,6 +596,14 @@ export default function JackpotResults() {
                                             }}
                                         >
                                             3 Symbols
+                                            <div className="position-info">                                              
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <NumberCircleFour style={{opacity:0.7}} size={18} />
+                                                <NumberCircleFive style={{opacity:0.7}} size={18} />
+                                                <NumberCircleSix style={{opacity:0.7}} size={18} />
+                                            </div>
                                         </td>
                                         <td>
                                             {getPrizePerRank(4)}
@@ -641,6 +675,14 @@ export default function JackpotResults() {
                                             }}
                                         >
                                             2 Symbols
+                                            <div className="position-info">                                              
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <NumberCircleThree style={{opacity:0.7}} size={18} />
+                                                <NumberCircleFour style={{opacity:0.7}} size={18} />
+                                                <NumberCircleFive style={{opacity:0.7}} size={18} />
+                                                <NumberCircleSix style={{opacity:0.7}} size={18} />
+                                            </div>
                                         </td>
                                         <td>
                                             {getPrizePerRank(5)}
@@ -712,6 +754,14 @@ export default function JackpotResults() {
                                             }}
                                         >
                                             1 Symbols
+                                            <div className="position-info">                                              
+                                                <CheckCircle style={{opacity:1, color:'#4ee19b'}} size={18} />
+                                                <NumberCircleTwo style={{opacity:0.7}} size={18} />
+                                                <NumberCircleThree style={{opacity:0.7}} size={18} />
+                                                <NumberCircleFour style={{opacity:0.7}} size={18} />
+                                                <NumberCircleFive style={{opacity:0.7}} size={18} />
+                                                <NumberCircleSix style={{opacity:0.7}} size={18} />
+                                            </div>
                                         </td>
                                         <td>
                                             {getPrizePerRank(6)}
