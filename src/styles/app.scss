@@ -344,9 +344,59 @@ h4,
 
 .dogether-card {
     margin-top: -374px !important;
-    background:linear-gradient(328.75deg, #10003b54 -5.49%, #0f0038f2 104.44%) !important;
+    background:linear-gradient(328.75deg, #10003ba6 -5.49%, #0f0038f2 104.44%) !important;
     @media(max-width:1100px){
         margin-top: -33vw !important;
+    }
+    h3 {
+        font-size: 30px !important;
+    font-family: 'Sigmar One';
+    color: #f5c753 !important;
+    text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
+    }
+    .heading-1 {
+        font-size:14px;
+        text-transform:uppercase;
+        color:#f13cf1;
+        
+    }
+    .heading-2 {
+        font-size:12px;
+        text-transform:uppercase;
+        color:#f13cf1;
+        text-shadow:none;
+    }
+    .nr-1 {
+        font-size:4vw;
+        font-weight:700;
+        margin-bottom:7px;
+        text-shadow:0px 2px 0px #adadad;
+        @media(max-width:768px){
+            font-size:8vw;
+        }
+    }
+    .nr-2 { 
+        font-size: 2vw;
+        font-weight:700;
+        width: 50%;
+        text-align: center;
+        text-shadow:0px 1px 0px #adadad;
+        @media(max-width:768px){
+            font-size:4vw;
+        }
+        @media(max-width:500px){
+            font-size:6vw;
+        }
+    }
+    .input-heading {
+        font-family: 'Sigmar One';
+        font-size: 22px;
+        color: #f5c753;
+        margin-bottom: 10px;
+        text-align: center;
+        padding-top: 15px;
+        border-top: 1px solid #fff3;
+        text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
     }
     .stats-card {
         background: linear-gradient(
@@ -358,11 +408,27 @@ h4,
         text-align: center;
         border: 0;
         text-shadow: 1px 1px 0px #00000063;
+        position:relative;
         small {
             margin-bottom:5px;
         }
         h4 {
             margin-bottom:0;
+        }
+        .nr {
+            position: absolute;
+    left: 5px;
+    top: -5px;
+    width: 30px;
+    height: 30px;
+    line-height: 31px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 6px;
+    box-shadow: 0px 5px 6px #ff36ff63;
+    background: linear-gradient(
+45deg
+, #ee26f1, #9a23a8);
         }
     }
 }
@@ -372,7 +438,7 @@ h4,
         font-family: 'Sigmar One';
     font-size: 22px;
     color: #f5c753;
-    text-shadow: 1px 1px 20px #f13bf1, 1px 2px 0px #8c6910;
+    text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
     }
     small {
         font-size:10px;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStore } from '../../store';
 import numeral from 'numeral';
-import { Bank, Check, Info, Ticket } from 'phosphor-react'
+import { Bank, Check, Info, Ticket,Coin } from 'phosphor-react'
 
 // import Nouislider from "nouislider-react";
 // import "nouislider/distribute/nouislider.css";
@@ -147,22 +147,25 @@ export default function Main(props) {
    
     return (
             <>
-                                <span className="info mb-3" style={{color:'#ffffffeb'}}>⚠️ We are in contact with security audit, until a full audit report we recommend to use Dogether at your own discretion and risk.</span>
-
-               <p className="text-center" style={{color:'#82f3be', fontWeight:700}}><Info size={24} style={{marginTop:'-4px'}}/> Pool your $UST with the earning yield on Anchor and enjoy Dogether buying lottery tickets on LoTerra with thousands of $UST prizes to win every week!</p>
-                <h2 className="text-center" style={{
+            <div className="col-md-9 col-lg-6 mx-auto">
+            <div className="card lota-card staking dogether-card">  
+           
+                              
+           <div className="card-body">    
+           <span className="info mb-3" style={{color:'#ffffffeb',}}>⚠️ We are in contact with security audit, until a full audit report we recommend to use Dogether at your own discretion and risk.</span>
+            <h2 className="text-center" style={{
                     background:'radial-gradient(#ffde872e, transparent)',
                     padding:'15px 0',
                 }}>
-                    <span className="d-block" style={{fontSize:'14px', textTransform:'uppercase', color:'#f13cf1'}}>Current pool balance</span>
+                    <span className="d-block heading-1">Current pool balance</span>
                     { totalBalance() ?
                 <>
-                 <span className="d-block" style={{marginBottom:'7px'}}>{numeral(totalBalance()).format('0.00')+' UST'}</span>  
-                 <span className="d-inline-block" style={{fontSize:'21px', marginRight:'6px'}}>
-                     <span className="d-block" style={{fontSize:'12px', textTransform:'uppercase', color:'#f13cf1'}}>Tickets a week</span>
+                 <span className="d-block nr-1">{numeral(totalBalance()).format('0.00')} <small>UST</small></span>  
+                 <span className="d-inline-block nr-2">
+                     <span className="d-block heading-2">Tickets a week</span>
                      {(totalBalance() / 100 * percentage / 100 * anchorPercentage / 356 * 7).toFixed(2)}</span>             
-                 <span className="d-inline-block" style={{fontSize:'21px', marginLeft:'6px'}}>
-                    <span className="d-block" style={{fontSize:'12px', textTransform:'uppercase', color:'#f13cf1'}}>Tickets a year</span>
+                 <span className="d-inline-block nr-2">
+                    <span className="d-block heading-2">Tickets a year</span>
                      {(totalBalance() / 100 * percentage / 100 * anchorPercentage / 1).toFixed(2)}</span>            
                 </>
 
@@ -173,9 +176,40 @@ export default function Main(props) {
                 </div>
                 </div>
                 }</h2>
+                                
+                <div className="row mb-3">
+                    <div className="col-md-12">
+                        <h3>How it works</h3>
+                    </div>
+                    <div className="col-md-4 mb-4">
+                        <div className="card stats-card d-flex py-3 text-center">
+                            <span className="nr">1</span>
+                            <Coin size={48} color={'#82f3be'} className="mx-auto" />
+                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Pool your UST on Dogether</p>
+                        </div>
+                    </div>
+                    <div className="col-md-4 mb-4">
+                        <div className="card stats-card d-flex py-3 text-center">
+                            <span className="nr">2</span>
+                            <img src="/anchor.svg" width="48px" className="img-fluid mx-auto"/>
+                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Earn yield from UST on Anchor</p>
+                        </div>
+                    </div>
+                    <div className="col-md-4 mb-4">
+                        <div className="card stats-card d-flex py-3 text-center">
+                            <span className="nr">3</span>
+                            <Ticket size={48} color={'#82f3be'} className="mx-auto" />
+                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Dogether buys tickets from yield</p>
+                        </div>
+                    </div>
+                </div>
+               <p className="text-center" style={{color:'#82f3be', fontWeight:700, fontSize:'12px'}}><Info size={24} style={{marginTop:'-4px'}}/> Dogether will automatically buy tickets for LoTerra Lottery, enjoy the possibility to win thousands of $UST prizes every week!</p>
+                
             
-
-                <p className="input-heading mt-3">The amount you want to pool</p>                
+            </div>     
+           <p className="input-heading mt-3" style={{
+               
+           }}>The amount you want to pool</p>                
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="basic-addon1">
                                         <img src="/UST.svg" width="30px" className="img-fluid"/>
@@ -393,8 +427,9 @@ export default function Main(props) {
     </div>
   </div>
 </div> */}
-          
-       
+          </div>
+          </div>
+              
             </>
     )
 }

@@ -71,18 +71,13 @@ export default () => {
                 
                     <div className="row">
                      
-                        <div className="col-12 col-md-8 col-lg-6 mx-auto">
                       
-                            <div className="card lota-card staking dogether-card">  
-           
-                              
-                                <div className="card-body">                               
+                      
+                                                       
                                     <Main showNotification={(message, type, dur) =>
                                     showNotification(message, type, dur)
                                 }/>                              
-                                </div>
-                            </div>
-                        </div>
+                     
                     </div>
                 </div>         
             </div>
