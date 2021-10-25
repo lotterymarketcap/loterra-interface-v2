@@ -34,6 +34,25 @@ export default function JackpotResults() {
                 100
         ).format('0,0.00')
     }
+    function getRawAltePrizePerRank(nr) {
+        let rank = nr - 1
+
+        return (state.config.prize_rank_winner_percentage[rank] *
+                parseInt(state.historicalJackpotAlte)) /
+                100
+        
+    }
+    function getRawPrizePerRankNet(nr) {
+        let rank = nr - 1
+        return (state.config.prize_rank_winner_percentage[rank] *
+                parseInt(state.historicalJackpot) -
+                (state.config.prize_rank_winner_percentage[rank] *
+                    parseInt(state.historicalJackpot) *
+                    state.config.token_holder_percentage_fee_reward) /
+                    100) /
+                100      
+    }
+
     function getPrizePerRankNet(nr) {
         let rank = nr - 1
         return numeral(
@@ -154,6 +173,18 @@ export default function JackpotResults() {
         }
     }
 
+    function getRawNumberOfRankWinners(nr){
+        let nrWinners = 0
+        state.allWinners.map((obj) => {
+            obj.claims.ranks.map((r) => {
+                if (r == nr) {
+                    nrWinners++
+                }
+            })
+        })
+        return nrWinners;
+    }
+
     function getNumberOfRankWinners(nr) {
         let nrWinners = 0
         state.allWinners.map((obj) => {
@@ -265,7 +296,7 @@ export default function JackpotResults() {
                     <div className="w-100 text-center latest-combination">
                         <h4 style={{ color: '#ff36ff' }}>
                             Winning combination
-                        </h4>
+                        </h4>                     
                         <p>
                             {state.winningCombination ? (
                                 state.winningCombination
@@ -301,6 +332,19 @@ export default function JackpotResults() {
                                             }}
                                         >
                                             {getNumberOfRankWinners(1)}
+                                            {getRawNumberOfRankWinners(1) !== 0 &&
+                                            <div className="prize-info">
+                                                <p className="prize-title">NET PRIZES</p>
+                                                <p className="ust-prize">
+                                                    {getRawNumberOfRankWinners(1) + 'x ' +numeral(getRawPrizePerRankNet(1) / getRawNumberOfRankWinners(1)).format('0,0.00')}
+                                                     <span>UST</span>
+                                                </p>
+                                                <p className="alte-prize">
+                                                    + {getRawNumberOfRankWinners(1) + 'x ' +numeral(getRawAltePrizePerRank(1) / getRawNumberOfRankWinners(1)).format('0,0.00')}
+                                                    <span>ALTE</span>
+                                                </p>
+                                            </div>
+                                            }
                                         </th>
                                         <td
                                             style={{
@@ -363,6 +407,19 @@ export default function JackpotResults() {
                                     <tr>
                                         <th scope="row" className="text-white">
                                             {getNumberOfRankWinners(2)}
+                                            {getRawNumberOfRankWinners(2) !== 0 &&
+                                            <div className="prize-info">
+                                                <p className="prize-title">NET PRIZES</p>
+                                                <p className="ust-prize">
+                                                    {getRawNumberOfRankWinners(2) + 'x ' +numeral(getRawPrizePerRankNet(2) / getRawNumberOfRankWinners(2)).format('0,0.00')}
+                                                     <span>UST</span>
+                                                </p>
+                                                <p className="alte-prize">
+                                                    + {getRawNumberOfRankWinners(2) + 'x ' +numeral(getRawAltePrizePerRank(2) / getRawNumberOfRankWinners(2)).format('0,0.00')}
+                                                    <span>ALTE</span>
+                                                </p>
+                                            </div>
+                                            }
                                         </th>
                                         <td
                                             style={{
@@ -421,6 +478,19 @@ export default function JackpotResults() {
                                     <tr>
                                         <th scope="row" className="text-white">
                                             {getNumberOfRankWinners(3)}
+                                            {getRawNumberOfRankWinners(3) !== 0 &&
+                                            <div className="prize-info">
+                                                <p className="prize-title">NET PRIZES</p>
+                                                <p className="ust-prize">
+                                                    {getRawNumberOfRankWinners(3) + 'x ' +numeral(getRawPrizePerRankNet(3) / getRawNumberOfRankWinners(3)).format('0,0.00')}
+                                                     <span>UST</span>
+                                                </p>
+                                                <p className="alte-prize">
+                                                    + {getRawNumberOfRankWinners(3) + 'x ' +numeral(getRawAltePrizePerRank(3) / getRawNumberOfRankWinners(3)).format('0,0.00')}
+                                                    <span>ALTE</span>
+                                                </p>
+                                            </div>
+                                            }
                                         </th>
                                         <td
                                             style={{
@@ -479,6 +549,19 @@ export default function JackpotResults() {
                                     <tr>
                                         <th scope="row" className="text-white">
                                             {getNumberOfRankWinners(4)}
+                                            {getRawNumberOfRankWinners(4) !== 0 &&
+                                            <div className="prize-info">
+                                                <p className="prize-title">NET PRIZES</p>
+                                                <p className="ust-prize">
+                                                    {getRawNumberOfRankWinners(4) + 'x ' +numeral(getRawPrizePerRankNet(4) / getRawNumberOfRankWinners(4)).format('0,0.00')}
+                                                     <span>UST</span>
+                                                </p>
+                                                <p className="alte-prize">
+                                                    + {getRawNumberOfRankWinners(4) + 'x ' +numeral(getRawAltePrizePerRank(4) / getRawNumberOfRankWinners(4)).format('0,0.00')}
+                                                    <span>ALTE</span>
+                                                </p>
+                                            </div>
+                                            }
                                         </th>
                                         <td
                                             style={{
@@ -537,6 +620,19 @@ export default function JackpotResults() {
                                     <tr>
                                         <th scope="row" className="text-white">
                                             {getNumberOfRankWinners(5)}
+                                            {getRawNumberOfRankWinners(5) !== 0 &&
+                                            <div className="prize-info">
+                                                <p className="prize-title">NET PRIZES</p>
+                                                <p className="ust-prize">
+                                                    {getRawNumberOfRankWinners(5) + 'x ' +numeral(getRawPrizePerRankNet(5) / getRawNumberOfRankWinners(5)).format('0,0.00')}
+                                                     <span>UST</span>
+                                                </p>
+                                                <p className="alte-prize">
+                                                    + {getRawNumberOfRankWinners(5) + 'x ' +numeral(getRawAltePrizePerRank(5) / getRawNumberOfRankWinners(5)).format('0,0.00')}
+                                                    <span>ALTE</span>
+                                                </p>
+                                            </div>
+                                            }
                                         </th>
                                         <td
                                             style={{
@@ -595,6 +691,19 @@ export default function JackpotResults() {
                                     <tr>
                                         <th scope="row" className="text-white">
                                             {getNumberOfRankWinners(6)}
+                                            {getRawNumberOfRankWinners(6) !== 0 &&
+                                            <div className="prize-info">
+                                                <p className="prize-title">NET PRIZES</p>
+                                                <p className="ust-prize">
+                                                    {getRawNumberOfRankWinners(6) + 'x ' +numeral(getRawPrizePerRankNet(6) / getRawNumberOfRankWinners(6)).format('0,0.00')}
+                                                     <span>UST</span>
+                                                </p>
+                                                <p className="alte-prize">
+                                                    + {getRawNumberOfRankWinners(6) + 'x ' +numeral(getRawAltePrizePerRank(6) / getRawNumberOfRankWinners(6)).format('0,0.00')}
+                                                    <span>ALTE</span>
+                                                </p>
+                                            </div>
+                                            }
                                         </th>
                                         <td
                                             style={{

@@ -433,6 +433,33 @@ h4,
     }
 }
 
+.prize-info {
+    background: linear-gradient(
+45deg
+, #55e5a04a, transparent);
+    padding: 6px;
+    margin-top: 8px;
+    p {
+        margin:0;
+        &.prize-title {
+            font-size:13px;
+            text-transform:uppercase;
+            font-weight:500;
+            opacity:0.5;
+        }
+        &.ust-prize {
+            color:#4ee19b;
+            font-size:14px;
+        }
+    
+        &.alte-prize {
+            font-size:12px;
+            color:#dcef14;
+        }
+    }
+    
+}
+
 .dogether-settings-info {
     .title {
         font-family: 'Sigmar One';
