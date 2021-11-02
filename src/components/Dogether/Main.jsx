@@ -324,7 +324,7 @@ export default function Main(props) {
         </div>           
         } 
 
-{pendingClaim() > 0 &&
+{pendingClaim() > 0 || claimInfo() > 0 &&
 <div className="col-md-12 my-3">
                 <div className="claim-unstake"
                 style={{
