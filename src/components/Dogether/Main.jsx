@@ -84,7 +84,7 @@ export default function Main(props) {
             })
     }
 
-    function claimInfo() {
+    function claimInfo() {       
         if (state.holderClaimsDogether) {
             let total_amount_claimable = 0
             state.holderClaimsDogether.map((e) => {
@@ -96,7 +96,7 @@ export default function Main(props) {
         }
         return 0
     }
-    function pendingClaim() {
+    function pendingClaim() {       
         if (state.holderClaimsDogether) {
             let total_amount_pending = 0
             state.holderClaimsDogether.map((e) => {
@@ -323,8 +323,7 @@ export default function Main(props) {
             </div>
         </div>           
         } 
-
-{pendingClaim() > 0 || claimInfo() > 0 &&
+{state.holderClaimsDogether && state.holderClaimsDogether.length > 0 &&
 <div className="col-md-12 my-3">
                 <div className="claim-unstake"
                 style={{
