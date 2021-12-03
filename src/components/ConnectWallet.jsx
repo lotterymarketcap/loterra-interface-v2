@@ -253,6 +253,8 @@ export default function ConnectWallet() {
         } else if (to == 'disconnect') {
             wallet.disconnect()
             dispatch({ type: 'setWallet', message: {} })
+        } else if (to == 'xdefi'){
+            console.log('connect xdefi', window.xfi.terra, window.isTerraExtensionAvailable );
         }
         setConnected(!connected)
         setIsDisplayDialog(false)
@@ -484,6 +486,13 @@ export default function ConnectWallet() {
                             Terra Station (extension)
                         </button>
                         <button
+                            onClick={() => connectTo('xdefi')}
+                            className="button-pink-outline"
+                            style={DialogButton}
+                        >
+                            XDEFI Wallet
+                        </button>
+                        <button
                             onClick={() => connectTo('mobile')}
                             className="button-pink-outline"
                             style={DialogButton}
@@ -707,6 +716,16 @@ export default function ConnectWallet() {
                                             style={{ marginTop: '-4px' }}
                                         />{' '}
                                         Terra Station (extension/mobile)
+                                    </button>
+                                    <button
+                                        onClick={() => connectTo('xdefi')}
+                                        className="dropdown-item"
+                                    >
+                                        <CaretRight
+                                            size={16}
+                                            style={{ marginTop: '-4px' }}
+                                        />{' '}
+                                        XDEFI Wallet
                                     </button>
                                     <button
                                         onClick={() => connectTo('mobile')}

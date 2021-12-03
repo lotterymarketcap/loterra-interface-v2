@@ -2,10 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
-let Wallet = {}
-if (typeof document !== 'undefined') {
-    Wallet = require('@terra-money/wallet-provider').WalletProvider
-}
+import { getChainOptions, WalletProvider } from '@terra-money/wallet-provider';
 // Your top level component
 import App from './App'
 
@@ -33,8 +30,10 @@ if (typeof document !== 'undefined') {
         : ReactDOM.render
     let inProduction = true
     const render = (Comp) => {
+        getChainOptions().then((chainOptions) => {
         renderMethod(
-            <Wallet
+            <WalletProvider
+                {...chainOptions}
                 defaultNetwork={mainnet}
                 walletConnectChainIds={{
                     0: testnet,
@@ -49,9 +48,10 @@ if (typeof document !== 'undefined') {
                 <AppContainer>
                     <Comp />
                 </AppContainer>
-            </Wallet>,
+            </WalletProvider>,
             target
         )
+            })
     }
 
     // Render!

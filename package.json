@@ -33,7 +33,7 @@
         "react-scroll-position": "^1.0.2",
         "react-static": "^7.5.1",
         "react-static-plugin-reach-router": "^7.5.1",
-        "react-static-plugin-sass": "^7.3.0",
+        "react-static-plugin-sass": "^7.6.2",
         "react-static-plugin-sitemap": "^7.5.1",
         "react-static-plugin-source-filesystem": "^7.5.1",
         "react-timer-hook": "^3.0.4"
