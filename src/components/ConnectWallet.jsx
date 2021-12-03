@@ -249,13 +249,16 @@ export default function ConnectWallet() {
         if (to == 'extension') {
             wallet.connect(wallet.availableConnectTypes[1])
         } else if (to == 'mobile') {
-            wallet.connect(wallet.availableConnectTypes[2])
-        } else if (to == 'disconnect') {
+            wallet.connect(wallet.availableConnectTypes[2])            
+        } else if (to == 'xdefi'){
+            if(window.xfi.terra){
+                wallet.connect(wallet.availableConnectTypes[1])
+            }            
+        }
+        else if (to == 'disconnect') {
             wallet.disconnect()
             dispatch({ type: 'setWallet', message: {} })
-        } else if (to == 'xdefi'){
-            console.log('connect xdefi', window.xfi.terra, window.isTerraExtensionAvailable );
-        }
+        } 
         setConnected(!connected)
         setIsDisplayDialog(false)
     }
