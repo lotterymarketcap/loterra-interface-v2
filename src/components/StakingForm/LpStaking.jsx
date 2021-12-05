@@ -272,7 +272,7 @@ export default function LpStaking(props) {
                                 ).format('0.00')}
                             </>
                         )}
-                        LOTA
+                        LP
                     </strong>
                 </small>
             </div>
@@ -300,7 +300,7 @@ export default function LpStaking(props) {
                                 ).format('0.00')}
                             </>
                         )}
-                        LOTA
+                        LP
                     </strong>
                 </small>
             </div>
@@ -323,7 +323,7 @@ export default function LpStaking(props) {
                     <span className="info">
                         <Info size={14} weight="fill" className="me-1" />
                         Your pending claim amount available soon:
-                        <strong> {pendingClaim()} LOTA</strong>
+                        <strong> {pendingClaim()} LP</strong>
                         <div style={{ marginTop: '20px' }}>
                             List of pending claims
                         </div>
