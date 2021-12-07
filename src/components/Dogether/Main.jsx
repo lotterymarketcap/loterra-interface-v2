@@ -211,16 +211,16 @@ export default function Main(props) {
                     </div>
                     <div className="col-md-6 mb-4">
                         <div className="card stats-card d-flex py-3 text-center">
-                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Dogether Solo everything is yours</p>
+                            <span className="nr">Dogether Solo</span>
                             <img src="/Solo.png" height="48px" className="img-fluid mx-auto"/>
                             <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Everything is yours</p>
                         </div>
                     </div>
-                    <div className="col-md-4 mb-4">
+                    <div className="col-md-6 mb-4">
                         <div className="card stats-card d-flex py-3 text-center">
-                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Dogether Co-op</p>
+                            <span className="nr">Dogether Co-op</span>
                             <img src="/Co-op.png" width="48px" className="img-fluid mx-auto"/>
-                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Shared between all playerss</p
+                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Shared between all players</p
                         </div>
                     </div>     
                 </div> 
