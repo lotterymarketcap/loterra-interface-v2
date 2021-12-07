@@ -221,7 +221,7 @@ export default function Main(props) {
                             <img src="/Co-op.png" width="48px" className="img-fluid mx-auto"/>
                         </div>
                     </div>     
-            
+                </div> 
             </div>     
            <p className="input-heading mt-3" style={{
                
