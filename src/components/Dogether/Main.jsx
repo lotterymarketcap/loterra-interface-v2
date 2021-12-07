@@ -205,6 +205,22 @@ export default function Main(props) {
                 </div>
                <p className="text-center" style={{color:'#82f3be', fontWeight:700, fontSize:'12px'}}><Info size={24} style={{marginTop:'-4px'}}/> Dogether will automatically buy tickets for LoTerra Lottery, enjoy the possibility to win thousands of $UST prizes every week!</p>
                 
+                <div className="row mb-3">
+                    <div className="col-md-12">
+                        <h3>Games</h3>
+                    </div>
+                    <div className="col-md-4 mb-4">
+                        <div className="card stats-card d-flex py-3 text-center">
+                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Dogether Solo everything is yours</p>
+                            <img src="/Solo.png" width="48px" className="img-fluid mx-auto"/>
+                        </div>
+                    </div>
+                    <div className="col-md-4 mb-4">
+                        <div className="card stats-card d-flex py-3 text-center">
+                            <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Dogether Co-op shared among all players</p>
+                            <img src="/Co-op.png" width="48px" className="img-fluid mx-auto"/>
+                        </div>
+                    </div>     
             
             </div>     
            <p className="input-heading mt-3" style={{
