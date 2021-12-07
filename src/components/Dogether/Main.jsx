@@ -224,7 +224,7 @@ export default function Main(props) {
                         </div>
                     </div>     
                </div> 
-           
+           </div>
            <p className="input-heading mt-3" style={{
                
            }}>The amount you want to pool</p>                
