@@ -205,26 +205,26 @@ export default function Main(props) {
                 </div>
                <p className="text-center" style={{color:'#82f3be', fontWeight:700, fontSize:'12px'}}><Info size={24} style={{marginTop:'-4px'}}/> Dogether will automatically buy tickets for LoTerra Lottery, enjoy the possibility to win thousands of $UST prizes every week!</p>
                 
-                <div className="row mb-3">
+               <div className="row mb-4">
                     <div className="col-md-12">
                         <h3>Games</h3>
                     </div>
-                    <div className="col-md-6 mb-4">
+                    <div className="col-md-4 mb-4">
                         <div className="card stats-card d-flex py-3 text-center">
                             <span className="nr">Dogether Solo</span>
                             <img src="/Solo.png" height="48px" className="img-fluid mx-auto"/>
                             <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Everything is yours</p>
                         </div>
                     </div>
-                    <div className="col-md-6 mb-4">
+                    <div className="col-md-4 mb-4">
                         <div className="card stats-card d-flex py-3 text-center">
                             <span className="nr">Dogether Co-op</span>
                             <img src="/Co-op.png" width="48px" className="img-fluid mx-auto"/>
                             <p className="align-self-center w-100 m-0 mt-2" style={{fontSize:'14px'}}>Shared between all players</p
                         </div>
                     </div>     
-                </div> 
-            </div>     
+               </div> 
+           
            <p className="input-heading mt-3" style={{
                
            }}>The amount you want to pool</p>                
