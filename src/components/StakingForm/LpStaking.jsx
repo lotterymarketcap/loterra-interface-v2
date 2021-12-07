@@ -318,64 +318,7 @@ export default function LpStaking(props) {
                     >
                         Claim unstake
                     </button>
-                    {/* If unstake claiming condition */}
-                    <span className="info">
-                        <Info size={14} weight="fill" className="me-1" />
-                        Your pending claim amount available soon:
-                        <strong> {pendingClaim()} LP</strong>
-                        <div style={{ marginTop: '20px' }}>
-                            List of pending claims
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td style={{ paddingLeft: '20px' }}>
-                                        Amount
-                                    </td>
-                                    <td style={{ paddingLeft: '20px' }}>
-                                        Release at blockheight
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {state.holderClaimsLP ? (
-                                    state.holderClaimsLP.map((e) => {
-                                        if (
-                                            e.release_at.at_height >
-                                            state.blockHeight
-                                        ) {
-                                            return (
-                                                <tr>
-                                                    <td
-                                                        style={{
-                                                            paddingLeft: '20px',
-                                                        }}
-                                                    >
-                                                        {numeral(
-                                                            parseInt(e.amount) /
-                                                                1000000
-                                                        ).format('0,0.000000')}
-                                                        LP token
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            paddingLeft: '20px',
-                                                        }}
-                                                    >
-                                                        {e.release_at.at_height}
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }
-                                    })
-                                ) : (
-                                    <tr>
-                                        <td>Empty</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </span>
+
                     <small className="float-end text-muted mt-2">
                         Available:
                         <strong>
