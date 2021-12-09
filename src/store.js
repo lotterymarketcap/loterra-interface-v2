@@ -159,7 +159,7 @@ const initialState = {
     historicalJackpotAlte: 0,
     balanceStakeOnDogether: 0,
     holderClaimsDogether: [],
-    totalBalancePoolDogether: 0
+    totalBalancePoolDogether: 0,
 }
 
 const reducer = (state, action) => {

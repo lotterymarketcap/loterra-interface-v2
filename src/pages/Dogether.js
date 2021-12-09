@@ -1,17 +1,16 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Footer from '../components/Footer'
 import Main from '../components/Dogether/Main'
-import {StdFee} from "@terra-money/terra.js";
+import { StdFee } from '@terra-money/terra.js'
 import Notification from '../components/Notification'
 
-
-export default () => {   
+export default () => {
     const [notification, setNotification] = useState({
         type: 'success',
         message: '',
         show: false,
     })
- 
+
     function hideNotification() {
         setNotification({
             message: notification.message,
@@ -56,30 +55,27 @@ export default () => {
                     width: '100%',
                     minHeight: '800px',
                 }}
-                
             >
-              
-                       <div className="container-fluid">
-                           <div className="row">
-                               <div className="col-12">
-                               <img src="/dogether-6.png" className="img-fluid dogether-logo"/>
-                               </div>
-                           </div>
-                       </div>
-                    
-                <div className="container h-100">
-                
+                <div className="container-fluid">
                     <div className="row">
-                     
-                      
-                      
-                                                       
-                                    <Main showNotification={(message, type, dur) =>
-                                    showNotification(message, type, dur)
-                                }/>                              
-                     
+                        <div className="col-12">
+                            <img
+                                src="/dogether-6.png"
+                                className="img-fluid dogether-logo"
+                            />
+                        </div>
                     </div>
-                </div>         
+                </div>
+
+                <div className="container h-100">
+                    <div className="row">
+                        <Main
+                            showNotification={(message, type, dur) =>
+                                showNotification(message, type, dur)
+                            }
+                        />
+                    </div>
+                </div>
             </div>
             <Notification
                 notification={notification}

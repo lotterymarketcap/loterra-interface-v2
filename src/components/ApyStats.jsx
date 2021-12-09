@@ -31,7 +31,7 @@ export default function ApyStats() {
                     state.loterraContractAddress,
                     {
                         count_winner: { lottery_id: index, rank: i },
-                    }
+                    },
                 )
 
                 await tmpWinnerData.push({
@@ -46,7 +46,7 @@ export default function ApyStats() {
                 state.loterraContractAddress,
                 {
                     jackpot: { lottery_id: index },
-                }
+                },
             )
 
             await tmpJackpotData.push({
@@ -83,7 +83,7 @@ export default function ApyStats() {
         function getPrizePerRank(nr) {
             let rank = nr - 1
             return numeral(
-                (state.config.prize_per_rank[rank] * parseInt(jackpot)) / 100
+                (state.config.prize_per_rank[rank] * parseInt(jackpot)) / 100,
             ).format('0,0.00')
         }
 

@@ -16,7 +16,7 @@ export default function ProposalItem(props) {
                     poll_id: id,
                     approve,
                 },
-            }
+            },
         )
         state.wallet
             .post({
@@ -160,12 +160,12 @@ export default function ProposalItem(props) {
                                             <td>
                                                 {(
                                                     (parseInt(
-                                                        data.weight_yes_vote
+                                                        data.weight_yes_vote,
                                                     ) *
                                                         100) /
                                                     parseInt(
                                                         state.staking
-                                                            .total_balance
+                                                            .total_balance,
                                                     )
                                                 ).toFixed(0)}
                                                 % of 50%
@@ -176,12 +176,12 @@ export default function ProposalItem(props) {
                                             <td>
                                                 {(
                                                     (parseInt(
-                                                        data.weight_no_vote
+                                                        data.weight_no_vote,
                                                     ) *
                                                         100) /
                                                     parseInt(
                                                         state.staking
-                                                            .total_balance
+                                                            .total_balance,
                                                     )
                                                 ).toFixed(0)}
                                                 % of 33%
@@ -202,12 +202,12 @@ export default function ProposalItem(props) {
                                             width:
                                                 percentageVotesYes(
                                                     data.weight_yes_vote,
-                                                    data.weight_no_vote
+                                                    data.weight_no_vote,
                                                 ) + '%',
                                         }}
                                         aria-valuenow={percentageVotesYes(
                                             data.weight_yes_vote,
-                                            data.weight_no_vote
+                                            data.weight_no_vote,
                                         )}
                                         aria-valuemin="0"
                                         aria-valuemax={
@@ -224,12 +224,12 @@ export default function ProposalItem(props) {
                                             width:
                                                 percentageVotesNo(
                                                     data.weight_yes_vote,
-                                                    data.weight_no_vote
+                                                    data.weight_no_vote,
                                                 ) + '%',
                                         }}
                                         aria-valuenow={percentageVotesNo(
                                             data.weight_yes_vote,
-                                            data.weight_no_vote
+                                            data.weight_no_vote,
                                         )}
                                         aria-valuemin="0"
                                         aria-valuemax={

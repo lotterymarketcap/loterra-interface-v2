@@ -76,7 +76,7 @@ export default () => {
                                     .slice(0)
                                     .reverse()
                                     .sort((a, b) =>
-                                        a.status == 'InProgress' ? -1 : 1
+                                        a.status == 'InProgress' ? -1 : 1,
                                     )
                                     .map((element, key) => {
                                         return (

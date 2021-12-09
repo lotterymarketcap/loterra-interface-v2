@@ -91,7 +91,7 @@ export default function ConnectWallet() {
     const api = new WasmAPI(state.lcd_client.apiRequester)
     async function baseData() {
         const latestBlocks = await axios.get(
-            'https://lcd.terra.dev/blocks/latest'
+            'https://lcd.terra.dev/blocks/latest',
         )
 
         dispatch({
@@ -103,7 +103,7 @@ export default function ConnectWallet() {
             state.loterraContractAddress,
             {
                 config: {},
-            }
+            },
         )
 
         dispatch({ type: 'setConfig', message: contractConfigInfo })
@@ -122,7 +122,7 @@ export default function ConnectWallet() {
                 winner: {
                     lottery_id: contractConfigInfo.lottery_counter - 1,
                 },
-            }
+            },
         )
         dispatch({ type: 'setAllRecentWinners', message: winners })
 
@@ -132,7 +132,7 @@ export default function ConnectWallet() {
                 balance: {
                     address: state.loterraContractAddress,
                 },
-            }
+            },
         )
         dispatch({ type: 'setDaoFunds', message: contractDaoBalance.balance })
         const contractLPLoterraBalance = await api.contractQuery(
@@ -141,7 +141,7 @@ export default function ConnectWallet() {
                 balance: {
                     address: state.loterraStakingLPAddress,
                 },
-            }
+            },
         )
         dispatch({
             type: 'setStakingLoterraFunds',
@@ -153,7 +153,7 @@ export default function ConnectWallet() {
                 balance: {
                     address: state.alteredStakingLPAddress,
                 },
-            }
+            },
         )
         dispatch({
             type: 'setStakingAlteredFunds',
@@ -162,10 +162,10 @@ export default function ConnectWallet() {
 
         // Get total pool in Dogether
         const total_pool_dogether = await api.contractQuery(
-            "terra19h4xk8xxxew0ne6fuw0mvuf7ltmjmxjxssj5ts",
+            'terra19h4xk8xxxew0ne6fuw0mvuf7ltmjmxjxssj5ts',
             {
-                state: { },
-            }
+                state: {},
+            },
         )
         dispatch({
             type: 'setTotalBalancePoolDogether',
@@ -178,7 +178,7 @@ export default function ConnectWallet() {
                 balance: {
                     address: state.loterraContractAddress,
                 },
-            }
+            },
         )
         dispatch({
             type: 'setAlteredJackpot',
@@ -196,7 +196,7 @@ export default function ConnectWallet() {
                     state.loterraContractAddress,
                     {
                         get_poll: { poll_id: index },
-                    }
+                    },
                 )
                 proposal.nr = index
                 allProposals.push(proposal)
@@ -216,7 +216,7 @@ export default function ConnectWallet() {
             state.loterraContractAddressCw20,
             {
                 token_info: {},
-            }
+            },
         )
         dispatch({ type: 'setTokenInfo', message: token_info })
 
@@ -224,7 +224,7 @@ export default function ConnectWallet() {
             state.loterraStakingLPAddress,
             {
                 state: {},
-            }
+            },
         )
         dispatch({ type: 'setStateLPStaking', message: state_lp_staking })
         const pool_info = await api.contractQuery(state.loterraPoolAddress, {
@@ -304,7 +304,7 @@ export default function ConnectWallet() {
                     state.loterraContractAddress,
                     {
                         config: {},
-                    }
+                    },
                 )
                 setConnected(true)
                 const lastDrawnJackpot = await api.contractQuery(
@@ -313,7 +313,7 @@ export default function ConnectWallet() {
                         jackpot: {
                             lottery_id: contractConfigInfo.lottery_counter - 1,
                         },
-                    }
+                    },
                 )
                 dispatch({
                     type: 'setLastDrawnJackpot',
@@ -321,17 +321,23 @@ export default function ConnectWallet() {
                 })
 
                 // Get balance to staked on Dogether
-                const balance_stake_on_dogether = await api.contractQuery(state.dogetherStakingAddress, {
-                    holder: {address: connectedWallet.walletAddress},
+                const balance_stake_on_dogether = await api.contractQuery(
+                    state.dogetherStakingAddress,
+                    {
+                        holder: { address: connectedWallet.walletAddress },
+                    },
+                )
+                dispatch({
+                    type: 'setBalanceStakeOnDogether',
+                    message: balance_stake_on_dogether.balance,
                 })
-                dispatch({ type: 'setBalanceStakeOnDogether', message: balance_stake_on_dogether.balance })
 
                 // Get balance pending to claim on Dogether
                 const claims_unstake_dogether = await api.contractQuery(
                     state.dogetherStakingAddress,
                     {
                         claims: { address: connectedWallet.walletAddress },
-                    }
+                    },
                 )
                 dispatch({
                     type: 'setHolderClaimsDogether',
@@ -342,7 +348,7 @@ export default function ConnectWallet() {
                     state.loterraStakingAddress,
                     {
                         holder: { address: connectedWallet.walletAddress },
-                    }
+                    },
                 )
                 dispatch({ type: 'setAllHolder', message: holder })
                 //console.log(holder)
@@ -353,7 +359,7 @@ export default function ConnectWallet() {
                         accrued_rewards: {
                             address: connectedWallet.walletAddress,
                         },
-                    }
+                    },
                 )
                 dispatch({
                     type: 'setHolderAccruedRewards',
@@ -365,7 +371,7 @@ export default function ConnectWallet() {
                     state.loterraContractAddressCw20,
                     {
                         balance: { address: connectedWallet.walletAddress },
-                    }
+                    },
                 )
                 dispatch({ type: 'setLotaBalance', message: token })
                 //console.log(token)
@@ -374,7 +380,7 @@ export default function ConnectWallet() {
                     state.loterraStakingAddress,
                     {
                         claims: { address: connectedWallet.walletAddress },
-                    }
+                    },
                 )
                 //console.log("claims")
                 //console.log(claims)
@@ -384,7 +390,7 @@ export default function ConnectWallet() {
                     state.loterraLPAddress,
                     {
                         balance: { address: connectedWallet.walletAddress },
-                    }
+                    },
                 )
                 dispatch({ type: 'setLPBalance', message: tokenLP })
                 //console.log(tokenLP)
@@ -394,7 +400,7 @@ export default function ConnectWallet() {
                         accrued_rewards: {
                             address: connectedWallet.walletAddress,
                         },
-                    }
+                    },
                 )
                 dispatch({
                     type: 'setLPHolderAccruedRewards',
@@ -405,7 +411,7 @@ export default function ConnectWallet() {
                     state.loterraStakingLPAddress,
                     {
                         holder: { address: connectedWallet.walletAddress },
-                    }
+                    },
                 )
                 dispatch({ type: 'setAllHolderLP', message: holderLP })
 
@@ -413,7 +419,7 @@ export default function ConnectWallet() {
                     state.loterraStakingLPAddress,
                     {
                         claims: { address: connectedWallet.walletAddress },
-                    }
+                    },
                 )
 
                 dispatch({
@@ -429,7 +435,7 @@ export default function ConnectWallet() {
                         balance: {
                             address: connectedWallet.walletAddress,
                         },
-                    }
+                    },
                 )
 
                 // Better to keep it at the end
@@ -442,14 +448,12 @@ export default function ConnectWallet() {
                             lottery_id: contractConfigInfo.lottery_counter,
                             address: connectedWallet.walletAddress,
                         },
-                    }
+                    },
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
-
             } catch (e) {
                 console.log(e)
             }
-
 
             //Store coins global state
             dispatch({ type: 'setAllNativeCoins', message: coins })
@@ -518,7 +522,10 @@ export default function ConnectWallet() {
                         />
                     </>
                 ) : (
-                    <div className="spinner-border spinner-border-sm" role="status">
+                    <div
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                    >
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 )}
@@ -623,8 +630,8 @@ export default function ConnectWallet() {
                                     lineHeight: '10px',
                                     padding: '3px',
                                     textTransform: 'uppercase',
-                                    color:'#10003b',
-                                    background:'#8bf6c2'
+                                    color: '#10003b',
+                                    background: '#8bf6c2',
                                 }}
                             >
                                 BETA
@@ -671,7 +678,7 @@ export default function ConnectWallet() {
                                 Together we decide
                             </span>
                         </a>
-                    </li>                    
+                    </li>
                 </nav>
 
                 <div className="navbar-nav ms-auto">

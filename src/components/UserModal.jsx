@@ -54,7 +54,7 @@ export default function UserModal(props) {
             state.loterraContractAddress,
             {
                 claim: {},
-            }
+            },
         )
 
         connectedWallet
@@ -67,7 +67,7 @@ export default function UserModal(props) {
             .then((e) => {
                 if (e.success) {
                     setResult(
-                        `Claim success, please verify transaction on the blockchain explorer https://finder.terra.money/columbus-4/tx/${e.result.txhash}`
+                        `Claim success, please verify transaction on the blockchain explorer https://finder.terra.money/columbus-4/tx/${e.result.txhash}`,
                     )
                     setClaimed(true)
                 } else {
@@ -87,7 +87,7 @@ export default function UserModal(props) {
             let id = parseInt(
                 state.historicalTicketLotteryId == 0
                     ? state.currentLotteryId
-                    : state.historicalTicketLotteryId
+                    : state.historicalTicketLotteryId,
             )
             if (type == 'prev' && id !== 1) {
                 id = id - 1
@@ -112,7 +112,7 @@ export default function UserModal(props) {
                         lottery_id: id,
                         address: state.wallet.walletAddress,
                     },
-                }
+                },
             )
             console.log(combinations)
             dispatch({ type: 'setAllCombinations', message: combinations })
@@ -458,7 +458,7 @@ export default function UserModal(props) {
                                                         />
                                                         {element}
                                                     </li>
-                                                )
+                                                ),
                                             )
                                         ) : (
                                             <li className="list-group-item">

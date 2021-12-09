@@ -11,7 +11,7 @@ export default function Countdown(props) {
         onExpire: () => console.warn('onExpire called'),
     })
     const start = new Date(
-        new Date(expiryTimestamp).getTime() - 84 * 60 * 60 * 1000
+        new Date(expiryTimestamp).getTime() - 84 * 60 * 60 * 1000,
     )
     const now = Date.now()
     const end = new Date(expiryTimestamp).getTime()

@@ -334,58 +334,61 @@ h4,
 }
 
 .dogether-logo {
-    margin:0 auto;
-    display:block;
-    position:relative;
-    @media(max-width:768px){
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    @media (max-width: 768px) {
         margin-top: 60px;
     }
 }
 
 .dogether-card {
     margin-top: -374px !important;
-    background:linear-gradient(328.75deg, #10003ba6 -5.49%, #0f0038f2 104.44%) !important;
-    @media(max-width:1100px){
+    background: linear-gradient(
+        328.75deg,
+        #10003ba6 -5.49%,
+        #0f0038f2 104.44%
+    ) !important;
+    @media (max-width: 1100px) {
         margin-top: -33vw !important;
     }
     h3 {
         font-size: 30px !important;
-    font-family: 'Sigmar One';
-    color: #f5c753 !important;
-    text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
+        font-family: 'Sigmar One';
+        color: #f5c753 !important;
+        text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
     }
     .heading-1 {
-        font-size:14px;
-        text-transform:uppercase;
-        color:#f13cf1;
-        
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #f13cf1;
     }
     .heading-2 {
-        font-size:12px;
-        text-transform:uppercase;
-        color:#f13cf1;
-        text-shadow:none;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #f13cf1;
+        text-shadow: none;
     }
     .nr-1 {
-        font-size:4vw;
-        font-weight:700;
-        margin-bottom:7px;
-        text-shadow:0px 2px 0px #adadad;
-        @media(max-width:768px){
-            font-size:8vw;
+        font-size: 4vw;
+        font-weight: 700;
+        margin-bottom: 7px;
+        text-shadow: 0px 2px 0px #adadad;
+        @media (max-width: 768px) {
+            font-size: 8vw;
         }
     }
-    .nr-2 { 
+    .nr-2 {
         font-size: 2vw;
-        font-weight:700;
+        font-weight: 700;
         width: 50%;
         text-align: center;
-        text-shadow:0px 1px 0px #adadad;
-        @media(max-width:768px){
-            font-size:4vw;
+        text-shadow: 0px 1px 0px #adadad;
+        @media (max-width: 768px) {
+            font-size: 4vw;
         }
-        @media(max-width:500px){
-            font-size:6vw;
+        @media (max-width: 500px) {
+            font-size: 6vw;
         }
     }
     .input-heading {
@@ -399,93 +402,92 @@ h4,
         text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
     }
     .stats-card {
-        background: linear-gradient(
-        45deg
-        , #30d9876e, #160842);
+        background: linear-gradient(45deg, #30d9876e, #160842);
         border-radius: 10px;
         color: #fff;
         padding: 5px;
         text-align: center;
         border: 0;
         text-shadow: 1px 1px 0px #00000063;
-        position:relative;
+        position: relative;
         small {
-            margin-bottom:5px;
+            margin-bottom: 5px;
         }
         h4 {
-            margin-bottom:0;
+            margin-bottom: 0;
         }
         .nr {
             position: absolute;
-    left: 5px;
-    top: -5px;
-    width: 30px;
-    height: 30px;
-    line-height: 31px;
-    font-size: 20px;
-    font-weight: 700;
-    border-radius: 6px;
-    box-shadow: 0px 5px 6px #ff36ff63;
-    background: linear-gradient(
-45deg
-, #ee26f1, #9a23a8);
+            left: 5px;
+            top: -5px;
+            width: 30px;
+            height: 30px;
+            line-height: 31px;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 6px;
+            box-shadow: 0px 5px 6px #ff36ff63;
+            background: linear-gradient(45deg, #ee26f1, #9a23a8);
         }
     }
 }
 
 .prize-info {
-    background: linear-gradient(
-45deg
-, #55e5a04a, transparent);
+    background: linear-gradient(45deg, #55e5a04a, transparent);
     padding: 6px;
     margin-top: 8px;
     p {
-        margin:0;
+        margin: 0;
         &.prize-title {
-            font-size:13px;
-            text-transform:uppercase;
-            font-weight:500;
-            opacity:0.5;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 500;
+            opacity: 0.5;
         }
         &.ust-prize {
-            color:#4ee19b;
-            font-size:14px;
+            color: #4ee19b;
+            font-size: 14px;
         }
-    
+
         &.alte-prize {
-            font-size:12px;
-            color:#dcef14;
+            font-size: 12px;
+            color: #dcef14;
         }
     }
-    
 }
 
 .dogether-settings-info {
     .title {
         font-family: 'Sigmar One';
-    font-size: 22px;
-    color: #f5c753;
-    text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
+        font-size: 22px;
+        color: #f5c753;
+        text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
     }
     small {
-        font-size:10px;
-        color:#82f3be;
+        font-size: 10px;
+        color: #82f3be;
     }
 }
 
 .dogether-usps {
-    color:#82f3be;
+    color: #82f3be;
 }
 
 .slider-round {
-    margin-bottom:60px;
+    margin-bottom: 60px;
     .noUi-connects {
-        border-radius:100px;
+        border-radius: 100px;
     }
     .noUi-connect {
-        background:linear-gradient(92.8deg, rgba(255, 255, 255, 0.6) -1.42%, rgba(10, 176, 96, 0.6) 102.82%), #20ff93;
+        background: linear-gradient(
+                92.8deg,
+                rgba(255, 255, 255, 0.6) -1.42%,
+                rgba(10, 176, 96, 0.6) 102.82%
+            ),
+            #20ff93;
     }
-    .noUi-marker,.noUi-marker-large {
+    .noUi-marker,
+    .noUi-marker-large {
         background: #ffffff7d;
     }
     .noUi-pips {
@@ -493,9 +495,9 @@ h4,
         color: #ffffff7d;
     }
     .noUi-handle {
-        border-radius:100px;
-        width:28px;
-        height:28px;
+        border-radius: 100px;
+        width: 28px;
+        height: 28px;
     }
     &.noUi-target {
         background: #10003b;

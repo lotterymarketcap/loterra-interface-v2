@@ -50,7 +50,7 @@ if (typeof document !== 'undefined') {
                     <Comp />
                 </AppContainer>
             </Wallet>,
-            target
+            target,
         )
     }
 

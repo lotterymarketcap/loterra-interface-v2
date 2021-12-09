@@ -98,14 +98,14 @@ export default () => {
                 loterra_contract_address,
                 {
                     config: {},
-                }
+                },
             )
 
             dispatch({ type: 'setConfig', message: contractConfigInfo })
 
             setPrice(contractConfigInfo.price_per_ticket_to_register)
             setExpiryTimestamp(
-                parseInt(contractConfigInfo.block_time_play * 1000)
+                parseInt(contractConfigInfo.block_time_play * 1000),
             )
             const bank = new BankAPI(terra.apiRequester)
             const contractBalance = await bank.balance(loterra_contract_address)
@@ -124,7 +124,7 @@ export default () => {
                     balance: {
                         address: state.loterraContractAddress,
                     },
-                }
+                },
             )
 
             const alteredJackpot =
@@ -142,7 +142,7 @@ export default () => {
                     jackpot: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
                     },
-                }
+                },
             )
             dispatch({
                 type: 'setHistoricalJackpot',
@@ -155,7 +155,7 @@ export default () => {
                     jackpot_alte: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
                     },
-                }
+                },
             )
             dispatch({
                 type: 'setHistoricalJackpotAlte',
@@ -168,7 +168,7 @@ export default () => {
                     count_ticket: {
                         lottery_id: contractConfigInfo.lottery_counter,
                     },
-                }
+                },
             )
             setTickets(parseInt(contractTicketsInfo))
 
@@ -178,7 +178,7 @@ export default () => {
                     count_player: {
                         lottery_id: contractConfigInfo.lottery_counter,
                     },
-                }
+                },
             )
             setPlayers(parseInt(contractPlayersInfo))
 
@@ -188,7 +188,7 @@ export default () => {
                     count_player: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
                     },
-                }
+                },
             )
             setRecentPlayers(parseInt(recentPlayersData))
             // Set default tickets to buy is an average bag
@@ -196,8 +196,8 @@ export default () => {
                 parseInt(
                     isNaN(contractTicketsInfo / contractPlayersInfo)
                         ? 1
-                        : contractTicketsInfo / contractPlayersInfo
-                )
+                        : contractTicketsInfo / contractPlayersInfo,
+                ),
             )
 
             //Get poll data
@@ -209,7 +209,7 @@ export default () => {
                     winning_combination: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
                     },
-                }
+                },
             )
             dispatch({
                 type: 'setWinningCombination',
@@ -221,7 +221,7 @@ export default () => {
                 loterra_pool_address,
                 {
                     pool: {},
-                }
+                },
             )
             setLotaPrice(currentLotaPrice)
 
@@ -234,7 +234,7 @@ export default () => {
                     winner: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
                     },
-                }
+                },
             )
             dispatch({ type: 'setAllWinners', message: winners })
             // Query all players
@@ -278,7 +278,7 @@ export default () => {
                     owner: connectedWallet.walletAddress,
                     spender: state.loterraContractAddress,
                 },
-            }
+            },
         )
 
         if (
@@ -299,7 +299,7 @@ export default () => {
             showNotification(
                 'Gift friends enabled but no friends wallet address',
                 'error',
-                4000
+                4000,
             )
             setBuyLoader(false)
             return
@@ -314,7 +314,7 @@ export default () => {
         const addToGas = 5000 * cart.length
         // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
         //const obj = new StdFee(200_000, { uusd: 340000 + addToGas })
-        const obj = new StdFee(10_000, { uusd: 4500})
+        const obj = new StdFee(10_000, { uusd: 4500 })
         let exec_msg = {
             register: {
                 combination: cart,
@@ -352,7 +352,7 @@ export default () => {
                 connectedWallet.walletAddress,
                 loterra_contract_address,
                 exec_msg,
-                coins_msg
+                coins_msg,
             )
         } else {
             //Altered of message
@@ -381,13 +381,13 @@ export default () => {
                         contract: loterra_contract_address,
                         amount: String(
                             state.config.price_per_ticket_to_register *
-                                cart.length
+                                cart.length,
                         ),
                         msg: Buffer.from(JSON.stringify(alteMsg)).toString(
-                            'base64'
+                            'base64',
                         ),
                     },
-                }
+                },
             )
         }
 
@@ -405,7 +405,7 @@ export default () => {
                     showNotification(
                         'register combination success',
                         'success',
-                        4000
+                        4000,
                     )
                     multiplier(amount)
                     setAlteBonus(false)
@@ -415,7 +415,7 @@ export default () => {
                     showNotification(
                         'register combination error',
                         'error',
-                        4000
+                        4000,
                     )
                     setBuyLoader(false)
                 }
@@ -602,7 +602,7 @@ export default () => {
                 bubbles: true,
                 cancelable: true,
                 buttons: 1,
-            })
+            }),
         )
     }
 
@@ -925,7 +925,7 @@ export default () => {
                                         Total:{' '}
                                         <strong>
                                             {numeral(
-                                                (amount * price) / 1000000
+                                                (amount * price) / 1000000,
                                             ).format('0,0.00')}{' '}
                                             {payWith == 'ust' ? 'UST' : 'ALTE'}
                                         </strong>
@@ -941,7 +941,7 @@ export default () => {
                                             Total:{' '}
                                             <strong>
                                                 {numeral(
-                                                    (amount * price) / 1000000
+                                                    (amount * price) / 1000000,
                                                 ).format('0,0.00')}{' '}
                                                 UST
                                             </strong>
@@ -958,7 +958,7 @@ export default () => {
                                                         (amount * price) /
                                                             1000000 /
                                                             state.config
-                                                                .bonus_burn_rate
+                                                                .bonus_burn_rate,
                                                 ).format('0,0.00')}{' '}
                                                 UST{' '}
                                                 <span>
@@ -967,7 +967,7 @@ export default () => {
                                                         (amount * price) /
                                                             1000000 /
                                                             state.config
-                                                                .bonus_burn_rate
+                                                                .bonus_burn_rate,
                                                     ).format('0,0.00')}{' '}
                                                     ALTE
                                                 </span>
@@ -1248,7 +1248,7 @@ export default () => {
                                                 {numeral(
                                                     lotaPrice.assets[1].amount /
                                                         lotaPrice.assets[0]
-                                                            .amount
+                                                            .amount,
                                                 ).format('0.000')}
                                                 <span>UST</span>
                                             </h5>
@@ -1262,7 +1262,7 @@ export default () => {
                                     <p>Current lottery balance</p>
                                     <h5>
                                         {numeral(contractBalance).format(
-                                            '0,0.00'
+                                            '0,0.00',
                                         )}
                                         <span>UST</span>
                                     </h5>
@@ -1273,7 +1273,7 @@ export default () => {
                                     <p>Circulating SUPPLY</p>
                                     <h5>
                                         {numeral(circulatingSupply()).format(
-                                            '0,0.00'
+                                            '0,0.00',
                                         )}
                                         <span>LOTA</span>
                                     </h5>
@@ -1284,7 +1284,7 @@ export default () => {
                                     <p>Total SUPPLY</p>
                                     <h5>
                                         {numeral(totalSupply()).format(
-                                            '0,0.00'
+                                            '0,0.00',
                                         )}
                                         <span>LOTA</span>
                                     </h5>
@@ -1297,7 +1297,7 @@ export default () => {
                                             <p>Market Cap</p>
                                             <h5>
                                                 {numeral(marketCap()).format(
-                                                    '0,0.00'
+                                                    '0,0.00',
                                                 )}
                                                 <span>UST</span>
                                             </h5>

@@ -157,14 +157,14 @@ export default function TicketModal(props) {
                                                 ck,
                                                 obj,
                                                 k,
-                                                c
+                                                c,
                                             ) => {
                                                 let x = obj
                                                 e.preventDefault()
 
                                                 if (
                                                     !combination.includes(
-                                                        e.target.value
+                                                        e.target.value,
                                                     )
                                                 ) {
                                                     // toast.error('this value is invalid, you have the following options: [a,b,c,d,e,f,0,1,2,3,4,5,6,7,8,9]')
@@ -190,7 +190,7 @@ export default function TicketModal(props) {
                                                                 e.target.value
                                                         }
                                                         new_code.push(item)
-                                                    }
+                                                    },
                                                 )
                                                 //console.log('new code should become',new_code.join(""),'string index in combos should be:',k)
                                                 if (
@@ -205,7 +205,7 @@ export default function TicketModal(props) {
                                                         type: 'setCombination',
                                                         message:
                                                             comboUpdate.join(
-                                                                ' '
+                                                                ' ',
                                                             ),
                                                     })
                                                 }
@@ -240,7 +240,7 @@ export default function TicketModal(props) {
                                                             ck,
                                                             obj,
                                                             k,
-                                                            c
+                                                            c,
                                                         )
                                                     }
                                                 />

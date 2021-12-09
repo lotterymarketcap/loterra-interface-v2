@@ -30,7 +30,7 @@ export default function AllowanceModal(props) {
                     spender: state.loterraContractAddress,
                     amount: (parseFloat(val) * 1000000).toString(),
                 },
-            }
+            },
         )
 
         state.wallet
@@ -47,7 +47,7 @@ export default function AllowanceModal(props) {
                     showNotification(
                         'Increase allowance success',
                         'success',
-                        4000
+                        4000,
                     )
                     //   window.location.reload();
                 } else {

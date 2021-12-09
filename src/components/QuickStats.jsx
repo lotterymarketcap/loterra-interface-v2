@@ -32,7 +32,7 @@ export default function QuickStats(props) {
                                     <h5>
                                         {numeral(
                                             lotaPrice.assets[1].amount /
-                                                lotaPrice.assets[0].amount
+                                                lotaPrice.assets[0].amount,
                                         ).format('0.000')}
                                         <span>UST</span>
                                     </h5>
@@ -49,7 +49,7 @@ export default function QuickStats(props) {
                             {circulatingSupply() ? (
                                 <h5>
                                     {numeral(circulatingSupply()).format(
-                                        '0,0.00'
+                                        '0,0.00',
                                     )}
                                     <span>LOTA</span>
                                 </h5>

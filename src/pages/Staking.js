@@ -67,7 +67,7 @@ export default () => {
             state.loterraStakingAddress,
             {
                 claim_rewards: {},
-            }
+            },
         )
         state.wallet
             .post({
@@ -94,7 +94,7 @@ export default () => {
             state.loterraStakingLPAddress,
             {
                 claim_rewards: {},
-            }
+            },
         )
         state.wallet
             .post({
@@ -168,8 +168,10 @@ export default () => {
         <>
             <div
                 className="hero staking"
-                style={{ backgroundImage:
-                    'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)', }}
+                style={{
+                    backgroundImage:
+                        'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)',
+                }}
             >
                 <div className="container h-100 d-md-flex">
                     <div className="row align-self-center">
@@ -208,7 +210,7 @@ export default () => {
                                                         {state.tokenInfo
                                                             .total_supply
                                                             ? numeral(
-                                                                  getStakedNr()
+                                                                  getStakedNr(),
                                                               ).format('0.0,00')
                                                             : '0'}
                                                     </div>
@@ -220,7 +222,7 @@ export default () => {
                                                         {state.tokenInfo
                                                             .total_supply
                                                             ? numeral(
-                                                                  getDaoFunds()
+                                                                  getDaoFunds(),
                                                               ).format('0.0,00')
                                                             : '0'}
                                                     </div>
@@ -232,7 +234,7 @@ export default () => {
                                                         {state.tokenInfo
                                                             .total_supply
                                                             ? numeral(
-                                                                  getLPFunds()
+                                                                  getLPFunds(),
                                                               ).format('0.0,00')
                                                             : '0'}
                                                     </div>
@@ -244,7 +246,7 @@ export default () => {
                                                         {state.tokenInfo
                                                             .total_supply
                                                             ? numeral(
-                                                                  getTotalStakedLP()
+                                                                  getTotalStakedLP(),
                                                               ).format('0.0,00')
                                                             : '0'}
                                                     </div>
@@ -256,7 +258,7 @@ export default () => {
                                                         {state.tokenInfo
                                                             .total_supply
                                                             ? numeral(
-                                                                  getNotStaked()
+                                                                  getNotStaked(),
                                                               ).format('0.0,00')
                                                             : '0'}
                                                     </div>
@@ -316,10 +318,10 @@ export default () => {
                                                         <p>
                                                             {numeral(
                                                                 parseInt(
-                                                                    state.holderAccruedRewards
-                                                                ) / 1000000
+                                                                    state.holderAccruedRewards,
+                                                                ) / 1000000,
                                                             ).format(
-                                                                '0.00'
+                                                                '0.00',
                                                             )}{' '}
                                                             UST
                                                         </p>
@@ -354,10 +356,10 @@ export default () => {
                                                         <p>
                                                             {numeral(
                                                                 parseInt(
-                                                                    state.LPHolderAccruedRewards
-                                                                ) / 1000000
+                                                                    state.LPHolderAccruedRewards,
+                                                                ) / 1000000,
                                                             ).format(
-                                                                '0,0.000000'
+                                                                '0,0.000000',
                                                             )}{' '}
                                                             LOTA ={' '}
                                                             {numeral(
@@ -370,9 +372,9 @@ export default () => {
                                                                         .poolInfo
                                                                         .assets[0]
                                                                         .amount /
-                                                                    1000000
+                                                                    1000000,
                                                             ).format(
-                                                                '0,0.00'
+                                                                '0,0.00',
                                                             )}{' '}
                                                             UST
                                                         </p>

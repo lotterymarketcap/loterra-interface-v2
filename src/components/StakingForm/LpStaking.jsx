@@ -36,7 +36,7 @@ export default function LpStaking(props) {
                         amount: amount.toString(),
                         msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
                     },
-                }
+                },
             )
         } else {
             msg = new MsgExecuteContract(
@@ -44,7 +44,7 @@ export default function LpStaking(props) {
                 state.loterraStakingLPAddress,
                 {
                     unbond_stake: { amount: amount.toString() },
-                }
+                },
             )
         }
 
@@ -102,7 +102,7 @@ export default function LpStaking(props) {
             state.loterraStakingLPAddress,
             {
                 withdraw_stake: {},
-            }
+            },
         )
         state.wallet
             .post({
@@ -154,7 +154,7 @@ export default function LpStaking(props) {
                         <strong>
                             {total_staked() ? (
                                 numeral((100000 / total_staked()) * 100).format(
-                                    '0'
+                                    '0',
                                 )
                             ) : (
                                 <div
@@ -268,7 +268,7 @@ export default function LpStaking(props) {
                         {state.wallet && state.wallet.walletAddress && (
                             <>
                                 {numeral(
-                                    parseInt(state.LPBalance.balance) / 1000000
+                                    parseInt(state.LPBalance.balance) / 1000000,
                                 ).format('0.00')}
                             </>
                         )}
@@ -296,7 +296,7 @@ export default function LpStaking(props) {
                             <>
                                 {numeral(
                                     parseInt(state.allHolderLP.balance) /
-                                        1000000
+                                        1000000,
                                 ).format('0.00')}
                             </>
                         )}
@@ -309,7 +309,8 @@ export default function LpStaking(props) {
                 <div className="claim-unstake">
                     <p className="input-heading">Claim unstake</p>
                     <p className="input-slogan">
-                        There is no unbonding period, you can stake and unstake instantly 
+                        There is no unbonding period, you can stake and unstake
+                        instantly
                     </p>
                     <button
                         className="btn btn-default-lg w-100"

@@ -36,7 +36,7 @@ export default function Staking(props) {
                         amount: amount.toString(),
                         msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
                     },
-                }
+                },
             )
         } else {
             msg = new MsgExecuteContract(
@@ -44,7 +44,7 @@ export default function Staking(props) {
                 state.loterraStakingAddress,
                 {
                     unbond_stake: { amount: amount.toString() },
-                }
+                },
             )
         }
 
@@ -101,7 +101,7 @@ export default function Staking(props) {
             state.loterraStakingAddress,
             {
                 withdraw_stake: {},
-            }
+            },
         )
         state.wallet
             .post({
@@ -194,7 +194,7 @@ export default function Staking(props) {
                             <>
                                 {numeral(
                                     parseInt(state.LotaBalance.balance) /
-                                        1000000
+                                        1000000,
                                 ).format('0.00')}
                             </>
                         )}
@@ -220,7 +220,7 @@ export default function Staking(props) {
                         {state.wallet && state.wallet.walletAddress && (
                             <>
                                 {numeral(
-                                    parseInt(state.allHolder.balance) / 1000000
+                                    parseInt(state.allHolder.balance) / 1000000,
                                 ).format('0.00')}
                             </>
                         )}
@@ -272,7 +272,7 @@ export default function Staking(props) {
                                                     >
                                                         {numeral(
                                                             parseInt(e.amount) /
-                                                                1000000
+                                                                1000000,
                                                         ).format('0,0.000000')}
                                                         LOTA
                                                     </td>
