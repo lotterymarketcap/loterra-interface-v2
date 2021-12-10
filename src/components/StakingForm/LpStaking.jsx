@@ -107,6 +107,33 @@ export default function LpStaking(props) {
         return <>0</>
     }
 
+    function claimUnstake() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingLPAddress,
+            {
+                withdraw_stake: {},
+            },
+        )
+        state.wallet
+            .post({
+                msgs: [msg],
+                fee: obj,
+                // gasPrices: obj.gasPrices(),
+                // gasAdjustment: 1.5,
+            })
+            .then((e) => {
+                if (e.success) {
+                    showNotification('Claim unstake success', 'success', 4000)
+                } else {
+                    console.log(e)
+                }
+            })
+            .catch((e) => {
+                console.log(e.message)
+                showNotification(e.message, 'error', 4000)
+            })
+    }
     function total_staked() {
         if (state.poolInfo.total_share && state.stateLPStaking.total_balance) {
             const ratio =
@@ -288,6 +315,33 @@ export default function LpStaking(props) {
                     </strong>
                 </small>
             </div>
+
+            {/*<div className="col-md-12 my-3">
+                <div className="claim-unstake">
+                    <p className="input-heading">Claim unstake</p>
+                    <p className="input-slogan">
+                        There is no unbonding period, you can stake and unstake
+                        instantly
+                    </p>
+                    <button
+                        className="btn btn-default-lg w-100"
+                        onClick={() => claimUnstake()}
+                        style={{ marginTop: '7px' }}
+                    >
+                        Claim unstake
+                    </button>
+
+                    <small className="float-end text-muted mt-2">
+                        Available:
+                        <strong>
+                            {state.wallet &&
+                                state.wallet.walletAddress &&
+                                claimInfo()}
+                            LP token
+                        </strong>
+                    </small>
+                </div>
+            </div> */}
         </div>
     )
 }
