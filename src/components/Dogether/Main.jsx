@@ -148,18 +148,11 @@ export default function Main(props) {
     }
 
     return (
-        <>
-            <div className="col-md-9 col-lg-6 mx-auto">
-                <div className="card lota-card staking dogether-card">
+        <>            
+        <div className="col-md-12 mb-4">
+        <div className="card lota-card staking dogether-card margin-top">
                     <div className="card-body">
-                        <span
-                            className="info mb-3"
-                            style={{ color: '#ffffffeb' }}
-                        >
-                            ⚠️ We are in contact with security audit, until a
-                            full audit report we recommend to use Dogether at
-                            your own discretion and risk.
-                        </span>
+                   
                         <h2
                             className="text-center"
                             style={{
@@ -216,7 +209,22 @@ export default function Main(props) {
                                 </div>
                             )}
                         </h2>
-
+                    </div>
+                    <span
+                            className="info mb-3"
+                            style={{ color: '#ffffffeb' }}
+                        >
+                            ⚠️ We are in contact with security audit, until a
+                            full audit report we recommend to use Dogether at
+                            your own discretion and risk.
+                        </span>
+                </div>
+        </div>
+            <div className="col-md-9 col-lg-6">
+                <div className="card lota-card staking dogether-card mt-0">
+                    <div className="card-body">
+                        
+                   
                         <div className="row mb-3">
                             <div className="col-md-12">
                                 <h3>How it works</h3>
@@ -324,7 +332,26 @@ export default function Main(props) {
                             </div>
                         </div>
                     </div>
-                    <p className="input-heading mt-3" style={{}}>
+                    
+
+                    {/* <div className="modal fade" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content card lota-card">
+      <div className="modal-header" style={{borderBottom:0}}>
+        <h5 className="modal-title" id="exampleModalLabel">Agreement</h5>
+        <button type="button" style={{color:'#fff'}} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+        ...
+      </div>
+    </div>
+  </div>
+</div> */}
+                </div>
+            </div>
+            <div className="col-md-3 col-lg-6">
+                <div className="card lota-card staking dogether-card" style={{marginTop:0}}>
+                <p className="input-heading mt-3" style={{}}>
                         The amount you want to pool
                     </p>
                     <div className="input-group mb-3">
@@ -742,25 +769,12 @@ export default function Main(props) {
                         </div>
                         {/* <p>{amount}</p>
             <p>{percentage}</p> */}
-                        <small>
-                            <strong>Current blockheight:</strong>{' '}
-                            {state.blockHeight}
-                        </small>
+                        
                     </div>
-
-                    {/* <div className="modal fade" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content card lota-card">
-      <div className="modal-header" style={{borderBottom:0}}>
-        <h5 className="modal-title" id="exampleModalLabel">Agreement</h5>
-        <button type="button" style={{color:'#fff'}} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div className="modal-body">
-        ...
-      </div>
-    </div>
-  </div>
-</div> */}
+                    <small>
+                    <strong>Current blockheight:</strong>{' '}
+                    {state.blockHeight}
+                    </small>
                 </div>
             </div>
         </>
