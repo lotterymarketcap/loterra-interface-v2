@@ -104,7 +104,7 @@ export default function LpStaking(props) {
             })
             return <>{total_amount_pending / 1000000}</>
         }
-        return <>0</>
+        return 0
     }
 
     function claimUnstake() {
@@ -316,7 +316,7 @@ export default function LpStaking(props) {
                 </small>
             </div>
 
-            {/*<div className="col-md-12 my-3">
+            { pendingClaim() > 0 && <div className="col-md-12 my-3">
                 <div className="claim-unstake">
                     <p className="input-heading">Claim unstake</p>
                     <p className="input-slogan">
@@ -341,7 +341,7 @@ export default function LpStaking(props) {
                         </strong>
                     </small>
                 </div>
-            </div> */}
+            </div> }
         </div>
     )
 }
