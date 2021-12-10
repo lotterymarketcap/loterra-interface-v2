@@ -1310,3 +1310,26 @@ h4,
         );
     }
 }
+
+
+.badge-status {
+    font-size: 13px;
+    background: #82f3be;
+    color: #fff;
+    display: inline-block;
+    width: auto;
+    margin: 0 auto;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    top: -8px;
+    text-transform:uppercase;
+    font-weight:700;
+    &.active {
+        color:#212529;
+    }
+    &.inactive {
+        background:#ee26f1;
+        color:#fff;
+    }
+}

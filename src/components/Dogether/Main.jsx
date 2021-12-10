@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStore } from '../../store'
 import numeral from 'numeral'
-import { Bank, Check, Info, Ticket, Coin } from 'phosphor-react'
+import { Bank, Check, Info, Ticket, Coin, User, UsersFour } from 'phosphor-react'
 
 // import Nouislider from "nouislider-react";
 // import "nouislider/distribute/nouislider.css";
@@ -174,33 +174,33 @@ export default function Main(props) {
                             {totalBalance() ? (
                                 <>
                                     <span className="d-block nr-1">
-                                        {numeral(totalBalance()).format('0.00')}{' '}
+                                        {numeral(totalBalance()).format('0,0.00')}{' '}
                                         <small>UST</small>
                                     </span>
                                     <span className="d-inline-block nr-2">
                                         <span className="d-block heading-2">
                                             Tickets a week
                                         </span>
-                                        {(
+                                        {numeral(
                                             (((((totalBalance() / 100) *
                                                 percentage) /
                                                 100) *
                                                 anchorPercentage) /
                                                 356) *
                                             7
-                                        ).toFixed(2)}
+                                        ).format('0,0.00')}
                                     </span>
                                     <span className="d-inline-block nr-2">
                                         <span className="d-block heading-2">
                                             Tickets a year
                                         </span>
-                                        {(
+                                        {numeral(
                                             ((((totalBalance() / 100) *
                                                 percentage) /
                                                 100) *
                                                 anchorPercentage) /
                                             1
-                                        ).toFixed(2)}
+                                        ).format('0,0.00')}
                                     </span>
                                 </>
                             ) : (
@@ -288,36 +288,38 @@ export default function Main(props) {
                             <div className="col-md-12">
                                 <h3>Games</h3>
                             </div>
-                            <div className="col-md-4 mb-4">
-                                <div className="card stats-card d-flex py-3 text-center">
-                                    <span className="nr">1</span>
-                                    <img
-                                        src="/Solo.png"
-                                        height="48px"
-                                        className="img-fluid mx-auto"
+                            <div className="col-md-6 mb-4">
+                                <div className="card stats-card d-flex py-3 text-center">                                  
+                                <p className="badge-status active">Active</p>
+                                    <User size={48}
+                                      color={'#82f3be'}
+                                      className="mx-auto"
                                     />
+                                    <p className="mb-0"><strong>Solo</strong></p>
                                     <p
-                                        className="align-self-center w-100 m-0 mt-2"
+                                        className="w-100 m-0"
                                         style={{ fontSize: '14px' }}
                                     >
                                         Everything is yours
                                     </p>
+                                  
                                 </div>
                             </div>
-                            <div className="col-md-4 mb-4">
-                                <div className="card stats-card d-flex py-3 text-center">
-                                    <span className="nr">2</span>
-                                    <img
-                                        src="/Co-op.png"
-                                        width="48px"
-                                        className="img-fluid mx-auto"
+                            <div className="col-md-6 mb-4" style={{opacity:0.5}}>
+                                <div className="card stats-card d-flex py-3 text-center">      
+                                <p className="badge-status inactive">Coming soon</p>                          
+                                    <UsersFour size={48}
+                                      color={'#82f3be'}
+                                      className="mx-auto"
                                     />
+                                        <p className="mb-0"><strong>Coop</strong></p>
                                     <p
-                                        className="align-self-center w-100 m-0 mt-2"
+                                        className="w-100 m-0"
                                         style={{ fontSize: '14px' }}
                                     >
                                         Shared between all players
                                     </p>
+                                   
                                 </div>
                             </div>
                         </div>
