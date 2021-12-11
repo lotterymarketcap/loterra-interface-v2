@@ -25,9 +25,9 @@ export default function LpStaking(props) {
             showNotification('Input amount empty', 'error', 4000)
             return
         }
-        let msg
+        let msgs = []
         if (type == 'stake') {
-            msg = new MsgExecuteContract(
+            msgs.push(new MsgExecuteContract(
                 state.wallet.walletAddress,
                 state.loterraLPAddress,
                 {
@@ -37,20 +37,31 @@ export default function LpStaking(props) {
                         msg: 'eyAiYm9uZF9zdGFrZSI6IHt9IH0=',
                     },
                 },
-            )
+            ))
         } else {
-            msg = new MsgExecuteContract(
+            // unbond
+            msgs.push(new MsgExecuteContract(
                 state.wallet.walletAddress,
                 state.loterraStakingLPAddress,
                 {
                     unbond_stake: { amount: amount.toString() },
                 },
+            ))
+            // Withdraw directly after unbond
+            msgs.push(
+                new MsgExecuteContract(
+                    state.wallet.walletAddress,
+                    state.loterraStakingLPAddress,
+                    {
+                        withdraw_stake: {},
+                    }
+                )
             )
         }
 
         state.wallet
             .post({
-                msgs: [msg],
+                msgs: msgs,
                 fee: obj,
                 // gasPrices: obj.gasPrices(),
                 // gasAdjustment: 1.5,
@@ -93,7 +104,7 @@ export default function LpStaking(props) {
             })
             return <>{total_amount_pending / 1000000}</>
         }
-        return <>0</>
+        return 0
     }
 
     function claimUnstake() {
@@ -183,7 +194,7 @@ export default function LpStaking(props) {
                         >
                             Terraswap
                         </a>{' '}
-                        and stake your LP token to share: 273.00 LOTA daily
+                        and stake your LP token and unstake at any time! Rewards are waiting! Share: 273.00 LOTA daily
                         rewards | 100,000.00 LOTA year rewards
                     </p>
                 }
@@ -305,7 +316,7 @@ export default function LpStaking(props) {
                 </small>
             </div>
 
-            <div className="col-md-12 my-3">
+            { pendingClaim() > 0 && <div className="col-md-12 my-3">
                 <div className="claim-unstake">
                     <p className="input-heading">Claim unstake</p>
                     <p className="input-slogan">
@@ -330,7 +341,7 @@ export default function LpStaking(props) {
                         </strong>
                     </small>
                 </div>
-            </div>
+            </div> }
         </div>
     )
 }
