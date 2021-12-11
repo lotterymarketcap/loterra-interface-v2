@@ -316,7 +316,7 @@ export default function LpStaking(props) {
                 </small>
             </div>
 
-            { pendingClaim() > 0 && <div className="col-md-12 my-3">
+            { pendingClaim() > 0 || claimInfo() > 0 && <div className="col-md-12 my-3">
                 <div className="claim-unstake">
                     <p className="input-heading">Claim unstake</p>
                     <p className="input-slogan">
