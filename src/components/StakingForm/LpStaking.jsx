@@ -92,7 +92,7 @@ export default function LpStaking(props) {
             })
             return <>{total_amount_claimable / 1000000}</>
         }
-        return <>0</>
+        return 0
     }
     function pendingClaim() {
         if (state.holderClaimsLP) {
