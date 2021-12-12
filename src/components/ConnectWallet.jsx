@@ -135,6 +135,18 @@ export default function ConnectWallet() {
             },
         )
         dispatch({ type: 'setDaoFunds', message: contractDaoBalance.balance })
+
+        const contractDogetherState = await api.contractQuery(
+            state.dogetherAddress,
+            {
+                state: {}
+            },
+        )
+        dispatch({
+            type: 'setDogetherState',
+            message: contractDogetherState,
+        })
+
         const contractLPLoterraBalance = await api.contractQuery(
             state.loterraContractAddressCw20,
             {

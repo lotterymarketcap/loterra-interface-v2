@@ -160,10 +160,16 @@ const initialState = {
     balanceStakeOnDogether: 0,
     holderClaimsDogether: [],
     totalBalancePoolDogether: 0,
+    dogetherState: {}
 }
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case "setDogetherState":
+            return {
+                ...state,
+                dogetherState: action.message,
+            }
         case 'setTotalBalancePoolDogether':
             return {
                 ...state,
