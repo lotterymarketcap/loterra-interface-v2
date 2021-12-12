@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStore } from '../../store'
 import numeral from 'numeral'
-import { Bank, Check, Info, Ticket, Coin } from 'phosphor-react'
+import { Bank, Check, Info, Ticket, Coin, User, UsersFour } from 'phosphor-react'
 
 // import Nouislider from "nouislider-react";
 // import "nouislider/distribute/nouislider.css";
@@ -148,18 +148,11 @@ export default function Main(props) {
     }
 
     return (
-        <>
-            <div className="col-md-9 col-lg-6 mx-auto">
-                <div className="card lota-card staking dogether-card">
+        <>            
+        <div className="col-md-12 mb-4">
+        <div className="card lota-card staking dogether-card margin-top">
                     <div className="card-body">
-                        <span
-                            className="info mb-3"
-                            style={{ color: '#ffffffeb' }}
-                        >
-                            ⚠️ We are in contact with security audit, until a
-                            full audit report we recommend to use Dogether at
-                            your own discretion and risk.
-                        </span>
+                   
                         <h2
                             className="text-center"
                             style={{
@@ -174,33 +167,33 @@ export default function Main(props) {
                             {totalBalance() ? (
                                 <>
                                     <span className="d-block nr-1">
-                                        {numeral(totalBalance()).format('0.00')}{' '}
+                                        {numeral(totalBalance()).format('0,0.00')}{' '}
                                         <small>UST</small>
                                     </span>
                                     <span className="d-inline-block nr-2">
                                         <span className="d-block heading-2">
                                             Tickets a week
                                         </span>
-                                        {(
+                                        {numeral(
                                             (((((totalBalance() / 100) *
                                                 percentage) /
                                                 100) *
                                                 anchorPercentage) /
                                                 356) *
                                             7
-                                        ).toFixed(2)}
+                                        ).format('0,0.00')}
                                     </span>
                                     <span className="d-inline-block nr-2">
                                         <span className="d-block heading-2">
                                             Tickets a year
                                         </span>
-                                        {(
+                                        {numeral(
                                             ((((totalBalance() / 100) *
                                                 percentage) /
                                                 100) *
                                                 anchorPercentage) /
                                             1
-                                        ).toFixed(2)}
+                                        ).format('0,0.00')}
                                     </span>
                                     <span className="d-inline-block nr-3">
                                         <span className="d-block heading-2">
@@ -222,7 +215,22 @@ export default function Main(props) {
                                 </div>
                             )}
                         </h2>
-
+                    </div>
+                    <span
+                            className="info mb-3"
+                            style={{ color: '#ffffffeb' }}
+                        >
+                            ⚠️ We are in contact with security audit, until a
+                            full audit report we recommend to use Dogether at
+                            your own discretion and risk.
+                        </span>
+                </div>
+        </div>
+            <div className="col-md-9 col-lg-6">
+                <div className="card lota-card staking dogether-card mt-0">
+                    <div className="card-body">
+                        
+                   
                         <div className="row mb-3">
                             <div className="col-md-12">
                                 <h3>How it works</h3>
@@ -294,41 +302,62 @@ export default function Main(props) {
                             <div className="col-md-12">
                                 <h3>Games</h3>
                             </div>
-                            <div className="col-md-4 mb-4">
-                                <div className="card stats-card d-flex py-3 text-center">
-                                    <span className="nr">1</span>
-                                    <img
-                                        src="/Solo.png"
-                                        height="48px"
-                                        className="img-fluid mx-auto"
+                            <div className="col-md-6 mb-4">
+                                <div className="card stats-card d-flex py-3 text-center">                                  
+                                <p className="badge-status active">Active</p>
+                                    <User size={48}
+                                      color={'#82f3be'}
+                                      className="mx-auto"
                                     />
+                                    <p className="mb-0"><strong>Solo</strong></p>
                                     <p
-                                        className="align-self-center w-100 m-0 mt-2"
+                                        className="w-100 m-0"
                                         style={{ fontSize: '14px' }}
                                     >
                                         Everything is yours
                                     </p>
+                                  
                                 </div>
                             </div>
-                            <div className="col-md-4 mb-4">
-                                <div className="card stats-card d-flex py-3 text-center">
-                                    <span className="nr">2</span>
-                                    <img
-                                        src="/Co-op.png"
-                                        width="48px"
-                                        className="img-fluid mx-auto"
+                            <div className="col-md-6 mb-4" style={{opacity:0.5}}>
+                                <div className="card stats-card d-flex py-3 text-center">      
+                                <p className="badge-status inactive">Coming soon</p>                          
+                                    <UsersFour size={48}
+                                      color={'#82f3be'}
+                                      className="mx-auto"
                                     />
+                                        <p className="mb-0"><strong>Coop</strong></p>
                                     <p
-                                        className="align-self-center w-100 m-0 mt-2"
+                                        className="w-100 m-0"
                                         style={{ fontSize: '14px' }}
                                     >
                                         Shared between all players
                                     </p>
+                                   
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <p className="input-heading mt-3" style={{}}>
+                    
+
+                    {/* <div className="modal fade" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content card lota-card">
+      <div className="modal-header" style={{borderBottom:0}}>
+        <h5 className="modal-title" id="exampleModalLabel">Agreement</h5>
+        <button type="button" style={{color:'#fff'}} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+        ...
+      </div>
+    </div>
+  </div>
+</div> */}
+                </div>
+            </div>
+            <div className="col-md-3 col-lg-6">
+                <div className="card lota-card staking dogether-card" style={{marginTop:0}}>
+                <p className="input-heading mt-3" style={{}}>
                         The amount you want to pool
                     </p>
                     <div className="input-group mb-3">
@@ -746,25 +775,12 @@ export default function Main(props) {
                         </div>
                         {/* <p>{amount}</p>
             <p>{percentage}</p> */}
-                        <small>
-                            <strong>Current blockheight:</strong>{' '}
-                            {state.blockHeight}
-                        </small>
+                        
                     </div>
-
-                    {/* <div className="modal fade" id="agreementModal" tabindex="-1" aria-labelledby="agreementModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content card lota-card">
-      <div className="modal-header" style={{borderBottom:0}}>
-        <h5 className="modal-title" id="exampleModalLabel">Agreement</h5>
-        <button type="button" style={{color:'#fff'}} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div className="modal-body">
-        ...
-      </div>
-    </div>
-  </div>
-</div> */}
+                    <small>
+                    <strong>Current blockheight:</strong>{' '}
+                    {state.blockHeight}
+                    </small>
                 </div>
             </div>
         </>
