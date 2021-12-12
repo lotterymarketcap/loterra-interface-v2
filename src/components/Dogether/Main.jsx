@@ -6,6 +6,7 @@ import { Bank, Check, Info, Ticket, Coin, User, UsersFour } from 'phosphor-react
 // import Nouislider from "nouislider-react";
 // import "nouislider/distribute/nouislider.css";
 import {Coins, MsgExecuteContract, StdFee} from '@terra-money/terra.js'
+import { useEffect } from 'react'
 const obj = new StdFee(700_000, { uusd: 319200 })
 
 export default function Main(props) {
@@ -14,6 +15,8 @@ export default function Main(props) {
     const [agreement, setAgreement] = useState(false)
     const [amount, setAmount] = useState(285)
     const [percentage, setPercentage] = useState(100)
+    const[dogetherUserStats,setDogetherUserStats] = useState([])
+ 
 
     // const onSlideChange = (render, handle, value, un, percent) => {
     //     setPercentage(percent[0].toFixed(2))
@@ -146,6 +149,14 @@ export default function Main(props) {
     function userBalance() {
         return parseInt(state.balanceStakeOnDogether) / 1000000
     }
+
+    useEffect(() => {
+        if(state.wallet.walletAddress){
+            fetch('https://privilege.digital/api/get-dogether-user?address='+state.wallet.walletAddress)
+  .then(response => response.json())
+  .then(data => setDogetherUserStats(data.user.info));
+        }
+    },[state.wallet.walletAddress])
 
     return (
         <>            
@@ -403,7 +414,7 @@ export default function Main(props) {
 
                             <div className="col-md-6 mb-3">
                                 <div className="card stats-card">
-                                    <div className="card-body">
+                                    <div className="card-body">                                        
                                         <small className="d-block">
                                             NR TICKETS A WEEK
                                         </small>
@@ -581,16 +592,9 @@ export default function Main(props) {
                                             <strong
                                                 style={{ color: '#82f3be' }}
                                             >
-                                                Your Dogether Stats
+                                                Your Stats
                                             </strong>{' '}
-                                            <small
-                                                style={{
-                                                    marginLeft: '5px',
-                                                    color: '#a49ab6',
-                                                }}
-                                            >
-                                                Average
-                                            </small>
+                                            
                                         </p>
                                         <p
                                             className="mb-1"
@@ -602,6 +606,47 @@ export default function Main(props) {
                                             )}{' '}
                                             UST
                                         </p>
+                                        {dogetherUserStats.length > 0 &&
+                                        <>
+                                      
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th style={{padding:0}}>Lottery</th>
+                                                    <th style={{padding:0}}>Nr Tickets bought</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {  dogetherUserStats.map(obj => {
+                                                return (<tr style={{background:'transparent',color:'#fff'}}>
+                                                    <td style={{padding:0}}><strong>#{obj.lottery_id}</strong></td>
+                                                    <td style={{padding:0}}>
+                                                    <Ticket
+                                                    size={18}
+                                                    color={'#82f3be'}
+                                                    style={{
+                                                        position: 'relative',
+                                                        top: '-2px',
+                                                        marginRight: '4px',
+                                                    }}
+                                                    />
+                                                        <strong>{obj.amount}</strong>
+                                                        </td>
+                                                </tr>)
+                                            })
+                                            }
+                                            </tbody>
+                                        </table>
+                                        </>
+                                        }
+                                        <small
+                                                style={{
+                                                    marginLeft: '0px',
+                                                    color: '#a49ab6',
+                                                }}
+                                            >
+                                                Predictions
+                                            </small>
                                         <p
                                             className="mb-1"
                                             style={{ fontSize: '14px' }}
