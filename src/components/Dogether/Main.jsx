@@ -694,7 +694,7 @@ export default function Main(props) {
                                             style={{ fontSize: '14px' }}
                                         >
                                             <strong>Earn compound</strong>{' '}
-                                            {numeral(earning / 1000000).format("0,0.000000")}UST (Updated weekly)
+                                            {numeral(earning / 1000000).format("0,0.000000")}Ticket(s) (Updated weekly)
 
                                         </p>
 
