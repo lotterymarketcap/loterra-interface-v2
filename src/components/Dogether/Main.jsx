@@ -152,7 +152,7 @@ export default function Main(props) {
 
     useEffect(() => {
         if(state.wallet.walletAddress){
-            fetch('https://privilege.digital/api/get-dogether-user?address=terra1yw8fas7td6v4etsw2pe46ms87mle0h3fq6as75')
+            fetch('https://privilege.digital/api/get-dogether-user?address='+state.wallet.walletAddress)
   .then(response => response.json())
   .then(data => setDogetherUserStats(data.user.info));
         }
