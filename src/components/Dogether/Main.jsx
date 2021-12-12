@@ -587,7 +587,7 @@ export default function Main(props) {
                                     className="w-100 text-end d-block"
                                     style={{ color: '#9186c3' }}
                                 >
-                                    Instant unPool available or UnPool period 100000 blockheight ~7 days
+                                    Instant unPool or UnPool period 100000 blockheight ~7 days
                                 </small>
                             </div>
 
@@ -607,7 +607,7 @@ export default function Main(props) {
                                             <strong
                                                 style={{ color: '#82f3be' }}
                                             >
-                                                Your Stats
+                                                My Stats
                                             </strong>{' '}
                                             
                                         </p>
