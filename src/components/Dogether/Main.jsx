@@ -197,7 +197,7 @@ export default function Main(props) {
                                     </span>
                                     <span className="d-inline-block nr-3">
                                         <span className="d-block heading-2">
-                                            Next purchase tickets
+                                            Next draw tickets
                                         </span>
                                         {" "+ new Date(parseInt(state.dogetherState.next_draw) * 1000).toUTCString()}
                                     </span>
