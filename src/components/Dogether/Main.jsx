@@ -5,7 +5,7 @@ import { Bank, Check, Info, Ticket, Coin, User, UsersFour } from 'phosphor-react
 
 // import Nouislider from "nouislider-react";
 // import "nouislider/distribute/nouislider.css";
-import {Coins, MsgExecuteContract, StdFee} from '@terra-money/terra.js'
+import {Coins, MsgExecuteContract, StdFee, WasmAPI} from '@terra-money/terra.js'
 import { useEffect } from 'react'
 const obj = new StdFee(700_000, { uusd: 319200 })
 
@@ -16,6 +16,7 @@ export default function Main(props) {
     const [amount, setAmount] = useState(285)
     const [percentage, setPercentage] = useState(100)
     const[dogetherUserStats,setDogetherUserStats] = useState([])
+    const [earning, setEarning] = useState(0)
  
 
     // const onSlideChange = (render, handle, value, un, percent) => {
@@ -150,11 +151,25 @@ export default function Main(props) {
         return parseInt(state.balanceStakeOnDogether) / 1000000
     }
 
+    async function accrued_rewards(){
+        const api = new WasmAPI(state.lcd_client.apiRequester)
+        let dogether_holder = await api.contractQuery(
+            "terra1z2vgthmdy5qlz4cnj9d9d3ajtqeq7uzc0acxrp",
+            {
+                accrued_rewards: {
+                    address: state.wallet.walletAddress
+                }
+            }
+        );
+        setEarning(parseInt(dogether_holder.rewards))
+    }
+
     useEffect(() => {
         if(state.wallet.walletAddress){
             fetch('https://privilege.digital/api/get-dogether-user?address='+state.wallet.walletAddress)
   .then(response => response.json())
-  .then(data => setDogetherUserStats(data.user.info));
+  .then(data => setDogetherUserStats(data.user.info)).catch(e => console.log(e));
+            accrued_rewards()
         }
     },[state.wallet.walletAddress])
 
@@ -674,6 +689,15 @@ export default function Main(props) {
                                                 1
                                             ).toFixed(2)}
                                         </p>
+                                        <p
+                                            className="mb-1"
+                                            style={{ fontSize: '14px' }}
+                                        >
+                                            <strong>Earn compound</strong>{' '}
+                                            {numeral(earning / 1000000).format("0,0.000000")}UST (Updated weekly)
+
+                                        </p>
+
                                     </div>
                                 </div>
                             )}
