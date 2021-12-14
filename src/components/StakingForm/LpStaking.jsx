@@ -90,7 +90,7 @@ export default function LpStaking(props) {
                     total_amount_claimable += parseInt(e.amount)
                 }
             })
-            return <>{total_amount_claimable / 1000000}</>
+            return total_amount_claimable / 1000000
         }
         return 0
     }
@@ -102,7 +102,7 @@ export default function LpStaking(props) {
                     total_amount_pending += parseInt(e.amount)
                 }
             })
-            return <>{total_amount_pending / 1000000}</>
+            return total_amount_pending / 1000000
         }
         return 0
     }
@@ -316,7 +316,8 @@ export default function LpStaking(props) {
                 </small>
             </div>
 
-            { pendingClaim() > 0 || claimInfo() > 0 && <div className="col-md-12 my-3">
+            { claimInfo() && pendingClaim() && pendingClaim() > 0 || claimInfo() > 0 &&
+             <div className="col-md-12 my-3">
                 <div className="claim-unstake">
                     <p className="input-heading">Claim unstake</p>
                     <p className="input-slogan">
