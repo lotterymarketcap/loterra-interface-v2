@@ -104,7 +104,7 @@ h4,
         padding: 77px 0;
     }
     &.staking {
-        height: 1360px;
+        height: 100%;
         background-position: center center;
         .van {
             margin-top: -70px;
@@ -1332,5 +1332,20 @@ h4,
     &.inactive {
         background:#ee26f1;
         color:#fff;
+    }
+}
+
+.staking-rewards-info {
+    padding:15px;
+    background: #10003b82;
+    border-radius:5px;
+    h2 {
+        font-size:18px;
+        font-weight:600;
+        margin-bottom:0;
+    }
+    p {
+        margin:0;
+        font-size:24px;
     }
 }

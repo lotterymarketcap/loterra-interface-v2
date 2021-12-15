@@ -78,9 +78,9 @@ export default function Staking(props) {
                     total_amount_claimable += parseInt(e.amount)
                 }
             })
-            return <>{total_amount_claimable / 1000000}</>
+            return total_amount_claimable / 1000000
         }
-        return <>0</>
+        return 0
     }
     function pendingClaim() {
         if (state.holderClaims) {
@@ -90,9 +90,9 @@ export default function Staking(props) {
                     total_amount_pending += parseInt(e.amount)
                 }
             })
-            return <>{total_amount_pending / 1000000}</>
+            return total_amount_pending / 1000000
         }
-        return <>0</>
+        return 0
     }
 
     function claimUnstake() {
@@ -113,6 +113,34 @@ export default function Staking(props) {
             .then((e) => {
                 if (e.success) {
                     showNotification('Claim unstake success', 'success', 4000)
+                } else {
+                    console.log(e)
+                }
+            })
+            .catch((e) => {
+                console.log(e.message)
+                showNotification(e.message, 'error', 4000)
+            })
+    }
+
+    function claimRewards() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingAddress,
+            {
+                claim_rewards: {},
+            },
+        )
+        state.wallet
+            .post({
+                msgs: [msg],
+                fee: obj,
+                // gasPrices: obj.gasPrices(),
+                // gasAdjustment: 1.5,
+            })
+            .then((e) => {
+                if (e.success) {
+                    showNotification('Claim rewards succes', 'success', 4000)
                 } else {
                     console.log(e)
                 }
@@ -228,7 +256,43 @@ export default function Staking(props) {
                     </strong>
                 </small>
             </div>
-            <div className="col-md-12 my-3">
+            <div className="col-md-12 staking-rewards-info">           
+                                                <h2>Staking rewards</h2>
+                                                {state.wallet &&
+                                                    state.wallet
+                                                        .walletAddress && (
+                                                        <p>
+                                                            {numeral(
+                                                                parseInt(
+                                                                    state.holderAccruedRewards,
+                                                                ) / 1000000,
+                                                            ).format(
+                                                                '0.00',
+                                                            )}{' '}
+                                                            UST
+                                                        </p>
+                                                    )}
+                                                <button
+                                                    className=" btn btn-outline-primary mt-3"
+                                                    disabled={
+                                                        state.holderAccruedRewards <=
+                                                        0
+                                                            ? true
+                                                            : false
+                                                    }
+                                                    onClick={() =>
+                                                        claimRewards()
+                                                    }
+                                                    style={{
+                                                        boxShadow: 'none',
+                                                    }}
+                                                >
+                                                    Claim rewards
+                                                </button>
+                                         
+            </div>
+            { pendingClaim() > 0 || claimInfo() > 0 &&
+                <div className="col-md-12 my-3">
                 <div className="claim-unstake">
                     <button
                         className="btn btn-default-lg w-100"
@@ -306,6 +370,7 @@ export default function Staking(props) {
                     </small>
                 </div>
             </div>
+            }
         </div>
     )
 }
