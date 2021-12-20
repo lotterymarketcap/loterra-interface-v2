@@ -61,60 +61,8 @@ export default () => {
         }, duration)
     }
 
-    function claimRewards() {
-        const msg = new MsgExecuteContract(
-            state.wallet.walletAddress,
-            state.loterraStakingAddress,
-            {
-                claim_rewards: {},
-            },
-        )
-        state.wallet
-            .post({
-                msgs: [msg],
-                fee: obj,
-                // gasPrices: obj.gasPrices(),
-                // gasAdjustment: 1.5,
-            })
-            .then((e) => {
-                if (e.success) {
-                    showNotification('Claim rewards succes', 'success', 4000)
-                } else {
-                    console.log(e)
-                }
-            })
-            .catch((e) => {
-                console.log(e.message)
-                showNotification(e.message, 'error', 4000)
-            })
-    }
-    function claimLPRewards() {
-        const msg = new MsgExecuteContract(
-            state.wallet.walletAddress,
-            state.loterraStakingLPAddress,
-            {
-                claim_rewards: {},
-            },
-        )
-        state.wallet
-            .post({
-                msgs: [msg],
-                fee: obj,
-                // gasPrices: obj.gasPrices(),
-                // gasAdjustment: 1.5,
-            })
-            .then((e) => {
-                if (e.success) {
-                    showNotification('Claim rewards succes', 'success', 4000)
-                } else {
-                    console.log(e)
-                }
-            })
-            .catch((e) => {
-                console.log(e.message)
-                showNotification(e.message, 'error', 4000)
-            })
-    }
+    
+    
 
     function getTotalStakedLP() {
         if (state.poolInfo.total_share && state.stateLPStaking.total_balance) {
@@ -173,8 +121,8 @@ export default () => {
                         'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)',
                 }}
             >
-                <div className="container h-100 d-md-flex">
-                    <div className="row align-self-center">
+                <div className="container">
+                    <div className="row">
                         <div className="col-md-12 col-lg-8 mx-auto order-1 order-lg-2 p-lg-5">
                             {/* <img
                                 src="/van.png"
@@ -187,16 +135,11 @@ export default () => {
                                     showNotification(message, type, dur)
                                 }
                             />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <section className="stakingrewards my-5">
-                <div className="container">
-                    <div className="card lota-card staking-rewards">
+
+<div className="card lota-card staking-rewards">
                         <div className="card-body">
                             <div className="row">
-                                <div className="col-lg-4 d-flex">
+                                <div className="col-lg-12 d-flex">
                                     {state.tokenInfo.total_supply &&
                                     state.poolInfo.total_share ? (
                                         <div className="align-self-center w-100">
@@ -306,105 +249,14 @@ export default () => {
                                     10.00<span>UST</span>
                                 </div>
                             <Line data={lineData} options={lineOptions} style={{background:'#10003b', borderRadius:'10px'}}/>
-                            </div> */}
-                                <div className="col-md-8 text-center">
-                                    <div className="row">
-                                        <div className="col-md-12 mb-4">
-                                            <div className="align-self-center w-100">
-                                                <h2>Staking rewards</h2>
-                                                {state.wallet &&
-                                                    state.wallet
-                                                        .walletAddress && (
-                                                        <p>
-                                                            {numeral(
-                                                                parseInt(
-                                                                    state.holderAccruedRewards,
-                                                                ) / 1000000,
-                                                            ).format(
-                                                                '0.00',
-                                                            )}{' '}
-                                                            UST
-                                                        </p>
-                                                    )}
-                                                <button
-                                                    className=" btn btn-special mt-3"
-                                                    disabled={
-                                                        state.holderAccruedRewards <=
-                                                        0
-                                                            ? true
-                                                            : false
-                                                    }
-                                                    onClick={() =>
-                                                        claimRewards()
-                                                    }
-                                                    style={{
-                                                        boxShadow: 'none',
-                                                    }}
-                                                >
-                                                    Claim rewards
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <div className="align-self-center w-100">
-                                                <h2>Staking LP rewards</h2>
-                                                {state.wallet &&
-                                                    state.wallet
-                                                        .walletAddress &&
-                                                    state.poolInfo.assets
-                                                        .length > 0 && (
-                                                        <p>
-                                                            {numeral(
-                                                                parseInt(
-                                                                    state.LPHolderAccruedRewards,
-                                                                ) / 1000000,
-                                                            ).format(
-                                                                '0,0.000000',
-                                                            )}{' '}
-                                                            LOTA ={' '}
-                                                            {numeral(
-                                                                (state.LPHolderAccruedRewards *
-                                                                    state
-                                                                        .poolInfo
-                                                                        .assets[1]
-                                                                        .amount) /
-                                                                    state
-                                                                        .poolInfo
-                                                                        .assets[0]
-                                                                        .amount /
-                                                                    1000000,
-                                                            ).format(
-                                                                '0,0.00',
-                                                            )}{' '}
-                                                            UST
-                                                        </p>
-                                                    )}
-                                                <button
-                                                    className=" btn btn-special mt-3"
-                                                    disabled={
-                                                        state.LPHolderAccruedRewards <=
-                                                        0
-                                                            ? true
-                                                            : false
-                                                    }
-                                                    onClick={() =>
-                                                        claimLPRewards()
-                                                    }
-                                                    style={{
-                                                        boxShadow: 'none',
-                                                    }}
-                                                >
-                                                    Claim rewards
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div> */}                               
                             </div>
                         </div>
                     </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>        
             {/* <section className="apystats my-5">
             <div className="container">
                 <div className="card lota-card apy-stats">

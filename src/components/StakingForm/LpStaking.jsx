@@ -134,6 +134,33 @@ export default function LpStaking(props) {
                 showNotification(e.message, 'error', 4000)
             })
     }
+    function claimLPRewards() {
+        const msg = new MsgExecuteContract(
+            state.wallet.walletAddress,
+            state.loterraStakingLPAddress,
+            {
+                claim_rewards: {},
+            },
+        )
+        state.wallet
+            .post({
+                msgs: [msg],
+                fee: obj,
+                // gasPrices: obj.gasPrices(),
+                // gasAdjustment: 1.5,
+            })
+            .then((e) => {
+                if (e.success) {
+                    showNotification('Claim rewards succes', 'success', 4000)
+                } else {
+                    console.log(e)
+                }
+            })
+            .catch((e) => {
+                console.log(e.message)
+                showNotification(e.message, 'error', 4000)
+            })
+    }
     function total_staked() {
         if (state.poolInfo.total_share && state.stateLPStaking.total_balance) {
             const ratio =
@@ -315,6 +342,58 @@ export default function LpStaking(props) {
                     </strong>
                 </small>
             </div>
+
+            <div className="col-md-12 staking-rewards-info">
+                                                <h2>Staking LP rewards</h2>
+                                                {state.wallet &&
+                                                    state.wallet
+                                                        .walletAddress &&
+                                                    state.poolInfo.assets
+                                                        .length > 0 && (
+                                                        <p>
+                                                            {numeral(
+                                                                parseInt(
+                                                                    state.LPHolderAccruedRewards,
+                                                                ) / 1000000,
+                                                            ).format(
+                                                                '0,0.000000',
+                                                            )}{' '}
+                                                            LOTA ={' '}
+                                                            {numeral(
+                                                                (state.LPHolderAccruedRewards *
+                                                                    state
+                                                                        .poolInfo
+                                                                        .assets[1]
+                                                                        .amount) /
+                                                                    state
+                                                                        .poolInfo
+                                                                        .assets[0]
+                                                                        .amount /
+                                                                    1000000,
+                                                            ).format(
+                                                                '0,0.00',
+                                                            )}{' '}
+                                                            UST
+                                                        </p>
+                                                    )}
+                                                <button
+                                                    className=" btn btn-outline-primary mt-3"
+                                                    disabled={
+                                                        state.LPHolderAccruedRewards <=
+                                                        0
+                                                            ? true
+                                                            : false
+                                                    }
+                                                    onClick={() =>
+                                                        claimLPRewards()
+                                                    }
+                                                    style={{
+                                                        boxShadow: 'none',
+                                                    }}
+                                                >
+                                                    Claim rewards
+                                                </button>
+                                            </div>
 
             { claimInfo() && pendingClaim() && pendingClaim() > 0 || claimInfo() > 0 &&
              <div className="col-md-12 my-3">

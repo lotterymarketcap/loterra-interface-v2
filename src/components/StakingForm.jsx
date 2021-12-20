@@ -39,33 +39,31 @@ export default function StakingForm(props) {
                             role="tablist"
                         >
                             <li className="nav-item" role="presentation">
-                                <button
+                                <a
                                     className="nav-link active"
                                     id="pills-staking-tab"
+                                    href="#pills-staking"  
                                     data-bs-toggle="pill"
                                     data-bs-target="#pills-staking"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="pills-staking"
-                                    aria-selected="true"
+                                                            
+                                                               
                                 >
                                     Staking
-                                </button>
+                                </a>
                             </li>
 
                             <li className="nav-item" role="presentation">
-                                <button
+                                <a
                                     className="nav-link"
                                     id="pills-lpstaking-tab"
+                                    href="#pills-lpstaking"    
                                     data-bs-toggle="pill"
-                                    data-bs-target="#pills-lpstaking"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="pills-lpstaking"
-                                    aria-selected="false"
+                                    data-bs-target="#pills-lpstaking"     
+                                                          
+                                                                    
                                 >
                                     LP Staking <label>NEW</label>
-                                </button>
+                                </a>
                             </li>
                         </ul>
                     </div>
