@@ -571,10 +571,10 @@ export default function ConnectWallet() {
         window.addEventListener('scroll', handleScroll)
     }, [
         connectedWallet,
-        lcd,
-        state.config,
-        state.allRecentWinners,
-        state.youWon,
+        // lcd,
+        // state.config,
+        // state.allRecentWinners,
+        // state.youWon,
     ])
 
     return (

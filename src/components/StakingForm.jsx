@@ -20,7 +20,7 @@ export default function StakingForm(props) {
 
     useEffect(() => {
         blockHeight()
-    }, [blockHeight])
+    }, [])
 
     return (
         <div className="card lota-card staking">
@@ -74,7 +74,7 @@ export default function StakingForm(props) {
                             role="tabpanel"
                             aria-labelledby="pills-staking-tab"
                         >
-                            <Staking showNotification={showNotification} />
+                            <Staking showNotification={showNotification} heightBlock={heightBlock} />
                         </div>
                         <div
                             className="tab-pane fade"

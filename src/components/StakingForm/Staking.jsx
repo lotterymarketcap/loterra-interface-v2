@@ -9,7 +9,7 @@ const addToGas = 5800
 const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
 
 export default function Staking(props) {
-    const { showNotification } = props
+    const { showNotification,heightBlock } = props
     const { state, dispatch } = useStore()
 
     function setInputAmount(amount) {
@@ -71,26 +71,26 @@ export default function Staking(props) {
     }
 
     function claimInfo() {
-        if (state.holderClaims) {
+        if (state.holderClaims.length > 0) {
             let total_amount_claimable = 0
             state.holderClaims.map((e) => {
-                if (e.release_at.at_height < state.blockHeight) {
+                if (e.release_at.at_height < heightBlock) {
                     total_amount_claimable += parseInt(e.amount)
                 }
             })
-            return total_amount_claimable / 1000000
+            return parseInt(total_amount_claimable / 1000000)
         }
         return 0
     }
     function pendingClaim() {
-        if (state.holderClaims) {
+        if (state.holderClaims.length > 0) {
             let total_amount_pending = 0
             state.holderClaims.map((e) => {
-                if (e.release_at.at_height > state.blockHeight) {
+                if (e.release_at.at_height > heightBlock) {
                     total_amount_pending += parseInt(e.amount)
                 }
             })
-            return total_amount_pending / 1000000
+            return parseInt(total_amount_pending / 1000000)
         }
         return 0
     }
@@ -290,12 +290,13 @@ export default function Staking(props) {
                                                     Claim rewards
                                                 </button>
                                          
-            </div>
-            { pendingClaim() > 0 || claimInfo() > 0 &&
+            </div>         
+            {claimInfo() > 0 || pendingClaim() > 0 &&
                 <div className="col-md-12 my-3">
                 <div className="claim-unstake">
                     <button
                         className="btn btn-default-lg w-100"
+                        disabled={claimInfo() > 0 ? false : true }
                         onClick={() => claimUnstake()}
                         style={{ marginTop: '21px' }}
                     >
@@ -320,15 +321,16 @@ export default function Staking(props) {
                                     </td>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>                                
                                 {state.holderClaims ? (
                                     state.holderClaims.map((e) => {
                                         if (
                                             e.release_at.at_height >
-                                            state.blockHeight
+                                            heightBlock
                                         ) {
-                                            return (
-                                                <tr>
+                                       
+                                                return (
+                                                    <tr>
                                                     <td
                                                         style={{
                                                             paddingLeft: '20px',
@@ -348,7 +350,8 @@ export default function Staking(props) {
                                                         {e.release_at.at_height}
                                                     </td>
                                                 </tr>
-                                            )
+                                                )
+                                            
                                         }
                                     })
                                 ) : (
