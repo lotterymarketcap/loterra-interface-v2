@@ -10,7 +10,7 @@ export default () => {
 
     async function getHomePageData() {
         try {
-          const result = await axios.get("https://privilege.digital/api/get-all-orders")
+          const result = await axios.get("https://privilege.digital/api/lota-get-all-orders")
           console.log(result.data);       
           setTraders(result.data.orders)
           
