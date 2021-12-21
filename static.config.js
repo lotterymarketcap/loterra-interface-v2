@@ -21,6 +21,10 @@ export default {
             template: 'src/pages/Index',
         },
         {
+            path: '/trading-competition',
+            template: 'src/pages/TradingCompetition',
+        },
+        {
             path: 'staking',
             template: 'src/pages/Staking',
         },
