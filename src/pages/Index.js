@@ -1202,7 +1202,7 @@ export default () => {
                                 className="btn btn-plain"
                                 href="https://docs.loterra.io/products/lottery"
                                 style={{
-                                    color: 'rgb(166, 159, 187)',
+                                    color: 'rgba(166, 159, 187)',
                                     fontSize: '16px',
                                 }}
                                 target="_blank"
@@ -1311,7 +1311,7 @@ export default () => {
                                     target="_blank"
                                     className="btn btn-plain"
                                     style={{
-                                        color: 'rgb(166, 159, 187)',
+                                        color: 'rgba(166, 159, 187)',
                                         fontSize: '16px',
                                     }}
                                 >
