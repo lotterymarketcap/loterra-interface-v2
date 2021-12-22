@@ -391,7 +391,7 @@ export default function ConnectWallet() {
                 const claims = await api.contractQuery(
                     state.loterraStakingAddress,
                     {
-                        claims: { address: connectedWallet.walletAddress },
+                        claims: { address: connectedWallet.walletAddress }, 
                     },
                 )
                 //console.log("claims")
