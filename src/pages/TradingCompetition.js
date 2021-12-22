@@ -31,25 +31,25 @@ export default () => {
       const getRankPrize = (nr) => {
         let rank = nr + 1;
           if(rank === 1){
-              return '3000'
+              return '20000'
           }
           if(rank === 2){
-            return '2500'
+            return '10000'
           }
           if(rank === 3){
-            return '2000'
+            return '3000'
           }
           if(rank === 4){
-            return '1500'
+            return '2000'
           }
           if(rank === 5){
             return '1000'
           }
           if(rank >= 6 && rank <= 10){
-            return '500'
-          }
+            return '400'
+          } 
           if(rank >= 11 && rank <= 40){
-            return '100'
+            return '66.66'
           }
           return 0;
       }
@@ -93,7 +93,7 @@ export default () => {
                 </div>
               </div>           
               <div className="col-12 col-md-4 mx-auto mt-2">
-                <a className="btn btn-outline-primary d-inline-block mx-auto" href="https://docs.alteredprotocol.com/events/trading-competition" target="_blank">
+                <a className="btn btn-outline-primary d-inline-block mx-auto" href="https://docs.loterra.io/events/trading-competition" target="_blank">
                 <ArrowSquareOut
                             size={18}
                             style={{
@@ -160,7 +160,7 @@ export default () => {
                     }}
                 >#{getRank(index)}</span></td>                                        
                     <td className="amount" style={{minWidth:'200px'}}>{(obj.volume_amount / 1000000).toFixed(2)} <small style={{fontSize:'13px',opacity:0.6}}>LOTA + UST</small></td>
-                    <td className="prize" style={{minWidth:'100px'}}><p>{getRankPrize(index)} <Ticket size={21} color={'#72ffc1'} style={{position:'relative', top:'-2px'}}/></p></td>
+                    <td className="prize" style={{minWidth:'100px'}}><p>${getRankPrize(index)} in LOTA</p></td>
                     <td className="trader-address text-end">{obj._id}</td>
                 </tr>
                 )
