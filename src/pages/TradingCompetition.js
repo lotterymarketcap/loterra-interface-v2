@@ -134,7 +134,7 @@ export default () => {
            
             
         </div>
-        <div class="table-responsive">
+        <div className="table-responsive">
         <table className="table trading-competition-table mb-5">
             <thead>
                 <tr>
@@ -147,7 +147,7 @@ export default () => {
             <tbody>
             { traders && traders.sort((a,b) => { return b.volume_amount - a.volume_amount}).slice(0,100).map((obj,index) => {
                 return (
-                <tr className={getRankClass(index)}>
+                <tr className={getRankClass(index)} key={index}>
                     <td className="rank" style={{minWidth:'50px'}}>
                         <span
                     style={{
@@ -162,7 +162,7 @@ export default () => {
                     <td className="amount" style={{minWidth:'200px'}}>{(obj.volume_amount / 1000000).toFixed(2)} <small style={{fontSize:'13px',opacity:0.6}}>LOTA + UST</small></td>
                     <td className="prize" style={{minWidth:'100px'}}><p>${getRankPrize(index)} in LOTA</p></td>
                     <td className="trader-address text-end">{obj._id}</td>
-                </tr>
+                </tr> 
                 )
                 
             })
