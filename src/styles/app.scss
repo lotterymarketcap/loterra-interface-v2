@@ -349,7 +349,7 @@ h4,
  
     background: linear-gradient(
         328.75deg,
-        #10003ba6 -5.49%,
+        #10003ba6 -5.49%, 
         #0f0038f2 104.44%
     ) !important;
     @media (max-width: 1100px) {
@@ -362,7 +362,7 @@ h4,
         text-shadow: 1px 1px 20px #10003b, 1px 2px 0px #8c6910;
     }
     .heading-1 {
-        font-size: 14px;
+        font-size: 14px; 
         text-transform: uppercase;
         color: #f13cf1;
     }
@@ -1347,5 +1347,96 @@ h4,
     p {
         margin:0;
         font-size:24px;
+    }
+}
+.trading-competition-body {
+    background: url('/bgtrading.JPG');
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-color: #0a0128;
+    background-attachment: fixed;
+}
+.trading-competition {
+    margin-top:135px;
+    .stats-card {
+        background: #0e0230d1;
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px;
+    h3 {
+        span {
+            text-transform:uppercase;
+        }
+    }
+    }
+    .heading-table {
+        font-family: "Sigmar One", cursive;
+        text-shadow: 1px 2px 0px #ff36ff;
+    }
+    .title {
+        color: #fff;
+    text-transform: uppercase;
+    font-size: 50px;
+    line-height: 30px;
+    position: relative;
+    margin-bottom: 37px;
+    z-index: 2;
+    font-weight: 300;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f038f0, 0 0 70px #f038f0, 0 0 80px #f038f0, 0 0 120px #f038f0, 0 0 200px #f038f0;
+    font-family: "Monoton", cursive;
+    @media(max-width:768px){
+        font-size:33px;
+    }
+    }
+    .trading-competition-table {
+        color:#fff;
+        tbody {
+            tr {
+                border-bottom: 1px solid rgb(31, 16, 77);
+                background: rgba(11, 1, 38, 0.829);
+            }
+        }
+        thead {
+            th {
+                font-size: 12px;
+                color: rgb(255, 54, 255);
+                font-weight: 200;
+                text-transform: uppercase;
+                border: 0;
+            }
+        }
+        .trader-address {
+            font-size:12px;
+            opacity:0.5;
+        }
+        .rank {
+            span {
+                font-size:16px;
+            }
+        }
+        .prize {
+            p {
+                margin-bottom: 0;
+    font-size: 16px;
+    font-weight: 700;
+            }
+        }
+        .amount {
+            font-weight:600;
+            font-size:16px;
+        }
+        .big {
+            border-bottom: 1px solid #1f104d;
+    background: linear-gradient(
+45deg, #ff36ff0d, #0d0230);
+            .rank {
+                span {
+                    font-size:21px;
+                }
+            }
+            .amount {
+                font-size:21px;
+            }
+        }
     }
 }
