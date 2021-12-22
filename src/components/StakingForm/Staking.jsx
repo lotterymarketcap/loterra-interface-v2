@@ -290,8 +290,9 @@ export default function Staking(props) {
                                                     Claim rewards
                                                 </button>
                                          
-            </div>         
-            {claimInfo() > 0 || pendingClaim() > 0 &&
+            </div>        
+      
+            {(claimInfo() > 0 || pendingClaim() > 0) &&
                 <div className="col-md-12 my-3">
                 <div className="claim-unstake">
                     <button
