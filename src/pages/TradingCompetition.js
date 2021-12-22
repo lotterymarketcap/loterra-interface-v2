@@ -125,7 +125,7 @@ export default () => {
                     <div className="card-body">
                         <h3>
                             <span style={{display:'block'}}>Total Volume</span>
-                            {traders && getTradingVolume()} <small style={{fontSize:'13px',opacity:0.6}}>LOTA + UST</small>
+                            {traders && getTradingVolume()} <small style={{fontSize:'13px',opacity:0.6}}>LOOP + LOTA</small>
                         </h3>                        
                     </div>
                   </div>         
@@ -159,7 +159,7 @@ export default () => {
                         fontWeight:'600',
                     }}
                 >#{getRank(index)}</span></td>                                        
-                    <td className="amount" style={{minWidth:'200px'}}>{(obj.volume_amount / 1000000).toFixed(2)} <small style={{fontSize:'13px',opacity:0.6}}>LOTA + UST</small></td>
+                    <td className="amount" style={{minWidth:'200px'}}>{(obj.volume_amount / 1000000).toFixed(2)} <small style={{fontSize:'13px',opacity:0.6}}>LOOP + LOTA</small></td>
                     <td className="prize" style={{minWidth:'100px'}}><p>${getRankPrize(index)} in LOTA</p></td>
                     <td className="trader-address text-end">{obj._id}</td>
                 </tr> 
