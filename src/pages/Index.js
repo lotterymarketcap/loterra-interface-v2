@@ -774,6 +774,22 @@ export default () => {
                                                     <strong>ALTE</strong>
                                                 </small>
                                             </div>
+                                            <div className="col-12 text-center mt-4 mb-4">
+                                                <a
+                                                    href="/trading-competition"
+                                                    className="btn btn-special"
+                                                >Trading competition</a>
+                                                <small
+                                                    style={{
+                                                        display: 'block',
+                                                        marginTop: '10px',
+                                                        fontSize: '12px',
+                                                        opacity: '0.6',
+                                                    }}
+                                                >
+                                                    See our trading competition
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
