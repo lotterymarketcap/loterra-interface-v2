@@ -136,6 +136,8 @@ const initialState = {
     LPHolderAccruedRewards: 0,
     combination: '',
     modal: false,
+    vkrContract: '',
+    vkrReferrer: {status:false,code:''},
     ustBalance: 0,
     daoFunds: 0,
     lcd_client: new LCDClient({
@@ -239,6 +241,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 modal: action.message,
+            }
+            case 'setVkrReferrer':
+            return {
+                ...state,
+                vkrReferrer: action.message,
             }
         case 'setCurrentLotteryId':
             return {

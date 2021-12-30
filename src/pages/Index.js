@@ -399,8 +399,36 @@ export default () => {
                 gasPrices: obj.gasPrices(),
                 gasAdjustment: 1.7,
             })
-            .then((e) => {
+            .then( async (e) => {
                 if (e.success) {
+                    // VALKYRIE START
+                    if(state.vkrReferrer.status && state.vkrReferrer.code !== ''){
+                        //Valkyrie referrer detected
+                        const participationReferrerInfo = await api.contractQuery(
+                            state.vkrContract,
+                            {
+                                participate: {
+                                    actor: connectedWallet.walletAddress,
+                                    referrer: {
+                                        compressed: state.vkrReferrer.code
+                                    }
+                                },
+                            },
+                        )
+                    } else {
+                        //Check normal valkyrie participator
+                        const participationInfo = await api.contractQuery(
+                            state.vkrContract, 
+                            {
+                                participate: {
+                                    actor: connectedWallet.walletAddress
+                                },
+                            },
+                        )
+                    }
+
+
+                    //VALKYRIE END
                     //setResult("register combination success")
                     showNotification(
                         'register combination success',
@@ -774,7 +802,7 @@ export default () => {
                                                     <strong>ALTE</strong>
                                                 </small>
                                             </div>
-                                            <div className="col-12 text-center mt-4 mb-4">
+                                            {/* <div className="col-12 text-center mt-4 mb-4">
                                                 <a
                                                     href="/trading-competition"
                                                     className="btn btn-special"
@@ -789,7 +817,7 @@ export default () => {
                                                 >
                                                     See our trading competition
                                                 </small>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
