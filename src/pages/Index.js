@@ -122,7 +122,7 @@ export default () => {
                 state.alteredContractAddress,
                 {
                     balance: {
-                        address: state.loterraContractAddress,
+                        address: state.loterraTestnetContractAddress,
                     },
                 },
             )
@@ -276,7 +276,7 @@ export default () => {
             {
                 allowance: {
                     owner: connectedWallet.walletAddress,
-                    spender: state.loterraContractAddress,
+                    spender: state.loterraTestnetContractAddress,
                 },
             },
         )
@@ -429,7 +429,7 @@ export default () => {
                         )
                         //Get total tickets bought by lottery_id
                         const combinations = await api.contractQuery(
-                            state.loterraContractAddress,
+                            state.loterraTestnetContractAddress,
                             {
                                 combination: {
                                     lottery_id: state.config.lottery_counter - 1,

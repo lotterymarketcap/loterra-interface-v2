@@ -144,7 +144,7 @@ export default function ConnectWallet() {
             state.loterraContractAddressCw20,
             {
                 balance: {
-                    address: state.loterraContractAddress,
+                    address: state.loterraTestnetContractAddress,
                 },
             },
         )
@@ -202,7 +202,7 @@ export default function ConnectWallet() {
             state.alteredContractAddress,
             {
                 balance: {
-                    address: state.loterraContractAddress,
+                    address: state.loterraTestnetContractAddress,
                 },
             },
         )
@@ -334,7 +334,7 @@ export default function ConnectWallet() {
                 )
                 setConnected(true)
                 const lastDrawnJackpot = await api.contractQuery(
-                    state.loterraContractAddress,
+                    state.loterraTestnetContractAddress,
                     {
                         jackpot: {
                             lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -468,7 +468,7 @@ export default function ConnectWallet() {
                 // This one can generate an error on try catch if no combination played
                 // Because if error others query will not be triggered right after the error
                 const combinations = await api.contractQuery(
-                    state.loterraContractAddress,
+                    state.loterraTestnetContractAddress,
                     {
                         combination: {
                             lottery_id: contractConfigInfo.lottery_counter,
