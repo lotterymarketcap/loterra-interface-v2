@@ -114,7 +114,7 @@ export default function ConnectWallet() {
         // VALKYRIE END
 
         const contractConfigInfo = await api.contractQuery(
-            state.loterraContractAddress,
+            state.loterraTestnetContractAddress,
             {
                 config: {},
             },
@@ -131,7 +131,7 @@ export default function ConnectWallet() {
         })
 
         const { winners } = await api.contractQuery(
-            state.loterraContractAddress,
+            state.loterraTestnetContractAddress,
             {
                 winner: {
                     lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -219,7 +219,7 @@ export default function ConnectWallet() {
             let allProposals = []
             for (let index = 1; index < pollCount + 1; index++) {
                 const proposal = await api.contractQuery(
-                    state.loterraContractAddress,
+                    state.loterraTestnetContractAddress,
                     {
                         get_poll: { poll_id: index },
                     },
