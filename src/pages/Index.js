@@ -350,7 +350,7 @@ export default () => {
         if (payWith == 'ust') {
             msg = new MsgExecuteContract(
                 connectedWallet.walletAddress,
-                loterra_contract_address,
+                state.loterraTestnetContractAddress,
                 exec_msg,
                 coins_msg,
             )
