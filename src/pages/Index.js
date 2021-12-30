@@ -425,32 +425,45 @@ export default () => {
                                 },
                             },
                         )
+                        //Get total tickets bought by lottery_id
+                        const combinations = await api.contractQuery(
+                            state.loterraContractAddress,
+                            {
+                                combination: {
+                                    lottery_id: state.config.lottery_counter - 1,
+                                    address: state.wallet.walletAddress,
+                                },
+                            },
+                        )
                 
                         //Do the C - Q * 10 formula
-
-                        if(state.vkrReferrer.status && state.vkrReferrer.code !== ''){
-                            //Valkyrie referrer detected
-                            const participationReferrerInfo = await api.contractQuery(
-                                state.vkrContract,
-                                {
-                                    participate: {
-                                        actor: connectedWallet.walletAddress,
-                                        referrer: {
-                                            compressed: state.vkrReferrer.code
-                                        }
+                        const participationTimes =  ((combinations.length - participationCount * 10) / 10);
+                       
+                        for (let index = 0; index < participationTimes; index++) {
+                            if(state.vkrReferrer.status && state.vkrReferrer.code !== ''){
+                                //Valkyrie referrer detected
+                                const participationReferrerInfo = await api.contractQuery(
+                                    state.vkrContract,
+                                    {
+                                        participate: {
+                                            actor: connectedWallet.walletAddress,
+                                            referrer: {
+                                                compressed: state.vkrReferrer.code
+                                            }
+                                        },
                                     },
-                                },
-                            )
-                        } else {
-                            //Check normal valkyrie participator
-                            const participationInfo = await api.contractQuery(
-                                state.vkrContract, 
-                                {
-                                    participate: {
-                                        actor: connectedWallet.walletAddress
+                                )
+                            } else {
+                                //Check normal valkyrie participator
+                                const participationInfo = await api.contractQuery(
+                                    state.vkrContract, 
+                                    {
+                                        participate: {
+                                            actor: connectedWallet.walletAddress
+                                        },
                                     },
-                                },
-                            )
+                                )
+                            }
                         }
                     }
                     //VALKYRIE END
