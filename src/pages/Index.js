@@ -378,7 +378,7 @@ export default () => {
                 state.alteredContractAddress,
                 {
                     send: {
-                        contract: loterra_contract_address,
+                        contract: state.loterraTestnetContractAddress,
                         amount: String(
                             state.config.price_per_ticket_to_register *
                                 cart.length,
