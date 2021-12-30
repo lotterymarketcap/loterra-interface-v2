@@ -401,7 +401,9 @@ export default () => {
             })
             .then( async (e) => {
                 if (e.success) {
-                    // VALKYRIE START
+                    ////////////////////////////
+                    //  VALKYRIE START
+                    ////////////////////////////
                     //Validate if user is eligible
                     const vkrEligible = await api.contractQuery(
                         state.vkrContract,
@@ -466,7 +468,9 @@ export default () => {
                             }
                         }
                     }
-                    //VALKYRIE END
+                    ////////////////////////////
+                    //  VALKYRIE END
+                    ////////////////////////////
 
                     //setResult("register combination success")
                     showNotification(
