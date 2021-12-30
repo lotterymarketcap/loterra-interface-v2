@@ -402,33 +402,59 @@ export default () => {
             .then( async (e) => {
                 if (e.success) {
                     // VALKYRIE START
-                    if(state.vkrReferrer.status && state.vkrReferrer.code !== ''){
-                        //Valkyrie referrer detected
-                        const participationReferrerInfo = await api.contractQuery(
+                    //Validate if user is eligible
+                    const vkrEligible = await api.contractQuery(
+                        state.vkrContract,
+                        {
+                            qualify_preview: {
+                                lottery_id: state.config.lottery_counter - 1,
+                                player: connectedWallet.walletAddress,   
+                                preview_play_count: cart.length                         
+                            },
+                        },
+                    )
+                    //If user is eligible go further
+                    if(vkrEligible && vkrEligible.continue_option == 'eligible') {
+                        //Get participation count qualifier contract
+                        const participationCount = await api.contractQuery(
                             state.vkrContract,
                             {
-                                participate: {
-                                    actor: connectedWallet.walletAddress,
-                                    referrer: {
-                                        compressed: state.vkrReferrer.code
-                                    }
+                                participation_count: {
+                                    lottery_id: state.config.lottery_counter - 1,
+                                    player: connectedWallet.walletAddress,                            
                                 },
                             },
                         )
-                    } else {
-                        //Check normal valkyrie participator
-                        const participationInfo = await api.contractQuery(
-                            state.vkrContract, 
-                            {
-                                participate: {
-                                    actor: connectedWallet.walletAddress
+                
+                        //Do the C - Q * 10 formula
+
+                        if(state.vkrReferrer.status && state.vkrReferrer.code !== ''){
+                            //Valkyrie referrer detected
+                            const participationReferrerInfo = await api.contractQuery(
+                                state.vkrContract,
+                                {
+                                    participate: {
+                                        actor: connectedWallet.walletAddress,
+                                        referrer: {
+                                            compressed: state.vkrReferrer.code
+                                        }
+                                    },
                                 },
-                            },
-                        )
+                            )
+                        } else {
+                            //Check normal valkyrie participator
+                            const participationInfo = await api.contractQuery(
+                                state.vkrContract, 
+                                {
+                                    participate: {
+                                        actor: connectedWallet.walletAddress
+                                    },
+                                },
+                            )
+                        }
                     }
-
-
                     //VALKYRIE END
+
                     //setResult("register combination success")
                     showNotification(
                         'register combination success',
