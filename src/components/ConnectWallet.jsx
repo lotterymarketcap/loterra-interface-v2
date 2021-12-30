@@ -327,7 +327,7 @@ export default function ConnectWallet() {
                 coins = await lcd.bank.balance(connectedWallet.walletAddress)
 
                 const contractConfigInfo = await api.contractQuery(
-                    state.loterraContractAddress,
+                    state.loterraTestnetContractAddress,
                     {
                         config: {},
                     },
