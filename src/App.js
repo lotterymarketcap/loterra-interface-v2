@@ -21,7 +21,7 @@ import NormalNav from './components/NormalNav'
 import { List } from 'phosphor-react'
 
 if(typeof window !== 'undefined'){
-    window.addEventListener('DOMContentLoaded', event => {
+    window.addEventListener('DOMContentLoaded', event => { 
         // Toggle the side navigation
         const sidebarToggle = document.body.querySelector('#sidebarToggle');
         if (sidebarToggle) {
