@@ -20,7 +20,7 @@ import ConnectWallet from './components/ConnectWallet'
 import NormalNav from './components/NormalNav'
 import { List } from 'phosphor-react'
 
-if(window !== undefined){
+if(typeof window !== 'undefined'){
     window.addEventListener('DOMContentLoaded', event => {
         // Toggle the side navigation
         const sidebarToggle = document.body.querySelector('#sidebarToggle');
