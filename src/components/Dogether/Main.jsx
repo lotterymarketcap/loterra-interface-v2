@@ -5,9 +5,9 @@ import { Bank, Check, Info, Ticket, Coin, User, UsersFour } from 'phosphor-react
 
 // import Nouislider from "nouislider-react";
 // import "nouislider/distribute/nouislider.css";
-import {Coins, MsgExecuteContract, StdFee, WasmAPI} from '@terra-money/terra.js'
+import {Coins, MsgExecuteContract, Fee, WasmAPI} from '@terra-money/terra.js'
 import { useEffect } from 'react'
-const obj = new StdFee(700_000, { uusd: 319200 })
+const obj = new Fee(700_000, { uusd: 319200 })
 
 export default function Main(props) {
     const { state, dispatch } = useStore()

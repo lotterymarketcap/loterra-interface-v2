@@ -1,7 +1,7 @@
 import React from 'react'
 import ProposalItem from '../components/ProposalItem'
 import { useStore } from '../store'
-import { StdFee } from '@terra-money/terra.js'
+import { Fee } from '@terra-money/terra.js'
 import Footer from '../components/Footer'
 import BodyLoader from '../components/BodyLoader'
 import { Bank, Info } from 'phosphor-react'
@@ -9,25 +9,10 @@ import { Bank, Info } from 'phosphor-react'
 export default () => {
     const { state, dispatch } = useStore()
     const addToGas = 5800
-    const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
+    const obj = new Fee(700_000, { uusd: 319200 + addToGas })
     return (
         <>
-            <div
-                className="bg-hero"
-                style={{
-                    backgroundImage:
-                        'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    width: '100%',
-                    height: '800px',
-                }}
-            ></div>
+         
             <section className="proposals" style={{ marginTop: '200px' }}>
                 <div className="container">
                     <div className="card lota-card proposals">

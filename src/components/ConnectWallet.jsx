@@ -59,13 +59,7 @@ export default function ConnectWallet() {
     const [connected, setConnected] = useState(false)
     const { state, dispatch } = useStore()
 
-    //Nav link active settings
-    let homeClass, stakingClass, daoClass
-    if (typeof location !== 'undefined') {
-        homeClass = location.pathname === '/' ? 'active' : ''
-        stakingClass = location.pathname.match(/^\/staking/) ? 'active' : ''
-        daoClass = location.pathname.match(/^\/dao/) ? 'active' : ''
-    }
+    
 
     let wallet = ''
     if (typeof document !== 'undefined') {
@@ -310,7 +304,18 @@ export default function ConnectWallet() {
             let token
             try {
                 const api = new WasmAPI(lcd.apiRequester)
-                coins = await lcd.bank.balance(connectedWallet.walletAddress)
+                if (connectedWallet) {
+                    lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
+                        coins = coins;
+                       console.log(coins ? coins.get('uusd').amount / 1000000 : '')              
+                       const ustBalance = coins.get('uusd').toData()         
+                       
+                      setBank(ustBalance.amount / 1000000)
+                      dispatch({ type: 'setUstBalance', message: ustBalance.amount / 1000000 })
+                    });
+                  } else {
+                    setBank(null);
+                  }
 
                 const contractConfigInfo = await api.contractQuery(
                     state.loterraContractAddress,
@@ -472,12 +477,12 @@ export default function ConnectWallet() {
             // console.log(coins)
             let alte = parseInt(alteTokens.balance) / 1000000
             console.log(alte)
-            let uusd = coins.filter((c) => {
-                return c.denom === 'uusd'
-            })
-            let ust = parseInt(uusd) / 1000000
-            setBank(numeral(ust).format('0,0.00'))
-            dispatch({ type: 'setUstBalance', message: ust })
+            // let uusd = coins.filter((c) => {
+            //     return c.denom === 'uusd'
+            // })
+            // let ust = parseInt(uusd) / 1000000
+            // setBank(numeral(ust).format('0,0.00'))
+     
             setAlteBank(numeral(alte).format('0,0.00'))
             // connectTo("extension")
         } else {
@@ -486,31 +491,7 @@ export default function ConnectWallet() {
             dispatch({ type: 'setWallet', message: {} })
         }
     }
-
-    function renderDialog() {
-        if (isDisplayDialog) {
-            return (
-                <div /*style={Modal}*/ onClick={() => closeModal()}>
-                    <div /*style={Dialog}*/ className="card-glass">
-                        <button
-                            onClick={() => connectTo('extension')}
-                            className="button-pink-outline"
-                            style={DialogButton}
-                        >
-                            Terra Station (extension)
-                        </button>
-                        <button
-                            onClick={() => connectTo('mobile')}
-                            className="button-pink-outline"
-                            style={DialogButton}
-                        >
-                            Terra Station (mobile)
-                        </button>
-                    </div>
-                </div>
-            )
-        }
-    }
+ 
 
     function returnBank() {
         return (
@@ -545,19 +526,7 @@ export default function ConnectWallet() {
         )
     }
 
-    const [scrolled, setScrolled] = React.useState(false)
-    const handleScroll = () => {
-        const offset = window.scrollY
-        if (offset > 25) {
-            setScrolled(true)
-        } else {
-            setScrolled(false)
-        }
-    }
 
-    function showSideNav() {
-        setSideNav(!sideNav)
-    }
 
     useEffect(() => {
         if (!state.config.lottery_counter) {
@@ -566,9 +535,6 @@ export default function ConnectWallet() {
         if (connectedWallet) {
             contactBalance()
         }
-
-        //console.log(connectedWallet)
-        window.addEventListener('scroll', handleScroll)
     }, [
         connectedWallet,
         // lcd,
@@ -578,123 +544,7 @@ export default function ConnectWallet() {
     ])
 
     return (
-        <>
-        <div
-            className={
-                scrolled
-                    ? 'navbar navbar-expand p-2 p-md-3 sticky'
-                    : 'navbar navbar-expand p-2 p-md-3'
-            }
-        >
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/">
-                    <img src="/logo.png" /> <span>LOTERRA</span>
-                </a>
-                <nav
-                    className={
-                        sideNav
-                            ? 'navbar-nav main-nav me-auto open'
-                            : 'navbar-nav main-nav me-auto'
-                    }
-                >
-                    <button
-                        className="main-nav-close-toggle"
-                        onClick={() => showSideNav()}
-                    >
-                        <X size={36} />
-                    </button>
-                    <li className="nav-item">
-                        <a href="/" className={'nav-link ' + homeClass}>
-                            <Ticket
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Lottery
-                            <span className="item-label">Jackpot Lottery</span>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="/dogether"
-                            className="nav-link"
-                            style={{ position: 'relative' }}
-                        >
-                            <Ticket
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Dogether
-                            <span className="item-label">No loss lottery</span>
-                            <span
-                                className="badge"
-                                style={{
-                                    position: 'absolute',
-                                    right: 0,
-                                    top: '-9px',
-                                    fontSize: '10px',
-                                    lineHeight: '10px',
-                                    padding: '3px',
-                                    textTransform: 'uppercase',
-                                    color: '#10003b',
-                                    background: '#8bf6c2',
-                                }}
-                            >
-                                BETA
-                            </span>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="/staking"
-                            className="nav-link"
-                            className={'nav-link ' + stakingClass}
-                        >
-                            <Coin
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Staking
-                            <span className="item-label">
-                                Become a casino owner or earn LOTA when staking
-                                LP
-                            </span>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="/dao"
-                            className="nav-link"
-                            className={'nav-link ' + daoClass}
-                        >
-                            <Bank
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            DAO
-                            <span className="item-label">
-                                Together we decide
-                            </span>
-                        </a>
-                    </li>
-                </nav>
-
-                <div className="navbar-nav ms-auto">
+        <>         
                     {!connected && (
                         <>
                             <div className="btn-group">
@@ -740,12 +590,7 @@ export default function ConnectWallet() {
                                     </button>
                                 </ul>
                             </div>
-                            <button
-                                className="btn btn-default nav-item ms-2 main-nav-toggle"
-                                onClick={() => showSideNav()}
-                            >
-                                <List size={26} />
-                            </button>
+                        
                         </>
                     )}
                     {connected && (
@@ -754,18 +599,14 @@ export default function ConnectWallet() {
                                 className={
                                     'btn btn-default nav-item me-2' +
                                     (state.youWon ? ' winner' : '')
-                                }
-                                style={{
-                                    padding: '0.275rem 0.55rem',
-                                }}
+                                }                            
                                 onClick={() => setIsModal(!isModal)}
                             >
                                 {state.youWon ? (
                                     <>
                                         <Trophy
                                             size={33}
-                                            style={{
-                                                marginTop: '-2px',
+                                            style={{                                         
                                                 color: '#ecba26',
                                             }}
                                         />
@@ -773,9 +614,8 @@ export default function ConnectWallet() {
                                     </>
                                 ) : (
                                     <UserCircle
-                                        size={33}
-                                        style={{
-                                            marginTop: '-2px',
+                                        size={28}
+                                        style={{                                   
                                             color: '#72ffc1',
                                         }}
                                     />
@@ -828,17 +668,11 @@ export default function ConnectWallet() {
                                         Disconnect
                                     </span>
                                 </button>
-                            </ul>
-                            <button
-                                className="btn btn-default nav-item ms-2 main-nav-toggle"
-                                onClick={() => showSideNav()}
-                            >
-                                <List size={26} />
-                            </button>
+                            </ul>                      
                         </>
                     )}
-                </div>
-            </div>
+      
+     
 
             {/*<button onClick={() => display()}>Connect Wallet</button>
         {renderDialog()}*/}
@@ -849,7 +683,7 @@ export default function ConnectWallet() {
                     connectedWallet={connectedWallet}
                 />
             )}
-        </div>
+    
         </>
     )
 }

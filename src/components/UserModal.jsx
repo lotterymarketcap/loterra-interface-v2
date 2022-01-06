@@ -13,7 +13,7 @@ import {
 import {
     LCDClient,
     MsgExecuteContract,
-    StdFee,
+    Fee,
     WasmAPI,
 } from '@terra-money/terra.js'
 import { useStore } from '../store'
@@ -47,7 +47,7 @@ export default function UserModal(props) {
         state.config.block_time_play * 1000 -
         state.config.every_block_time_play / 2
     const addToGas = 5300
-    const obj = new StdFee(300_000, { uusd: 273600 + addToGas })
+    const obj = new Fee(300_000, { uusd: 273600 + addToGas })
     function claim() {
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,

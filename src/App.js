@@ -8,13 +8,45 @@ import './styles/base.scss'
 import { Head } from 'react-static'
 import { popper } from '@popperjs/core'
 
+
+
+
 let bootstrap = {}
 if (typeof document !== 'undefined') {
     bootstrap = require('bootstrap')
 }
 import { StoreProvider } from './store'
+import ConnectWallet from './components/ConnectWallet'
+import NormalNav from './components/NormalNav'
+import { List } from 'phosphor-react'
+
+if(window !== undefined){
+    window.addEventListener('DOMContentLoaded', event => {
+        // Toggle the side navigation
+        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+        if (sidebarToggle) {
+            // Uncomment Below to persist sidebar toggle between refreshes
+            // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+            //     document.body.classList.toggle('sb-sidenav-toggled');
+            // }
+            sidebarToggle.addEventListener('click', event => {
+                event.preventDefault();
+                document.body.classList.toggle('sb-sidenav-toggled');      
+                localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+            });
+        }
+
+    
+    });
+
+    
+}
+
 
 class App extends Component {
+
+
+
     render() {
         return (
             <Suspense
@@ -94,8 +126,22 @@ class App extends Component {
                         />
                     </Head>
                     <StoreProvider>
-                        <Navbar />
-                        <Routes default />
+                    <div className="d-flex" id="wrapper">
+                        <div id="sidebar-wrapper" className="sticky-top">
+                            <NormalNav />
+                        </div>
+                        <div id="page-content-wrapper" >
+                        <nav className="navbar navbar-expand navbar-light sticky-top" id="smallNav">
+                    <div className="container-fluid">
+                        <button className="btn btn-default" id="sidebarToggle"> <List size={26} /></button>
+                        <div className="navbar">
+                        <ConnectWallet/>
+                        </div>
+                    </div>
+                </nav>
+                            <Routes default />
+                        </div>
+                    </div>
                     </StoreProvider>
 
                     {/*<Footer/>*/}

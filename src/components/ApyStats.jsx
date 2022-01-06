@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {
     LCDClient,
     MsgExecuteContract,
-    StdFee,
+    Fee,
     WasmAPI,
 } from '@terra-money/terra.js'
 import { useStore } from '../store'

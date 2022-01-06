@@ -25,7 +25,7 @@ import {
 } from 'phosphor-react'
 // import Jackpot from "../components/Jackpot";
 import {
-    StdFee,
+    Fee,
     MsgExecuteContract,
     LCDClient,
     WasmAPI,
@@ -107,16 +107,18 @@ export default () => {
             setExpiryTimestamp(
                 parseInt(contractConfigInfo.block_time_play * 1000),
             )
-            const bank = new BankAPI(terra.apiRequester)
-            const contractBalance = await bank.balance(loterra_contract_address)
-            const ustBalance = contractBalance.get('uusd').toData()
-            const jackpotAlocation =
-                contractConfigInfo.jackpot_percentage_reward
-            const contractJackpotInfo =
-                (ustBalance.amount * jackpotAlocation) / 100
-
-            setContractBalance(ustBalance.amount / 1000000)
-            setJackpot(parseInt(contractJackpotInfo) / 1000000)
+            // const bank = new BankAPI(terra.apiRequester)
+            const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward
+            terra.bank.balance(loterra_contract_address).then(([coins]) => {            
+                const ustBalance = coins.get('uusd').toData()
+            
+                const contractJackpotInfo =
+                    (ustBalance.amount * jackpotAlocation) / 100
+    
+                setContractBalance(ustBalance.amount / 1000000)
+                setJackpot(parseInt(contractJackpotInfo) / 1000000)
+            });
+           
 
             const jackpotAltered = await api.contractQuery(
                 state.alteredContractAddress,
@@ -310,11 +312,11 @@ export default () => {
             setBuyLoader(false)
             return
         }
-        // const obj = new StdFee(1_000_000, { uusd: 200000 })
+        // const obj = new Fee(1_000_000, { uusd: 200000 })
         const addToGas = 5000 * cart.length
-        // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        //const obj = new StdFee(200_000, { uusd: 340000 + addToGas })
-        const obj = new StdFee(10_000, { uusd: 4500 })
+        // const obj = new Fee(1_000_000, { uusd: 30000 + addToGas })
+        //const obj = new Fee(200_000, { uusd: 340000 + addToGas })
+        const obj = new Fee(10_000, { uusd: 4500 })
         let exec_msg = {
             register: {
                 combination: cart,
@@ -637,35 +639,20 @@ export default () => {
                     backgroundPosition: 'center center',
                 }}
             >
-                <div className="container-fluid container-md">
+                <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-12 col-xl-8 mx-auto text-center">
-                            <div className="jackpot">
-                                <img
-                                    src={'/Lottery.png'}
-                                    style={{
-                                        marginBottom: '-58px',
-                                        maxWidth: '100%',
-                                        position: 'relative',
-                                        zIndex: '1',
-                                    }}
-                                />
-                                <p>Mixed Jackpot</p>
-                                <h3>Draws every 3 days</h3>
+                        <div className="col-lg-12 text-center">
+                          
+                                <div className="jackpot">                              
+                            
+                               <h1>Decentralized Loterry</h1>
+                               <p className="slogan">Next Jackpot</p>
+                                { jackpot ? (
+                                    <>                          
                                 <h2>
                                     {numeral(jackpot)
-                                        .format('0,0.00')
-                                        .split('')
-                                        .map((obj) => {
-                                            return (
-                                                <div className="roller">
-                                                    {obj}
-                                                </div>
-                                            )
-                                        })}
-                                    <div className="roller">
-                                        <span>UST</span>
-                                    </div>
+                                        .format('0,0.00')}
+                                    
                                 </h2>
                                 <div className="combine-jackpot">
                                     <PlusCircle size={28} weight="fill" />
@@ -673,19 +660,35 @@ export default () => {
                                 <h2 className="alte-jackpot">
                                     {numeral(jackpotAltered)
                                         .format('0,0.00')
-                                        .split('')
-                                        .map((obj) => {
-                                            return (
-                                                <div className="roller">
-                                                    {obj}
-                                                </div>
-                                            )
-                                        })}
-                                    <div className="roller">
-                                        <span>ALTE</span>
-                                    </div>
+                                        // .split('')
+                                        // .map((obj) => {
+                                        //     return (
+                                        //         <div className="roller">
+                                        //             {obj}
+                                        //         </div>
+                                        //     )
+                                        }                                  
                                 </h2>
-                            </div>
+                            </>
+                            )
+
+                            :
+                            (
+                                <div className="d-flex w-100" style={{height:'200px'}}>
+                                    <div class="spinner-border text-primary align-self-center mx-auto" 
+                                    style={{
+                                        width:'6rem',
+                                        height:'6rem',
+                                        borderWidth:'9px'
+                                    }}
+                                    role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                </div>
+                            )
+
+                            }
+                             </div>
                             <div className="row">
                                 <div className="col-md-8 mx-auto">
                                     <div className="countdown-holder">
@@ -696,7 +699,7 @@ export default () => {
                                                         <div className="row">
                                                             <div className="col-4 text-center svg-rotate">
                                                                 <UserFocus
-                                                                    size={36}
+                                                                    size={42}
                                                                 />
                                                             </div>
                                                             <div className="col-8 text-center d-flex text-md-start">
@@ -723,7 +726,7 @@ export default () => {
                                                         <div className="row">
                                                             <div className="col-4 text-center svg-rotate">
                                                                 <Ticket
-                                                                    size={36}
+                                                                    size={42}
                                                                 />
                                                             </div>
                                                             <div className="col-8 text-center d-flex text-md-start">

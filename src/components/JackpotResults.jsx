@@ -4,7 +4,7 @@ import numeral from 'numeral'
 import {
     LCDClient,
     MsgExecuteContract,
-    StdFee,
+    Fee,
     WasmAPI,
     BankAPI,
 } from '@terra-money/terra.js'

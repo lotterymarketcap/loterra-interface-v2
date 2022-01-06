@@ -9,7 +9,7 @@ import { useStore } from '../store'
 import {
     LCDClient,
     MsgExecuteContract,
-    StdFee,
+    Fee,
     WasmAPI,
 } from '@terra-money/terra.js'
 import numeral from 'numeral'
@@ -25,7 +25,7 @@ const BURNED_LOTA = 4301383550000
 
 export default () => {
     const addToGas = 5800
-    const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
+    const obj = new Fee(700_000, { uusd: 319200 + addToGas })
     const [notification, setNotification] = useState({
         type: 'success',
         message: '',
@@ -115,11 +115,7 @@ export default () => {
     return (
         <>
             <div
-                className="hero staking"
-                style={{
-                    backgroundImage:
-                        'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)',
-                }}
+                className="hero staking"               
             >
                 <div className="container">
                     <div className="row">
