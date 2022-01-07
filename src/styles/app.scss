@@ -216,12 +216,12 @@ h4,
                 0 0 120px #f038f0, 0 0 200px #f038f0;
         }
         @media (max-width: 990px) {
-            padding: 105px 0;
-            height: 1305px;
+            padding: 90px 0;
+    
         }
         @media (max-width: 510px) {
-            padding: 105px 0;
-            height: 1350px;
+            padding: 90px 0;
+   
             h1 {
                 font-size: 43px;
             }
@@ -426,11 +426,11 @@ h4,
     margin: 0 auto;
     display: block;
     position: relative;
-    margin-top: 70px;
+  
     margin-bottom: -31px;
     z-index: 9;
     @media (max-width: 768px) {
-        margin-top: 60px;
+    
     }
 }
 
@@ -647,6 +647,10 @@ h4,
         font-weight:700;
         &.alte-jackpot {
             font-size:46px;
+        }
+        span {
+            font-weight:300;
+            font-size:18px;
         }
     }
 

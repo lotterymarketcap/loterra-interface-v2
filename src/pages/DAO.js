@@ -13,7 +13,7 @@ export default () => {
     return (
         <>
          
-            <section className="proposals" style={{ marginTop: '200px' }}>
+            <section className="proposals" style={{ marginTop: '90px' }}>
                 <div className="container">
                     <div className="card lota-card proposals">
                         <div className="card-header text-center">

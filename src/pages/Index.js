@@ -651,12 +651,9 @@ export default () => {
                                     <>                          
                                 <h2>
                                     {numeral(jackpot)
-                                        .format('0,0.00')}
+                                        .format('0,0.00')}<span>UST</span>
                                     
-                                </h2>
-                                <div className="combine-jackpot">
-                                    <PlusCircle size={28} weight="fill" />
-                                </div>
+                                </h2>                    
                                 <h2 className="alte-jackpot">
                                     {numeral(jackpotAltered)
                                         .format('0,0.00')
@@ -667,7 +664,7 @@ export default () => {
                                         //             {obj}
                                         //         </div>
                                         //     )
-                                        }                                  
+                                        }<span>ALTE</span>                                
                                 </h2>
                             </>
                             )
