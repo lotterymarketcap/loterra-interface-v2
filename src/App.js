@@ -8,7 +8,7 @@ import './styles/base.scss'
 import { Head } from 'react-static'
 import { popper } from '@popperjs/core'
 
-
+ 
 
 
 let bootstrap = {}
