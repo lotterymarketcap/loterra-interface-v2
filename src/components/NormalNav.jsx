@@ -119,11 +119,11 @@ if (typeof location !== 'undefined') {
                             </span>
                         </a>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item" style={{opacity:0.5}}>
                         <a
                             href="/#"
                             className="nav-link"
-                            className={'nav-link ' + daoClass}
+                            className={'nav-link '}
                         >
                             <Planet
                                 size={24}

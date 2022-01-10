@@ -641,11 +641,15 @@ export default () => {
             > */}
                 <div className="container-fluid px-md-5">
 
-                    <div className="card base-card mt-5">
+                    <div className="card base-card">
                         <div className="card-body p-md-5">
                             <div className="row">
+                                <div className="col-md-12 text-center">
+                                    <h1>Decentralized Loterry </h1>
+                                    <p className="slogan">LoTerra is a decentralized gaming ecosystem managed by LOTA holders</p>
+                                </div>
                                 <div className="col-md-6">
-                                <h1>Decentralized Loterry</h1>
+                                
                                 <p className="sub-title">Next jackpot</p>
                                 <h2>
                                     {numeral(jackpot)

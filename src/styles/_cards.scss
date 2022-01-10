@@ -12,11 +12,25 @@ margin-bottom:0;
     &.base-card {
         background:transparent;
         color:#fff;
+        .slogan {
+            font-size: 19px;
+    opacity: 0.5;
+    margin-bottom: 44px;
+    @media(max-width:620px){
+        font-size: 14px;
+    opacity: 0.5;
+    margin-bottom: 20px;
+    }
+        }
         h1 {
             font-style: normal;
             font-weight: bold;
-            font-size: 25px;
-            line-height: 37px;
+            font-size: 55px;
+            line-height: 67px;
+            @media(max-width:620px){
+                font-size: 25px;
+                line-height: 20px;
+            }
         }
         h2 {
             font-style: normal;
@@ -89,8 +103,9 @@ line-height: 31px;
         }
     }
     &.lota-card {
-        background: linear-gradient(328.75deg, #493c85 -5.49%, #0f0038 104.44%);
-        border-radius: 10px;
+        background: linear-gradient(
+            328.75deg, #160150 -5.49%, #0f0038 104.44%);
+                border-radius: 10px;
 
         .card-header {
             .card-header-icon {
