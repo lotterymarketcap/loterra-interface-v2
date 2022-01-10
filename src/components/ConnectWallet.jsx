@@ -597,7 +597,7 @@ export default function ConnectWallet() {
                         <>
                             <button
                                 className={
-                                    'btn btn-default nav-item me-2' +
+                                    'btn btn-default nav-item' +
                                     (state.youWon ? ' winner' : '')
                                 }                            
                                 onClick={() => setIsModal(!isModal)}
@@ -630,8 +630,7 @@ export default function ConnectWallet() {
                             </button>
                             <ul
                                 className="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="dropdownMenuButton2"
-                                style={{ top: '70px' }}
+                                aria-labelledby="dropdownMenuButton2"                             
                             >
                                 {bank && alteBank && (
                                     <div

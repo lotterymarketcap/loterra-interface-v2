@@ -42,7 +42,7 @@ body {
   }
 
   #smallNav {
-    background:#16073e;
+    background: #00000047;
     .btn {
         height:42px;
     }
@@ -166,6 +166,14 @@ h4,
 .navbar {    
     z-index: 10;
     transition: background 150ms linear;
+    padding:0;
+    .btn {
+        border-radius:0 !important;
+    }
+    .btn-default {
+        border:0;
+        background:transparent;
+    }
     .navbar-brand {
         span {
             color: #fff;

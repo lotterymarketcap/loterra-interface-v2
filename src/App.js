@@ -132,7 +132,7 @@ class App extends Component {
                         </div>
                         <div id="page-content-wrapper" >
                         <nav className="navbar navbar-expand navbar-light sticky-top" id="smallNav">
-                    <div className="container-fluid">
+                    <div className="container-fluid px-0">
                         <button className="btn btn-default" id="sidebarToggle"> <List size={26} /></button>
                         <div className="navbar">
                         <ConnectWallet/>
