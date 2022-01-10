@@ -69,9 +69,19 @@ body {
             font-weight:700;
         }
     }
+    .sub-heading {
+        display:block;
+        text-transform:uppercase;
+        font-weight:600;
+        font-size:13px;
+        opacity:0.5;
+        margin-top:15px;
+        margin-bottom:10px;
+    }
     .nav-item {
         list-style-type:none;
         margin-bottom:15px;
+        position:relative;
         .nav-link {
             display:block;
             color:#fff;

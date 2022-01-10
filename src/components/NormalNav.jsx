@@ -11,6 +11,7 @@ import {
     Ticket,
     Coin,
     Bank,
+    Planet,
 } from 'phosphor-react'
 
 
@@ -49,7 +50,7 @@ if (typeof location !== 'undefined') {
                             className="nav-link"
                             style={{ position: 'relative' }}
                         >
-                            <Ticket
+                            <Trophy
                                 size={24}
                                 style={{
                                     marginRight: '3px',
@@ -118,7 +119,86 @@ if (typeof location !== 'undefined') {
                             </span>
                         </a>
                     </li>
-         
+                    <li className="nav-item">
+                        <a
+                            href="/#"
+                            className="nav-link"
+                            className={'nav-link ' + daoClass}
+                        >
+                            <Planet
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Spacewager
+                            <span className="item-label">
+                                Predict the next price
+                            </span>
+                            <span
+                                className="badge"
+                                style={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    top: '-9px',
+                                    fontSize: '10px',
+                                    lineHeight: '10px',
+                                    padding: '3px',
+                                    textTransform: 'uppercase',
+                                    color: '#10003b',
+                                    background: '#8bf6c2',
+                                }}
+                            >
+                                COMING SOON
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <span className="sub-heading">LoTerra projects</span>
+                    <li className="nav-item">
+                        <a
+                            href="https://app.alteredprotocol.com"
+                            target="_blank"
+                            className="nav-link"
+                            className={'nav-link '}
+                        >
+                            <Bank
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Altered
+                            <span className="item-label">
+                                First elastic token on Terra
+                            </span>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a
+                               href="https://curio.art"
+                               target="_blank"
+                            className="nav-link"
+                            className={'nav-link '}
+                        >
+                            <Bank
+                                size={24}
+                                style={{
+                                    marginRight: '3px',
+                                    position: 'relative',
+                                    top: '-1px',
+                                }}
+                            />{' '}
+                            Curio
+                            <span className="item-label">
+                                NFT Marketplace
+                            </span>
+                        </a>
+                    </li>
 
               
      

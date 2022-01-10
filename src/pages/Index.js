@@ -631,17 +631,98 @@ export default () => {
             position:'absolute',
             maxWidth:'100%'
             }}/> */}
-            <div
+            {/* <div
                 className="hero"
                 style={{
                     backgroundImage:
                         'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(rays.svg)',
                     backgroundPosition: 'center center',
                 }}
-            >
-                <div className="container-fluid">
+            > */}
+                <div className="container-fluid px-md-5">
+
+                    <div className="card base-card mt-5">
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-md-6">
+                                <h1>Decentralized Loterry</h1>
+                                <p className="sub-title">Next jackpot</p>
+                                <h2>
+                                    {numeral(jackpot)
+                                        .format('0,0.00')}<span>UST</span>
+                                    
+                                </h2> 
+                                <p className="sub-title">Mixed jackpot</p>
+                                <h2 className="alte">
+                                +{numeral(jackpotAltered)
+                                        .format('0,0.00')}<span>ALTE</span>
+                                    
+                                </h2> 
+                                <div className="col-12 text-start mt-4 mb-4">
+                                                <button
+                                                    className={
+                                                        'btn btn-special'
+                                                    }
+                                                    onClick={() =>
+                                                        setBuyNow(!buyNow)
+                                                    }
+                                                >
+                                                    Buy Tickets
+                                                </button>
+                                                <small
+                                                    style={{
+                                                        display: 'block',
+                                                        marginTop: '10px',
+                                                        fontSize: '12px',
+                                                        opacity: '0.6',
+                                                    }}
+                                                >
+                                                    You can buy tickets with{' '}
+                                                    <strong>UST</strong> and{' '}
+                                                    <strong>ALTE</strong>
+                                                </small>
+                                            </div>        
+                                </div>
+                                <div className="col-md-6">
+                                <p className="sub-title">Next draw in</p>
+                                <Countdown
+                                                    expiryTimestamp={
+                                                        expiryTimestamp
+                                                    }
+                                                />
+                                                <div className="row">
+                                                    <div className="col-md-6 text-center">
+                                                    <div className="card base-card-light">
+                                                        <div className="card-body">
+                                                        <p className="sub-title">Players</p>
+                                                    {players ? (
+                                                                        <p className="amount">{players}</p>
+                                                                    ) : (
+                                                                        <PriceLoader />
+                                                                    )}
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div className="col-md-6 text-center">
+                                                    <div className="card base-card-light">
+                                                        <div className="card-body">
+                                                    <p className="sub-title">Tickets</p>
+                                                    {tickets ? (
+                                                                        <p className="amount">{tickets}</p>
+                                                                    ) : (
+                                                                        <PriceLoader />
+                                                                    )}
+                                                                    </div>
+                                                                    </div>
+                                                    </div>
+                                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="row">
-                        <div className="col-lg-12 text-center">
+                        {/* <div className="col-lg-12 text-center">
                           
                                 <div className="jackpot">                              
                             
@@ -778,8 +859,8 @@ export default () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> */}
+{/* 
                         <div className="col-12 col-md-8 mx-auto">
                             <div className="row">
                                 <div className="col-12 col-md-8 mx-auto">
@@ -818,8 +899,8 @@ export default () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> */}
+                    {/* </div> */}
                 </div>
 
                 {/*
