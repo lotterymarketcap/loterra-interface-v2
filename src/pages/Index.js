@@ -642,7 +642,7 @@ export default () => {
                 <div className="container-fluid px-md-5">
 
                     <div className="card base-card mt-5">
-                        <div className="card-body">
+                        <div className="card-body p-md-5">
                             <div className="row">
                                 <div className="col-md-6">
                                 <h1>Decentralized Loterry</h1>
@@ -683,15 +683,16 @@ export default () => {
                                                 </small>
                                             </div>        
                                 </div>
-                                <div className="col-md-6">
-                                <p className="sub-title">Next draw in</p>
+                                <div className="col-md-6 d-flex">
+                                            <div className="align-self-center w-100">
+                                            <p className="sub-title">Next draw in</p>
                                 <Countdown
                                                     expiryTimestamp={
                                                         expiryTimestamp
                                                     }
                                                 />
                                                 <div className="row">
-                                                    <div className="col-md-6 text-center">
+                                                    <div className="col-6 p-1 text-center">
                                                     <div className="card base-card-light">
                                                         <div className="card-body">
                                                         <p className="sub-title">Players</p>
@@ -703,7 +704,7 @@ export default () => {
                                                         </div>
                                                     </div>
                                                     </div>
-                                                    <div className="col-md-6 text-center">
+                                                    <div className="col-6 p-1 text-center">
                                                     <div className="card base-card-light">
                                                         <div className="card-body">
                                                     <p className="sub-title">Tickets</p>
@@ -716,6 +717,7 @@ export default () => {
                                                                     </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                 </div>
                             </div>
                         </div>

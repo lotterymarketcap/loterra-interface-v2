@@ -49,7 +49,7 @@ export default function Countdown(props) {
               
                     {expiryTimestamp > new Date() ? (
                         <div className="row text-center">
-                            <div className="col mb-3">
+                            <div className="col-3 mb-3 p-1">
                             <div className="card base-card-light">
                                                         <div className="card-body">
                                 <div className="font-bold time" x-text="days">
@@ -62,7 +62,7 @@ export default function Countdown(props) {
                                 </div>
                             </div>
                       
-                            <div className="col mb-3">
+                            <div className="col-3 mb-3 p-1">
                             <div className="card base-card-light">
                                                         <div className="card-body">
                                 <div className="font-bold time" x-text="hours">
@@ -75,7 +75,7 @@ export default function Countdown(props) {
                                 </div>
                             </div>
                        
-                            <div className="col mb-3">
+                            <div className="col-3 mb-3 p-1">
                             <div className="card base-card-light">
                                                         <div className="card-body">
                                 <div
@@ -91,7 +91,7 @@ export default function Countdown(props) {
                                 </div>
                             </div>
                        
-                            <div className="col mb-3">
+                            <div className="col-3 mb-3 p-1">
                             <div className="card base-card-light">
                                                         <div className="card-body">
                                 <div
