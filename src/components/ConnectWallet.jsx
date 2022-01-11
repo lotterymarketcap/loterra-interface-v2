@@ -484,8 +484,11 @@ export default function ConnectWallet() {
             //Store coins global state
             dispatch({ type: 'setAllNativeCoins', message: coins })
             // console.log(coins)
-            let alte = parseInt(alteTokens.balance) / 1000000
-            console.log(alte)
+            let alte = 0;
+            if(alteTokens){
+                alte = parseInt(alteTokens.balance) / 1000000
+                console.log(alte)
+            }
             let uusd = coins.filter((c) => {
                 return c.denom === 'uusd'
             })
