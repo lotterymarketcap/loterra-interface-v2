@@ -1263,9 +1263,6 @@ export default () => {
 
             <div
                 className="how"
-                style={{
-                    padding: '125px 0',
-                }}
             >
                 <div className="container">
                     <div className="row">
@@ -1300,7 +1297,7 @@ export default () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="col-12 text-center">
+                        {/* <div className="col-12 text-center">
                             <h5 className="mt-4 mb-1">Learn more?</h5>
                             <a
                                 className="btn btn-plain"
@@ -1320,7 +1317,7 @@ export default () => {
                                 />{' '}
                                 LoTerra lottery documentation
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

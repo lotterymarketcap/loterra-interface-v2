@@ -29,7 +29,7 @@
         padding: 8px 35px;
     }
     &.btn-plain {
-        background: #10003b;
+        background: #16073e;
         border: 1px solid #44377e;
         box-sizing: border-box;
         border-radius: 10px;
@@ -52,7 +52,7 @@
         padding: 8px 35px;
     }
     &.btn-default {
-        background: linear-gradient(328.75deg, #493c85 -5.49%, #0f0038 104.44%);
+        background: #15073c;
         border: 1px solid #40337a;
         box-sizing: border-box;
         border-radius: 7px;
@@ -91,7 +91,7 @@
         }
     }
     &.btn-default-lg {
-        background: linear-gradient(328.75deg, #493c85 -5.49%, #0f0038 104.44%);
+        background: #15073c;
         border: 1px solid #40337a;
         box-sizing: border-box;
         border-radius: 7px;
@@ -102,8 +102,8 @@
         border-bottom: 4px solid rgb(16, 0, 59);
     }
     &.btn-plain-lg {
-        background: linear-gradient(328.75deg, #493c85 -5.49%, #0f0038 104.44%);
-        border: 1px solid #3f3178;
+        background: #16073e;
+        border: 1px solid #44377e;
         box-sizing: border-box;
         border-radius: 7px;
         color: #ffffff;
@@ -112,13 +112,7 @@
         padding: 11px 5px;
     }
     &.btn-normal-lg {
-        background: linear-gradient(
-                92.8deg,
-                rgba(255, 255, 255, 0.6) -1.42%,
-                rgba(205, 21, 205, 0.318) 102.82%
-            ),
-            #ff36ff;
-        border: 1px solid #f037f0;
+        background: #ff0dff;
         box-sizing: border-box;
         border-radius: 7px;
         color: #ffffff;
