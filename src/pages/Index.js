@@ -66,6 +66,7 @@ const BURNED_LOTA = 4301383550000
 export default () => {
     const [jackpot, setJackpot] = useState(0)
     const [jackpotAltered, setAlteredJackpot] = useState(0)
+    const [jackpotAlteredUst, setAlteredJackpotUst] = useState(0)
     const [tickets, setTickets] = useState(0)
     const [players, setPlayers] = useState(0)
     const [recentPlayers, setRecentPlayers] = useState(0)
@@ -137,6 +138,17 @@ export default () => {
                 type: 'setAlteredJackpot',
                 message: alteredJackpot,
             })
+
+            const poolAlte = await api.contractQuery('terra18adm0emn6j3pnc90ldechhun62y898xrdmfgfz', {
+                pool: {},
+            })
+
+            let ust = parseInt(poolAlte.assets[1].amount)
+            let alte = parseInt(poolAlte.assets[0].amount)
+
+            let formatPrice = ust / alte
+            let final = formatPrice.toFixed() * parseInt(alteredJackpot) / 1000000;
+            setAlteredJackpotUst(final)
 
             const jackpotInfo = await api.contractQuery(
                 loterra_contract_address,
@@ -652,11 +664,16 @@ export default () => {
                                 
                                 <p className="sub-title">Next jackpot</p>
                                 <h2>
-                                    {numeral(jackpot)
+                                    {numeral(jackpotAlteredUst + jackpot)
                                         .format('0,0.00')}<span>UST</span>
                                     
                                 </h2> 
                                 <p className="sub-title">Mixed jackpot</p>
+                                <h2 className="alte" style={{color:"#fff"}}>
+                                +{numeral(jackpot)
+                                        .format('0,0.00')}<span>UST</span>
+                                    
+                                </h2> 
                                 <h2 className="alte">
                                 +{numeral(jackpotAltered)
                                         .format('0,0.00')}<span>ALTE</span>

@@ -164,14 +164,9 @@ if (typeof location !== 'undefined') {
                             className="nav-link"
                             className={'nav-link '}
                         >
-                            <Bank
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
+                            <img src={'/alte-trans.svg'}  style={{
+                                    marginRight: '3px',                            
+                                }}  height="21" width="21"/>{' '}
                             Altered
                             <span className="item-label">
                                 First elastic token on Terra
@@ -185,14 +180,9 @@ if (typeof location !== 'undefined') {
                             className="nav-link"
                             className={'nav-link '}
                         >
-                            <Bank
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
+                           <img src={'/curio-trans.svg'} style={{
+                                    marginRight: '3px',                            
+                                }} height="21" width="21"/>{' '}
                             Curio
                             <span className="item-label">
                                 NFT Marketplace
