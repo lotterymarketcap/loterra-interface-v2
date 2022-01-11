@@ -95,7 +95,7 @@ export default () => {
     const fetchContractQuery = useCallback(async () => {
         try {
             const contractConfigInfo = await api.contractQuery(
-                loterra_contract_address,
+                state.loterraTestnetContractAddress,
                 {
                     config: {},
                 },
@@ -108,7 +108,7 @@ export default () => {
                 parseInt(contractConfigInfo.block_time_play * 1000),
             )
             const bank = new BankAPI(terra.apiRequester)
-            const contractBalance = await bank.balance(loterra_contract_address)
+            const contractBalance = await bank.balance(state.loterraTestnetContractAddress)
             const ustBalance = contractBalance.get('uusd').toData()
             const jackpotAlocation =
                 contractConfigInfo.jackpot_percentage_reward
@@ -118,26 +118,26 @@ export default () => {
             setContractBalance(ustBalance.amount / 1000000)
             setJackpot(parseInt(contractJackpotInfo) / 1000000)
 
-            const jackpotAltered = await api.contractQuery(
-                state.alteredContractAddress,
-                {
-                    balance: {
-                        address: state.loterraTestnetContractAddress,
-                    },
-                },
-            )
+            // const jackpotAltered = await api.contractQuery(
+            //     state.alteredContractAddress,
+            //     {
+            //         balance: {
+            //             address: state.loterraTestnetContractAddress,
+            //         },
+            //     },
+            // )
 
-            const alteredJackpot =
-                (jackpotAltered.balance * jackpotAlocation) / 100
+            // const alteredJackpot =
+            //     (jackpotAltered.balance * jackpotAlocation) / 100
 
-            setAlteredJackpot(parseInt(alteredJackpot) / 1000000)
+            // setAlteredJackpot(parseInt(alteredJackpot) / 1000000)
             dispatch({
                 type: 'setAlteredJackpot',
                 message: alteredJackpot,
             })
 
             const jackpotInfo = await api.contractQuery(
-                loterra_contract_address,
+                loterraTestnetContractAddress,
                 {
                     jackpot: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -150,7 +150,7 @@ export default () => {
             })
 
             const jackpotAlteInfo = await api.contractQuery(
-                loterra_contract_address,
+                loterraTestnetContractAddress,
                 {
                     jackpot_alte: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -163,7 +163,7 @@ export default () => {
             })
 
             const contractTicketsInfo = await api.contractQuery(
-                loterra_contract_address,
+                loterraTestnetContractAddress,
                 {
                     count_ticket: {
                         lottery_id: contractConfigInfo.lottery_counter,
@@ -173,7 +173,7 @@ export default () => {
             setTickets(parseInt(contractTicketsInfo))
 
             const contractPlayersInfo = await api.contractQuery(
-                loterra_contract_address,
+                loterraTestnetContractAddress,
                 {
                     count_player: {
                         lottery_id: contractConfigInfo.lottery_counter,
@@ -183,7 +183,7 @@ export default () => {
             setPlayers(parseInt(contractPlayersInfo))
 
             const recentPlayersData = await api.contractQuery(
-                loterra_contract_address,
+                loterraTestnetContractAddress,
                 {
                     count_player: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -204,7 +204,7 @@ export default () => {
 
             //Get latest winning combination
             const winningCombination = await api.contractQuery(
-                loterra_contract_address,
+                loterraTestnetContractAddress,
                 {
                     winning_combination: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -217,13 +217,13 @@ export default () => {
             })
 
             //Get current lota price
-            const currentLotaPrice = await api.contractQuery(
-                loterra_pool_address,
-                {
-                    pool: {},
-                },
-            )
-            setLotaPrice(currentLotaPrice)
+            // const currentLotaPrice = await api.contractQuery(
+            //     loterra_pool_address,
+            //     {
+            //         pool: {},
+            //     },
+            // )
+            // setLotaPrice(currentLotaPrice)
 
             //Dev purposes disable for production
             //console.log('contract info',contractConfigInfo)
@@ -271,15 +271,18 @@ export default () => {
             setBuyLoader(false)
             return showNotification('Please connect your wallet', 'error', 4000)
         }
-        const allowance = await api.contractQuery(
-            state.alteredContractAddress,
-            {
-                allowance: {
-                    owner: connectedWallet.walletAddress,
-                    spender: state.loterraTestnetContractAddress,
-                },
-            },
-        )
+
+        const allowance = 100;
+        //DISABLED FOR VKR TESTING
+        // const allowance = await api.contractQuery(
+        //     state.alteredContractAddress,
+        //     {
+        //         allowance: {
+        //             owner: connectedWallet.walletAddress,
+        //             spender: state.loterraTestnetContractAddress,
+        //         },
+        //     },
+        // )
 
         if (
             alteBonus &&
@@ -401,7 +404,8 @@ export default () => {
             })
             .then( async (e) => {
                 if (e.success) {
-                    ////////////////////////////
+                    try {
+                        ////////////////////////////
                     //  VALKYRIE START
                     ////////////////////////////
                     //Validate if user is eligible
@@ -467,6 +471,9 @@ export default () => {
                                 )
                             }
                         }
+                    }
+                    }catch(e){
+                        console.log(e)
                     }
                     ////////////////////////////
                     //  VALKYRIE END
