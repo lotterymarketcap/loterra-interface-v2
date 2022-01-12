@@ -77,11 +77,11 @@ export default function TicketModal(props) {
 
     return (
         <>
-            <div className={'ticketmodal' + (open ? ' show' : '')}>
+            <div className={'ticketmodal d-flex' + (open ? ' show' : '')}>
                 <button className="toggle" onClick={() => toggleModal()}>
                     <X size={36} />
                 </button>
-
+                <div className="align-self-center card-body-wrapper">
                 <div className="ticketmodal_heading text-center pb-0">
                     <h2>Personalize Tickets</h2>
                     <p className="mb-0">
@@ -260,6 +260,7 @@ export default function TicketModal(props) {
                     >
                         Buy {combo.length} Tickets
                     </button>
+                </div>
                 </div>
             </div>
             <div

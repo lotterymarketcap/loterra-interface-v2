@@ -48,6 +48,12 @@ body {
     }
   }
 
+  .card-body-wrapper {
+    width: 600px !important;
+    position: relative;
+    margin:0 auto;
+  }
+
   #sidebar-wrapper {
     min-height: 100vh;
     margin-left: -300px;
@@ -852,21 +858,21 @@ h4,
 
 .amount-block {
     background: linear-gradient(95.45deg, #3b2e73 -92.2%, #10003b 105.35%);
-    box-sizing: border-box;
-    
-    border-radius: 10px;
-
+    box-sizing: border-box;    
+    border-radius: 0;
     visibility: hidden;
     opacity: 0;
     margin-left: auto;
     margin-right: auto;
     position: absolute;
     transition: all 200ms linear;
-    z-index: 15;
-    width: 400px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    z-index: 1020;
+    width: 100%;
+    height:100%;
+    top: 0;
+    left:0;
+    right:0;
+    bottom:0;    
     .toggle {
         background: transparent;
         border: 0;

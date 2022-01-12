@@ -653,7 +653,7 @@ export default () => {
             > */}
                 <div className="container-fluid px-md-5">
 
-                    <div className="card base-card">
+                    <div className="card base-card border-0">
                         <div className="card-body p-md-5">
                             <div className="row">
                                 <div className="col-md-12 text-center">
@@ -939,7 +939,7 @@ export default () => {
                             }
                         >
                             <div className="card-header">
-                                <h3>Book Your Tickets</h3>
+                                
                                 <button
                                     className="toggle"
                                     onClick={() => setBuyNow(!buyNow)}
@@ -947,7 +947,9 @@ export default () => {
                                     <X size={36} />
                                 </button>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body d-flex">
+                                <div className="align-self-center card-body-wrapper">
+                                <h3>Book Your Tickets</h3>
                                 <p
                                     style={{
                                         marginBottom: 0,
@@ -1250,6 +1252,7 @@ export default () => {
                                         </div>
                                     )}
                                 </button>
+                                </div>
                             </div>
                         </div>
                         <div
