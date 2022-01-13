@@ -685,7 +685,7 @@ export default () => {
                                 </h2> 
                                 <p className="sub-title">Mixed jackpot</p>
                                 <h2 className="alte" style={{color:"#fff"}}>
-                                +{numeral(jackpot)
+                                {numeral(jackpot)
                                         .format('0,0.00')}<span>UST</span>
                                     
                                 </h2> 
