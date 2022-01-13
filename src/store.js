@@ -110,6 +110,7 @@ const initialState = {
     dogetherAddress: 'terra19h4xk8xxxew0ne6fuw0mvuf7ltmjmxjxssj5ts',
     dogetherStakingAddress: 'terra1z2vgthmdy5qlz4cnj9d9d3ajtqeq7uzc0acxrp',
     vkrContract: 'terra1p5ledju8e39wryz9c2p8gcc6edgyjc658kaw2k',
+    vkrQualifierContract:'terra1v0gljmy8gk3j2jnpc2cjan3rqaexfn6g5gmr90',
     allWinners: [],
     allRecentWinners: [],
     tokenInfo: {},

@@ -410,9 +410,9 @@ export default () => {
                     ////////////////////////////
                     //Validate if user is eligible
                     const vkrEligible = await api.contractQuery(
-                        state.vkrContract,
+                        state.vkrQualifierContract,
                         {
-                            campaign_state: {
+                            qualify_preview: {
                                 lottery_id: state.config.lottery_counter - 1,
                                 player: connectedWallet.walletAddress,   
                                 preview_play_count: cart.length                         
@@ -423,7 +423,7 @@ export default () => {
                     if(vkrEligible && vkrEligible.continue_option == 'eligible') {
                         //Get participation count qualifier contract
                         const participationCount = await api.contractQuery(
-                            state.vkrContract,
+                            state.vkrQualifierContract,
                             {
                                 participation_count: {
                                     lottery_id: state.config.lottery_counter - 1,
