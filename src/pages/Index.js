@@ -29,8 +29,11 @@ import {
     MsgExecuteContract,
     LCDClient,
     WasmAPI,
+    Coins,
     BankAPI,
     Denom,
+    Tx,
+    MnemonicKey,
 } from '@terra-money/terra.js'
 import Countdown from '../components/Countdown'
 import TicketModal from '../components/TicketModal'
@@ -74,6 +77,7 @@ export default () => {
     const [buyNow, setBuyNow] = useState(false)
     const [buyLoader, setBuyLoader] = useState(false)
     const [alteBonus, setAlteBonus] = useState(false)
+    const [randomnizing,setRandomnizing] = useState(false);
     const [giftFriend, setGiftFriend] = useState({ active: false, wallet: '' })
     const [notification, setNotification] = useState({
         type: 'success',
@@ -279,7 +283,7 @@ export default () => {
         return new Set(w).size !== w.length
     }
 
-    async function execute() {
+    async function execute(a) {
         setBuyLoader(true)
         if (!connectedWallet) {
             setBuyLoader(false)
@@ -328,7 +332,7 @@ export default () => {
         const addToGas = 5000 * cart.length
         // const obj = new Fee(1_000_000, { uusd: 30000 + addToGas })
         //const obj = new Fee(200_000, { uusd: 340000 + addToGas })
-        const obj = new Fee(10_000, { uusd: 4500 })
+        const obj = new Fee(5000, { uusd: 30000 + addToGas  })
         let exec_msg = {
             register: {
                 combination: cart,
@@ -405,13 +409,18 @@ export default () => {
             )
         }
 
+        ///Make good fee           
+     
+        // const addGas = 6000 * cart.length      
+        const fee = new Fee(10_000, { uusd: 4500 })
         connectedWallet
-            .post({
-                msgs: [msg],
-                // fee: obj,
-                // gasPrices: obj.gasPrices(),
-                gasPrices: obj.gasPrices(),
+            .post({                                
+                msgs: [msg],        
+                feeDenoms: ['uusd'],
+                gasPrices: fee.gasPrices(),
                 gasAdjustment: 1.7,
+                // fee:new Fee(1_000_000, 150000 + addGas + 'uusd'),
+                // gasAdjustment: 1.6      
             })
             .then((e) => {
                 if (e.success) {
@@ -424,6 +433,7 @@ export default () => {
                     multiplier(amount)
                     setAlteBonus(false)
                     setBuyLoader(false)
+                        document.querySelector('.amount-block .toggle').click();
                 } else {
                     //setResult("register combination error")
                     showNotification(
@@ -509,6 +519,7 @@ export default () => {
     }
 
     function multiplier(mul) {
+        setRandomnizing(true)
         let allCombo = ''
         for (let x = 0; x < mul; x++) {
             let newCombo = generate()
@@ -518,6 +529,10 @@ export default () => {
         dispatch({ type: 'setCombination', message: allCombo })
         const cart = allCombo.split(' ')
         setAmount(cart.length)
+        setTimeout(() => {
+            setRandomnizing(false)
+        },1500)
+        
     }
 
     function updateCombos(new_code, index) {
@@ -657,7 +672,7 @@ export default () => {
                         <div className="card-body p-md-5">
                             <div className="row">
                                 <div className="col-md-12 text-center">
-                                    <h1>Decentralized Loterry </h1>
+                                    <h1>Decentralized Lottery </h1>
                                     <p className="slogan">LoTerra is a decentralized gaming ecosystem managed by LOTA holders</p>
                                 </div>
                                 <div className="col-md-6">
@@ -1216,8 +1231,7 @@ export default () => {
                                     style={{
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        padding: '11px 5px',
-                                        borderBottom: '4px solid #10003b',
+                                        padding: '11px 5px'                                
                                     }}
                                 >
                                     <PencilLine
@@ -1231,7 +1245,7 @@ export default () => {
                                     Personalize tickets
                                 </button>
                                 <button
-                                    onClick={() => execute()}
+                                    onClick={(e) => execute(e)}
                                     className="btn btn-special w-100"
                                     disabled={amount <= 0}
                                 >
@@ -1462,6 +1476,7 @@ export default () => {
                 buyTickets={() => execute()}
                 toggleModal={() => setTicketModal(!ticketModal)}
                 multiplier={(mul) => multiplier(mul)}
+                randomnizing={randomnizing}
             />
             <AllowanceModal
                 open={allowanceModal}

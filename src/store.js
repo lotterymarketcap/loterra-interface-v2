@@ -140,7 +140,10 @@ const initialState = {
     daoFunds: 0,
     lcd_client: new LCDClient({
         URL: 'https://lcd.terra.dev/',
-        chainID: 'columbus-4',
+        chainID: 'columbus-5',
+        feeDenoms:['uusd'],
+        gasPrices: { uusd: 0.15 },
+        gasAdjustment: 1.4,
     }),
     blockHeight: 0,
     stateLPStaking: {},
