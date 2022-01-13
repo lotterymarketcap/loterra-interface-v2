@@ -353,7 +353,7 @@ export default () => {
         if (payWith == 'ust') {
             msg = new MsgExecuteContract(
                 connectedWallet.walletAddress,
-                state.loterraTestnetContractAddress,
+                state.loterraTestnetContractAddress,    
                 exec_msg,
                 coins_msg,
             )
@@ -412,7 +412,7 @@ export default () => {
                     const vkrEligible = await api.contractQuery(
                         state.vkrContract,
                         {
-                            qualify_preview: {
+                            campaign_state: {
                                 lottery_id: state.config.lottery_counter - 1,
                                 player: connectedWallet.walletAddress,   
                                 preview_play_count: cart.length                         
@@ -500,6 +500,7 @@ export default () => {
             })
             .catch((e) => {
                 //setResult(e.message)
+                console.log(e)
                 showNotification(e.message, 'error', 4000)
                 setBuyLoader(false)
             })
