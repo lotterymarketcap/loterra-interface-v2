@@ -444,7 +444,7 @@ export default function ConnectWallet() {
                     message: claimsLP.claims,
                 })
 
-                checkIfWon()
+              
 
                 alteTokens = await api.contractQuery(
                     state.alteredContractAddress,
@@ -457,8 +457,16 @@ export default function ConnectWallet() {
 
                 // Better to keep it at the end
                 // This one can generate an error on try catch if no combination played
-                // Because if error others query will not be triggered right after the error
-                const combinations = await api.contractQuery(
+           
+                   //Store coins global state
+            dispatch({ type: 'setAllNativeCoins', message: coins })
+            // console.log(coins)
+            let alte = parseInt(alteTokens.balance) / 1000000
+            console.log(alte)
+            setAlteBank(numeral(alte).format('0,0.00'))
+
+                 // Because if error others query will not be triggered right after the error
+                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
                     {
                         combination: {
@@ -468,22 +476,19 @@ export default function ConnectWallet() {
                     },
                 )
                 dispatch({ type: 'setAllCombinations', message: combinations })
+           
             } catch (e) {
                 console.log(e)
             }
 
-            //Store coins global state
-            dispatch({ type: 'setAllNativeCoins', message: coins })
-            // console.log(coins)
-            let alte = parseInt(alteTokens.balance) / 1000000
-            console.log(alte)
+         
             // let uusd = coins.filter((c) => {
             //     return c.denom === 'uusd'
             // })
             // let ust = parseInt(uusd) / 1000000
             // setBank(numeral(ust).format('0,0.00'))
      
-            setAlteBank(numeral(alte).format('0,0.00'))
+       
             // connectTo("extension")
         } else {
             setBank(null)
@@ -529,19 +534,29 @@ export default function ConnectWallet() {
 
 
     useEffect(() => {
-        if (!state.config.lottery_counter) {
-            baseData()
-        }
-        if (connectedWallet) {
-            contactBalance()
-        }
+            baseData()       
     }, [
-        connectedWallet,
+        // connectedWallet,
         // lcd,
         // state.config,
         // state.allRecentWinners,
         // state.youWon,
     ])
+
+    useEffect(() => {
+        if (connectedWallet && !state.wallet.walletAddress) {
+            contactBalance()                   
+        }
+    },[connectedWallet])
+
+
+    //useEffect for your won function
+
+    useEffect(() => {
+        if(state.allRecentWinners.length > 0)    {
+            checkIfWon()
+        }
+    },[state.allRecentWinners])
 
     return (
         <>         
