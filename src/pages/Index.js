@@ -413,7 +413,7 @@ export default () => {
                         state.vkrQualifierContract,
                         {
                             qualify_preview: {
-                                lottery_id: state.config.lottery_counter - 1,
+                                lottery_id: state.config.lottery_counter,
                                 player: connectedWallet.walletAddress,   
                                 preview_play_count: cart.length                         
                             },
