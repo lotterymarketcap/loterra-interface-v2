@@ -405,7 +405,7 @@ export default () => {
             .then( async (e) => {
                 if (e.success) {
                     try {
-                        ////////////////////////////
+                    ////////////////////////////
                     //  VALKYRIE START
                     ////////////////////////////
                     //Validate if user is eligible
