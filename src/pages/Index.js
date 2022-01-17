@@ -131,13 +131,13 @@ export default () => {
             //     (jackpotAltered.balance * jackpotAlocation) / 100
 
             // setAlteredJackpot(parseInt(alteredJackpot) / 1000000)
-            dispatch({
-                type: 'setAlteredJackpot',
-                message: alteredJackpot,
-            })
+            // dispatch({
+            //     type: 'setAlteredJackpot',
+            //     message: alteredJackpot,
+            // })
 
             const jackpotInfo = await api.contractQuery(
-                loterraTestnetContractAddress,
+                state.loterraTestnetContractAddress,
                 {
                     jackpot: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -149,21 +149,21 @@ export default () => {
                 message: parseInt(jackpotInfo) / 1000000,
             })
 
-            const jackpotAlteInfo = await api.contractQuery(
-                loterraTestnetContractAddress,
-                {
-                    jackpot_alte: {
-                        lottery_id: contractConfigInfo.lottery_counter - 1,
-                    },
-                },
-            )
-            dispatch({
-                type: 'setHistoricalJackpotAlte',
-                message: parseInt(jackpotAlteInfo) / 1000000,
-            })
+            // const jackpotAlteInfo = await api.contractQuery(
+            //     state.loterraTestnetContractAddress,
+            //     {
+            //         jackpot_alte: {
+            //             lottery_id: contractConfigInfo.lottery_counter - 1,
+            //         },
+            //     },
+            // )
+            // dispatch({
+            //     type: 'setHistoricalJackpotAlte',
+            //     message: parseInt(jackpotAlteInfo) / 1000000,
+            // })
 
             const contractTicketsInfo = await api.contractQuery(
-                loterraTestnetContractAddress,
+                state.loterraTestnetContractAddress,
                 {
                     count_ticket: {
                         lottery_id: contractConfigInfo.lottery_counter,
@@ -173,7 +173,7 @@ export default () => {
             setTickets(parseInt(contractTicketsInfo))
 
             const contractPlayersInfo = await api.contractQuery(
-                loterraTestnetContractAddress,
+                state.loterraTestnetContractAddress,
                 {
                     count_player: {
                         lottery_id: contractConfigInfo.lottery_counter,
@@ -183,7 +183,7 @@ export default () => {
             setPlayers(parseInt(contractPlayersInfo))
 
             const recentPlayersData = await api.contractQuery(
-                loterraTestnetContractAddress,
+                state.loterraTestnetContractAddress,
                 {
                     count_player: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -204,7 +204,7 @@ export default () => {
 
             //Get latest winning combination
             const winningCombination = await api.contractQuery(
-                loterraTestnetContractAddress,
+                state.loterraTestnetContractAddress,
                 {
                     winning_combination: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -229,7 +229,7 @@ export default () => {
             //console.log('contract info',contractConfigInfo)
 
             const { winners } = await api.contractQuery(
-                loterra_contract_address,
+                state.loterraTestnetContractAddress,
                 {
                     winner: {
                         lottery_id: contractConfigInfo.lottery_counter - 1,
@@ -238,7 +238,7 @@ export default () => {
             )
             dispatch({ type: 'setAllWinners', message: winners })
             // Query all players
-            const players = await api.contractQuery(loterra_contract_address, {
+            const players = await api.contractQuery(state.loterraTestnetContractAddress, {
                 players: {
                     lottery_id: contractConfigInfo.lottery_counter - 1,
                 },

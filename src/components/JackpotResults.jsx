@@ -136,7 +136,7 @@ export default function JackpotResults() {
             dispatch({ type: 'setHistoricalJackpotLotteryId', message: id })
 
             const winningCombination = await api.contractQuery(
-                loterra_contract_address,
+                state.loterraTestnetContractAddress,
                 {
                     winning_combination: { lottery_id: id },
                 },
@@ -147,7 +147,7 @@ export default function JackpotResults() {
             })
 
             const { winners } = await api.contractQuery(
-                loterra_contract_address,
+                state.loterraTestnetContractAddress,
                 {
                     winner: {
                         lottery_id: id,
@@ -157,7 +157,7 @@ export default function JackpotResults() {
             dispatch({ type: 'setAllWinners', message: winners })
 
             const jackpotInfo = await api.contractQuery(
-                loterra_contract_address,
+                state.loterraTestnetContractAddress,
                 {
                     jackpot: {
                         lottery_id: id,
@@ -170,18 +170,18 @@ export default function JackpotResults() {
                 message: parseInt(jackpotInfo) / 1000000,
             })
 
-            const jackpotAlteInfo = await api.contractQuery(
-                loterra_contract_address,
-                {
-                    jackpot_alte: {
-                        lottery_id: id,
-                    },
-                },
-            )
-            dispatch({
-                type: 'setHistoricalJackpotAlte',
-                message: parseInt(jackpotAlteInfo) / 1000000,
-            })
+            // const jackpotAlteInfo = await api.contractQuery(
+            //     state.loterraTestnetContractAddress,
+            //     {
+            //         jackpot_alte: {
+            //             lottery_id: id,
+            //         },
+            //     },
+            // )
+            // dispatch({
+            //     type: 'setHistoricalJackpotAlte',
+            //     message: parseInt(jackpotAlteInfo) / 1000000,
+            // })
         } catch (e) {
             console.log(e, 'no found')
         }
