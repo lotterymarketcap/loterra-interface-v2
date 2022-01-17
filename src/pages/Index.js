@@ -436,8 +436,8 @@ export default () => {
                 )
 
                 //Do the C - Q * 10 formula
-                const participationTimes =  parseInt((combinations.length + cart.length - participationCount * 10) / 10);
-
+                const participationTimes =  parseInt((combinations.length + cart.length - (participationCount * 10)) / 10);
+                console.log(participationTimes)
 
                 for (let index = 0; index < participationTimes; index++) {
                     if(state.vkrReferrer.status && state.vkrReferrer.code !== ''){
