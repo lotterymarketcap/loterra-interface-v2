@@ -435,7 +435,7 @@ export default () => {
                             address: state.wallet.walletAddress,
                         },
                     },
-                ).then((a) => {
+                ).then((a) => { 
                     combinations = a
                 }).catch(error => {
                     console.log('no combinations yet')
