@@ -425,7 +425,9 @@ export default () => {
                     },
                 )
                 //Get total tickets bought by lottery_id
-                const combinations = await api.contractQuery(
+                let combinations  = {};
+                combinations.combination = []
+                const combinations_query = await api.contractQuery(
                     state.loterraTestnetContractAddress,
                     {
                         combination: {
@@ -433,7 +435,11 @@ export default () => {
                             address: state.wallet.walletAddress,
                         },
                     },
-                )
+                ).then((a) => {
+                    combinations = a
+                }).catch(error => {
+                    console.log('no combinations yet')
+                })
 
                 //Do the C - Q * 10 formula
                 const participationTimes = (combinations.combination.length + cart.length - (participationCount.participation_count * 10)) / 10;
