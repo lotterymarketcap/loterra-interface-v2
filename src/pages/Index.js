@@ -443,9 +443,9 @@ export default () => {
 
                 //Do the C - Q * 10 formula
                 const participationTimes = (combinations.combination.length + cart.length - (participationCount.participation_count * 10)) / 10;
-                console.log(participationTimes, combinations.combination.length, cart.length, participationCount.participation_count)
+                console.log(Math.floor(participationTimes), combinations.combination.length, cart.length, participationCount.participation_count)
 
-                for (let index = 0; index < participationTimes; index++) {
+                for (let index = 0; index < Math.floor(participationTimes); index++) {
                     if(state.vkrReferrer.status && state.vkrReferrer.code !== ''){
                         //Valkyrie referrer detected
                         const msg = new MsgExecuteContract(
