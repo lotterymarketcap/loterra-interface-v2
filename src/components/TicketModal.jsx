@@ -6,8 +6,9 @@ import { useStore } from '../store'
 
 export default function TicketModal(props) {
     const [combo, setCombo] = useState([])
+   
     // const [scrollPosition, setScrollPosition] = useState(null)
-    const { open, toggleModal, amount, updateCombos, buyTickets, multiplier } =
+    const { open, toggleModal, amount, updateCombos, buyTickets, multiplier, randomnizing } =
         props
     const store = useStore()
 
@@ -77,11 +78,11 @@ export default function TicketModal(props) {
 
     return (
         <>
-            <div className={'ticketmodal' + (open ? ' show' : '')}>
+            <div className={'ticketmodal d-flex' + (open ? ' show' : '')}>
                 <button className="toggle" onClick={() => toggleModal()}>
                     <X size={36} />
                 </button>
-
+                <div className="align-self-center card-body-wrapper">
                 <div className="ticketmodal_heading text-center pb-0">
                     <h2>Personalize Tickets</h2>
                     <p className="mb-0">
@@ -110,8 +111,7 @@ export default function TicketModal(props) {
                         style={{
                             fontSize: '18px',
                             fontWeight: 'bold',
-                            padding: '11px 5px',
-                            borderBottom: '4px solid #10003b',
+                            padding: '11px 5px'                            
                         }}
                     >
                         <Shuffle
@@ -121,6 +121,7 @@ export default function TicketModal(props) {
                         />{' '}
                         Randomize Combinations
                     </button>
+                    {!randomnizing &&
                     <ul
                         className="list-group"
                         id="ticket_list"
@@ -250,7 +251,14 @@ export default function TicketModal(props) {
                             )
                         })}
                     </ul>
-
+                    }
+                    { randomnizing &&
+                        <div className="w-100 py-3 text-center">
+                            <div className="spinner-border text-primary" role="status">
+                        {/* <span className="sr-only">Loading...</span> */}
+                      </div>
+                        </div>
+                    }
                     <button
                         className="btn btn-special w-100 mt-3"
                         onClick={() => {
@@ -260,6 +268,7 @@ export default function TicketModal(props) {
                     >
                         Buy {combo.length} Tickets
                     </button>
+                </div>
                 </div>
             </div>
             <div

@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import axios from 'axios'
 import { LCDClient, WasmAPI } from '@terra-money/terra.js'
 import {
     useWallet,
-    WalletStatus,
     useConnectedWallet,
-    ConnectType,
 } from '@terra-money/wallet-provider'
 import {
     Wallet,
@@ -13,17 +11,11 @@ import {
     UserCircle,
     Trophy,
     Power,
-    List,
-    Check,
-    X,
-    Ticket,
-    Coin,
-    Bank,
+    Check   
 } from 'phosphor-react'
 import numeral from 'numeral'
 import UserModal from './UserModal'
 import { useStore } from '../store'
-import { Link } from '@reach/router'
 // let useWallet = {}
 // if (typeof document !== 'undefined') {
 //     useWallet = require('@terra-money/wallet-provider').useWallet
@@ -59,13 +51,7 @@ export default function ConnectWallet() {
     const [connected, setConnected] = useState(false)
     const { state, dispatch } = useStore()
 
-    //Nav link active settings
-    let homeClass, stakingClass, daoClass
-    if (typeof location !== 'undefined') {
-        homeClass = location.pathname === '/' ? 'active' : ''
-        stakingClass = location.pathname.match(/^\/staking/) ? 'active' : ''
-        daoClass = location.pathname.match(/^\/dao/) ? 'active' : ''
-    }
+    
 
     let wallet = ''
     if (typeof document !== 'undefined') {
@@ -242,8 +228,8 @@ export default function ConnectWallet() {
         const pool_info = await api.contractQuery(state.loterraPoolAddress, {
             pool: {},
         })
-        console.log('pool_info')
-        console.log(pool_info)
+        //console.log('pool_info')
+       // console.log(pool_info)
         dispatch({ type: 'setPoolInfo', message: pool_info })
     }
 
@@ -274,7 +260,7 @@ export default function ConnectWallet() {
         // Code for winner detector
         try {
             let type = false
-            console.log('checking for winner')
+            //console.log('checking for winner')
             // Query all winners for most recent draw
 
             //Test purposes
@@ -293,7 +279,7 @@ export default function ConnectWallet() {
             })
 
             dispatch({ type: 'setYouWon', message: type })
-            console.log(state.youWon)
+           // console.log(state.youWon)
         } catch (e) {
             console.log(e)
         }
@@ -310,7 +296,18 @@ export default function ConnectWallet() {
             let token
             try {
                 const api = new WasmAPI(lcd.apiRequester)
-                coins = await lcd.bank.balance(connectedWallet.walletAddress)
+                if (connectedWallet) {
+                    lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
+                        coins = coins;
+                      // console.log(coins ? coins.get('uusd').amount / 1000000 : '')              
+                       const ustBalance = coins.get('uusd').toData()         
+                       
+                      setBank(ustBalance.amount / 1000000)
+                      dispatch({ type: 'setUstBalance', message: ustBalance.amount / 1000000 })
+                    });
+                  } else {
+                    setBank(null);
+                  }
 
                 const contractConfigInfo = await api.contractQuery(
                     state.loterraContractAddress,
@@ -439,7 +436,7 @@ export default function ConnectWallet() {
                     message: claimsLP.claims,
                 })
 
-                checkIfWon()
+              
 
                 alteTokens = await api.contractQuery(
                     state.alteredContractAddress,
@@ -452,8 +449,16 @@ export default function ConnectWallet() {
 
                 // Better to keep it at the end
                 // This one can generate an error on try catch if no combination played
-                // Because if error others query will not be triggered right after the error
-                const combinations = await api.contractQuery(
+           
+                   //Store coins global state
+            dispatch({ type: 'setAllNativeCoins', message: coins })
+            // console.log(coins)
+            let alte = parseInt(alteTokens.balance) / 1000000
+          //  console.log(alte)
+            setAlteBank(numeral(alte).format('0,0.00'))
+
+                 // Because if error others query will not be triggered right after the error
+                 const combinations = await api.contractQuery(
                     state.loterraContractAddress,
                     {
                         combination: {
@@ -461,24 +466,25 @@ export default function ConnectWallet() {
                             address: connectedWallet.walletAddress,
                         },
                     },
-                )
-                dispatch({ type: 'setAllCombinations', message: combinations })
+                ).then((a) => { 
+                    dispatch({ type: 'setAllCombinations', message: a })
+                }).catch(error => {
+                    console.log('no combinations found')
+                })
+            
+           
             } catch (e) {
                 console.log(e)
             }
 
-            //Store coins global state
-            dispatch({ type: 'setAllNativeCoins', message: coins })
-            // console.log(coins)
-            let alte = parseInt(alteTokens.balance) / 1000000
-            console.log(alte)
-            let uusd = coins.filter((c) => {
-                return c.denom === 'uusd'
-            })
-            let ust = parseInt(uusd) / 1000000
-            setBank(numeral(ust).format('0,0.00'))
-            dispatch({ type: 'setUstBalance', message: ust })
-            setAlteBank(numeral(alte).format('0,0.00'))
+         
+            // let uusd = coins.filter((c) => {
+            //     return c.denom === 'uusd'
+            // })
+            // let ust = parseInt(uusd) / 1000000
+            // setBank(numeral(ust).format('0,0.00'))
+     
+       
             // connectTo("extension")
         } else {
             setBank(null)
@@ -486,31 +492,7 @@ export default function ConnectWallet() {
             dispatch({ type: 'setWallet', message: {} })
         }
     }
-
-    function renderDialog() {
-        if (isDisplayDialog) {
-            return (
-                <div /*style={Modal}*/ onClick={() => closeModal()}>
-                    <div /*style={Dialog}*/ className="card-glass">
-                        <button
-                            onClick={() => connectTo('extension')}
-                            className="button-pink-outline"
-                            style={DialogButton}
-                        >
-                            Terra Station (extension)
-                        </button>
-                        <button
-                            onClick={() => connectTo('mobile')}
-                            className="button-pink-outline"
-                            style={DialogButton}
-                        >
-                            Terra Station (mobile)
-                        </button>
-                    </div>
-                </div>
-            )
-        }
-    }
+ 
 
     function returnBank() {
         return (
@@ -545,156 +527,35 @@ export default function ConnectWallet() {
         )
     }
 
-    const [scrolled, setScrolled] = React.useState(false)
-    const handleScroll = () => {
-        const offset = window.scrollY
-        if (offset > 25) {
-            setScrolled(true)
-        } else {
-            setScrolled(false)
-        }
-    }
 
-    function showSideNav() {
-        setSideNav(!sideNav)
-    }
 
     useEffect(() => {
-        if (!state.config.lottery_counter) {
-            baseData()
-        }
-        if (connectedWallet) {
-            contactBalance()
-        }
-
-        //console.log(connectedWallet)
-        window.addEventListener('scroll', handleScroll)
+            baseData()       
     }, [
-        connectedWallet,
+        // connectedWallet,
         // lcd,
         // state.config,
         // state.allRecentWinners,
         // state.youWon,
     ])
 
-    return (
-        <>
-        <div
-            className={
-                scrolled
-                    ? 'navbar navbar-expand p-2 p-md-3 sticky'
-                    : 'navbar navbar-expand p-2 p-md-3'
-            }
-        >
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/">
-                    <img src="/logo.png" /> <span>LOTERRA</span>
-                </a>
-                <nav
-                    className={
-                        sideNav
-                            ? 'navbar-nav main-nav me-auto open'
-                            : 'navbar-nav main-nav me-auto'
-                    }
-                >
-                    <button
-                        className="main-nav-close-toggle"
-                        onClick={() => showSideNav()}
-                    >
-                        <X size={36} />
-                    </button>
-                    <li className="nav-item">
-                        <a href="/" className={'nav-link ' + homeClass}>
-                            <Ticket
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Lottery
-                            <span className="item-label">Jackpot Lottery</span>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="/dogether"
-                            className="nav-link"
-                            style={{ position: 'relative' }}
-                        >
-                            <Ticket
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Dogether
-                            <span className="item-label">No loss lottery</span>
-                            <span
-                                className="badge"
-                                style={{
-                                    position: 'absolute',
-                                    right: 0,
-                                    top: '-9px',
-                                    fontSize: '10px',
-                                    lineHeight: '10px',
-                                    padding: '3px',
-                                    textTransform: 'uppercase',
-                                    color: '#10003b',
-                                    background: '#8bf6c2',
-                                }}
-                            >
-                                BETA
-                            </span>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="/staking"
-                            className="nav-link"
-                            className={'nav-link ' + stakingClass}
-                        >
-                            <Coin
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            Staking
-                            <span className="item-label">
-                                Become a casino owner or earn LOTA when staking
-                                LP
-                            </span>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a
-                            href="/dao"
-                            className="nav-link"
-                            className={'nav-link ' + daoClass}
-                        >
-                            <Bank
-                                size={24}
-                                style={{
-                                    marginRight: '3px',
-                                    position: 'relative',
-                                    top: '-1px',
-                                }}
-                            />{' '}
-                            DAO
-                            <span className="item-label">
-                                Together we decide
-                            </span>
-                        </a>
-                    </li>
-                </nav>
+    useEffect(() => {
+        if (connectedWallet && !state.wallet.walletAddress) {
+            contactBalance()                   
+        }
+    },[connectedWallet])
 
-                <div className="navbar-nav ms-auto">
+
+    //useEffect for your won function
+
+    useEffect(() => {
+        if(state.allRecentWinners.length > 0 && connectedWallet && connectedWallet.walletAddress)    {
+            checkIfWon()
+        }
+    },[state.allRecentWinners])
+
+    return (
+        <>         
                     {!connected && (
                         <>
                             <div className="btn-group">
@@ -740,32 +601,23 @@ export default function ConnectWallet() {
                                     </button>
                                 </ul>
                             </div>
-                            <button
-                                className="btn btn-default nav-item ms-2 main-nav-toggle"
-                                onClick={() => showSideNav()}
-                            >
-                                <List size={26} />
-                            </button>
+                        
                         </>
                     )}
                     {connected && (
                         <>
                             <button
                                 className={
-                                    'btn btn-default nav-item me-2' +
+                                    'btn btn-default nav-item' +
                                     (state.youWon ? ' winner' : '')
-                                }
-                                style={{
-                                    padding: '0.275rem 0.55rem',
-                                }}
+                                }                            
                                 onClick={() => setIsModal(!isModal)}
                             >
                                 {state.youWon ? (
                                     <>
                                         <Trophy
                                             size={33}
-                                            style={{
-                                                marginTop: '-2px',
+                                            style={{                                         
                                                 color: '#ecba26',
                                             }}
                                         />
@@ -773,9 +625,8 @@ export default function ConnectWallet() {
                                     </>
                                 ) : (
                                     <UserCircle
-                                        size={33}
-                                        style={{
-                                            marginTop: '-2px',
+                                        size={28}
+                                        style={{                                   
                                             color: '#72ffc1',
                                         }}
                                     />
@@ -790,8 +641,7 @@ export default function ConnectWallet() {
                             </button>
                             <ul
                                 className="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="dropdownMenuButton2"
-                                style={{ top: '70px' }}
+                                aria-labelledby="dropdownMenuButton2"                             
                             >
                                 {bank && alteBank && (
                                     <div
@@ -828,17 +678,11 @@ export default function ConnectWallet() {
                                         Disconnect
                                     </span>
                                 </button>
-                            </ul>
-                            <button
-                                className="btn btn-default nav-item ms-2 main-nav-toggle"
-                                onClick={() => showSideNav()}
-                            >
-                                <List size={26} />
-                            </button>
+                            </ul>                      
                         </>
                     )}
-                </div>
-            </div>
+      
+     
 
             {/*<button onClick={() => display()}>Connect Wallet</button>
         {renderDialog()}*/}
@@ -849,7 +693,7 @@ export default function ConnectWallet() {
                     connectedWallet={connectedWallet}
                 />
             )}
-        </div>
+    
         </>
     )
 }

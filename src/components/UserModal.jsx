@@ -13,7 +13,7 @@ import {
 import {
     LCDClient,
     MsgExecuteContract,
-    StdFee,
+    Fee,
     WasmAPI,
 } from '@terra-money/terra.js'
 import { useStore } from '../store'
@@ -47,7 +47,7 @@ export default function UserModal(props) {
         state.config.block_time_play * 1000 -
         state.config.every_block_time_play / 2
     const addToGas = 5300
-    const obj = new StdFee(300_000, { uusd: 273600 + addToGas })
+    const obj = new Fee(300_000, { uusd: 273600 + addToGas })
     function claim() {
         const msg = new MsgExecuteContract(
             connectedWallet.walletAddress,
@@ -102,7 +102,7 @@ export default function UserModal(props) {
             if (type == 'current') {
                 id = state.currentLotteryId
             }
-            console.log(id)
+           // console.log(id)
             dispatch({ type: 'setHistoricalTicketLotteryId', message: id })
 
             const combinations = await api.contractQuery(
@@ -114,7 +114,7 @@ export default function UserModal(props) {
                     },
                 },
             )
-            console.log(combinations)
+           // console.log(combinations)
             dispatch({ type: 'setAllCombinations', message: combinations })
             setTicketLoad(false)
         } catch (e) {
@@ -334,31 +334,13 @@ export default function UserModal(props) {
         <>
             <div className={'usermodal' + (open ? ' show' : '')}>
                 <button className="toggle" onClick={() => toggleModal()}>
-                    <X size={48} />
+                    <X size={24} />
                 </button>
                 <div className="usermodal_content">
                     <div className="row">
                         {connectedWallet && connectedWallet.walletAddress && (
                             <>
-                                <div className="col-12 mb-2 text-center start">
-                                    <UserCircle size={100} />
-                                </div>
-                                {state.youWon &&
-                                    state.config.prize_rank_winner_percentage &&
-                                    state.allRecentWinners.length > 0 && (
-                                        <div className="text-center winner-box">
-                                            <p className="winner-box-heading">
-                                                <strong>
-                                                    YOU WON!{' '}
-                                                    {state.lastDrawnJackpot !==
-                                                        0 &&
-                                                        calculateTotalPrizesInDollars()}
-                                                </strong>{' '}
-                                                <span>Latest draw prizes</span>
-                                            </p>
-                                            {showWinnerPrizes()}
-                                        </div>
-                                    )}
+                             
                                 <div className="col-12 text-center claim">
                                     <h4 className="mb-2">
                                         Your Lottery Tickets
@@ -392,7 +374,22 @@ export default function UserModal(props) {
                                                 </small>
                                             )}
                                     </h4>
-
+                                    {state.youWon &&
+                                    state.config.prize_rank_winner_percentage &&
+                                    state.allRecentWinners.length > 0 && (
+                                        <div className="text-center winner-box">
+                                            <p className="winner-box-heading">
+                                                <strong>
+                                                    YOU WON!{' '}
+                                                    {state.lastDrawnJackpot !==
+                                                        0 &&
+                                                        calculateTotalPrizesInDollars()}
+                                                </strong>{' '}
+                                                <span>Latest draw prizes</span>
+                                            </p>
+                                            {showWinnerPrizes()}
+                                        </div>
+                                    )}
                                     <div className="btn-group w-100">
                                         <button
                                             className="btn btn-default"

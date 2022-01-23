@@ -2,35 +2,27 @@ import React, {
     useEffect,
     useState,
     useCallback,
-    useContext,
     useRef,
 } from 'react'
 import numeral from 'numeral'
 import {
-    Ticket,
     X,
-    Trophy,
-    UserFocus,
     ChartPie,
     ChartLine,
     PlusCircle,
     MinusCircle,
     PencilLine,
     Fire,
-    Files,
     Gift,
-    UsersThree,
     MonitorPlay,
     Info,
 } from 'phosphor-react'
 // import Jackpot from "../components/Jackpot";
 import {
-    StdFee,
+    Fee,
     MsgExecuteContract,
-    LCDClient,
     WasmAPI,
-    BankAPI,
-    Denom,
+   
 } from '@terra-money/terra.js'
 import Countdown from '../components/Countdown'
 import TicketModal from '../components/TicketModal'
@@ -38,13 +30,10 @@ import TicketModal from '../components/TicketModal'
 import { useStore } from '../store'
 
 import Notification from '../components/Notification'
-import SocialShare from '../components/SocialShare'
 import Footer from '../components/Footer'
 import AllowanceModal from '../components/AllowanceModal'
-import WinnerRow from '../components/WinnerRow'
 import PriceLoader from '../components/PriceLoader'
 import JackpotResults from '../components/JackpotResults'
-import QuickStats from '../components/QuickStats'
 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
@@ -66,6 +55,7 @@ const BURNED_LOTA = 4301383550000
 export default () => {
     const [jackpot, setJackpot] = useState(0)
     const [jackpotAltered, setAlteredJackpot] = useState(0)
+    const [jackpotAlteredUst, setAlteredJackpotUst] = useState(0)
     const [tickets, setTickets] = useState(0)
     const [players, setPlayers] = useState(0)
     const [recentPlayers, setRecentPlayers] = useState(0)
@@ -73,6 +63,7 @@ export default () => {
     const [buyNow, setBuyNow] = useState(false)
     const [buyLoader, setBuyLoader] = useState(false)
     const [alteBonus, setAlteBonus] = useState(false)
+    const [randomnizing,setRandomnizing] = useState(false);
     const [giftFriend, setGiftFriend] = useState({ active: false, wallet: '' })
     const [notification, setNotification] = useState({
         type: 'success',
@@ -107,16 +98,18 @@ export default () => {
             setExpiryTimestamp(
                 parseInt(contractConfigInfo.block_time_play * 1000),
             )
-            const bank = new BankAPI(terra.apiRequester)
-            const contractBalance = await bank.balance(loterra_contract_address)
-            const ustBalance = contractBalance.get('uusd').toData()
-            const jackpotAlocation =
-                contractConfigInfo.jackpot_percentage_reward
-            const contractJackpotInfo =
-                (ustBalance.amount * jackpotAlocation) / 100
-
-            setContractBalance(ustBalance.amount / 1000000)
-            setJackpot(parseInt(contractJackpotInfo) / 1000000)
+            // const bank = new BankAPI(terra.apiRequester)
+            const jackpotAlocation = contractConfigInfo.jackpot_percentage_reward
+            terra.bank.balance(loterra_contract_address).then(([coins]) => {            
+                const ustBalance = coins.get('uusd').toData()
+            
+                const contractJackpotInfo =
+                    (ustBalance.amount * jackpotAlocation) / 100
+    
+                setContractBalance(ustBalance.amount / 1000000)
+                setJackpot(parseInt(contractJackpotInfo) / 1000000)
+            });
+           
 
             const jackpotAltered = await api.contractQuery(
                 state.alteredContractAddress,
@@ -135,6 +128,17 @@ export default () => {
                 type: 'setAlteredJackpot',
                 message: alteredJackpot,
             })
+
+            const poolAlte = await api.contractQuery('terra18adm0emn6j3pnc90ldechhun62y898xrdmfgfz', {
+                pool: {},
+            })
+
+            let ust = parseInt(poolAlte.assets[1].amount)
+            let alte = parseInt(poolAlte.assets[0].amount)
+
+            let formatPrice = ust / alte
+            let final = formatPrice.toFixed() * parseInt(alteredJackpot) / 1000000;
+            setAlteredJackpotUst(final)
 
             const jackpotInfo = await api.contractQuery(
                 loterra_contract_address,
@@ -265,7 +269,7 @@ export default () => {
         return new Set(w).size !== w.length
     }
 
-    async function execute() {
+    async function execute(a) {
         setBuyLoader(true)
         if (!connectedWallet) {
             setBuyLoader(false)
@@ -310,11 +314,11 @@ export default () => {
             setBuyLoader(false)
             return
         }
-        // const obj = new StdFee(1_000_000, { uusd: 200000 })
+        // const obj = new Fee(1_000_000, { uusd: 200000 })
         const addToGas = 5000 * cart.length
-        // const obj = new StdFee(1_000_000, { uusd: 30000 + addToGas })
-        //const obj = new StdFee(200_000, { uusd: 340000 + addToGas })
-        const obj = new StdFee(10_000, { uusd: 4500 })
+        // const obj = new Fee(1_000_000, { uusd: 30000 + addToGas })
+        //const obj = new Fee(200_000, { uusd: 340000 + addToGas })
+        const obj = new Fee(5000, { uusd: 30000 + addToGas  })
         let exec_msg = {
             register: {
                 combination: cart,
@@ -391,13 +395,18 @@ export default () => {
             )
         }
 
+        ///Make good fee           
+     
+        // const addGas = 6000 * cart.length      
+        const fee = new Fee(10_000, { uusd: 4500 })
         connectedWallet
-            .post({
-                msgs: [msg],
-                // fee: obj,
-                // gasPrices: obj.gasPrices(),
-                gasPrices: obj.gasPrices(),
+            .post({                                
+                msgs: [msg],        
+                feeDenoms: ['uusd'],
+                gasPrices: fee.gasPrices(),
                 gasAdjustment: 1.7,
+                // fee:new Fee(1_000_000, 150000 + addGas + 'uusd'),
+                // gasAdjustment: 1.6      
             })
             .then((e) => {
                 if (e.success) {
@@ -410,6 +419,7 @@ export default () => {
                     multiplier(amount)
                     setAlteBonus(false)
                     setBuyLoader(false)
+                        document.querySelector('.amount-block .toggle').click();
                 } else {
                     //setResult("register combination error")
                     showNotification(
@@ -495,6 +505,7 @@ export default () => {
     }
 
     function multiplier(mul) {
+        setRandomnizing(true)
         let allCombo = ''
         for (let x = 0; x < mul; x++) {
             let newCombo = generate()
@@ -504,6 +515,10 @@ export default () => {
         dispatch({ type: 'setCombination', message: allCombo })
         const cart = allCombo.split(' ')
         setAmount(cart.length)
+        setTimeout(() => {
+            setRandomnizing(false)
+        },1500)
+        
     }
 
     function updateCombos(new_code, index) {
@@ -629,63 +644,153 @@ export default () => {
             position:'absolute',
             maxWidth:'100%'
             }}/> */}
-            <div
+            {/* <div
                 className="hero"
                 style={{
                     backgroundImage:
                         'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(rays.svg)',
                     backgroundPosition: 'center center',
                 }}
-            >
-                <div className="container-fluid container-md">
+            > */}
+                <div className="container-fluid px-md-5">
+
+                    <div className="card base-card border-0">
+                        <div className="card-body p-md-5">
+                            <div className="row">
+                                <div className="col-md-12 text-center">
+                                    <h1>Decentralized Lottery </h1>
+                                    <p className="slogan">LoTerra is a decentralized gaming ecosystem managed by LOTA holders</p>
+                                </div>
+                                <div className="col-xl-6">
+                                
+                                <p className="sub-title">Next jackpot</p>
+                                <h2>
+                                    {numeral(jackpotAlteredUst + jackpot)
+                                        .format('0,0.00')}<span>UST</span>
+                                    
+                                </h2> 
+                                <p className="sub-title">Mixed jackpot</p>
+                                <h2 className="alte" style={{color:"#fff"}}>
+                                {numeral(jackpot)
+                                        .format('0,0.00')}<span>UST</span>
+                                    
+                                </h2> 
+                                <h2 className="alte">
+                                +{numeral(jackpotAltered)
+                                        .format('0,0.00')}<span>ALTE</span>
+                                    
+                                </h2> 
+                                <div className="col-12 text-start mt-4 mb-4">
+                                                <button
+                                                    className={
+                                                        'btn btn-special'
+                                                    }
+                                                    onClick={() =>
+                                                        setBuyNow(!buyNow)
+                                                    }
+                                                >
+                                                    Buy Tickets
+                                                </button>
+                                                <small
+                                                    style={{
+                                                        display: 'block',
+                                                        marginTop: '10px',
+                                                        fontSize: '12px',
+                                                        opacity: '0.6',
+                                                    }}
+                                                >
+                                                    You can buy tickets with{' '}
+                                                    <strong>UST</strong> and{' '}
+                                                    <strong>ALTE</strong>
+                                                </small>
+                                            </div>        
+                                </div>
+                                <div className="col-xl-6 d-flex">
+                                            <div className="align-self-center w-100">
+                                            <p className="sub-title">Next draw in</p>
+                                <Countdown
+                                                    expiryTimestamp={
+                                                        expiryTimestamp
+                                                    }
+                                                />
+                                                <div className="row">
+                                                    <div className="col-6 p-1 text-center">
+                                                    <div className="card base-card-light">
+                                                        <div className="card-body">
+                                                        <p className="sub-title">Players</p>
+                                                    {players ? (
+                                                                        <p className="amount">{players}</p>
+                                                                    ) : (
+                                                                        <PriceLoader />
+                                                                    )}
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div className="col-6 p-1 text-center">
+                                                    <div className="card base-card-light">
+                                                        <div className="card-body">
+                                                    <p className="sub-title">Tickets</p>
+                                                    {tickets ? (
+                                                                        <p className="amount">{tickets}</p>
+                                                                    ) : (
+                                                                        <PriceLoader />
+                                                                    )}
+                                                                    </div>
+                                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="row">
-                        <div className="col-lg-12 col-xl-8 mx-auto text-center">
-                            <div className="jackpot">
-                                <img
-                                    src={'/Lottery.png'}
-                                    style={{
-                                        marginBottom: '-58px',
-                                        maxWidth: '100%',
-                                        position: 'relative',
-                                        zIndex: '1',
-                                    }}
-                                />
-                                <p>Mixed Jackpot</p>
-                                <h3>Draws every 3 days</h3>
+                        {/* <div className="col-lg-12 text-center">
+                          
+                                <div className="jackpot">                              
+                            
+                               <h1>Decentralized Loterry</h1>
+                               <p className="slogan">Next Jackpot</p>
+                                { jackpot ? (
+                                    <>                          
                                 <h2>
                                     {numeral(jackpot)
-                                        .format('0,0.00')
-                                        .split('')
-                                        .map((obj) => {
-                                            return (
-                                                <div className="roller">
-                                                    {obj}
-                                                </div>
-                                            )
-                                        })}
-                                    <div className="roller">
-                                        <span>UST</span>
-                                    </div>
-                                </h2>
-                                <div className="combine-jackpot">
-                                    <PlusCircle size={28} weight="fill" />
-                                </div>
+                                        .format('0,0.00')}<span>UST</span>
+                                    
+                                </h2>                    
                                 <h2 className="alte-jackpot">
                                     {numeral(jackpotAltered)
                                         .format('0,0.00')
-                                        .split('')
-                                        .map((obj) => {
-                                            return (
-                                                <div className="roller">
-                                                    {obj}
-                                                </div>
-                                            )
-                                        })}
-                                    <div className="roller">
-                                        <span>ALTE</span>
-                                    </div>
+                                        // .split('')
+                                        // .map((obj) => {
+                                        //     return (
+                                        //         <div className="roller">
+                                        //             {obj}
+                                        //         </div>
+                                        //     )
+                                        }<span>ALTE</span>                                
                                 </h2>
-                            </div>
+                            </>
+                            )
+
+                            :
+                            (
+                                <div className="d-flex w-100" style={{height:'200px'}}>
+                                    <div class="spinner-border text-primary align-self-center mx-auto" 
+                                    style={{
+                                        width:'6rem',
+                                        height:'6rem',
+                                        borderWidth:'9px'
+                                    }}
+                                    role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                </div>
+                            )
+
+                            }
+                             </div>
                             <div className="row">
                                 <div className="col-md-8 mx-auto">
                                     <div className="countdown-holder">
@@ -696,7 +801,7 @@ export default () => {
                                                         <div className="row">
                                                             <div className="col-4 text-center svg-rotate">
                                                                 <UserFocus
-                                                                    size={36}
+                                                                    size={42}
                                                                 />
                                                             </div>
                                                             <div className="col-8 text-center d-flex text-md-start">
@@ -723,7 +828,7 @@ export default () => {
                                                         <div className="row">
                                                             <div className="col-4 text-center svg-rotate">
                                                                 <Ticket
-                                                                    size={36}
+                                                                    size={42}
                                                                 />
                                                             </div>
                                                             <div className="col-8 text-center d-flex text-md-start">
@@ -778,8 +883,8 @@ export default () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> */}
+{/* 
                         <div className="col-12 col-md-8 mx-auto">
                             <div className="row">
                                 <div className="col-12 col-md-8 mx-auto">
@@ -818,8 +923,8 @@ export default () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> */}
+                    {/* </div> */}
                 </div>
 
                 {/*
@@ -835,7 +940,7 @@ export default () => {
                             }
                         >
                             <div className="card-header">
-                                <h3>Book Your Tickets</h3>
+                                
                                 <button
                                     className="toggle"
                                     onClick={() => setBuyNow(!buyNow)}
@@ -843,7 +948,9 @@ export default () => {
                                     <X size={36} />
                                 </button>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body d-flex">
+                                <div className="align-self-center card-body-wrapper">
+                                <h3>Book Your Tickets</h3>
                                 <p
                                     style={{
                                         marginBottom: 0,
@@ -1110,8 +1217,7 @@ export default () => {
                                     style={{
                                         fontSize: '18px',
                                         fontWeight: 'bold',
-                                        padding: '11px 5px',
-                                        borderBottom: '4px solid #10003b',
+                                        padding: '11px 5px'                                
                                     }}
                                 >
                                     <PencilLine
@@ -1125,7 +1231,7 @@ export default () => {
                                     Personalize tickets
                                 </button>
                                 <button
-                                    onClick={() => execute()}
+                                    onClick={(e) => execute(e)}
                                     className="btn btn-special w-100"
                                     disabled={amount <= 0}
                                 >
@@ -1146,6 +1252,7 @@ export default () => {
                                         </div>
                                     )}
                                 </button>
+                                </div>
                             </div>
                         </div>
                         <div
@@ -1159,9 +1266,6 @@ export default () => {
 
             <div
                 className="how"
-                style={{
-                    padding: '125px 0',
-                }}
             >
                 <div className="container">
                     <div className="row">
@@ -1196,7 +1300,7 @@ export default () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="col-12 text-center">
+                        {/* <div className="col-12 text-center">
                             <h5 className="mt-4 mb-1">Learn more?</h5>
                             <a
                                 className="btn btn-plain"
@@ -1216,7 +1320,7 @@ export default () => {
                                 />{' '}
                                 LoTerra lottery documentation
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -1358,6 +1462,7 @@ export default () => {
                 buyTickets={() => execute()}
                 toggleModal={() => setTicketModal(!ticketModal)}
                 multiplier={(mul) => multiplier(mul)}
+                randomnizing={randomnizing}
             />
             <AllowanceModal
                 open={allowanceModal}

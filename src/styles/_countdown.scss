@@ -50,12 +50,12 @@
         color: #ffffff94;
     }
     .time {
-        font-weight: 900;
+        font-weight: 700;
         font-size: 33px;
         color: #ffffff;
         text-shadow: 2px 2px 0px #00000061;
-        @media (max-width: 500px) {
-            font-size: 34px;
+        @media (max-width: 620px) {
+            font-size: 24px;
         }
     }
     .time-low {
@@ -65,13 +65,16 @@
         opacity: 0.6;
         margin-bottom: -10px;
         text-transform: uppercase;
+        @media (max-width: 620px) {
+            font-size: 9px;
+        }
     }
     .spacer {
         font-size: 32px;
-        font-weight: 900;
+        font-weight: 700;
         color: #fff;
         line-height: 57px;
-        @media (max-width: 500px) {
+        @media (max-width: 620px) {
             font-size: 34px;
             line-height: 61px;
         }

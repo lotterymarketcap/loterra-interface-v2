@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { X, Ticket, UserCircle } from 'phosphor-react'
-import { StdFee } from '@terra-money/terra.js'
+import { Fee } from '@terra-money/terra.js'
 
 export default function ProposalModal(props) {
     const { open, toggleModal } = props

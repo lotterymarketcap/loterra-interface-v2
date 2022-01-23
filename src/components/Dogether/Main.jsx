@@ -5,9 +5,9 @@ import { Bank, Check, Info, Ticket, Coin, User, UsersFour } from 'phosphor-react
 
 // import Nouislider from "nouislider-react";
 // import "nouislider/distribute/nouislider.css";
-import {Coins, MsgExecuteContract, StdFee, WasmAPI} from '@terra-money/terra.js'
+import {Coins, MsgExecuteContract, Fee, WasmAPI} from '@terra-money/terra.js'
 import { useEffect } from 'react'
-const obj = new StdFee(700_000, { uusd: 319200 })
+const obj = new Fee(700_000, { uusd: 319200 })
 
 export default function Main(props) {
     const { state, dispatch } = useStore()
@@ -26,7 +26,7 @@ export default function Main(props) {
     const anchorPercentage = 18
 
     function doGether(e) {
-        console.log('Dogether with: ', amount, percentage)
+     //   console.log('Dogether with: ', amount, percentage)
         if (!agreement) {
             showNotification('You need to accept the agreement', 'error', 4000)
             return
@@ -59,7 +59,7 @@ export default function Main(props) {
             })
     }
     function doGetherUnstake() {
-        console.log('Dogether with: ', amount, percentage)
+        //console.log('Dogether with: ', amount, percentage)
         if (amount <= 0) return
         let msg = new MsgExecuteContract(
             state.wallet.walletAddress,
@@ -252,7 +252,7 @@ export default function Main(props) {
                         </span>
                 </div>
         </div>
-            <div className="col-md-9 col-lg-6">
+            <div className="col-xl-6">
                 <div className="card lota-card staking dogether-card mt-0">
                     <div className="card-body">
                         
@@ -381,7 +381,7 @@ export default function Main(props) {
 </div> */}
                 </div>
             </div>
-            <div className="col-md-3 col-lg-6">
+            <div className="col-xl-6">
                 <div className="card lota-card staking dogether-card" style={{marginTop:0}}>
                 <p className="input-heading mt-3" style={{}}>
                         The amount you want to pool

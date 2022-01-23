@@ -24,6 +24,7 @@
             text-transform: uppercase;
             font-weight: 800;
             font-size: 24px;
+            opacity:1 !important;
             span {
                 display: block;
                 font-size: 13px;
@@ -56,7 +57,7 @@
     .usermodal_content {
         width: 100%;
         position: relative;
-        padding: 35px 15px;
+        padding: 0px 15px;
         .start {
             svg {
                 fill: #fff;

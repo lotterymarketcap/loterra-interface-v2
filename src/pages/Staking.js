@@ -9,7 +9,7 @@ import { useStore } from '../store'
 import {
     LCDClient,
     MsgExecuteContract,
-    StdFee,
+    Fee,
     WasmAPI,
 } from '@terra-money/terra.js'
 import numeral from 'numeral'
@@ -25,7 +25,7 @@ const BURNED_LOTA = 4301383550000
 
 export default () => {
     const addToGas = 5800
-    const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
+    const obj = new Fee(700_000, { uusd: 319200 + addToGas })
     const [notification, setNotification] = useState({
         type: 'success',
         message: '',
@@ -115,15 +115,11 @@ export default () => {
     return (
         <>
             <div
-                className="hero staking"
-                style={{
-                    backgroundImage:
-                        'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)',
-                }}
+                className="hero staking"               
             >
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-12 col-lg-8 mx-auto order-1 order-lg-2 p-lg-5">
+                        <div className="col-md-6">
                             {/* <img
                                 src="/van.png"
                                 className="van img-fluid mx-auto d-block"
@@ -135,8 +131,9 @@ export default () => {
                                     showNotification(message, type, dur)
                                 }
                             />
-
-<div className="card lota-card staking-rewards">
+    </div>
+    <div className="col-md-6">
+<div className="card lota-card staking-rewards" style={{background:'transparent'}}>
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-lg-12 d-flex">
@@ -253,10 +250,11 @@ export default () => {
                             </div>
                         </div>
                     </div>
+                    </div>
                         </div>
                     </div>
                 </div>
-            </div>        
+            
             {/* <section className="apystats my-5">
             <div className="container">
                 <div className="card lota-card apy-stats">

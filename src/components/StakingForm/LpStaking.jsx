@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { TelegramLogo, Info } from 'phosphor-react'
 import { useStore } from '../../store'
-import { MsgExecuteContract, StdFee } from '@terra-money/terra.js'
+import { MsgExecuteContract, Fee } from '@terra-money/terra.js'
 
 import numeral from 'numeral'
 
 const addToGas = 5800
-const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
+const obj = new Fee(700_000, { uusd: 319200 + addToGas })
 
 export default function LpStaking(props) {
     const { showNotification } = props

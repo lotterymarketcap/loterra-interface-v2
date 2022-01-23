@@ -28,51 +28,56 @@ export default function Countdown(props) {
 
     return (
         <div className="countdown">
-            <div className="row m-0">
-                <div className="col-12 text-center mb-2">
+        
+                {/* <div className="col-12 text-center mb-2">
                     <div className="title">Next draw in</div>
                 </div>
                 <div className="col-12">
-                    <div className="progress">
-                        <div
+                    <div className="progress"> */}
+                        {/* <div
                             className="progress-bar special"
                             role="progressbar"
                             style={{ width: percentageTillRebase + '%' }}
                             aria-valuenow={percentageTillRebase}
                             aria-valuemin="0"
                             aria-valuemax="100"
-                        >
+                        > */}
                             {/* {numeral(percentageTillRebase).format('0')}% */}
-                        </div>
-                    </div>
-                </div>
-                <div className="col-12 col-md-10 mx-auto">
+                        {/* </div> */}
+                    {/* </div>
+                </div> */}
+              
                     {expiryTimestamp > new Date() ? (
                         <div className="row text-center">
-                            <div className="col px-1">
-                                <div className="text-sm time-low">Days</div>
+                            <div className="col-3 mb-3 p-1">
+                            <div className="card base-card-light">
+                                                        <div className="card-body">
                                 <div className="font-bold time" x-text="days">
                                     {expiryTimestamp > 1
                                         ? days.toString().padStart(2, 0)
                                         : '-'}
                                 </div>
+                                <div className="text-sm time-low">Days</div>
+                                </div>
+                                </div>
                             </div>
-                            <div className="col px-1">
-                                <span className="spacer">:</span>
-                            </div>
-                            <div className="col px-1">
-                                <div className="text-sm time-low">Hours</div>
+                      
+                            <div className="col-3 mb-3 p-1">
+                            <div className="card base-card-light">
+                                                        <div className="card-body">
                                 <div className="font-bold time" x-text="hours">
                                     {expiryTimestamp > 1
                                         ? hours.toString().padStart(2, 0)
                                         : '-'}
                                 </div>
+                                <div className="text-sm time-low">Hours</div>
+                                </div>
+                                </div>
                             </div>
-                            <div className="col px-1">
-                                <span className="spacer">:</span>
-                            </div>
-                            <div className="col px-1">
-                                <div className="text-sm time-low">Minutes</div>
+                       
+                            <div className="col-3 mb-3 p-1">
+                            <div className="card base-card-light">
+                                                        <div className="card-body">
                                 <div
                                     className="font-bold time"
                                     x-text="minutes"
@@ -81,12 +86,14 @@ export default function Countdown(props) {
                                         ? minutes.toString().padStart(2, 0)
                                         : '-'}
                                 </div>
+                                <div className="text-sm time-low">Minutes</div>
+                                </div>
+                                </div>
                             </div>
-                            <div className="col px-1">
-                                <span className="spacer">:</span>
-                            </div>
-                            <div className="col px-1">
-                                <div className="text-sm time-low">Seconds</div>
+                       
+                            <div className="col-3 mb-3 p-1">
+                            <div className="card base-card-light">
+                                                        <div className="card-body">
                                 <div
                                     className="font-bold time"
                                     x-text="seconds"
@@ -95,7 +102,12 @@ export default function Countdown(props) {
                                         ? seconds.toString().padStart(2, 0)
                                         : '-'}
                                 </div>
-                            </div>
+                                <div className="text-sm time-low">Seconds</div>
+                                </div>
+                                </div>
+                                </div>
+                               
+                         
                         </div>
                     ) : (
                         <div className="row text-center">
@@ -107,7 +119,6 @@ export default function Countdown(props) {
                         </div>
                     )}
                 </div>
-            </div>
-        </div>
+ 
     )
 }

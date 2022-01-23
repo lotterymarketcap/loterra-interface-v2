@@ -6,7 +6,7 @@ export default function Footer() {
     return (
         <footer
             className="container-fluid mt-4"
-            style={{ background: '#10003b' }}
+            style={{ background: '#16073e' }}
         >
             <div className="social-share py-5">
                 <p className="mb-2">

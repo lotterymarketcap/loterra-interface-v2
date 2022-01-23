@@ -1,6 +1,10 @@
 import React, { Component, Suspense, useContext } from 'react'
-import { Root, Routes } from 'react-static'
-import { Router, Link } from '@reach/router'
+import { Root, Routes,addPrefetchExcludes } from 'react-static'
+import {
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
@@ -8,37 +12,53 @@ import './styles/base.scss'
 import { Head } from 'react-static'
 import { popper } from '@popperjs/core'
 
+
+import Index from './pages/Index';
+import Dogether from './pages/Dogether';
+import Dao from './pages/DAO';
+import Staking from './pages/Staking';
+ 
+
+
 let bootstrap = {}
 if (typeof document !== 'undefined') {
     bootstrap = require('bootstrap')
 }
 import { StoreProvider } from './store'
+import ConnectWallet from './components/ConnectWallet'
+import NormalNav from './components/NormalNav'
+import { List } from 'phosphor-react'
+
+if(typeof window !== 'undefined'){
+    window.addEventListener('DOMContentLoaded', event => { 
+        // Toggle the side navigation
+        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+        if (sidebarToggle) {
+            // Uncomment Below to persist sidebar toggle between refreshes
+            // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+            //     document.body.classList.toggle('sb-sidenav-toggled');
+            // }
+            sidebarToggle.addEventListener('click', event => {
+                event.preventDefault();
+                document.body.classList.toggle('sb-sidenav-toggled');      
+                localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+            });
+        }
+
+    
+    });
+
+    
+}
+
 
 class App extends Component {
+
+
+
     render() {
         return (
-            <Suspense
-                fallback={
-                    <div className="vh-100 d-flex">
-                        <div className="align-self-center w-100 text-center">
-                            <img src="logo.png" className="img-fluid mb-4" />
-                            <p
-                                style={{
-                                    color: '#f038f0',
-                                    textTransform: 'uppercase',
-                                    fontSize: '36px',
-                                    fontWeight: '300',
-                                    textShadow: '0px 0px 26px #ff36ff',
-                                    fontFamily: "'Monoton', cursive",
-                                }}
-                                className="loading_animation"
-                            >
-                                Loading...{' '}
-                            </p>
-                        </div>
-                    </div>
-                }
-            >
+            
                 <Root>
                     <Head>
                         <meta charSet="UTF-8" />
@@ -63,7 +83,7 @@ class App extends Component {
                         <meta
                             property="og:image"
                             content="https://loterra.io/loterra.png"
-                        />
+                        /> 
                         <meta property="og:image:alt" content="LoTerra icon" />
                         <meta property="og:type" content="website" />
                         <meta
@@ -94,13 +114,52 @@ class App extends Component {
                         />
                     </Head>
                     <StoreProvider>
-                        <Navbar />
-                        <Routes default />
+                    <div className="d-flex" id="wrapper">
+                        <div id="sidebar-wrapper" className="sticky-top">
+                            <NormalNav />
+                        </div>
+                        <div id="page-content-wrapper" >
+                        <nav className="navbar navbar-expand navbar-light sticky-top" id="smallNav">
+                    <div className="container-fluid px-0">
+                        <button className="btn btn-default" id="sidebarToggle"> <List size={26} /></button>
+                        <div className="navbar">
+                        <ConnectWallet/>
+                        </div>
+                    </div>
+                </nav>
+         
+                        <Switch>
+                        <Suspense
+                fallback={
+                    <div
+                    className={
+                        'loader h-100 text-center d-flex ' 
+                   
+                    }
+                >
+                    <div className="align-self-center w-100">
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                }
+            >     
+                        <Route exact path="/" component={Index} />
+                        <Route exact path="/dogether" component={Dogether} />
+                        <Route exact path="/staking" component={Staking} />
+                        <Route exact path="/dao" component={Dao} />                        
+                        <Route render={() => <Routes/>} />
+                        </Suspense>
+                        </Switch>
+  
+                        </div>
+                    </div>
                     </StoreProvider>
 
                     {/*<Footer/>*/}
                 </Root>
-            </Suspense>
+  
         )
     }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { X, Ticket, UserCircle, Info } from 'phosphor-react'
 import {
-    StdFee,
+    Fee,
     MsgExecuteContract,
     LCDClient,
     WasmAPI,
@@ -21,7 +21,7 @@ export default function AllowanceModal(props) {
 
     function increaseUserAllowance(val) {
         const addToGas = 5800
-        const obj = new StdFee(700_000, { uusd: 319200 + addToGas })
+        const obj = new Fee(700_000, { uusd: 319200 + addToGas })
         const msg = new MsgExecuteContract(
             state.wallet.walletAddress,
             'terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv',
@@ -60,7 +60,7 @@ export default function AllowanceModal(props) {
 
     function handleChange(e) {
         setPrefillValue(e.target.value)
-        console.log(prefillValue)
+        //console.log(prefillValue)
     }
 
     return (
@@ -90,10 +90,10 @@ export default function AllowanceModal(props) {
                             <input
                                 name="allowance_amount"
                                 value={
-                                    prefillValue == 0 ? prefill : prefillValue
+                                    prefillValue == 0 && prefill ? prefill : prefillValue
                                 }
                                 type="number"
-                                min={prefill}
+                                min={prefill ? prefill : prefillValue}
                                 className="form-control"
                                 onChange={(e) => handleChange(e)}
                                 required

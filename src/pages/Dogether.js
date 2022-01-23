@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Footer from '../components/Footer'
 import Main from '../components/Dogether/Main'
-import { StdFee } from '@terra-money/terra.js'
+import { Fee } from '@terra-money/terra.js'
 import Notification from '../components/Notification'
 
 export default () => {
@@ -42,9 +42,7 @@ export default () => {
         <>
             <div
                 className="bg-hero"
-                style={{
-                    backgroundImage:
-                        'linear-gradient(0deg, #160150, #170f5300, #17095200),radial-gradient(#f23bf23b , #160150ad), url(/rays.svg)',
+                style={{                  
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center',
                     backgroundRepeat: 'no-repeat',
