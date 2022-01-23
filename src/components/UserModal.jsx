@@ -334,31 +334,13 @@ export default function UserModal(props) {
         <>
             <div className={'usermodal' + (open ? ' show' : '')}>
                 <button className="toggle" onClick={() => toggleModal()}>
-                    <X size={48} />
+                    <X size={24} />
                 </button>
                 <div className="usermodal_content">
                     <div className="row">
                         {connectedWallet && connectedWallet.walletAddress && (
                             <>
-                                <div className="col-12 mb-2 text-center start">
-                                    <UserCircle size={100} />
-                                </div>
-                                {state.youWon &&
-                                    state.config.prize_rank_winner_percentage &&
-                                    state.allRecentWinners.length > 0 && (
-                                        <div className="text-center winner-box">
-                                            <p className="winner-box-heading">
-                                                <strong>
-                                                    YOU WON!{' '}
-                                                    {state.lastDrawnJackpot !==
-                                                        0 &&
-                                                        calculateTotalPrizesInDollars()}
-                                                </strong>{' '}
-                                                <span>Latest draw prizes</span>
-                                            </p>
-                                            {showWinnerPrizes()}
-                                        </div>
-                                    )}
+                             
                                 <div className="col-12 text-center claim">
                                     <h4 className="mb-2">
                                         Your Lottery Tickets
@@ -392,7 +374,22 @@ export default function UserModal(props) {
                                                 </small>
                                             )}
                                     </h4>
-
+                                    {state.youWon &&
+                                    state.config.prize_rank_winner_percentage &&
+                                    state.allRecentWinners.length > 0 && (
+                                        <div className="text-center winner-box">
+                                            <p className="winner-box-heading">
+                                                <strong>
+                                                    YOU WON!{' '}
+                                                    {state.lastDrawnJackpot !==
+                                                        0 &&
+                                                        calculateTotalPrizesInDollars()}
+                                                </strong>{' '}
+                                                <span>Latest draw prizes</span>
+                                            </p>
+                                            {showWinnerPrizes()}
+                                        </div>
+                                    )}
                                     <div className="btn-group w-100">
                                         <button
                                             className="btn btn-default"

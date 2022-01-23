@@ -1,6 +1,10 @@
 import React, { Component, Suspense, useContext } from 'react'
-import { Root, Routes } from 'react-static'
-import { Router, Link } from '@reach/router'
+import { Root, Routes,addPrefetchExcludes } from 'react-static'
+import {
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
@@ -8,6 +12,11 @@ import './styles/base.scss'
 import { Head } from 'react-static'
 import { popper } from '@popperjs/core'
 
+
+import Index from './pages/Index';
+import Dogether from './pages/Dogether';
+import Dao from './pages/DAO';
+import Staking from './pages/Staking';
  
 
 
@@ -49,28 +58,7 @@ class App extends Component {
 
     render() {
         return (
-            <Suspense
-                fallback={
-                    <div className="vh-100 d-flex">
-                        <div className="align-self-center w-100 text-center">
-                            <img src="logo.png" className="img-fluid mb-4" />
-                            <p
-                                style={{
-                                    color: '#f038f0',
-                                    textTransform: 'uppercase',
-                                    fontSize: '36px',
-                                    fontWeight: '300',
-                                    textShadow: '0px 0px 26px #ff36ff',
-                                    fontFamily: "'Monoton', cursive",
-                                }}
-                                className="loading_animation"
-                            >
-                                Loading...{' '}
-                            </p>
-                        </div>
-                    </div>
-                }
-            >
+            
                 <Root>
                     <Head>
                         <meta charSet="UTF-8" />
@@ -95,7 +83,7 @@ class App extends Component {
                         <meta
                             property="og:image"
                             content="https://loterra.io/loterra.png"
-                        />
+                        /> 
                         <meta property="og:image:alt" content="LoTerra icon" />
                         <meta property="og:type" content="website" />
                         <meta
@@ -139,14 +127,44 @@ class App extends Component {
                         </div>
                     </div>
                 </nav>
-                            <Routes default />
+                <Suspense
+                fallback={
+                    <div className="vh-100 d-flex">
+                        <div className="align-self-center w-100 text-center">
+                            <img src="logo.png" className="img-fluid mb-4" />
+                            <p
+                                style={{
+                                    color: '#f038f0',
+                                    textTransform: 'uppercase',
+                                    fontSize: '36px',
+                                    fontWeight: '300',
+                                    textShadow: '0px 0px 26px #ff36ff',
+                                    fontFamily: "'Monoton', cursive",
+                                }}
+                                className="loading_animation"
+                            >
+                                Loading...{' '}
+                            </p>
+                        </div>
+                    </div>
+                }
+            >
+                        <Switch>
+                           
+                        <Route exact path="/" component={Index} />
+                        <Route exact path="/dogether" component={Dogether} />
+                        <Route exact path="/staking" component={Staking} />
+                        <Route exact path="/dao" component={Dao} />                        
+                        <Route render={() => <Routes/>} />
+                        </Switch>
+        </Suspense>
                         </div>
                     </div>
                     </StoreProvider>
 
                     {/*<Footer/>*/}
                 </Root>
-            </Suspense>
+  
         )
     }
 }

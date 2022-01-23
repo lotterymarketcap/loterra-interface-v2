@@ -13,6 +13,7 @@ import {
     Bank,
     Planet,
 } from 'phosphor-react'
+import { Link, NavLink } from 'react-router-dom'
 
 
 export default function NormalNav() {
@@ -31,7 +32,7 @@ if (typeof location !== 'undefined') {
                 </a>               
         
                     <li className="nav-item">
-                        <a href="/" className={'nav-link ' + homeClass}>
+                        <NavLink exact  to="/" className={'nav-link'}>
                             <Ticket
                                 size={24}
                                 style={{
@@ -42,11 +43,11 @@ if (typeof location !== 'undefined') {
                             />{' '}
                             Lottery
                             <span className="item-label">Jackpot Lottery</span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="nav-item">
-                        <a
-                            href="/dogether"
+                        <NavLink exact 
+                            to="/dogether"
                             className="nav-link"
                             style={{ position: 'relative' }}
                         >
@@ -76,11 +77,11 @@ if (typeof location !== 'undefined') {
                             >
                                 BETA
                             </span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="nav-item">
-                        <a
-                            href="/staking"
+                        <NavLink exact 
+                            to="/staking"
                             className="nav-link"
                             className={'nav-link ' + stakingClass}
                         >
@@ -97,11 +98,11 @@ if (typeof location !== 'undefined') {
                                 Become a casino owner or earn LOTA when staking
                                 LP
                             </span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="nav-item">
-                        <a
-                            href="/dao"
+                        <NavLink exact 
+                            to="/dao"
                             className="nav-link"
                             className={'nav-link ' + daoClass}
                         >
@@ -117,11 +118,10 @@ if (typeof location !== 'undefined') {
                             <span className="item-label">
                                 Together we decide
                             </span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="nav-item" style={{opacity:0.5}}>
-                        <a
-                            href="/#"
+                        <a                      
                             className="nav-link"
                             className={'nav-link '}
                         >
