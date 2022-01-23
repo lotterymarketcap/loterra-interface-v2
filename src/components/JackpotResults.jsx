@@ -315,8 +315,8 @@ export default function JackpotResults() {
                             {state.winningCombination ? (
                                 state.winningCombination
                                     .split('')
-                                    .map((obj) => {
-                                        return <span>{obj}</span>
+                                    .map((obj,i) => {
+                                        return <span key={i+'c'}>{obj}</span>
                                     })
                             ) : (
                                 <PriceLoader />

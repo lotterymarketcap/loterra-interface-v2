@@ -26,7 +26,7 @@ export default function Main(props) {
     const anchorPercentage = 18
 
     function doGether(e) {
-        console.log('Dogether with: ', amount, percentage)
+     //   console.log('Dogether with: ', amount, percentage)
         if (!agreement) {
             showNotification('You need to accept the agreement', 'error', 4000)
             return
@@ -59,7 +59,7 @@ export default function Main(props) {
             })
     }
     function doGetherUnstake() {
-        console.log('Dogether with: ', amount, percentage)
+        //console.log('Dogether with: ', amount, percentage)
         if (amount <= 0) return
         let msg = new MsgExecuteContract(
             state.wallet.walletAddress,

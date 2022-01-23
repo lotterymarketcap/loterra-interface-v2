@@ -127,37 +127,32 @@ class App extends Component {
                         </div>
                     </div>
                 </nav>
-                <Suspense
+         
+                        <Switch>
+                        <Suspense
                 fallback={
-                    <div className="vh-100 d-flex">
-                        <div className="align-self-center w-100 text-center">
-                            <img src="logo.png" className="img-fluid mb-4" />
-                            <p
-                                style={{
-                                    color: '#f038f0',
-                                    textTransform: 'uppercase',
-                                    fontSize: '36px',
-                                    fontWeight: '300',
-                                    textShadow: '0px 0px 26px #ff36ff',
-                                    fontFamily: "'Monoton', cursive",
-                                }}
-                                className="loading_animation"
-                            >
-                                Loading...{' '}
-                            </p>
+                    <div
+                    className={
+                        'loader h-100 text-center d-flex ' 
+                   
+                    }
+                >
+                    <div className="align-self-center w-100">
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
                         </div>
                     </div>
+                </div>
                 }
-            >
-                        <Switch>
-                           
+            >     
                         <Route exact path="/" component={Index} />
                         <Route exact path="/dogether" component={Dogether} />
                         <Route exact path="/staking" component={Staking} />
                         <Route exact path="/dao" component={Dao} />                        
                         <Route render={() => <Routes/>} />
+                        </Suspense>
                         </Switch>
-        </Suspense>
+  
                         </div>
                     </div>
                     </StoreProvider>

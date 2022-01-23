@@ -60,7 +60,7 @@ export default function AllowanceModal(props) {
 
     function handleChange(e) {
         setPrefillValue(e.target.value)
-        console.log(prefillValue)
+        //console.log(prefillValue)
     }
 
     return (
@@ -90,10 +90,10 @@ export default function AllowanceModal(props) {
                             <input
                                 name="allowance_amount"
                                 value={
-                                    prefillValue == 0 ? prefill : prefillValue
+                                    prefillValue == 0 && prefill ? prefill : prefillValue
                                 }
                                 type="number"
-                                min={prefill}
+                                min={prefill ? prefill : prefillValue}
                                 className="form-control"
                                 onChange={(e) => handleChange(e)}
                                 required

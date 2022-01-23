@@ -102,7 +102,7 @@ export default function UserModal(props) {
             if (type == 'current') {
                 id = state.currentLotteryId
             }
-            console.log(id)
+           // console.log(id)
             dispatch({ type: 'setHistoricalTicketLotteryId', message: id })
 
             const combinations = await api.contractQuery(
@@ -114,7 +114,7 @@ export default function UserModal(props) {
                     },
                 },
             )
-            console.log(combinations)
+           // console.log(combinations)
             dispatch({ type: 'setAllCombinations', message: combinations })
             setTicketLoad(false)
         } catch (e) {

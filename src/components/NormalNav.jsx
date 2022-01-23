@@ -116,7 +116,7 @@ if (typeof location !== 'undefined') {
                             />{' '}
                             DAO
                             <span className="item-label">
-                                Together we decide
+                                Together we decide 
                             </span>
                         </NavLink>
                     </li>

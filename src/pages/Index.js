@@ -2,24 +2,18 @@ import React, {
     useEffect,
     useState,
     useCallback,
-    useContext,
     useRef,
 } from 'react'
 import numeral from 'numeral'
 import {
-    Ticket,
     X,
-    Trophy,
-    UserFocus,
     ChartPie,
     ChartLine,
     PlusCircle,
     MinusCircle,
     PencilLine,
     Fire,
-    Files,
     Gift,
-    UsersThree,
     MonitorPlay,
     Info,
 } from 'phosphor-react'
@@ -27,13 +21,8 @@ import {
 import {
     Fee,
     MsgExecuteContract,
-    LCDClient,
     WasmAPI,
-    Coins,
-    BankAPI,
-    Denom,
-    Tx,
-    MnemonicKey,
+   
 } from '@terra-money/terra.js'
 import Countdown from '../components/Countdown'
 import TicketModal from '../components/TicketModal'
@@ -41,13 +30,10 @@ import TicketModal from '../components/TicketModal'
 import { useStore } from '../store'
 
 import Notification from '../components/Notification'
-import SocialShare from '../components/SocialShare'
 import Footer from '../components/Footer'
 import AllowanceModal from '../components/AllowanceModal'
-import WinnerRow from '../components/WinnerRow'
 import PriceLoader from '../components/PriceLoader'
 import JackpotResults from '../components/JackpotResults'
-import QuickStats from '../components/QuickStats'
 
 let useConnectedWallet = {}
 if (typeof document !== 'undefined') {
