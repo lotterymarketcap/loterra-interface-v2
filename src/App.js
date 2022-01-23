@@ -29,6 +29,8 @@ import ConnectWallet from './components/ConnectWallet'
 import NormalNav from './components/NormalNav'
 import { List } from 'phosphor-react'
 
+
+
 if(typeof window !== 'undefined'){
     window.addEventListener('DOMContentLoaded', event => { 
         // Toggle the side navigation
@@ -60,6 +62,7 @@ class App extends Component {
         return (
             
                 <Root>
+               
                     <Head>
                         <meta charSet="UTF-8" />
                         <meta
@@ -114,6 +117,7 @@ class App extends Component {
                         />
                     </Head>
                     <StoreProvider>
+                  
                     <div className="d-flex" id="wrapper">
                         <div id="sidebar-wrapper" className="sticky-top">
                             <NormalNav />
@@ -127,9 +131,8 @@ class App extends Component {
                         </div>
                     </div>
                 </nav>
-         
-                        <Switch>
-                        <Suspense
+              
+                <Suspense
                 fallback={
                     <div
                     className={
@@ -145,14 +148,17 @@ class App extends Component {
                 </div>
                 }
             >     
+                        <Switch>
+                  
                         <Route exact path="/" component={Index} />
                         <Route exact path="/dogether" component={Dogether} />
                         <Route exact path="/staking" component={Staking} />
                         <Route exact path="/dao" component={Dao} />                        
                         <Route render={() => <Routes/>} />
-                        </Suspense>
+                     
                         </Switch>
-  
+             
+                        </Suspense>
                         </div>
                     </div>
                     </StoreProvider>
