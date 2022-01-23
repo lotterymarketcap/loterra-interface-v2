@@ -252,7 +252,7 @@ export default function Main(props) {
                         </span>
                 </div>
         </div>
-            <div className="col-md-9 col-lg-6">
+            <div className="col-xl-6">
                 <div className="card lota-card staking dogether-card mt-0">
                     <div className="card-body">
                         
@@ -381,7 +381,7 @@ export default function Main(props) {
 </div> */}
                 </div>
             </div>
-            <div className="col-md-3 col-lg-6">
+            <div className="col-xl-6">
                 <div className="card lota-card staking dogether-card" style={{marginTop:0}}>
                 <p className="input-heading mt-3" style={{}}>
                         The amount you want to pool

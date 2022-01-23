@@ -661,7 +661,7 @@ export default () => {
                                     <h1>Decentralized Lottery </h1>
                                     <p className="slogan">LoTerra is a decentralized gaming ecosystem managed by LOTA holders</p>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-xl-6">
                                 
                                 <p className="sub-title">Next jackpot</p>
                                 <h2>
@@ -705,7 +705,7 @@ export default () => {
                                                 </small>
                                             </div>        
                                 </div>
-                                <div className="col-md-6 d-flex">
+                                <div className="col-xl-6 d-flex">
                                             <div className="align-self-center w-100">
                                             <p className="sub-title">Next draw in</p>
                                 <Countdown
