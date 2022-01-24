@@ -419,7 +419,7 @@ export default () => {
                     state.vkrQualifierContract,
                     {
                         participation_count: {
-                            lottery_id: state.config.lottery_counter - 1,
+                            lottery_id: state.config.lottery_counter,
                             player: connectedWallet.walletAddress,                            
                         },
                     },
@@ -431,7 +431,7 @@ export default () => {
                     state.loterraTestnetContractAddress,
                     {
                         combination: {
-                            lottery_id: state.config.lottery_counter - 1,
+                            lottery_id: state.config.lottery_counter,
                             address: state.wallet.walletAddress,
                         },
                     },
